@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+        <meta
+            http-equiv="Content-Security-Policy"
+            content="script-src 'self' 'unsafe-inline';"
+        />
+        <link rel="stylesheet" href="styles.css" />
+        <title>name of app</title>
+    </head>
+    <body>
+        <!-- Chatbox UI -->
+        <div
+            id="chat-container"
+            style="padding: 10px; width: 100%; box-sizing: border-box; position: fixed; bottom: 0; left: 0; overflow-y: auto;"
+        >
+            <div
+                id="chat-messages"
+                style="height: calc(100vh - 56px); overflow-y: auto; border-bottom: 1px solid #eee; margin-bottom: 10px; padding: 2px;"
+            >
+            </div>
+            <input
+                id="chat-input"
+                type="text"
+                placeholder="Type a message..."
+                style="width: calc(100% - 60px);"
+            />
+            <button id="chat-send">Send</button>
+        </div>
+        <!-- Focus on chatbox on startup -->
+        <script>
+            window.addEventListener('DOMContentLoaded', () => {
+                const chatInput = document.getElementById('chat-input');
+                if (chatInput) chatInput.focus();
+            });
+        </script>
+        <script type="module" src="./renderer.js"></script>
+    </body>
+</html>

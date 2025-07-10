@@ -1,0 +1,155 @@
+export class Chatbox {
+    constructor() {
+        this.chatMessages = document.getElementById('chat-messages');
+        this.chatInput = document.getElementById('chat-input');
+        this.chatSend = document.getElementById('chat-send');
+
+        this.inputHistory = [];
+        this.historyIndex = -1;
+
+        this.tabmatches = [];
+        this.tabIndex = 0;
+        this.lastTabPrefix = '';
+        this.originalInput = '';
+    }
+
+    createListeners() {
+        this.chatSend.addEventListener('click', () => {
+            const msg = this.chatInput.value.trim();
+            this.input(msg);
+        });
+
+        // Tab autocomplete for table name after 'from' with cycling support
+        this.chatInput.addEventListener('keydown', (e) => {
+            this.hotkeys(e);
+        });
+    }
+
+    async input(msg) {
+        if (msg) {
+            // Only save if not a repeat of the last input
+            if (this.inputHistory.length === 0 || this.inputHistory[this.inputHistory.length - 1] !== msg) {
+                this.inputHistory.push(msg);
+            }
+
+            this.historyIndex = this.inputHistory.length;
+
+            if (msg.startsWith('select ') || msg.startsWith('SELECT ') || msg.startsWith('show ') || msg.startsWith('SHOW ') || msg.startsWith('describe ') || msg.startsWith('DESCRIBE ')) {
+                // SQL query command
+                const sql = msg;
+                console.log('Executing SQL:', sql);
+                // Call backend to execute SQL and get result
+                const result = await window.database.queryTable(sql);
+                console.log('SQL Result:', result);
+
+                if (result.success) {
+                    this.displayTable(result.results);
+                } else {
+                    this.displayError(new Error(result.message || 'No results returned.'));
+                }
+                
+                this.chatInput.value = '';
+            } else {
+                const msgDiv = document.createElement('div');
+                msgDiv.textContent = msg;
+                this.chatMessages.appendChild(msgDiv);
+                this.chatInput.value = '';
+                this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+            }
+        }
+    }
+
+    displayTable(rows) {
+        const div = document.createElement('div');
+        if (!rows || rows.length === 0) {
+            this.chatMessages.textContent = 'No results.';
+            return;
+        }
+
+        // Create table
+        let html = '<table border="1" style="border-collapse:collapse;width:100%">';
+        html += '<br>'; // Add empty line before table
+        html += '<tr>' + Object.keys(rows[0]).map(k => `<th>${k.replace(/_/g, ' ')}</th>`).join('') + '</tr>';
+        for (const row of rows) {
+            html += '<tr>' + Object.values(row).map(v => `<td>${v}</td>`).join('') + '</tr>';
+        }
+        html += '</table>';
+        html += '<br>'; // Add empty line after table
+        div.innerHTML = html;
+        this.chatMessages.appendChild(div);
+        this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+    }
+
+    displayError(err) {
+        const div = document.createElement('div');
+        div.textContent = err.message;
+        this.chatMessages.appendChild(div);
+        this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+    }
+
+    hotkeys(input) {
+        if (input.key === 'Enter') {
+            this.chatSend.click();
+        } else if (input.key === 'ArrowUp') {
+            if (this.inputHistory.length > 0 && this.historyIndex > 0) {
+                this.historyIndex--;
+                this.chatInput.value = this.inputHistory[this.historyIndex];
+                setTimeout(() => this.chatInput.setSelectionRange(this.chatInput.value.length, this.chatInput.value.length), 0);
+            }
+        } else if (input.key === 'ArrowDown') {
+            if (this.inputHistory.length > 0 && this.historyIndex < this.inputHistory.length - 1) {
+                this.historyIndex++;
+                this.chatInput.value = this.inputHistory[this.historyIndex];
+                setTimeout(() => this.chatInput.setSelectionRange(this.chatInput.value.length, this.chatInput.value.length), 0);
+            } else if (this.historyIndex === this.inputHistory.length - 1) {
+                this.historyIndex++;
+                this.chatInput.value = '';
+            }
+        } else if (input.key === 'Tab') {
+            // Tab autocomplete for table name after 'from' with cycling, mid-word support
+            this.autocomplete(input);
+        } else {
+            // Reset tab matches if not typing a table name
+            this.tabmatches = [];
+            this.tabIndex = 0;
+            this.lastTabPrefix = '';
+            this.originalInput = '';
+        }
+    }
+
+    async autocomplete(input) {
+        // Tab autocomplete for table name after 'from' with cycling, mid-word support
+        const value = this.chatInput.value;
+        // Match 'from' followed by any non-space chars (table name), possibly mid-word
+        const match = (/from\s+([\w]*)/i.exec(value) || /FROM\s+([\w]*)/i.exec(value) || /describe\s+([\w]*)/i.exec(value) || /DESCRIBE\s+([\w]*)/i.exec(value));
+        if (match) {
+            const tables = await window.database.getTables();
+            const partial = match[1].toLowerCase();
+            // Use tables as an array directly
+            if (this.tabmatches.length === 0 || this.lastTabPrefix !== partial) {
+                const tableList = Array.isArray(tables) ? tables : (tables && tables.lookupTable ? tables.lookupTable : []);
+                this.tabmatches = tableList.filter(t => t.toLowerCase().includes(partial));
+                this.tabIndex = 0;
+                this.lastTabPrefix = partial;
+                this.originalInput = value;
+            }
+            if (this.tabmatches.length > 0) {
+                input.preventDefault();
+                const found = this.tabmatches[this.tabIndex];
+                // Replace only the matched partial table name after 'from' with the full table name
+                const partialStart = match.index + match[0].lastIndexOf(partial);
+                this.chatInput.value = this.originalInput.substring(0, partialStart) + found + this.originalInput.substring(partialStart + partial.length);
+                setTimeout(() => this.chatInput.setSelectionRange(partialStart + found.length, partialStart + found.length), 0);
+                this.tabIndex = (this.tabIndex + 1) % this.tabmatches.length;
+            } else {
+                this.chatInput.value = this.originalInput;
+            }
+        } else {
+            this.tabmatches = [];
+            this.tabIndex = 0;
+            this.lastTabPrefix = '';
+            this.originalInput = '';
+        }
+    }
+        
+}
