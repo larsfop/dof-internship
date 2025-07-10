@@ -46,8 +46,10 @@ export class Tabs {
 
         // Render chatbox UI for the current tab
         const chatBox = this.tabs[this.currentTab];
-        chatBox.appendContainer();
-        chatBox.focusInput(); // Focus the input of the current tab        
+        if (chatBox) {
+            chatBox.appendContainer();
+            chatBox.focusInput(); // Focus the input of the current tab        
+        }
 
         // Render tabs list
         this.tabsList.innerHTML = '';
