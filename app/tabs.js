@@ -57,13 +57,25 @@ export class Tabs {
             tabDiv.className = 'tab' + (idx === this.currentTab ? ' active' : '');
             tabDiv.style.display = 'flex';
             tabDiv.style.alignItems = 'center';
-            // tabDiv.style.background = idx === this.currentTab ? '#e0e0e0' : '#fff';
             tabDiv.style.border = '1px solid #ccc';
             tabDiv.style.borderRadius = '4px';
             tabDiv.style.padding = '2px 8px';
             tabDiv.style.cursor = 'pointer';
             tabDiv.style.position = 'relative';
             tabDiv.textContent = `Tab ${idx + 1}`;
+
+            // Highlight current tab with adaptive color
+            if (idx === this.currentTab) {
+                tabDiv.style.background = window.matchMedia('(prefers-color-scheme: dark)').matches ? '#333' : '#e0e0e0';
+                tabDiv.style.color = window.matchMedia('(prefers-color-scheme: dark)').matches ? '#fff' : '#222';
+                tabDiv.style.fontWeight = 'bold';
+                tabDiv.style.boxShadow = window.matchMedia('(prefers-color-scheme: dark)').matches ? '0 2px 8px #1118' : '0 2px 8px #ccc8';
+            } else {
+                tabDiv.style.background = window.matchMedia('(prefers-color-scheme: dark)').matches ? '#222' : '#fff';
+                tabDiv.style.color = window.matchMedia('(prefers-color-scheme: dark)').matches ? '#bbb' : '#222';
+                tabDiv.style.fontWeight = 'normal';
+                tabDiv.style.boxShadow = 'none';
+            }
 
             // Render new tab button
             if (idx === this.tabs.length - 1) {
