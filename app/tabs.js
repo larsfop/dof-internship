@@ -2,7 +2,6 @@ import { Chatbox } from './chatbox.js';
 
 export class Tabs {
     constructor() {
-        this.newTabButton = document.getElementById('new-tab-button');
         this.tabsList = document.getElementById('tabs-list');
         this.tabs = [];
         this.currentTab = 0;
@@ -13,13 +12,7 @@ export class Tabs {
     }
 
     addListeners() {
-        // Add event listeners for new tab buttons
-        this.newTabButton.addEventListener('click', () => {
-            this.addTab();
-            this.currentTab = this.getTabs().length - 1; // Update current tab index
-            this.renderTabs();
-        });
-
+        // Add listeners for hotkeys
         document.addEventListener('keydown', (e) => {
             this.hotkeys(e);
         });
@@ -50,6 +43,12 @@ export class Tabs {
             chatBox.appendContainer();
             chatBox.focusInput(); // Focus the input of the current tab        
         }
+        else {
+            const chatContainer = document.getElementById('chat-container');
+            if (chatContainer) {
+                chatContainer.innerHTML = ''; // Clear chat container if no tabs
+            }
+        }
 
         // Render tabs list
         this.tabsList.innerHTML = '';
@@ -58,13 +57,32 @@ export class Tabs {
             tabDiv.className = 'tab' + (idx === this.currentTab ? ' active' : '');
             tabDiv.style.display = 'flex';
             tabDiv.style.alignItems = 'center';
-            tabDiv.style.background = idx === this.currentTab ? '#e0e0e0' : '#fff';
+            // tabDiv.style.background = idx === this.currentTab ? '#e0e0e0' : '#fff';
             tabDiv.style.border = '1px solid #ccc';
             tabDiv.style.borderRadius = '4px';
             tabDiv.style.padding = '2px 8px';
             tabDiv.style.cursor = 'pointer';
             tabDiv.style.position = 'relative';
             tabDiv.textContent = `Tab ${idx + 1}`;
+
+            // Render new tab button
+            if (idx === this.tabs.length - 1) {
+                const newTabBtn = document.createElement('button');
+                newTabBtn.textContent = '+';
+                newTabBtn.title = 'New Tab';
+                newTabBtn.style.marginLeft = '6px';
+                newTabBtn.style.border = '1px solid #ccc';
+                newTabBtn.style.borderRadius = '4px';
+                newTabBtn.style.cursor = 'pointer';
+                newTabBtn.style.fontSize = '16px';
+                newTabBtn.style.position = 'absolute';
+                newTabBtn.style.right = '-40px'; // Position to the right of the last tab
+                newTabBtn.onclick = (e) => {
+                e.stopPropagation();
+                this.addTab();
+                };
+                tabDiv.appendChild(newTabBtn);
+            }
 
             // Close button
             const closeBtn = document.createElement('button');
