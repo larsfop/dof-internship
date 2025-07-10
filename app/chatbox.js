@@ -57,6 +57,10 @@ export class Chatbox {
         this.chatContainer.appendChild(this.chatSend);
     }
 
+    focusInput() {
+        if (this.chatInput) this.chatInput.focus();
+    }
+
     async input(msg) {
         if (msg) {
             // Only save if not a repeat of the last input

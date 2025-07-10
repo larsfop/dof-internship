@@ -19,6 +19,10 @@ export class Tabs {
             this.currentTab = this.getTabs().length - 1; // Update current tab index
             this.renderTabs();
         });
+
+        document.addEventListener('keydown', (e) => {
+            this.hotkeys(e);
+        });
     }
 
     addTab() {
@@ -41,7 +45,9 @@ export class Tabs {
         if (!this.tabsList) return;
 
         // Render chatbox UI for the current tab
-        this.tabs[this.currentTab].appendContainer();
+        const chatBox = this.tabs[this.currentTab];
+        chatBox.appendContainer();
+        chatBox.focusInput(); // Focus the input of the current tab        
 
         // Render tabs list
         this.tabsList.innerHTML = '';
@@ -87,5 +93,24 @@ export class Tabs {
 
     print() {
         console.log(this.tabs)
+    }
+
+    hotkeys(e) {
+        // create new tab with Ctrl + T
+        if (e.ctrlKey && e.key.toLowerCase() === 't') {
+            e.preventDefault(); // Prevent default action
+            this.addTab();
+        }
+        // close current tab with Ctrl + W
+        if (e.ctrlKey && e.key.toLowerCase() === 'w') {
+            e.preventDefault(); // Prevent default action
+            this.closeTab(this.currentTab);
+        }
+        // switch to next tab with Ctrl + Tab
+        if (e.ctrlKey && e.key.toLowerCase() === 'tab') {
+            e.preventDefault(); // Prevent default action
+            this.currentTab = (this.currentTab + 1) % this.tabs.length; // Cycle through tabs
+            this.renderTabs();
+        }
     }
 }
