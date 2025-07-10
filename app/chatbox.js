@@ -1,8 +1,7 @@
 export class Chatbox {
     constructor() {
-        this.chatMessages = document.getElementById('chat-messages');
-        this.chatInput = document.getElementById('chat-input');
-        this.chatSend = document.getElementById('chat-send');
+        this.chatContainer = document.getElementById('chat-container');
+        this.createUI();
 
         this.inputHistory = [];
         this.historyIndex = -1;
@@ -11,6 +10,8 @@ export class Chatbox {
         this.tabIndex = 0;
         this.lastTabPrefix = '';
         this.originalInput = '';
+
+        this.createListeners();
     }
 
     createListeners() {
@@ -23,6 +24,37 @@ export class Chatbox {
         this.chatInput.addEventListener('keydown', (e) => {
             this.hotkeys(e);
         });
+    }
+
+    createUI() {
+        // create chat messages area
+        this.chatMessages = document.createElement('div');
+        this.chatMessages.id = 'chat-messages';
+        this.chatMessages.style.height = 'calc(100vh - 100px)';
+        this.chatMessages.style.overflowY = 'auto';
+        this.chatMessages.style.borderBottom = '1px solid #eee';
+        this.chatMessages.style.marginBottom = '10px';
+        this.chatMessages.style.padding = '2px';
+
+        // create chat input area
+        this.chatInput = document.createElement('input');
+        this.chatInput.id = 'chat-input';
+        this.chatInput.type = 'text';
+        this.chatInput.placeholder = 'Type your message here...';
+        this.chatInput.style.width = 'calc(100% - 80px)';
+
+        // create send button
+        this.chatSend = document.createElement('button');
+        this.chatSend.id = 'chat-send';
+        this.chatSend.textContent = 'Send';
+    }
+
+    appendContainer() {
+        this.chatContainer.innerHTML = ''; // Clear previous content
+        // Append elements to chat container
+        this.chatContainer.appendChild(this.chatMessages);
+        this.chatContainer.appendChild(this.chatInput);
+        this.chatContainer.appendChild(this.chatSend);
     }
 
     async input(msg) {
