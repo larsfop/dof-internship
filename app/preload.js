@@ -9,3 +9,7 @@ contextBridge.exposeInMainWorld('database', {
     queryTable: (query) => ipcRenderer.invoke('db:query', query),
     getTables: () => ipcRenderer.invoke('get-db-tables')
 })
+
+contextBridge.exposeInMainWorld('paths', {
+    appPath: () => ipcRenderer.invoke('get-app-path'),
+})

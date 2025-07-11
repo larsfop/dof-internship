@@ -6,6 +6,11 @@ import mysql from 'mysql2';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+console.log(__dirname)
+ipcMain.handle('get-app-path', () => {
+    return __dirname; // Return the directory of the main.js file
+});
+
 let connection;
 let db_tables;
 

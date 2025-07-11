@@ -32,10 +32,10 @@ export class Chatbox {
         // create chat messages area
         this.chatMessages = document.createElement('div');
         this.chatMessages.id = 'chat-messages';
-        this.chatMessages.style.height = 'calc(100vh - 100px)';
+        this.chatMessages.style.height = 'calc(100vh - 110px)';
         this.chatMessages.style.overflowY = 'auto';
         this.chatMessages.style.borderBottom = '1px solid #eee';
-        this.chatMessages.style.marginBottom = '10px';
+        this.chatMessages.style.marginBottom = '15px';
         this.chatMessages.style.padding = '2px';
 
         // create chat input area

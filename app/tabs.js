@@ -1,4 +1,5 @@
 import { Chatbox } from './chatbox.js';
+import { Pdf } from './pdf.js';
 
 export class Tabs {
     constructor() {
@@ -19,7 +20,8 @@ export class Tabs {
     }
 
     addTab() {
-        const chatbox = new Chatbox();
+        // const chatbox = new Chatbox();
+        const chatbox = new Pdf('../../../ns-en-1995-1-1_2004+a2_2014+na_2024_en_001.pdf')
 
         this.tabs.push(chatbox);
         this.currentTab = this.tabs.length - 1;
