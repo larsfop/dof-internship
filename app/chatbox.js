@@ -1,3 +1,5 @@
+import { Table } from "./table.js";
+
 export class Chatbox {
     constructor() {
         this.chatContainer = document.getElementById('chat-container');
@@ -79,7 +81,10 @@ export class Chatbox {
                 console.log('SQL Result:', result);
 
                 if (result.success) {
-                    this.displayTable(result.results);
+                    const caption = msg.split(/\s+/).pop();
+                    const table = new Table(result.results, caption);
+                    this.chatMessages.appendChild(table.div);
+                    this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
                 } else {
                     this.displayError(new Error(result.message || 'No results returned.'));
                 }
@@ -93,27 +98,6 @@ export class Chatbox {
                 this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
             }
         }
-    }
-
-    displayTable(rows) {
-        const div = document.createElement('div');
-        if (!rows || rows.length === 0) {
-            this.chatMessages.textContent = 'No results.';
-            return;
-        }
-
-        // Create table
-        let html = '<table border="1" style="border-collapse:collapse;width:100%">';
-        html += '<br>'; // Add empty line before table
-        html += '<tr>' + Object.keys(rows[0]).map(k => `<th>${k.replace(/_/g, ' ')}</th>`).join('') + '</tr>';
-        for (const row of rows) {
-            html += '<tr>' + Object.values(row).map(v => `<td>${v}</td>`).join('') + '</tr>';
-        }
-        html += '</table>';
-        html += '<br>'; // Add empty line after table
-        div.innerHTML = html;
-        this.chatMessages.appendChild(div);
-        this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
     }
 
     displayError(err) {
