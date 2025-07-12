@@ -1,15 +1,19 @@
 import { Chatbox } from './chatbox.js';
 import { Pdf } from './pdf.js';
+import { dragElement } from './dragElement.js';
 
 export class Tabs {
     constructor() {
-        this.tabsList = document.getElementById('tabs-list');
+        // this.tabsList = document.getElementById('tabs-list');
+        this.createUI(); // Create tabs list if it doesn't exist
         this.tabs = [];
         this.currentTab = 0;
 
         this.addTab(); // Initialize with one tab
+        this.addTab(); // Initialize with one tab
+        this.addTab('pdf', '../../../ns-en-1995-1-1_2004+a2_2014+na_2024_en_001.pdf'); // Add a PDF tab
         
-        this.addListeners(); // Add event listeners for tab actions
+        this.addListeners(); // Add event listeners for hotkeys
     }
 
     addListeners() {
@@ -19,19 +23,38 @@ export class Tabs {
         });
     }
 
-    addTab() {
-        // const chatbox = new Chatbox();
-        const chatbox = new Pdf('../../../ns-en-1995-1-1_2004+a2_2014+na_2024_en_001.pdf')
+    createUI() {
+        // Create a container for the tabs
+        this.tabsList = document.createElement('div');
+        this.tabsList.id = 'tabs-list';
+        document.body.appendChild(this.tabsList); // Append to body or a specific container
 
+        // Create a container for the window
+        this.windowContainer = document.createElement('div');
+        this.windowContainer.id = 'window-container';
+        document.body.appendChild(this.windowContainer); // Append to body or a specific container
+    }
+
+    addTab(type = 'chatbox', filePath = null) {
+        let chatbox
+        if (type == 'chatbox') {
+            chatbox = new Chatbox();
+        } else if (type == 'pdf') {
+            chatbox = new Pdf(filePath)
+        }
+
+        const container = chatbox.mainContainer;
+        container.style.display = 'none'
+        this.windowContainer.appendChild(chatbox.mainContainer);
         this.tabs.push(chatbox);
-        this.currentTab = this.tabs.length - 1;
+        this.changeTab(this.tabs.length - 1); // Switch to the new tab
         this.renderTabs();
     }
 
     closeTab(index) {
         this.tabs.splice(index, 1);
         if (this.currentTab >= this.tabs.length) {
-            this.currentTab = this.tabs.length - 1;
+            this.changeTab(this.tabs.length - 1);
         }
         this.renderTabs();
     }
@@ -42,7 +65,6 @@ export class Tabs {
         // Render chatbox UI for the current tab
         const chatBox = this.tabs[this.currentTab];
         if (chatBox) {
-            chatBox.appendContainer();
             chatBox.focusInput(); // Focus the input of the current tab        
         }
         else {
@@ -56,15 +78,11 @@ export class Tabs {
         this.tabsList.innerHTML = '';
         this.tabs.forEach((tab, idx) => {
             const tabDiv = document.createElement('div');
+            tabDiv.id = 'tab'
             tabDiv.className = 'tab' + (idx === this.currentTab ? ' active' : '');
-            tabDiv.style.display = 'flex';
-            tabDiv.style.alignItems = 'center';
-            tabDiv.style.border = '1px solid #ccc';
-            tabDiv.style.borderRadius = '4px';
-            tabDiv.style.padding = '2px 8px';
-            tabDiv.style.cursor = 'pointer';
-            tabDiv.style.position = 'relative';
             tabDiv.textContent = `Tab ${idx + 1}`;
+            // tabDiv.style.left = `${idx * 82 + 10}px`; // Position tabs horizontally
+            tabDiv.draggable = true;
 
             // Highlight current tab with adaptive color
             if (idx === this.currentTab) {
@@ -79,34 +97,11 @@ export class Tabs {
                 tabDiv.style.boxShadow = 'none';
             }
 
-            // Render new tab button
-            if (idx === this.tabs.length - 1) {
-                const newTabBtn = document.createElement('button');
-                newTabBtn.textContent = '+';
-                newTabBtn.title = 'New Tab';
-                newTabBtn.style.marginLeft = '6px';
-                newTabBtn.style.border = '1px solid #ccc';
-                newTabBtn.style.borderRadius = '4px';
-                newTabBtn.style.cursor = 'pointer';
-                newTabBtn.style.fontSize = '16px';
-                newTabBtn.style.position = 'absolute';
-                newTabBtn.style.right = '-40px'; // Position to the right of the last tab
-                newTabBtn.onclick = (e) => {
-                e.stopPropagation();
-                this.addTab();
-                };
-                tabDiv.appendChild(newTabBtn);
-            }
-
             // Close button
             const closeBtn = document.createElement('button');
+            closeBtn.id = 'tab-close'
             closeBtn.textContent = '×';
             closeBtn.title = 'Close Tab';
-            closeBtn.style.marginLeft = '6px';
-            closeBtn.style.background = 'transparent';
-            closeBtn.style.border = 'none';
-            closeBtn.style.cursor = 'pointer';
-            closeBtn.style.fontSize = '16px';
             closeBtn.onclick = (e) => {
                 e.stopPropagation();
                 this.closeTab(idx);
@@ -114,11 +109,32 @@ export class Tabs {
             tabDiv.appendChild(closeBtn);
 
             tabDiv.onclick = () => {
-                this.currentTab = idx;
+                this.changeTab(idx); // Change to the clicked tab
                 this.renderTabs();
             };
+
+            // dragElement(tabDiv); // Make the tab draggable
             this.tabsList.appendChild(tabDiv);
         });
+
+        const idx = this.tabs.length - 1;
+        const newTabBtn = document.createElement('button');
+        newTabBtn.id = 'tab-new';
+        newTabBtn.textContent = '+';
+        newTabBtn.title = 'New Tab';
+        // newTabBtn.style.left = `${(idx + 1) * 82 + 10}px`; // Position next to the last tab
+        newTabBtn.onclick = (e) => {
+        e.stopPropagation();
+        this.addTab();
+        };
+        this.tabsList.appendChild(newTabBtn);
+    }
+
+    changeTab(idx) {
+        const oldIdx = this.currentTab;
+        this.tabs[oldIdx].mainContainer.style.display = 'none'; // Hide old tab
+        this.tabs[idx].mainContainer.style.display = 'block'; // Show new tab
+        this.currentTab = idx; // Update current tab index
     }
 
     getTabs() {

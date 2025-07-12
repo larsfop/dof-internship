@@ -1,9 +1,8 @@
 import { Table } from "./table.js";
 
 export class Chatbox {
-    constructor() {
-        this.chatContainer = document.getElementById('chat-container');
-        this.createUI();
+    constructor(goldenLayout = false) {
+        this.createUI(goldenLayout);
 
         this.inputHistory = [];
         this.historyIndex = -1;
@@ -28,35 +27,51 @@ export class Chatbox {
         });
     }
 
-    createUI() {
+    createUI(goldenLayout) {
+        if (goldenLayout) {
+            this.mainContainer = document.createElement('div');
+            this.mainContainer.id = 'chat-container';
+            this.mainContainer.style.width = 'inherit';
+            this.mainContainer.style.height = 'inherit';
+        } else {
+            this.mainContainer = document.createElement('div');
+            this.mainContainer.id = 'chat-container';
+        }
+
         // create chat messages area
         this.chatMessages = document.createElement('div');
         this.chatMessages.id = 'chat-messages';
-        this.chatMessages.style.height = 'calc(100vh - 110px)';
+        this.chatMessages.style.height = 'calc(100% - 80px)';
         this.chatMessages.style.overflowY = 'auto';
         this.chatMessages.style.borderBottom = '1px solid #eee';
         this.chatMessages.style.marginBottom = '15px';
-        this.chatMessages.style.padding = '2px';
+        this.chatMessages.style.marginLeft = '15px';
+        this.chatMessages.style.marginRight = '15px';
+        this.chatMessages.style.marginTop = '25px';
+        this.chatMessages.style.overflowY = 'auto';
 
         // create chat input area
         this.chatInput = document.createElement('input');
         this.chatInput.id = 'chat-input';
         this.chatInput.type = 'text';
         this.chatInput.placeholder = 'Type your message here...';
-        this.chatInput.style.width = 'calc(100% - 80px)';
+        this.chatInput.style.width = 'calc(100% - 86px)';
+        this.chatInput.style.marginLeft = '15px';
+        this.chatInput.style.marginBottom = '15px';
 
         // create send button
         this.chatSend = document.createElement('button');
         this.chatSend.id = 'chat-send';
         this.chatSend.textContent = 'Send';
+
+        this.mainContainer.appendChild(this.chatMessages);
+        this.mainContainer.appendChild(this.chatInput);
+        this.mainContainer.appendChild(this.chatSend);
     }
 
-    appendContainer() {
-        this.chatContainer.innerHTML = ''; // Clear previous content
+    appendContainer(container) {
         // Append elements to chat container
-        this.chatContainer.appendChild(this.chatMessages);
-        this.chatContainer.appendChild(this.chatInput);
-        this.chatContainer.appendChild(this.chatSend);
+        container.appendChild(this.mainContainer);
     }
 
     focusInput() {

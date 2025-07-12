@@ -14,8 +14,13 @@
     "electron": "^37.2.0"
   },
   "dependencies": {
-    "mysql": "^2.18.1",
+    "@hpcc-js/wc-layout": "^0.5.0",
+    "@lumino/domutils": "^2.0.3",
+    "@lumino/widgets": "^2.7.1",
+    "golden-layout": "^2.6.0",
+    "jquery": "^3.7.1",
     "mysql2": "^3.14.1",
-    "pdfjs-dist": "^5.3.93"
+    "pdfjs-dist": "^5.3.93",
+    "tslib": "^2.8.1"
   }
 }

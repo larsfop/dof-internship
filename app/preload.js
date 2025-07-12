@@ -1,4 +1,5 @@
-const { contextBridge, ipcRenderer } = require('electron/renderer')
+const { contextBridge, ipcRenderer, webUtils } = require('electron/renderer')
+
 
 contextBridge.exposeInMainWorld('darkMode', {
   toggle: () => ipcRenderer.invoke('dark-mode:toggle'),
@@ -12,4 +13,10 @@ contextBridge.exposeInMainWorld('database', {
 
 contextBridge.exposeInMainWorld('paths', {
     appPath: () => ipcRenderer.invoke('get-app-path'),
+})
+
+contextBridge.exposeInMainWorld('file', {
+    getPath: (file) => {
+      return webUtils.getPathForFile(file)
+    }
 })

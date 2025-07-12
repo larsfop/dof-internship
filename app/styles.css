@@ -9,3 +9,55 @@
 @media (prefers-color-scheme: light) {
   body { background: #ddd; color: black; }
 }
+
+h2{
+  font: 14px Arial, sans-serif;
+  color:#fff;
+  padding: 10px;
+  text-align: center;
+}
+
+#window-container, #chat-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 35px);
+  box-sizing: border-box;
+}
+
+#tabs-list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0px 10px;
+  gap: 1px;
+}
+
+#tab {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 2px 8px;
+  cursor: pointer;
+}
+
+#tab-new {
+  margin-left: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  position: relative;
+  padding: 2px 8px;
+}
+
+#tab-close {
+  margin-left: 6px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}

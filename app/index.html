@@ -11,19 +11,12 @@
         <title>name of app</title>
     </head>
     <body>
-        <!-- Tabs UI -->
-        <div
-            id="tabs-container"
-            style="padding: 10px; width: 100%; box-sizing: border-box; position: fixed; top: 0; left: 0; border-bottom: 1px solid #eee; display: flex; align-items: center; z-index: 10;"
-        >
-            <div id="tabs-list" style="flex: 1; display: flex; gap: 4px;"></div>
-        </div>
-        <!-- Chatbox UI -->
-        <div
-            id="chat-container" style="padding: 10px; height: calc(100vh - 45px); width: 100%; box-sizing: border-box; position: fixed; bottom: 0; left: 0; overflow-y: auto;">
-        </div>
-        <!-- Focus on chatbox on startup -->
         <script type="module" src="./renderer.js"></script>
         <script src="./node_modules/pdfjs-dist/build/pdf.mjs" type="module"></script>
+        <script type="text/javascript" src="./node_modules/jquery/dist/jquery.min.js"></script>
+        <script src="./node_modules/golden-layout/dist/goldenlayout.min.js"></script>
+        <link rel="stylesheet" href="./node_modules/golden-layout/dist/css/goldenlayout-base.css" />
+        <link rel="stylesheet" href="./node_modules/golden-layout/dist/css/themes/goldenlayout-light-theme.css" />
+        <link rel="stylesheet" href="./node_modules/golden-layout/dist/css/themes/goldenlayout-dark-theme.css" />
     </body>
 </html>
