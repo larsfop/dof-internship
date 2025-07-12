@@ -1,6 +1,7 @@
 import { Tabs } from './tabs.js';
 import { Chatbox } from './chatbox.js';
 import { Pdf } from './pdf.js';
+import { Layout } from './layout.js';
 
 // Chatbox and tabs logic for renderer process
 if (typeof window !== 'undefined') {
@@ -10,18 +11,6 @@ if (typeof window !== 'undefined') {
         window.addEventListener('dragover', (e) => e.preventDefault());
         window.addEventListener('drop', (e) => e.preventDefault());
 
-        document.body.addEventListener('drop', (e) => {
-            e.preventDefault();
-            if (e.dataTransfer && e.dataTransfer.files.length > 0) {
-                for (const file of e.dataTransfer.files) {
-                    if (file.type === 'application/pdf') {
-                        const filePath = window.file.getPath(file);
-                        tabs.addTab('pdf', filePath)
-                    }
-                }
-            }
-        })
-        
         var config = {
             content: [
                 {
@@ -71,8 +60,7 @@ if (typeof window !== 'undefined') {
         });
 
         // layout.init();
-        const tabs = new Tabs();
-
-
+        // const tabs = new Tabs();
+        const appLayout = new Layout();
     });
 }

@@ -17,10 +17,34 @@ h2{
   text-align: center;
 }
 
+.splitter-vertical {
+  width: 5px;
+  cursor: ew-resize;
+}
+
+.splitter-horizontal {
+  height: 5px;
+  cursor: ns-resize;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 8px;
+  height: 100vh;
+}
+
+#panel-container {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  min-width: 0;   /* Prevents flexbox overflow */
+  min-height: 0;  /* Prevents flexbox overflow */
+  box-sizing: border-box;
+}
+
 #window-container, #chat-container {
-  position: fixed;
-  bottom: 0;
-  left: 0;
   width: 100%;
   height: calc(100% - 35px);
   box-sizing: border-box;

@@ -1,13 +1,69 @@
 import { Chatbox } from './chatbox.js';
 import { Pdf } from './pdf.js';
-import { dragElement } from './dragElement.js';
+// import { Window } from './window.js';
+
+export class Tabs2 {
+    constructor(idx, content) {
+        this.idx = idx; // Store the index of the tab
+        this.content = content; // Store the content of the tab
+
+        this.createUI(); // Create UI elements for tabs and window
+    }
+
+    createUI() {
+        // Create a container for the tabs
+        this.tabDiv = document.createElement('div');
+        this.tabDiv.id = 'tab'
+        this.tabDiv.textContent = `Tab ${this.idx + 1}`;
+        this.tabDiv.draggable = true;
+    }
+
+    appendContainer(tabContainer, contentContainer) {
+        tabContainer.insertBefore(this.tabDiv, tabContainer.lastChild); // Insert before the last child to keep the new tab at the end
+        contentContainer.appendChild(this.content.mainContainer); // Append the content's main container to the content container
+    }
+
+    toggleActive(force = null) {
+        const active = this.tabDiv.classList.toggle('active', force); // Toggle the active class for the tab
+        this.renderActive(active); // Render the active state of the tab
+        if (active) {
+            this.content.mainContainer.style.display = 'block'; // Show content when active
+        } else {
+            this.content.mainContainer.style.display = 'none'; // Hide content when inactive
+        }
+    }
+
+    renderActive(active) {
+        // Highlight current tab with adaptive color
+        if (active) {
+            this.tabDiv.style.background = window.matchMedia('(prefers-color-scheme: dark)').matches ? '#333' : '#e0e0e0';
+            this.tabDiv.style.color = window.matchMedia('(prefers-color-scheme: dark)').matches ? '#fff' : '#222';
+            this.tabDiv.style.fontWeight = 'bold';
+            this.tabDiv.style.boxShadow = window.matchMedia('(prefers-color-scheme: dark)').matches ? '0 2px 8px #1118' : '0 2px 8px #ccc8';
+        } else {
+            this.tabDiv.style.background = window.matchMedia('(prefers-color-scheme: dark)').matches ? '#222' : '#fff';
+            this.tabDiv.style.color = window.matchMedia('(prefers-color-scheme: dark)').matches ? '#bbb' : '#222';
+            this.tabDiv.style.fontWeight = 'normal';
+            this.tabDiv.style.boxShadow = 'none';
+        }
+    }
+
+}  
+    
+
+
+
+
+
 
 export class Tabs {
     constructor() {
         // this.tabsList = document.getElementById('tabs-list');
-        this.createUI(); // Create tabs list if it doesn't exist
         this.tabs = [];
+        this.windows = [];
         this.currentTab = 0;
+
+        this.addWindow(); // Create tabs list if it doesn't exist
 
         this.addTab(); // Initialize with one tab
         this.addTab(); // Initialize with one tab
@@ -32,7 +88,21 @@ export class Tabs {
         // Create a container for the window
         this.windowContainer = document.createElement('div');
         this.windowContainer.id = 'window-container';
-        document.body.appendChild(this.windowContainer); // Append to body or a specific container
+    }
+
+    addWindow() {
+        this.createUI(); // Ensure UI is created
+        const windowDiv = document.createElement('div');
+        windowDiv.id = 'window';
+
+        const windowSplitContainer = document.createElement('div');
+        windowSplitContainer.id = 'window-split-container';
+        windowSplitContainer.appendChild(this.windowContainer)
+        windowSplitContainer.appendChild(this.tabsList);
+
+        windowDiv.appendChild(windowSplitContainer);
+        document.body.appendChild(windowDiv); // Append to body or a specific container
+        this.windows.push(windowDiv);
     }
 
     addTab(type = 'chatbox', filePath = null) {
@@ -52,10 +122,13 @@ export class Tabs {
     }
 
     closeTab(index) {
-        this.tabs.splice(index, 1);
-        if (this.currentTab >= this.tabs.length) {
-            this.changeTab(this.tabs.length - 1);
+        if (index >= this.tabs.length - 1) {
+            if (index > 0) this.changeTab(this.currentTab - 1)
+            else return
+        } else {
+            this.currentTab--; // Decrement current tab index
         }
+        this.tabs.splice(index, 1);
         this.renderTabs();
     }
 
@@ -67,12 +140,7 @@ export class Tabs {
         if (chatBox) {
             chatBox.focusInput(); // Focus the input of the current tab        
         }
-        else {
-            const chatContainer = document.getElementById('chat-container');
-            if (chatContainer) {
-                chatContainer.innerHTML = ''; // Clear chat container if no tabs
-            }
-        }
+
 
         // Render tabs list
         this.tabsList.innerHTML = '';
@@ -81,7 +149,6 @@ export class Tabs {
             tabDiv.id = 'tab'
             tabDiv.className = 'tab' + (idx === this.currentTab ? ' active' : '');
             tabDiv.textContent = `Tab ${idx + 1}`;
-            // tabDiv.style.left = `${idx * 82 + 10}px`; // Position tabs horizontally
             tabDiv.draggable = true;
 
             // Highlight current tab with adaptive color
@@ -122,10 +189,9 @@ export class Tabs {
         newTabBtn.id = 'tab-new';
         newTabBtn.textContent = '+';
         newTabBtn.title = 'New Tab';
-        // newTabBtn.style.left = `${(idx + 1) * 82 + 10}px`; // Position next to the last tab
         newTabBtn.onclick = (e) => {
-        e.stopPropagation();
-        this.addTab();
+            e.stopPropagation();
+            this.addTab();
         };
         this.tabsList.appendChild(newTabBtn);
     }
@@ -135,14 +201,6 @@ export class Tabs {
         this.tabs[oldIdx].mainContainer.style.display = 'none'; // Hide old tab
         this.tabs[idx].mainContainer.style.display = 'block'; // Show new tab
         this.currentTab = idx; // Update current tab index
-    }
-
-    getTabs() {
-        return this.tabs;
-    }
-
-    print() {
-        console.log(this.tabs)
     }
 
     hotkeys(e) {
@@ -159,7 +217,7 @@ export class Tabs {
         // switch to next tab with Ctrl + Tab
         if (e.ctrlKey && e.key.toLowerCase() === 'tab') {
             e.preventDefault(); // Prevent default action
-            this.currentTab = (this.currentTab + 1) % this.tabs.length; // Cycle through tabs
+            this.changeTab((this.currentTab + 1) % this.tabs.length); // Cycle through tabs
             this.renderTabs();
         }
     }
