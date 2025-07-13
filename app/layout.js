@@ -1,4 +1,5 @@
 import { Panel } from './panel.js';
+import { Splitter } from './splitter.js';
 
 export class Layout {
     constructor() {
@@ -11,6 +12,8 @@ export class Layout {
         this.addPanel(1, 1); // Create tabs list if it doesn't exist
         this.addSplitter(0, 'vertical'); // Add a horizontal splitter
         this.addPanel(2, 1); // Initialize with one panel
+
+        this.splitter.dragElement(this.panels[0].panelContainer, this.panels[1].panelContainer); // Enable dragging between the two panels
     }
 
     createUI() {
@@ -31,16 +34,20 @@ export class Layout {
     }
 
     addSplitter(panelIndex, direction) {
+        this.splitter = new Splitter(panelIndex, direction);
+        this.splitter.appendContainer(this.layoutContainer); // Append the splitter to the layout container
+
+        /*
         const splitter = document.createElement('div');
+        splitter.id = 'splitter'
         if (direction === 'horizontal') splitter.className = 'splitter-horizontal';
         else if (direction === 'vertical') splitter.className = 'splitter-vertical';
         else throw new Error('Invalid splitter direction');
-        splitter.style.backgroundColor = '#ccc';
 
-        // Place splitter inside the grid gap
-        splitter.style.gridColumn = `${panelIndex + 1}`;
-        splitter.style.gridRow = `${panelIndex + 1}`;
+        splitter.style.left = `${this.layoutContainer.clientWidth/2 + 4}px`;
+
         this.layoutContainer.appendChild(splitter); // Append the splitter to the layout container
+        */
     }
 
     splitPanel(panelIndex, direction) {

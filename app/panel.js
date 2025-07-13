@@ -14,7 +14,7 @@ export class Panel {
 
         this.active = true;
         this.addTab(); // Initialize with one tab
-        this.addTab('pdf', '../../../ns-en-1995-1-1_2004+a2_2014+na_2024_en_001.pdf'); // Add a PDF tab
+        this.addTab('pdf', '../ns-en-1995-1-1_2004+a2_2014+na_2024_en_001.pdf'); // Add a PDF tab
     
         this.createListeners(); // Create event listeners for hotkeys
     }

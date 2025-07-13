@@ -17,13 +17,20 @@ h2{
   text-align: center;
 }
 
+#splitter {
+  position: absolute;
+  background: #ccc;
+  z-index: 1000;
+  height: 100%;
+}
+
 .splitter-vertical {
-  width: 5px;
+  width: 9px;
   cursor: ew-resize;
 }
 
 .splitter-horizontal {
-  height: 5px;
+  height: 9px;
   cursor: ns-resize;
 }
 
@@ -32,7 +39,7 @@ h2{
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr;
   gap: 8px;
-  height: 100vh;
+  height: 97vh;
 }
 
 #panel-container {
