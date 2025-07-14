@@ -42,7 +42,8 @@ export class Chatbox {
         this.chatMessages = document.createElement('div');
         this.chatMessages.id = 'chat-messages';
         this.chatMessages.style.height = 'calc(100% - 36px)';
-        this.chatMessages.style.overflow = 'auto';
+        this.chatMessages.style.overflowY = 'auto';
+        this.chatMessages.style.overflowX = 'hidden'; // Hide horizontal overflow
         this.chatMessages.style.borderBottom = '1px solid #eee';
         this.chatMessages.style.marginBottom = '15px';
         this.chatMessages.style.marginLeft = '15px';

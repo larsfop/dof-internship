@@ -1,40 +1,115 @@
 import { Panel } from './panel.js';
 import { Splitter } from './splitter.js';
 
+let test = {
+    layout: {
+        type: 'row',
+        content: 
+        {
+            p1: 'p1',
+            splitter: 's1',
+            p2: {
+                type: 'column',
+                content: 
+                {
+                    p1: 'p21',
+                    splitter: 's2',
+                    p2: 'p22'
+                }
+            
+            }
+        }
+    
+    }
+}
+
+let l = {
+    s1: {
+        type: 'row',
+        p1: 'p1',
+        splitter: 's1',
+        p2: 'p2',
+    },
+    s2: {
+        type: 'column',
+        p1: 'p2',
+        splitter: 's2',
+        p2: 'p3'
+    }
+}
+
 export class Layout {
     constructor() {
-        this.panels = [];
+        this.panels = {};
 
+        this.panelIdx = 0; // Index for the next panel to be added
         this.columns = 1; // Default to one column
         this.rows = 1; // Default to one row
 
         this.createUI();
-        this.addPanel(1, 1); // Create tabs list if it doesn't exist
-        this.addSplitter(0, 'vertical'); // Add a horizontal splitter
-        this.addPanel(2, 1); // Initialize with one panel
+        this.addPanel(); // Create tabs list if it doesn't exist
+        this.addSplitter('vertical'); // Add a horizontal splitter
+        this.addPanel(); // Initialize with one panel
 
-        this.splitter.dragElement(this.panels[0].panelContainer, this.panels[1].panelContainer); // Enable dragging between the two panels
+        this.splitter.dragElement(); // Enable dragging between the two panels
+        this.createListeners(); // Create event listeners for layout changes
+    }
+
+    createListeners() {
+        // Add event listeners for layout changes, if needed
+        document.addEventListener('drop', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const target = e.target;
+            const panelContainer = target.closest('.panel-container');
+            const tgtPanel = this.panels[panelContainer.id];
+            const tgtTab = tgtPanel.tabs[Number(target.id.split('')[1])];
+
+            if (e.dataTransfer && e.dataTransfer.files.length > 0) {
+                for (const file of e.dataTransfer.files) {
+                    if (file.type === 'application/pdf') {
+                        const filePath = window.file.getPath(file);
+                        tgtPanel.addTab('pdf', filePath)
+                    }
+                }
+            }
+
+            if (target.classList.contains('tab')) {
+                const srcPanel = this.panels[e.dataTransfer.getData('panelId')];
+                const tabIdx = Number(e.dataTransfer.getData('tabId').split('')[1]);
+                const srcTab = srcPanel.tabs[tabIdx];
+                console.log(srcTab, tgtTab);
+                if (srcPanel === tgtPanel) {
+                    const parent = target.parentNode;
+                    parent.insertBefore(srcTab.tabDiv, tgtTab.tabDiv); // Move the tab to the new position
+                } else {
+                    tgtPanel.moveTab(srcTab, tgtTab); // Move the tab to the new position
+                    srcPanel.closeTab(tabIdx)
+                }
+
+            }
+
+        });
+        
     }
 
     createUI() {
         // Create a container for the layout
         this.layoutContainer = document.createElement('div');
         this.layoutContainer.id = 'layout-container';
-        this.layoutContainer.className = 'grid-container'; // Use grid layout for the main container
+        this.layoutContainer.className = 'horisontal-container'; // Use grid layout for the main container
         document.body.appendChild(this.layoutContainer); // Append to body or a specific container
     }
 
-    addPanel(column, row) {
-        if (column > this.columns) this.columns = column; // Update columns if needed
-        if (row > this.rows) this.rows = row; // Update rows if needed
-
-        const panel = new Panel(column, row);
+    addPanel() {
+        const panel = new Panel(this.panelIdx++); // Increment the index for the next panel
         panel.appendContainer(this.layoutContainer); // Append the panel to the layout container
-        this.panels.push(panel); // Store the panel in the panels array
+        this.panels['p' + panel.panelIdx] = panel; // Store the panel in the panels object
     }
 
-    addSplitter(panelIndex, direction) {
-        this.splitter = new Splitter(panelIndex, direction);
+    addSplitter(direction) {
+        this.splitter = new Splitter(direction);
         this.splitter.appendContainer(this.layoutContainer); // Append the splitter to the layout container
 
         /*

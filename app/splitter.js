@@ -1,6 +1,5 @@
 export class Splitter {
-    constructor(panelIndex, direction) {
-        this.panelIndex = panelIndex;
+    constructor(direction) {
         this.direction = direction;
 
         this.createSplitter();
@@ -18,25 +17,27 @@ export class Splitter {
             throw new Error('Invalid splitter direction');
         }
 
-        // Set initial position and size
-        this.splitter.style.top = '0px'; // Adjust as needed
     }
 
     appendContainer(container) {
-        this.splitter.style.left = `${container.clientWidth / 2 + 4}px`; // Example positioning logic
+        // this.splitter.style.left = `${container.clientWidth / 2 + 4}px`; // Example positioning logic
         container.appendChild(this.splitter);
     }
 
-    dragElement(elm1, elm2) {
+    dragElement() {
         const self = this; // Preserve context for event handlers
         var md
+
+        const elements = this.splitter.parentElement.getElementsByClassName('panel-container');
+        const elm1 = elements[0];
+        const elm2 = elements[1];
 
         this.splitter.onmousedown = onMouseDown;
 
         function onMouseDown(e) {
-            const elements = document.getElementsByClassName('pdf-viewer');
-            [...elements].forEach(element => {
-                element.style.pointerEvents = 'none'; // Disable pointer events on PDF viewers
+            const pdfs = document.getElementsByClassName('pdf-viewer');
+            [...pdfs].forEach(pdf => {
+                pdf.style.pointerEvents = 'none'; // Disable pointer events on PDF viewers
             });
 
             md = {e,
@@ -58,16 +59,18 @@ export class Splitter {
             if (self.direction === 'vertical') {
                 delta.x = Math.min(Math.max(delta.x, -md.elm1Width), md.elm2Width);
 
-                self.splitter.style.left = `${md.offsetLeft + delta.x}px`;
-                elm1.style.width = `${md.elm1Width + delta.x}px`;
-                elm2.style.width = `${md.elm2Width - delta.x}px`;
+                const totalWidth = md.elm1Width + md.elm2Width;
+                const percentageDelta = (delta.x / totalWidth) * 100;
+
+                elm1.style.width = `${((md.elm1Width / totalWidth) * 100) + percentageDelta}%`;
+                elm2.style.width = `${((md.elm2Width / totalWidth) * 100) - percentageDelta}%`;
             }
         }
 
         function onMouseUp() {
-            const elements = document.getElementsByClassName('pdf-viewer');
-            [...elements].forEach(element => {
-                element.style.pointerEvents = 'auto'; // Re-enable pointer events on PDF viewers
+            const pdfs = document.getElementsByClassName('pdf-viewer');
+            [...pdfs].forEach(pdf => {
+                pdf.style.pointerEvents = 'auto'; // Re-enable pointer events on PDF viewers
             });
 
             document.onmousemove = document.onmouseup = null; // Clean up event listeners

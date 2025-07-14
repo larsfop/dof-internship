@@ -23,6 +23,7 @@ export class Table {
 
     createTable(data, caption) {
         this.div = document.createElement('div');
+        this.div.style.overflowX = 'auto';
         
         let html = '<table border="1" style="border-collapse: collapse; width: 100%;">';
         html += '<br>'; // Add empty line before table
