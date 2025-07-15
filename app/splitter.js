@@ -35,9 +35,13 @@ export class Splitter {
         this.splitter.onmousedown = onMouseDown;
 
         function onMouseDown(e) {
-            const pdfs = document.getElementsByClassName('pdf-viewer');
-            [...pdfs].forEach(pdf => {
-                pdf.style.pointerEvents = 'none'; // Disable pointer events on PDF viewers
+            // const pdfs = document.getElementsByClassName('pdf-viewer');
+            // [...pdfs].forEach(pdf => {
+            //     pdf.style.pointerEvents = 'none'; // Disable pointer events on PDF viewers
+            // });
+            const panels = document.getElementsByClassName('panel-container');
+            [...panels].forEach(panel => {
+                panel.style.pointerEvents = 'none'; // Disable pointer events on panels during drag
             });
 
             md = {e,
@@ -64,13 +68,25 @@ export class Splitter {
 
                 elm1.style.width = `${((md.elm1Width / totalWidth) * 100) + percentageDelta}%`;
                 elm2.style.width = `${((md.elm2Width / totalWidth) * 100) - percentageDelta}%`;
+            } else if (self.direction === 'horizontal') {
+                delta.y = Math.min(Math.max(delta.y, -md.elm1Width), md.elm2Width);
+
+                const totalHeight = md.elm1Width + md.elm2Width;
+                const percentageDelta = (delta.y / totalHeight) * 100;
+
+                elm1.style.height = `${((md.elm1Width / totalHeight) * 100) + percentageDelta}%`;
+                elm2.style.height = `${((md.elm2Width / totalHeight) * 100) - percentageDelta}%`;
             }
         }
 
         function onMouseUp() {
-            const pdfs = document.getElementsByClassName('pdf-viewer');
-            [...pdfs].forEach(pdf => {
-                pdf.style.pointerEvents = 'auto'; // Re-enable pointer events on PDF viewers
+            // const pdfs = document.getElementsByClassName('pdf-viewer');
+            // [...pdfs].forEach(pdf => {
+            //     pdf.style.pointerEvents = 'auto'; // Re-enable pointer events on PDF viewers
+            // });
+            const panels = document.getElementsByClassName('panel-container');
+            [...panels].forEach(panel => {
+                panel.style.pointerEvents = 'auto'; // Re-enable pointer events on panels after drag
             });
 
             document.onmousemove = document.onmouseup = null; // Clean up event listeners

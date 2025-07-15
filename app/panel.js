@@ -1,9 +1,9 @@
 import { Tabs } from './tabs.js';
-import { Chatbox } from './chatbox.js';
+import { Chatbox } from './content.js';
 import { Pdf } from './pdf.js';
 
 export class Panel {
-    constructor(idx) {
+    constructor(idx, tabIdx) {
         this.tabs = [];
         this.currentWindow = null;
         this.currentTab = 0;
@@ -12,8 +12,7 @@ export class Panel {
 
         this.active = true;
         this.createUI();
-        this.addTab(); // Initialize with one tab
-        this.tabs[0].toggleActive(true); // Set the first tab as active
+        this.addTab(tabIdx); // Initialize with one tab
     
         this.createListeners(); // Create event listeners for hotkeys
     }
@@ -45,11 +44,11 @@ export class Panel {
 
         // Create a container for the tabs
         this.tabsList = document.createElement('div');
-        this.tabsList.id = 'tabs-list';
+        this.tabsList.className = 'tabs-list';
         this.panelContainer.appendChild(this.tabsList); // Append the tabs list to the panel container
 
         this.newTabBtn = document.createElement('button');
-        this.newTabBtn.id = 'tab-new';
+        this.newTabBtn.className = 'tab-new';
         this.newTabBtn.textContent = '+';
         this.newTabBtn.title = 'New Tab';
         this.newTabBtn.onclick = (e) => {
@@ -60,7 +59,7 @@ export class Panel {
 
         // Create a container for the window content
         this.windowContainer = document.createElement('div');
-        this.windowContainer.id = 'window-container';
+        this.windowContainer.className = 'window-container';
         this.panelContainer.appendChild(this.windowContainer); // Append the window container to the panel container
     }
 
@@ -68,9 +67,7 @@ export class Panel {
         container.appendChild(this.panelContainer);
     }
 
-    addTab(type = 'chatbox', file = null) {
-        const idx = this.tabs.length; // Get the current index for the new tab
-
+    addTab(tabIdx, type = 'chatbox', file = null) {
         // Fill window content
         let content;
         if (type === 'chatbox') {
@@ -79,20 +76,18 @@ export class Panel {
         } else if (type === 'pdf' && file) {
             content = new Pdf(file);
         }
+        content.mainContainer.id = `c${this.tabIdx}`; // Set a unique ID for the content container
 
-        const tab = new Tabs(this.panelIdx, idx, content);
+        const tab = new Tabs(this.panelIdx, tabIdx, content);
         tab.appendContainer(this.tabsList, this.windowContainer); // Append the tab's UI to the panel container
-        tab.tabDiv.onclick = () => {
-            this.changeTab(idx); // Change to the clicked tab
-        };
 
         this.tabs.push(tab); // Store the tab in the tabs object
-        if (this.tabs.length === 1) {
-            tab.toggleActive(true); // Activate the first tab
-        } else {
-            this.changeTab(idx); // Change to the newly added tab
-        }
-        this.currentTab = idx; // Set the current tab to the newly added tab
+        // if (this.tabs.length === 1) {
+        //     tab.toggleActive(true); // Activate the first tab
+        // } else {
+        //     tab.changeTab(); // Change to the newly added tab
+        // }
+        this.currentTab = tabIdx; // Set the current tab to the newly added tab
     }
 
     moveTab(srcTab, tgtTab) {

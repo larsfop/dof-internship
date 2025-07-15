@@ -1,5 +1,4 @@
-import { Tabs } from './tabs.js';
-import { Chatbox } from './chatbox.js';
+import { Chatbox } from './content.js';
 import { Pdf } from './pdf.js';
 import { Layout } from './layout.js';
 
@@ -10,11 +9,9 @@ if (typeof window !== 'undefined') {
 
         window.addEventListener('dragover', (e) => {
             e.preventDefault();
-            e.stopPropagation();
         });
         window.addEventListener('drop', (e) => {
             e.preventDefault();
-            e.stopPropagation();
         });
 
 
@@ -36,11 +33,21 @@ if (typeof window !== 'undefined') {
                                     componentName: 'chatbox',
                                     title: 'Chatbox 2',
                                 },
+                                {
+                                    type: 'component',
+                                    componentName: 'chatbox',
+                                    title: 'Chatbox 2',
+                                },
+                                {
+                                    type: 'component',
+                                    componentName: 'chatbox',
+                                    title: 'Chatbox 2',
+                                },
                             ]
                         },
                         {
                             type: 'component',
-                            componentName: 'pdf',
+                            componentName: 'chatbox',
                             title: 'PDF',
                         }
                     ]

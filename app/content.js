@@ -35,12 +35,12 @@ export class Chatbox {
             this.mainContainer.style.height = 'inherit';
         } else {
             this.mainContainer = document.createElement('div');
-            this.mainContainer.id = 'chat-container';
+            this.mainContainer.className = 'chat-container'; // Add a class for styling if needed
         }
 
         // create chat messages area
         this.chatMessages = document.createElement('div');
-        this.chatMessages.id = 'chat-messages';
+        this.chatMessages.className = 'chat-messages';
         this.chatMessages.style.height = 'calc(100% - 36px)';
         this.chatMessages.style.overflowY = 'auto';
         this.chatMessages.style.overflowX = 'hidden'; // Hide horizontal overflow
@@ -52,7 +52,7 @@ export class Chatbox {
 
         // create chat input area
         this.chatInput = document.createElement('input');
-        this.chatInput.id = 'chat-input';
+        this.chatInput.className = 'chat-input';
         this.chatInput.type = 'text';
         this.chatInput.placeholder = 'Type your message here...';
         this.chatInput.style.width = 'calc(100% - 80px)';
@@ -61,7 +61,7 @@ export class Chatbox {
 
         // create send button
         this.chatSend = document.createElement('button');
-        this.chatSend.id = 'chat-send';
+        this.chatSend.className = 'chat-send';
         this.chatSend.textContent = 'Send';
 
         this.mainContainer.appendChild(this.chatMessages);
@@ -187,4 +187,37 @@ export class Chatbox {
         }
     }
         
+}
+
+
+export class Pdf {
+    constructor(pdfPath) {
+        this.pdfPath = pdfPath;
+        this.viewer = './pdfjs/web/viewer.html?file='; // Path to the PDF.js viewer
+        this.createPdfViewer();
+    }
+
+    createPdfViewer() {
+        // built-in PDF viewer
+        // this.mainContainer = document.createElement('div');
+        // this.mainContainer.className = 'pdf-viewer'; // Add a class for styling if needed
+        // this.mainContainer.innerHTML = `<embed src="${this.pdfPath}" width="100%" height="100%"></embed>`;
+        // this.mainContainer.style.width = '100%';
+        // this.mainContainer.style.height = '100%'; // Adjust height as needed
+
+        // Use Mozilla's PDF.js viewer
+        this.mainContainer = document.createElement('embed');
+        this.mainContainer.className = 'pdf-viewer'; // Add a class for styling if needed
+        this.mainContainer.src = `${this.viewer}${encodeURIComponent(this.pdfPath)}`; // Use the app path to construct the full URL
+        this.mainContainer.width = '100%';
+        this.mainContainer.height = '100%'; // Full width and height
+    }
+
+    appendContainer(container) {
+        container.appendChild(this.mainContainer);
+    }
+
+    focusInput() {
+        // No input to focus in PDF viewer
+    }
 }
