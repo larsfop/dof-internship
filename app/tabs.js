@@ -156,6 +156,28 @@ export class Tabs {
             this.changeTab(); // Change to the clicked tab
         };
 
+        // Create a close button for the tab
+        const closeButton = document.createElement('button');
+        closeButton.className = 'tab-close';
+        closeButton.textContent = '×'; // Close button symbol
+        closeButton.onclick = (e) => {
+            e.stopPropagation(); // Prevent event bubbling
+            const parent = this.tabDiv.parentNode; // Get the parent container of the tab
+            const contentParent = this.content.mainContainer.parentNode; // Get the parent container of the content
+
+            // Remove the tab and its associated content
+            parent.removeChild(this.tabDiv);
+            contentParent.removeChild(this.content.mainContainer);
+
+            // Activate another tab if the closed tab was active
+            const remainingTabs = parent.getElementsByClassName('tab');
+            if (this.tabDiv.classList.contains('active') && remainingTabs.length > 0) {
+            this.toggleActive(true, remainingTabs[0]); // Activate the first remaining tab
+            }
+        };
+
+        this.tabDiv.appendChild(closeButton); // Append the close button to the tab
+
         this.content.mainContainer.id = `c${this.tabIdx}`; // Set a unique ID for the content container
     }
 

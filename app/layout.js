@@ -19,6 +19,9 @@ export class Layout {
     }
 
     createListeners() {
+
+        // DROPPING FILES AFTER A TAB PANEL SPLIT DOES NOT SHOW THE HIGHLIGHTS!!!
+
         // Add event listeners for layout changes, if needed
         const self = this;
         let dragEntered = true
