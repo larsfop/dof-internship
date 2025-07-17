@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, nativeTheme } from 'electron';
+import { app, BrowserWindow, ipcMain, nativeTheme, Menu } from 'electron';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import mysql from 'mysql2';
@@ -74,13 +74,58 @@ app.whenReady().then(() => {
             createWindow();
         }
     });
+
+    const menu = Menu.buildFromTemplate([
+        { label: 'File',
+            submenu: [
+                { label: 'Exit', role: 'quit' }
+            ]
+        },
+        { label: 'Edit',
+            submenu: [
+                { role: 'undo' },
+                { role: 'redo' },
+                { type: 'separator' },
+                { role: 'cut' },
+                { role: 'copy' },
+                { role: 'paste' },
+                { type: 'separator' },
+                { role: 'selectAll' }
+            ]
+        },
+        {
+            label: 'View',
+            submenu: [
+                { role: 'reload' },
+                { role: 'forceReload' },
+                { role: 'toggleDevTools' },
+                { type: 'separator' },
+                {
+                    label: 'Toggle dark/light mode',
+                    click: () => {
+                        nativeTheme.themeSource = nativeTheme.shouldUseDarkColors ? 'light' : 'dark';
+                    }
+                }
+            ]
+        },
+        {
+            label: 'Window',
+            submenu: [
+                { role: 'minimize' },
+                { role: 'zoom' },
+                { role: 'close' },
+            ]
+        }
+    ]);
+
+    Menu.setApplicationMenu(menu);
 });
 
 app.on('window-all-closed', () => {
     if (connection) connection.end();
     if (process.platform !== 'darwin') {
         app.quit();
-    }
+}
 });
 
 // Handle chatbox SQL query

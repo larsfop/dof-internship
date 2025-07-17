@@ -18,6 +18,21 @@ if (typeof window !== 'undefined') {
             e.preventDefault();
         });
 
+        function updateTabTheme() {
+            const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const tabs = document.getElementsByClassName('tab');
+            [...tabs].forEach(tab => {
+                tab.classList.remove('tab-dark-mode', 'tab-light-mode');
+                tab.classList.add(isDark ? 'tab-dark-mode' : 'tab-light-mode');
+            });
+        }
+
+        // Initial theme set
+        updateTabTheme();
+
+        // Listen for theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateTabTheme);
+
         const dbx = new Dropbox();
 
         var config = {
