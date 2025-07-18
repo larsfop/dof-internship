@@ -14,10 +14,8 @@
         <script type="module" src="./renderer.js"></script>
         <script src="./node_modules/pdfjs-dist/build/pdf.mjs" type="module"></script>
         <script src="./node_modules//dropbox/dist/Dropbox-sdk.min.js"></script>
-        <script type="text/javascript" src="./node_modules/jquery/dist/jquery.min.js"></script>
-        <script src="./node_modules/golden-layout/dist/goldenlayout.min.js"></script>
-        <link rel="stylesheet" href="./node_modules/golden-layout/dist/css/goldenlayout-base.css" />
-        <link rel="stylesheet" href="./node_modules/golden-layout/dist/css/themes/goldenlayout-light-theme.css" />
-        <link rel="stylesheet" href="./node_modules/golden-layout/dist/css/themes/goldenlayout-dark-theme.css" />
+        <script>
+            const worker = new Worker('./worker.js', { type: 'module' });
+        </script>
     </body>
 </html>

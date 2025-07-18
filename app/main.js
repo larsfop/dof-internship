@@ -1,7 +1,11 @@
 import { app, BrowserWindow, ipcMain, nativeTheme, Menu } from 'electron';
+import express from 'express';
+import fetch from 'node-fetch';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import mysql from 'mysql2';
+import mupdf from 'mupdf';
+import Dropbox from 'dropbox';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -11,11 +15,15 @@ ipcMain.handle('get-app-path', () => {
     return __dirname; // Return the directory of the main.js file
 });
 
+const authApp = express();
+const hostName = 'localhost';
+const port = 3000;
+let dropboxAccessToken = null;
 let connection;
 let db_tables;
-
+let mainWindow;
 const createWindow = () => {
-    const win = new BrowserWindow({
+    mainWindow = new BrowserWindow({
         width: 1920,
         height: 1080,
         webPreferences: {
@@ -26,7 +34,7 @@ const createWindow = () => {
         }
     });
 
-    win.loadFile('index.html');
+    mainWindow.loadFile('index.html');
 
     // Connect to MySQL after window is created
     try {
@@ -42,7 +50,6 @@ const createWindow = () => {
                 console.error('Error fetching tables:', error);
             } else {
                 db_tables = results.map(row => Object.values(row)[0]); // Extract table names
-                console.log('Tables:', db_tables);
 
                 // Expose tables to renderer process for autocompletion
                 ipcMain.handle('get-db-tables', () => db_tables);
@@ -65,6 +72,51 @@ const createWindow = () => {
         nativeTheme.themeSource = 'system';
     });
 };
+
+const dbx = new Dropbox.Dropbox({
+    clientId: '25qnd8cmj0jv2vv',
+});
+
+const redirectUri = `http://${hostName}:${port}/auth`;
+
+authApp.get('/', (req, res) => {
+  dbx.auth.getAuthenticationUrl(redirectUri, null, 'code', 'offline', null, 'none', true)
+    .then((authUrl) => {
+      res.writeHead(302, { Location: authUrl });
+      res.end();
+    });
+});
+
+authApp.get('/auth', (req, res) => { // eslint-disable-line no-unused-vars
+  const { code } = req.query;
+  console.log(`code:${code}`);
+
+  dbx.auth.getAccessTokenFromCode(redirectUri, code)
+    .then((token) => {
+      console.log(`Token Result:${JSON.stringify(token)}`);
+
+      dropboxAccessToken = token.result.access_token;
+      if (mainWindow) {
+        mainWindow.webContents.send('dropbox-auth-success', dropboxAccessToken);
+      }
+
+      dbx.auth.setRefreshToken(token.result.refresh_token);
+      dbx.usersGetCurrentAccount()
+        .then((response) => {
+          console.log('response', response);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  res.end();
+});
+
+authApp.listen(port);
+
 
 app.whenReady().then(() => {
     createWindow();
@@ -144,4 +196,8 @@ ipcMain.handle('db:query', async (event, query) => {
             }
         });
     });
+});
+
+ipcMain.handle('get-dropbox-access-token', () => {
+    return dropboxAccessToken; // Return the Dropbox access token
 });

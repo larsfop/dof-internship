@@ -20,3 +20,13 @@ contextBridge.exposeInMainWorld('file', {
       return webUtils.getPathForFile(file)
     }
 })
+
+contextBridge.exposeInMainWorld('dropbox', {
+    getAccessToken: () => ipcRenderer.invoke('get-dropbox-access-token'),
+    authSuccess: (resolve, window) => ipcRenderer.once('dropbox-auth-success', (event, token) => {
+        if (window) {
+            window.close();
+        }
+        resolve(token);
+    })
+});

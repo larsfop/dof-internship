@@ -1,4 +1,4 @@
 app/node_modules
-hours.txt
+*.txt
 .vscode
 __pycache__

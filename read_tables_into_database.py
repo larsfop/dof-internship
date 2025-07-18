@@ -25,7 +25,7 @@ class PDFTableReader:
         self.doc = pymupdf.open(pdf_path)
         self.idx = 1
 
-    def extract_tables_pages(self, *page_numbers, recreate_table=False):
+    def extract_tables_pages(self, *page_numbers, recreate_table=False) -> None:
         for page_number in page_numbers:
             if not isinstance(page_number, int):
                 raise TypeError("Page number must be an integer")
