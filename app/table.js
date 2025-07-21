@@ -1,47 +1,81 @@
 export class Table {
-    constructor(data, caption) {
-        this.createTable(data, caption);
+    constructor() {
+        this.currentOrder = 0
+        this.currentSortReference = null;
+    }
 
+    createListeners() {
         const table = this.div.querySelector('table');
 
         this.tBody = table.tBodies[0];
 
         this.initialList = Array.from(this.tBody.rows);
-        this.currentSortReference = null;
-        this.currentOrder = 0
-
-        this.createListeners(table);
-    }
-
-    createListeners(table) {
         const heads = table.tHead.rows[0].cells;
         Array.from(heads).forEach((head) => {
             head.addEventListener('click', this.onHeadClick.bind(this)
             );
         });
+
+        //const pdfButton = this.div.querySelector('.button-show-in-pdf');
+        const pdfButton = this.div.getElementsByClassName('button-show-in-pdf')[0];
+        if (pdfButton) {
+            pdfButton.addEventListener('click', async () => {
+                const query = await window.database.queryTable(`select * from pdf_page where table_name = '${this.caption}'`);
+                const results = query[0];
+                console.log(pdfButton, results)
+
+                const pdf = document.getElementById(results.pdf)
+                const pdfParent = pdf.parentElement;
+                const idx = Array.from(pdfParent.children).indexOf(pdf);
+
+                // Attach the pdf to the DOM such that the page number can be changed
+                pdfButton.appendChild(pdf);
+                console.log(pdf.src.split('#')[0] + `#page=${results.page}`) 
+                pdf.src = pdf.src.split('#')[0] + `#page=${results.page}`;
+
+                // Move the pdf back to its original position
+                pdfParent.insertBefore(pdf, pdfParent.children[idx]);
+            });
+        }
     }
 
-    createTable(data, caption) {
+    async createTable(data, caption) {
+        this.caption = caption
         this.div = document.createElement('div');
         this.div.style.overflowX = 'auto';
-        
-        let html = '<table border="1" style="border-collapse: collapse; width: 100%;">';
-        html += '<br>'; // Add empty line before table
 
-        html += `<caption style="text-align: left; font-weight: bold; font-size: 1.2em;">${caption.replace(/_/g, ' ').replace(/^./, char => char.toUpperCase())}</caption>`;
-        
-        html += '<thead>'
-        html += '<tr>' + Object.keys(data[0]).map(k => `<th>${k.replace(/_/g, ' ')}</th>`).join('') + '</tr>';
-        
-        html += '<tbody>';
-        for (const row of data) {
-            html += '<tr>' + Object.values(row).map(v => `<td>${v}</td>`).join('') + '</tr>';
+        const table = document.createElement('table');
+
+        const title = document.createElement('caption');
+        title.textContent = caption;
+
+        const query = await window.database.queryTable(`select * from pdf_page where table_name = '${caption}'`);
+        const results = query[0];
+        const button = document.createElement('button');
+        if (results) {
+            button.className = 'button-show-in-pdf';
+            button.textContent = 'Show in PDF';
+            title.appendChild(button);  
         }
-        html += '</tbody>';
-        html += '</table>';
-        html += '<br>'; // Add empty line after table
 
-        this.div.innerHTML = html;
+        const head = document.createElement('thead');
+        const headRow = document.createElement('tr');
+        headRow.innerHTML = Object.keys(data[0]).map(k => `<th>${k.replace(/_/g, ' ')}</th>`).join('');
+        head.appendChild(headRow);
+
+        const body = document.createElement('tbody');
+        data.forEach(row => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = Object.values(row).map(v => `<td>${v}</td>`).join('');
+            body.appendChild(tr);
+        });
+
+        table.appendChild(title);
+        table.appendChild(head);
+        table.appendChild(body);
+
+        this.div.appendChild(table);
+
         console.log(this.div)
     }
 
@@ -63,7 +97,7 @@ export class Table {
         return valueA >= valueB ? 1 : -1;
     }
 
-    onHeadClick({currentTarget}) {
+    onHeadClick({ currentTarget }) {
         const index = currentTarget.cellIndex;
         if (this.currentSortReference === index) {
             this.currentOrder = (this.currentOrder + 1) % 3; // Toggle order
@@ -87,5 +121,5 @@ export class Table {
             this.fillTable(newList);
         }
     }
-        
+
 }

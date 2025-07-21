@@ -3,11 +3,13 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  body { background: #333; color: white; }
+  body { background: #333; color: white; border-color: white; }
+  table, td, th {border-color: white;}
 }
 
 @media (prefers-color-scheme: light) {
-  body { background: #ddd; color: black; }
+  body { background: #ddd; color: black; border-color: black; }
+  table, td, th {border-color: black;}
 }
 
 #splitter {
@@ -126,6 +128,26 @@
   width: 100%;
   height: calc(100% - 44px);
   box-sizing: border-box;
+}
+
+table {
+  width: 100%;
+}
+
+table, th, td {
+  border: 1px, solid;
+  border-collapse: collapse;
+}
+
+caption {
+  text-align: left;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.button-show-in-pdf {
+  float: right;
+  margin-left: 10px;
 }
 
 .tabs-list {

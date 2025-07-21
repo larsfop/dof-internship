@@ -172,15 +172,14 @@ export class Layout {
         tab.changeTab(); // Change to the newly created tab
     }
 
-    addTab(tabIdx, type = 'chatbox', file = null) {
+    addTab(tabIdx, type = 'chatbox', file = null, id = null) {
         // Fill window content
         let content;
         if (type === 'chatbox') {
-            content = new Chatbox();
+            content = new Chatbox(id = id);
         } else if (type === 'pdf' && file) {
-            content = new Pdf(file);
+            content = new Pdf(file, id);
         }
-        content.mainContainer.id = `c${this.tabIdx}`; // Set a unique ID for the content container
 
         const tab = new Tabs(this.panelIdx, tabIdx, content, this);
 

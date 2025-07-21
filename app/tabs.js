@@ -177,8 +177,6 @@ export class Tabs {
         };
 
         this.tabDiv.appendChild(closeButton); // Append the close button to the tab
-
-        this.content.mainContainer.id = `c${this.tabIdx}`; // Set a unique ID for the content container
     }
 
     appendContainer(panelDiv) {
@@ -200,8 +198,10 @@ export class Tabs {
     }
 
     toggleActive(force = null, tabDiv = this.tabDiv) {
-        const idx = Number(tabDiv.id.split('')[1]); // Extract the index from the ID
-        const content = document.getElementById(`c${idx}`); // Get the content
+        // const idx = Number(tabDiv.id.split('')[1]); // Extract the index from the ID
+        // const content = document.getElementById(`c${idx}`); // Get the content
+        const idx = Array.from(tabDiv.parentNode.children).indexOf(tabDiv); // Get the index of the tab in its parent
+        const content = tabDiv.closest('.panel-container').querySelector('.window-container').children[idx]
 
         const active = tabDiv.classList.toggle('active', force); // Toggle the active class for the tab
         if (active) {

@@ -46,14 +46,15 @@ if (typeof window !== 'undefined') {
         dbx.dbx.filesDownload({
             path: '/wip_lo/codes/ns-en-1995-1-1_2004+a2_2014+na_2024_en_001.pdf'
         }).then(response => {
-            console.log(response.result);
+            console.log(response.result)
             const blob = response.result.fileBlob;
             const url = URL.createObjectURL(blob);
-            const tab = appLayout.addTab(appLayout.tabIdx++, 'pdf', url);
+            const tab = appLayout.addTab(appLayout.tabIdx++, 'pdf', url, response.result.name);
             const panelDiv = document.querySelector('.panel-container');
 
             const { panel1, panel2 } = appLayout.splitPanel('right', panelDiv);
             tab.appendContainer(panel2);
+            tab.changeTab()
 
             const tabsList = panelDiv.querySelector('.tabs-list');
             const contents = panelDiv.querySelector('.window-container');

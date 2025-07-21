@@ -1,7 +1,8 @@
 import { Table } from "./table.js";
 
 export class Chatbox {
-    constructor(goldenLayout = false) {
+    constructor(goldenLayout = false, id = null) {
+        this.id = id
         this.createUI(goldenLayout);
 
         this.inputHistory = [];
@@ -41,6 +42,7 @@ export class Chatbox {
         // create chat messages area
         this.chatMessages = document.createElement('div');
         this.chatMessages.className = 'chat-messages';
+        if (this.id) this.chatMessages.id = this.id;
         this.chatMessages.style.height = 'calc(100% - 36px)';
         this.chatMessages.style.overflowY = 'auto';
         this.chatMessages.style.overflowX = 'hidden'; // Hide horizontal overflow
@@ -95,13 +97,15 @@ export class Chatbox {
                 const result = await window.database.queryTable(sql);
                 console.log('SQL Result:', result);
 
-                if (result.success) {
+                if (result) {
                     const caption = msg.split(/\s+/).pop();
-                    const table = new Table(result.results, caption);
+                    const table = new Table();
+                    await table.createTable(result, caption);
+                    table.createListeners();
                     this.chatMessages.appendChild(table.div);
                     this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
                 } else {
-                    this.displayError(new Error(result.message || 'No results returned.'));
+                    this.displayError(new Error(result || 'No results returned.'));
                 }
                 
                 this.chatInput.value = '';
@@ -191,10 +195,12 @@ export class Chatbox {
 
 
 export class Pdf {
-    constructor(pdfPath) {
-        this.pdfPath = pdfPath;
-        this.viewer = './pdfjs/web/viewer.html?file='; // Path to the PDF.js viewer
+    constructor(pdfPath, id = null) {
+        this.id = id;
+        this.viewer = `./pdfjs/web/viewer.html?file=${encodeURIComponent(pdfPath)}`; // Path to the PDF.js viewer
         this.createPdfViewer();
+
+        console.log(pdfPath)
     }
 
     createPdfViewer() {
@@ -207,10 +213,15 @@ export class Pdf {
 
         // Use Mozilla's PDF.js viewer
         this.mainContainer = document.createElement('embed');
-        this.mainContainer.className = 'pdf-viewer'; // Add a class for styling if needed
-        this.mainContainer.src = `${this.viewer}${encodeURIComponent(this.pdfPath)}`; // Use the app path to construct the full URL
+        this.mainContainer.className = 'pdf-viewer';
+        if (this.id) this.mainContainer.id = this.id;
+        this.mainContainer.src = this.viewer;
         this.mainContainer.width = '100%';
-        this.mainContainer.height = '100%'; // Full width and height
+        this.mainContainer.height = '100%';
+    }
+
+    setPage(page) {
+        this.mainContainer.src = `${this.viewer}#page=${page}`;
     }
 
     appendContainer(container) {

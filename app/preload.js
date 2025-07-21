@@ -22,8 +22,8 @@ contextBridge.exposeInMainWorld('file', {
 })
 
 contextBridge.exposeInMainWorld('dropbox', {
-    getAccessToken: () => ipcRenderer.invoke('get-dropbox-access-token'),
-    authSuccess: (resolve, window) => ipcRenderer.once('dropbox-auth-success', (event, token) => {
+    getPdfLink: (filePath) => ipcRenderer.invoke('get-pdf-link', filePath),
+    authSuccess: (resolve, window) => ipcRenderer.once('authorised', (event, token) => {
         if (window) {
             window.close();
         }

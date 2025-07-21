@@ -6,6 +6,8 @@ import { fileURLToPath } from 'node:url';
 import mysql from 'mysql2';
 import mupdf from 'mupdf';
 import Dropbox from 'dropbox';
+import { arrayBufferToBinaryString } from 'blob-util'
+import fs from 'fs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -19,6 +21,7 @@ const authApp = express();
 const hostName = 'localhost';
 const port = 3000;
 let dropboxAccessToken = null;
+let dbx;
 let connection;
 let db_tables;
 let mainWindow;
@@ -36,20 +39,20 @@ const createWindow = () => {
 
     mainWindow.loadFile('index.html');
 
+    // Read and parse MySQL connection details from mysql_connection.json
+    const mysqlConfigPath = path.join(__dirname, 'mysql_connection.json');
+    const file = fs.readFileSync(mysqlConfigPath, 'utf-8');
+    const config = JSON.parse(file);
     // Connect to MySQL after window is created
     try {
-        connection = mysql.createConnection({
-            host: '192.168.0.41',
-            user: 'lars',
-            password: 'Lilleaker01', // set your password
-            database: 'tables' // set your database
-        });
+        connection = mysql.createConnection(config.user);
         console.log('Connected to MySQL database');
         connection.query('SHOW TABLES', (error, results) => {
             if (error) {
                 console.error('Error fetching tables:', error);
             } else {
                 db_tables = results.map(row => Object.values(row)[0]); // Extract table names
+                console.log('Database tables:', db_tables);
 
                 // Expose tables to renderer process for autocompletion
                 ipcMain.handle('get-db-tables', () => db_tables);
@@ -73,51 +76,71 @@ const createWindow = () => {
     });
 };
 
-const dbx = new Dropbox.Dropbox({
+async function getPdfLink (event, filePath) {
+    return new Promise((resolve, reject) => {
+        const pdfLink = dbx.filesDownload({
+            path: filePath
+        }).then(response => {
+            console.log('pdf-response', response.result)
+            const blob = response.result.fileBlob;
+            console.log(arrayBufferToBinaryString('blob', blob));
+
+            resolve(arrayBufferToBinaryString(blob));
+        }).catch(error => {
+            console.error('Error downloading PDF:', error);
+            throw error;
+        });
+    })
+}
+
+const dbxAuth = new Dropbox.DropboxAuth({
     clientId: '25qnd8cmj0jv2vv',
 });
 
 const redirectUri = `http://${hostName}:${port}/auth`;
 
 authApp.get('/', (req, res) => {
-  dbx.auth.getAuthenticationUrl(redirectUri, null, 'code', 'offline', null, 'none', true)
-    .then((authUrl) => {
-      res.writeHead(302, { Location: authUrl });
-      res.end();
-    });
+    dbxAuth.getAuthenticationUrl(redirectUri, null, 'code', 'offline', null, 'none', true)
+        .then((authUrl) => {
+            res.writeHead(302, { Location: authUrl });
+            res.end();
+        });
 });
 
 authApp.get('/auth', (req, res) => { // eslint-disable-line no-unused-vars
-  const { code } = req.query;
-  console.log(`code:${code}`);
+    const { code } = req.query;
 
-  dbx.auth.getAccessTokenFromCode(redirectUri, code)
-    .then((token) => {
-      console.log(`Token Result:${JSON.stringify(token)}`);
+    dbxAuth.getAccessTokenFromCode(redirectUri, code)
+        .then((token) => {
+            if (mainWindow) {
+                mainWindow.webContents.send('authorised', token.result.access_token);
+            }
 
-      dropboxAccessToken = token.result.access_token;
-      if (mainWindow) {
-        mainWindow.webContents.send('dropbox-auth-success', dropboxAccessToken);
-      }
+            dbxAuth.setRefreshToken(token.result.refresh_token);
 
-      dbx.auth.setRefreshToken(token.result.refresh_token);
-      dbx.usersGetCurrentAccount()
-        .then((response) => {
-          console.log('response', response);
+            /*
+            const dbx = new Dropbox.Dropbox({
+                auth = dbxAuth
+            });
+            dbx.usersGetCurrentAccount()
+                .then((account) => {
+                    console.log(account);
+                })
+                .catch((error) => {
+                    console.error('Error getting account info:', error);
+                });*/
+
+            // ipcMain.handle('get-pdf-link', getPdfLink);
         })
         .catch((error) => {
-          console.error(error);
+            console.error(error);
         });
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-  res.end();
+    res.end();
 });
 
 authApp.listen(port);
 
-
+app.disableHardwareAcceleration();
 app.whenReady().then(() => {
     createWindow();
 
@@ -128,12 +151,14 @@ app.whenReady().then(() => {
     });
 
     const menu = Menu.buildFromTemplate([
-        { label: 'File',
+        {
+            label: 'File',
             submenu: [
                 { label: 'Exit', role: 'quit' }
             ]
         },
-        { label: 'Edit',
+        {
+            label: 'Edit',
             submenu: [
                 { role: 'undo' },
                 { role: 'redo' },
@@ -177,7 +202,7 @@ app.on('window-all-closed', () => {
     if (connection) connection.end();
     if (process.platform !== 'darwin') {
         app.quit();
-}
+    }
 });
 
 // Handle chatbox SQL query
@@ -189,15 +214,12 @@ ipcMain.handle('db:query', async (event, query) => {
         connection.query(query, (error, results) => {
             if (error) {
                 console.error('Error executing query:', error);
-                resolve({ success: false, message: error.message }); // Resolve with error message
+                resolve(error.message); // Resolve with error message
             } else {
                 console.log(results);
-                resolve({ success: true, results }); // Resolve with query results
+                resolve(results); // Resolve with query results
             }
         });
     });
 });
 
-ipcMain.handle('get-dropbox-access-token', () => {
-    return dropboxAccessToken; // Return the Dropbox access token
-});
