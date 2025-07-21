@@ -139,6 +139,63 @@ export class Tabs {
             });
         })
 
+        try {
+            this.content.chatSend.addEventListener('click', async () => {
+                const msg = this.content.chatInput.value.trim();
+
+                // Add event listeners for the PDF button if a table is created
+                const table = await this.content.input(msg);
+                if (table && table.pdfButton) {
+                    table.pdfButton.addEventListener('click', async () => {
+                        const query = await window.database.queryTable(`select * from pdf_page where table_name = '${table.caption}'`);
+                        const results = query[0];
+                        console.log(table.pdfButton, results)
+
+                        const pdf = document.getElementById(results.pdf);
+                        if (pdf) {
+                            const pdfParent = pdf.parentElement;
+                            const idx = Array.from(pdfParent.children).indexOf(pdf);
+
+                            // Attach the pdf to the DOM such that the page number can be changed
+                            table.pdfButton.appendChild(pdf);
+                            console.log(pdf.src.split('#')[0] + `#page=${results.page}`) 
+                            pdf.src = pdf.src.split('#')[0] + `#page=${results.page}`;
+
+                            // Move the pdf back to its original position
+                            pdfParent.insertBefore(pdf, pdfParent.children[idx]);
+                        } else {
+                            const file = await this.panel.dbx.dbx.filesDownload({path: `/wip_lo/codes/${results.pdf}`});
+                            const blob = file.result.fileBlob;
+                            const url = URL.createObjectURL(blob);
+                            const tab = this.panel.addTab(this.tabIdx++, 'pdf', url, results.pdf);
+                            const panel = this.panel.layoutContainer.firstChild;
+                            if ( panel.classList.contains('split-row') || panel.classList.contains('split-column') )
+                            {
+                                tab.appendContainer(panel.lastChild);
+                                tab.changeTab();
+                            } else {
+                                const { panel1, panel2 } = this.panel.splitPanel('right', panel);
+                                tab.appendContainer(panel2);
+                                tab.changeTab();
+
+                                const tabsList = panel.querySelector('.tabs-list');
+                                const contents = panel.querySelector('.window-container');
+
+                                panel1.appendChild(tabsList);
+                                panel1.appendChild(contents);
+                            }
+                        }
+                    });
+                }
+            });
+            this.content.chatInput.addEventListener('keydown', (e) => {
+                this.content.hotkeys(e); // Handle hotkeys for the chat input
+            });
+        } catch (e) {
+            console.error(`${this.content} is not a chatbox`);
+        }
+
+
 
     }
 

@@ -13,7 +13,7 @@ export class Chatbox {
         this.lastTabPrefix = '';
         this.originalInput = '';
 
-        this.createListeners();
+        // this.createListeners();
     }
 
     createListeners() {
@@ -97,9 +97,10 @@ export class Chatbox {
                 const result = await window.database.queryTable(sql);
                 console.log('SQL Result:', result);
 
+                let table;
                 if (result) {
                     const caption = msg.split(/\s+/).pop();
-                    const table = new Table();
+                    table = new Table();
                     await table.createTable(result, caption);
                     table.createListeners();
                     this.chatMessages.appendChild(table.div);
@@ -109,6 +110,7 @@ export class Chatbox {
                 }
                 
                 this.chatInput.value = '';
+                return table;
             } else {
                 const msgDiv = document.createElement('div');
                 msgDiv.textContent = msg;
@@ -117,6 +119,7 @@ export class Chatbox {
                 this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
             }
         }
+
     }
 
     displayError(err) {

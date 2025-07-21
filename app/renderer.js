@@ -39,11 +39,11 @@ if (typeof window !== 'undefined') {
 
         const token = await getDropboxAccessToken();
 
-        const appLayout = new Layout();
         const dbx = new Dropbox(token);
+        const appLayout = new Layout(dbx);
 
         // Download and display a PDF from Dropbox
-        dbx.dbx.filesDownload({
+        /*dbx.dbx.filesDownload({
             path: '/wip_lo/codes/ns-en-1995-1-1_2004+a2_2014+na_2024_en_001.pdf'
         }).then(response => {
             console.log(response.result)
@@ -61,7 +61,7 @@ if (typeof window !== 'undefined') {
 
             panel1.appendChild(tabsList);
             panel1.appendChild(contents);
-        });
+        });*/
 
         const worker = new Worker('./worker.js', { type: 'module' });
         console.log(worker)

@@ -17,7 +17,7 @@ export class Table {
         });
 
         //const pdfButton = this.div.querySelector('.button-show-in-pdf');
-        const pdfButton = this.div.getElementsByClassName('button-show-in-pdf')[0];
+        /*const pdfButton = this.div.getElementsByClassName('button-show-in-pdf')[0];
         if (pdfButton) {
             pdfButton.addEventListener('click', async () => {
                 const query = await window.database.queryTable(`select * from pdf_page where table_name = '${this.caption}'`);
@@ -25,18 +25,22 @@ export class Table {
                 console.log(pdfButton, results)
 
                 const pdf = document.getElementById(results.pdf)
-                const pdfParent = pdf.parentElement;
-                const idx = Array.from(pdfParent.children).indexOf(pdf);
+                if (pdf) {
+                    const pdfParent = pdf.parentElement;
+                    const idx = Array.from(pdfParent.children).indexOf(pdf);
 
-                // Attach the pdf to the DOM such that the page number can be changed
-                pdfButton.appendChild(pdf);
-                console.log(pdf.src.split('#')[0] + `#page=${results.page}`) 
-                pdf.src = pdf.src.split('#')[0] + `#page=${results.page}`;
+                    // Attach the pdf to the DOM such that the page number can be changed
+                    pdfButton.appendChild(pdf);
+                    console.log(pdf.src.split('#')[0] + `#page=${results.page}`) 
+                    pdf.src = pdf.src.split('#')[0] + `#page=${results.page}`;
 
-                // Move the pdf back to its original position
-                pdfParent.insertBefore(pdf, pdfParent.children[idx]);
+                    // Move the pdf back to its original position
+                    pdfParent.insertBefore(pdf, pdfParent.children[idx]);
+                } else {
+
+                }
             });
-        }
+        }*/
     }
 
     async createTable(data, caption) {
@@ -51,11 +55,11 @@ export class Table {
 
         const query = await window.database.queryTable(`select * from pdf_page where table_name = '${caption}'`);
         const results = query[0];
-        const button = document.createElement('button');
+        this.pdfButton = document.createElement('button');
         if (results) {
-            button.className = 'button-show-in-pdf';
-            button.textContent = 'Show in PDF';
-            title.appendChild(button);  
+            this.pdfButton.className = 'button-show-in-pdf';
+            this.pdfButton.textContent = 'Show in PDF';
+            title.appendChild(this.pdfButton);  
         }
 
         const head = document.createElement('thead');
