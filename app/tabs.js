@@ -140,6 +140,8 @@ export class Tabs {
         })
 
         try {
+            // Move to the PDF page containing the table
+            // If the PDF is not loaded, download it from Dropbox
             this.content.chatSend.addEventListener('click', async () => {
                 const msg = this.content.chatInput.value.trim();
 
@@ -164,15 +166,24 @@ export class Tabs {
                             // Move the pdf back to its original position
                             pdfParent.insertBefore(pdf, pdfParent.children[idx]);
                         } else {
-                            const file = await this.panel.dbx.dbx.filesDownload({path: `/wip_lo/codes/${results.pdf}`});
-                            const blob = file.result.fileBlob;
-                            const url = URL.createObjectURL(blob);
+                            // Get the PDF url
+                            var url = this.panel.documents[results.pdf];
+                            // First PDF reference, download it from dropbox
+                            if ( !url ) {
+                                const file = await this.panel.dbx.dbx.filesDownload({path: `/wip_lo/codes/${results.pdf}`});
+                                const blob = file.result.fileBlob;
+                                url = URL.createObjectURL(blob);
+                                this.panel.documents[results.pdf] = url; // Store the URL in the documents object
+                            }
+                            // Create a new tab with the PDF
                             const tab = this.panel.addTab(this.tabIdx++, 'pdf', url, results.pdf);
                             const panel = this.panel.layoutContainer.firstChild;
+                            // If the top panel is split, place the PDF in the right/bottom most panel
                             if ( panel.classList.contains('split-row') || panel.classList.contains('split-column') )
                             {
                                 tab.appendContainer(panel.lastChild);
                                 tab.changeTab();
+                            // Else split the panel to the right and place the PDF there
                             } else {
                                 const { panel1, panel2 } = this.panel.splitPanel('right', panel);
                                 tab.appendContainer(panel2);

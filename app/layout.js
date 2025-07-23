@@ -5,6 +5,7 @@ import { Chatbox, Pdf } from './content.js';
 export class Layout {
     constructor(dbx) {
         this.panels = {};
+        this.documents = {};
 
         this.dbx = dbx; // Store the Dropbox instance for later use
         this.panelIdx = 0; // Index for the next panel to be added

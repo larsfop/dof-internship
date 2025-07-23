@@ -5,11 +5,15 @@
 @media (prefers-color-scheme: dark) {
   body { background: #333; color: white; border-color: white; }
   table, td, th {border-color: white;}
+  tr:hover {background-color: #444;}
+  .tab:hover, .tab-close:hover, .tab-new:hover { background: #555; }
 }
 
 @media (prefers-color-scheme: light) {
   body { background: #ddd; color: black; border-color: black; }
   table, td, th {border-color: black;}
+  tr:hover {background-color: #eee;}
+  .tab:hover, .tab-close:hover, .tab-new:hover { background: #f0f0f0; }
 }
 
 #splitter {
@@ -218,7 +222,8 @@ caption {
 }
 
 .tab-close {
-  margin-left: 6px;
+  width: 18px;
+  height: 18px;
   background: transparent;
   border: none;
   cursor: pointer;

@@ -40,7 +40,7 @@ const createWindow = () => {
     mainWindow.loadFile('index.html');
 
     // Read and parse MySQL connection details from mysql_connection.json
-    const mysqlConfigPath = path.join(__dirname, 'mysql_connection.json');
+    const mysqlConfigPath = path.join(__dirname, '../mysql_connection.json');
     const file = fs.readFileSync(mysqlConfigPath, 'utf-8');
     const config = JSON.parse(file);
     // Connect to MySQL after window is created
