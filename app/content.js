@@ -1,4 +1,5 @@
 import { Table } from "./table.js";
+import { Commands } from "./commands.js";
 
 export class Chatbox {
     constructor(goldenLayout = false, id = null) {
@@ -13,19 +14,22 @@ export class Chatbox {
         this.lastTabPrefix = '';
         this.originalInput = '';
 
-        // this.createListeners();
+        this.commands = new Commands(this.chatInput);
+
+        this.createListeners();
     }
 
-    createListeners() {
-        this.chatSend.addEventListener('click', () => {
-            const msg = this.chatInput.value.trim();
-            this.input(msg);
+    async createListeners() {
+        const tables = await window.database.queryTable('SELECT tableID,caption from document_metadata');
+        this.lookupTable = {};
+        this.tableList = [];
+        tables.forEach((table) => {
+            this.lookupTable[table.caption] = table.tableID;
+            this.tableList.push(table.caption);
         });
 
         // Tab autocomplete for table name after 'from' with cycling support
-        this.chatInput.addEventListener('keydown', (e) => {
-            this.hotkeys(e);
-        });
+        this.chatInput.addEventListener('keydown', this.hotkeys.bind(this));
     }
 
     createUI(goldenLayout) {
@@ -47,10 +51,11 @@ export class Chatbox {
         this.chatMessages.style.overflowY = 'auto';
         this.chatMessages.style.overflowX = 'hidden'; // Hide horizontal overflow
         this.chatMessages.style.borderBottom = '1px solid #eee';
-        this.chatMessages.style.marginBottom = '15px';
+        this.chatMessages.style.marginBottom = '13px';
         this.chatMessages.style.marginLeft = '15px';
         this.chatMessages.style.marginRight = '15px';
         this.chatMessages.style.marginTop = '25px';
+        this.chatMessages.style.paddingBottom = '2px'
 
         // create chat input area
         this.chatInput = document.createElement('input');
@@ -71,6 +76,17 @@ export class Chatbox {
         this.mainContainer.appendChild(this.chatSend);
     }
 
+    async setupTables() {
+        const tables = await window.database.queryTable('SELECT tableID,caption from document_metadata');
+        console.log('Tables:', tables);
+
+        this.lookupTable = {};
+        tables.forEach((table) => {
+            this.lookupTable[table.caption] = table.tableID;
+        })
+        console.log('Lookup Table:', this.lookupTable);
+    }
+
     appendContainer(container) {
         // Append elements to chat container
         container.appendChild(this.mainContainer);
@@ -87,30 +103,14 @@ export class Chatbox {
                 this.inputHistory.push(msg);
             }
 
+            const msg_lower = msg.toLowerCase();
+
             this.historyIndex = this.inputHistory.length;
 
-            if (msg.startsWith('select ') || msg.startsWith('SELECT ') || msg.startsWith('show ') || msg.startsWith('SHOW ') || msg.startsWith('describe ') || msg.startsWith('DESCRIBE ')) {
-                // SQL query command
-                const sql = msg;
-                console.log('Executing SQL:', sql);
-                // Call backend to execute SQL and get result
-                const result = await window.database.queryTable(sql);
-                console.log('SQL Result:', result);
-
-                let table;
-                if (result) {
-                    const caption = msg.split(/\s+/).pop();
-                    table = new Table();
-                    await table.createTable(result, caption);
-                    table.createListeners();
-                    this.chatMessages.appendChild(table.div);
-                    this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
-                } else {
-                    this.displayError(new Error(result || 'No results returned.'));
-                }
-                
+            if (msg_lower.startsWith('table') || msg_lower.startsWith('select') || msg_lower.startsWith('show') || msg_lower.startsWith('describe')) {
+            // if (msg.startsWith('select ') || msg.startsWith('SELECT ') || msg.startsWith('show ') || msg.startsWith('SHOW ') || msg.startsWith('describe ') || msg.startsWith('DESCRIBE ')) {
                 this.chatInput.value = '';
-                return table;
+                return await this.displayTable(msg);
             } else {
                 const msgDiv = document.createElement('div');
                 msgDiv.textContent = msg;
@@ -119,7 +119,58 @@ export class Chatbox {
                 this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
             }
         }
+    }
 
+    async displayTable(msg) {
+        const tableCmds = ['table', 'select', 'describe'];
+
+        const msgSplit = msg.trim().split(/\s+/);
+        var tableName = msgSplit.pop();
+        console.log(msg, msgSplit, tableName);
+        if (tableCmds.includes(msg.split(/\s+/)[0].toLowerCase())) {
+            if (!this.lookupTable[tableName]) {
+                this.displayError(new Error(`Table "${tableName}" not found.`));
+                return;
+            }else if (msg.toLowerCase().startsWith('table')) {
+                var sql = msg.replace(/table\s.*/i, `select * from ${this.lookupTable[tableName]}`);
+            } else if (msg.toLowerCase().startsWith('describe')) {
+                var sql = msg.replace(/describe\s.*/i, `describe ${this.lookupTable[tableName]}`);
+            } else if (msg.toLowerCase().startsWith('select')) {
+                var sql = msg.replace(/from\s.*(\w+)/i, `from ${this.lookupTable[tableName]}`);
+            }
+        } else if (msg.toLowerCase().startsWith('show')) {
+            if (msgSplit.length > 0) {
+                console.log('Searching for table:', tableName);
+                var sql = `select title, tableName, page, tableNumber from document_metadata where title like "%${tableName}%" order by page`
+            } else {
+                var sql = 'select title, tableName, page, tableNumber from document_metadata order by page'
+            }
+            tableName = 'Document Tables'
+        } else {
+            this.displayError(new Error(`Invalid command: ${msg}`));
+            return;
+        }
+
+        console.log('Executing SQL:', sql);
+        // Call backend to execute SQL and get result
+        const result = await window.database.queryTable(sql);
+        console.log('SQL Result:', result);
+
+        if (result) {
+            const query = await window.database.queryTable(
+                `select tableName from document_metadata where caption = "${tableName}"` // Get the table name from metadata
+            )
+            const caption = query[0] ? query[0].tableName : tableName; // Use the table name from metadata or fallback to the last part of the SQL command
+            var table = new Table(this.lookupTable[tableName]);
+            await table.createTable(result, caption);
+            table.createListeners();
+            this.chatMessages.appendChild(table.div);
+            this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+        }
+        else {
+            this.displayError(new Error(result || 'No results returned.'));
+        }
+        return table;
     }
 
     displayError(err) {
@@ -161,19 +212,19 @@ export class Chatbox {
 
     async autocomplete(input) {
         // Tab autocomplete for table name after 'from' with cycling, mid-word support
-        const value = this.chatInput.value;
+        const cmd = this.chatInput.value;
+        const cmdLower = cmd.toLowerCase();
         // Match 'from' followed by any non-space chars (table name), possibly mid-word
-        const match = (/from\s+([\w]*)/i.exec(value) || /FROM\s+([\w]*)/i.exec(value) || /describe\s+([\w]*)/i.exec(value) || /DESCRIBE\s+([\w]*)/i.exec(value));
+        const match = (/table\s+([\w]*)/i.exec(cmdLower) || /from\s+([\w]*)/i.exec(cmdLower) || /describe\s+([\w]*)/i.exec(cmdLower));
+        console.log('Autocomplete match:', match);
         if (match) {
-            const tables = await window.database.getTables();
-            const partial = match[1].toLowerCase();
+            const partial = match[match.length - 1].toLowerCase();
             // Use tables as an array directly
             if (this.tabmatches.length === 0 || this.lastTabPrefix !== partial) {
-                const tableList = Array.isArray(tables) ? tables : (tables && tables.lookupTable ? tables.lookupTable : []);
-                this.tabmatches = tableList.filter(t => t.toLowerCase().includes(partial));
+                this.tabmatches = this.tableList.filter(t => t.toLowerCase().includes(partial));
                 this.tabIndex = 0;
                 this.lastTabPrefix = partial;
-                this.originalInput = value;
+                this.originalInput = cmd;
             }
             if (this.tabmatches.length > 0) {
                 input.preventDefault();

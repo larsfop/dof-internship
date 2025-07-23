@@ -143,6 +143,10 @@ table, th, td {
   border-collapse: collapse;
 }
 
+th, td {
+  padding: 0px 6px;
+}
+
 caption {
   text-align: left;
   font-weight: bold;

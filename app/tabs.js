@@ -147,36 +147,24 @@ export class Tabs {
 
                 // Add event listeners for the PDF button if a table is created
                 const table = await this.content.input(msg);
-                if (table && table.pdfButton) {
+                if (table && table.pdfButton && table.tableID) {
                     table.pdfButton.addEventListener('click', async () => {
-                        const query = await window.database.queryTable(`select * from pdf_page where table_name = '${table.caption}'`);
+                        const query = await window.database.queryTable(`select * from document_metadata where tableID = '${table.tableID}'`);
                         const results = query[0];
-                        console.log(table.pdfButton, results)
 
-                        const pdf = document.getElementById(results.pdf);
-                        if (pdf) {
-                            const pdfParent = pdf.parentElement;
-                            const idx = Array.from(pdfParent.children).indexOf(pdf);
-
-                            // Attach the pdf to the DOM such that the page number can be changed
-                            table.pdfButton.appendChild(pdf);
-                            console.log(pdf.src.split('#')[0] + `#page=${results.page}`) 
-                            pdf.src = pdf.src.split('#')[0] + `#page=${results.page}`;
-
-                            // Move the pdf back to its original position
-                            pdfParent.insertBefore(pdf, pdfParent.children[idx]);
-                        } else {
+                        var pdf = document.getElementById(results.pdfPath);
+                        if (!pdf) {
                             // Get the PDF url
-                            var url = this.panel.documents[results.pdf];
+                            var url = this.panel.documents[results.pdfPath];
                             // First PDF reference, download it from dropbox
                             if ( !url ) {
-                                const file = await this.panel.dbx.dbx.filesDownload({path: `/wip_lo/codes/${results.pdf}`});
+                                const file = await this.panel.dbx.dbx.filesDownload({path: `/wip_lo/codes/${results.pdfPath}`});
                                 const blob = file.result.fileBlob;
                                 url = URL.createObjectURL(blob);
-                                this.panel.documents[results.pdf] = url; // Store the URL in the documents object
+                                this.panel.documents[results.pdfPath] = url; // Store the URL in the documents object
                             }
                             // Create a new tab with the PDF
-                            const tab = this.panel.addTab(this.tabIdx++, 'pdf', url, results.pdf);
+                            const tab = await this.panel.addTab(this.tabIdx++, 'pdf', url, results.pdfPath);
                             const panel = this.panel.layoutContainer.firstChild;
                             // If the top panel is split, place the PDF in the right/bottom most panel
                             if ( panel.classList.contains('split-row') || panel.classList.contains('split-column') )
@@ -195,13 +183,26 @@ export class Tabs {
                                 panel1.appendChild(tabsList);
                                 panel1.appendChild(contents);
                             }
+
+                            pdf = document.getElementById(results.pdfPath);
                         }
+                        const pdfParent = pdf.parentElement;
+                        const idx = Array.from(pdfParent.children).indexOf(pdf);
+
+                        // Attach the pdf to the DOM such that the page number can be changed
+                        table.pdfButton.appendChild(pdf);
+                        console.log(pdf.src.split('#')[0] + `#page=${results.page}`) 
+                        pdf.src = pdf.src.split('#')[0] + `#page=${results.page}`;
+
+                        // Move the pdf back to its original position
+                        pdfParent.insertBefore(pdf, pdfParent.children[idx]);
                     });
                 }
             });
-            this.content.chatInput.addEventListener('keydown', (e) => {
-                this.content.hotkeys(e); // Handle hotkeys for the chat input
-            });
+
+            // this.content.chatInput.addEventListener('keydown', (e) => {
+            //     this.content.hotkeys(e); // Handle hotkeys for the chat input
+            // });
         } catch (e) {
             console.error(`${this.content} is not a chatbox`);
         }

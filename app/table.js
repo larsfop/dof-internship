@@ -1,7 +1,8 @@
 export class Table {
-    constructor() {
+    constructor(tableID) {
         this.currentOrder = 0
         this.currentSortReference = null;
+        this.tableID = tableID;
     }
 
     createListeners() {
@@ -44,14 +45,14 @@ export class Table {
     }
 
     async createTable(data, caption) {
-        this.caption = caption
+        this.caption = caption;
         this.div = document.createElement('div');
         this.div.style.overflowX = 'auto';
 
         const table = document.createElement('table');
 
         const title = document.createElement('caption');
-        title.textContent = caption;
+        title.innerHTML = caption.replace(/B.*\sB/, (x) => `<sub>${x.slice(1, -2)}</sub>`);
 
         const query = await window.database.queryTable(`select * from pdf_page where table_name = '${caption}'`);
         const results = query[0];

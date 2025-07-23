@@ -43,7 +43,7 @@ export class Layout {
                 e.target.classList.remove('highlight-display'); // Remove the class indicating the dragenter event
             }
 
-            function handleDrop(e) {
+            async function handleDrop(e) {
                 e.preventDefault(); // Prevent default drop behavior
                 e.stopPropagation();
 
@@ -53,7 +53,7 @@ export class Layout {
                 for (const file of e.dataTransfer.files) {
                     if (file.type === 'application/pdf') {
                         const filePath = window.file.getPath(file);
-                        const tab = self.addTab(self.tabIdx++, 'pdf', filePath);
+                        const tab = await self.addTab(self.tabIdx++, 'pdf', filePath);
                         e.target.classList.remove('highlight-display'); // Remove the class indicating the dragenter event
                         if (e.target.classList.contains('window-highlight') && !e.target.classList.contains('highlight-center')) {
                             const direction = e.target.classList[1].split('-')[1]; // Get the direction from the class name
@@ -130,10 +130,10 @@ export class Layout {
             newTabBtn.className = 'tab-new';
             newTabBtn.textContent = '+';
             newTabBtn.title = 'New Tab';
-            newTabBtn.onclick = (e) => {
+            newTabBtn.onclick = async (e) => {
                 e.stopPropagation();
                 const panelDiv = e.target.closest('.panel-container');
-                const tab = this.addTab(this.tabIdx++);
+                const tab = await this.addTab(this.tabIdx++);
                 tab.appendContainer(panelDiv);
                 tab.changeTab(); // Change to the newly created tab
             };
@@ -166,19 +166,20 @@ export class Layout {
         return panelContainer;
     }
 
-    addPanel() {
+    async addPanel() {
         const panelContainer = this.createPanelUI(); // Create the UI for the panel
         this.layoutContainer.appendChild(panelContainer); // Append the panel container to the layout container
-        const tab = this.addTab(this.tabIdx++); // Initialize with one tab
+        const tab = await this.addTab(this.tabIdx++); // Initialize with one tab
         tab.appendContainer(panelContainer);
         tab.changeTab(); // Change to the newly created tab
     }
 
-    addTab(tabIdx, type = 'chatbox', file = null, id = null) {
+    async addTab(tabIdx, type = 'chatbox', file = null, id = null) {
         // Fill window content
         let content;
         if (type === 'chatbox') {
             content = new Chatbox(id = id);
+            await content.setupTables(); // Setup tables for the chatbox
         } else if (type === 'pdf' && file) {
             content = new Pdf(file, id);
         }
@@ -206,14 +207,14 @@ export class Layout {
     }
 
     splitPanel(direction, panel) {
+        const panelChildren = panel.children;
+
+        const panel1 = this.createPanelUI(false); // Create a new panel UI
+        const panel2 = this.createPanelUI(true); // Create another new panel UI
         if (direction === 'right' || direction === 'left') {
             // Split the panel horizontally
-            panel.classList.add('split-row'); // Add a class for styling
-            const panelChildren = panel.children;
-
-            const panel1 = this.createPanelUI(false); // Create a new panel UI
-            const panel2 = this.createPanelUI(true); // Create another new panel UI
             if (direction === 'right') {
+            panel.classList.add('split-row'); // Add a class for styling            if (direction === 'right') {
                 panel.appendChild(panel1); // Move the current panel to the new panel
                 this.addSplitter('vertical', panel); // Add a vertical splitter
                 panel.appendChild(panel2); // Append the new panel UI
@@ -229,10 +230,6 @@ export class Layout {
         } else if (direction === 'bottom' || direction === 'top') {
             // Split the panel vertically
             panel.classList.add('split-column'); // Add a class for styling
-            const panelChildren = panel.children;
-
-            const panel1 = this.createPanelUI(false); // Create a new panel UI
-            const panel2 = this.createPanelUI(true); // Create another new panel UI
             if (direction === 'bottom') {
                 panel.appendChild(panel1); // Move the current panel to the new panel
                 this.addSplitter('horizontal', panel); // Add a horizontal splitter
