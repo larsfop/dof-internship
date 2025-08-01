@@ -338,7 +338,6 @@ if __name__ == "__main__":
     mydb = mysql.connector.connect(
         host=user['host'],
         user=user['user'],
-        password=user['password'],
     )
 
     pdf = PDFTableReader(

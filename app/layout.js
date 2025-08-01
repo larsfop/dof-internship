@@ -26,7 +26,7 @@ export class Layout {
 
         // Add event listeners for layout changes, if needed
         const self = this;
-        let dragEntered = true
+        var dragEntered = true
         document.addEventListener('dragenter', (e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -189,29 +189,46 @@ export class Layout {
         return tab
     }
 
+    removeTab(button, tab) {
+        // Logic to remove a tab
+        // This should handle removing the tab from the UI and updating the layout accordingly
+        const tabDiv = button.parentNode; // Get the parent tab div
+        const panel = tabDiv.closest('.panel-container'); // Get the closest panel container
+
+        // Get tab index in the tab list
+        const remainingTabs = panel.getElementsByClassName('tab');
+        const index = Array.from(remainingTabs).indexOf(tabDiv);
+
+        tabDiv.remove(); // Remove the tab from the panel
+        tab.content.mainContainer.remove(); // Remove the content from the panel
+
+        // Change tab if the removed tab was active
+        console.log(index, remainingTabs.length);
+        if (tabDiv.classList.contains('active') && remainingTabs.length > 0)
+            tab.toggleActive(true, remainingTabs[index - 1]); // Activate the first remaining tab
+
+        // If no tabs left, remove the panel
+        if (remainingTabs.length === 0) {
+            this.removePanel(panel);
+        }
+    }
+
     addSplitter(direction, container = this.layoutContainer) {
         this.splitter = new Splitter(direction);
         this.splitter.appendContainer(container); // Append the splitter to the layout container
-
-        /*
-        const splitter = document.createElement('div');
-        splitter.id = 'splitter'
-        if (direction === 'horizontal') splitter.className = 'splitter-horizontal';
-        else if (direction === 'vertical') splitter.className = 'splitter-vertical';
-        else throw new Error('Invalid splitter direction');
-
-        splitter.style.left = `${this.layoutContainer.clientWidth/2 + 4}px`;
-
-        this.layoutContainer.appendChild(splitter); // Append the splitter to the layout container
-        */
+        
+        // Set panel widths
+        const elements = container.getElementsByClassName('panel-container');
+        const elm1 = elements[0];
+        const elm2 = elements[1];
     }
 
     splitPanel(direction, panel) {
-        const panelChildren = panel.children;
-
         const panel1 = this.createPanelUI(false); // Create a new panel UI
         const panel2 = this.createPanelUI(true); // Create another new panel UI
         if (direction === 'right' || direction === 'left') {
+            panel1.style.marginRight = '-8px';
+            panel1.style.borderRight = '4px solid gray'; // Add a border to the right side
             // Split the panel horizontally
             if (direction === 'right') {
             panel.classList.add('split-row'); // Add a class for styling            if (direction === 'right') {
@@ -228,6 +245,8 @@ export class Layout {
 
             return { panel1, panel2 };
         } else if (direction === 'bottom' || direction === 'top') {
+            panel1.style.marginBottom = '-8px';
+            panel1.style.borderBottom = '4px solid gray'; // Add a border to the bottom side
             // Split the panel vertically
             panel.classList.add('split-column'); // Add a class for styling
             if (direction === 'bottom') {
@@ -245,6 +264,50 @@ export class Layout {
             return { panel1, panel2 };
         } else {
             throw new Error('Invalid direction for splitting panel');
+        }
+    }
+
+    // Merge two panels into one when closing the last tab
+    removePanel(panel) {
+        const parent = panel.parentNode; // Get the parent container of the panel
+        if (parent.classList.contains('layout-container')) {
+            // If the panel is the only one in the layout, remove it
+            parent.removeChild(panel);
+        }
+        else if (parent.classList.contains('split-row') || parent.classList.contains('split-column')) {
+            // Remove splitter
+            if (parent.firstChild === panel) {
+                parent.removeChild(panel.nextSibling);
+            } else {
+                parent.removeChild(panel.previousSibling);
+            }
+
+            panel.remove(); // Remove the panel
+        }
+
+        if (parent.getElementsByClassName('panel-container').length === 1) {
+            // If one panel remains, move the panel up one level
+            const child = parent.firstChild; // Get the first child of the parent
+            const parentParent = parent.parentNode; // Get the parent of the parent
+            child.style.margin = '0'; // Reset margin
+            child.style.border = 'none'; // Reset border
+            child.style.width = '100%'; // Reset width to full
+            child.style.height = '100%'; // Reset height to full
+
+            if (parentParent.firstChild === parent) {
+                parentParent.insertBefore(child, parent); // Insert the child before the parent
+                if (parentParent.classList.contains('split-row')) {
+                    child.style.marginRight = '-8px'; // Adjust margin for row split
+                    child.style.borderRight = '4px solid gray'; // Add a border to the right side
+                } else if (parentParent.classList.contains('split-column')) {
+                    child.style.marginBottom = '-8px'; // Adjust margin for column split
+                    child.style.borderBottom = '4px solid gray'; // Add a border to the bottom side
+                }
+            } else {
+                parent.parentNode.appendChild(child);   
+            }
+
+            parent.remove(); // Remove the empty parent container
         }
     }
 

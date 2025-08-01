@@ -45,35 +45,28 @@ export class Chatbox {
 
         // create chat messages area
         this.chatMessages = document.createElement('div');
-        this.chatMessages.className = 'chat-messages';
+        this.chatMessages.className = 'chat-messages border-color';
         if (this.id) this.chatMessages.id = this.id;
-        this.chatMessages.style.height = 'calc(100% - 36px)';
-        this.chatMessages.style.overflowY = 'auto';
-        this.chatMessages.style.overflowX = 'hidden'; // Hide horizontal overflow
-        this.chatMessages.style.borderBottom = '1px solid #eee';
-        this.chatMessages.style.marginBottom = '13px';
-        this.chatMessages.style.marginLeft = '15px';
-        this.chatMessages.style.marginRight = '15px';
-        this.chatMessages.style.marginTop = '25px';
-        this.chatMessages.style.paddingBottom = '2px'
 
         // create chat input area
+        const div = document.createElement('div');
+        div.className = 'chat';
+
         this.chatInput = document.createElement('input');
         this.chatInput.className = 'chat-input';
         this.chatInput.type = 'text';
         this.chatInput.placeholder = 'Type your message here...';
-        this.chatInput.style.width = 'calc(100% - 80px)';
-        this.chatInput.style.marginLeft = '15px';
-        this.chatInput.style.marginBottom = '15px';
 
         // create send button
         this.chatSend = document.createElement('button');
         this.chatSend.className = 'chat-send';
         this.chatSend.textContent = 'Send';
 
+        div.appendChild(this.chatInput);
+        div.appendChild(this.chatSend);
+
         this.mainContainer.appendChild(this.chatMessages);
-        this.mainContainer.appendChild(this.chatInput);
-        this.mainContainer.appendChild(this.chatSend);
+        this.mainContainer.appendChild(div);
     }
 
     async setupTables() {
@@ -96,28 +89,111 @@ export class Chatbox {
         if (this.chatInput) this.chatInput.focus();
     }
 
-    async input(msg) {
+    capitalizeSentences(msg) {
+        return msg.replace(/(^\w{1}|\.\s*\w{1})/g, (c) => c.toUpperCase());
+    }
+
+    async input(msg, panel) {
         if (msg) {
             // Only save if not a repeat of the last input
             if (this.inputHistory.length === 0 || this.inputHistory[this.inputHistory.length - 1] !== msg) {
                 this.inputHistory.push(msg);
             }
-
-            const msg_lower = msg.toLowerCase();
-
+            this.chatInput.value = '';
             this.historyIndex = this.inputHistory.length;
+            this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
 
-            if (msg_lower.startsWith('table') || msg_lower.startsWith('select') || msg_lower.startsWith('show') || msg_lower.startsWith('describe')) {
-            // if (msg.startsWith('select ') || msg.startsWith('SELECT ') || msg.startsWith('show ') || msg.startsWith('SHOW ') || msg.startsWith('describe ') || msg.startsWith('DESCRIBE ')) {
-                this.chatInput.value = '';
-                return await this.displayTable(msg);
-            } else {
-                const msgDiv = document.createElement('div');
-                msgDiv.textContent = msg;
-                this.chatMessages.appendChild(msgDiv);
-                this.chatInput.value = '';
-                this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+            this.inputOutputBlock = document.createElement('div');
+            this.inputOutputBlock.className = 'input-output-block';
+            this.chatMessages.appendChild(this.inputOutputBlock);
+
+            if (this.chatMessages.children.length > 1) {
+                const hr = document.createElement('hr');
+                this.chatMessages.insertBefore(hr, this.chatMessages.lastChild);
             }
+
+            // Display input message
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'input-message';
+            msgDiv.innerHTML = this.capitalizeSentences(msg);
+            this.inputOutputBlock.appendChild(msgDiv);
+
+            const output = await this.output(msg, panel);
+
+            this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+            return output;
+        }
+    }
+
+    async output(msg, panel) {
+        const msg_lower = msg.toLowerCase();
+        if (msg_lower.startsWith('table') || msg_lower.startsWith('select') || msg_lower.startsWith('show') || msg_lower.startsWith('describe')) {
+            // if (msg.startsWith('select ') || msg.startsWith('SELECT ') || msg.startsWith('show ') || msg.startsWith('SHOW ') || msg.startsWith('describe ') || msg.startsWith('DESCRIBE ')) {
+            return await this.displayTable(msg);
+        } else {
+            const msgDiv = document.createElement('div');
+
+            const embeds = await window.openAI.vectorSearch(msg);
+
+            console.log(embeds)
+            if (Array.isArray(embeds)) {
+                embeds.forEach(embed => {
+                    if (embed) {
+                        if (typeof embed.startpage === "string") embed.startpage = Number(embed.startpage);
+                        if (typeof embed.endpage === "string") embed.endpage = Number(embed.endpage);
+                        if (typeof embed.score === "string") embed.score = Number(embed.score);
+                    }
+                });
+            }
+
+            var docs = []
+            var pages = [];
+            for (let i = 0; i < 1; i++) {
+                // Should be dynamically aquired from the vector database query
+                // For testing it is set to a static value
+                var path = 'ns-en-1995-1-1_2004+a2_2014+na_2024_en_001.pdf';
+                const array = embeds[i];
+
+                var blob = panel.documents[path]
+                if (!blob) {
+                    const file = await panel.dbx.dbx.filesDownload({ path: `/wip_lo/codes/${path}` });
+                    blob = file.result.fileBlob;
+                    panel.documents[path] = blob;
+                }
+
+
+                docs.push({
+                    name: path,
+                    blob: await blob.arrayBuffer(),
+                    url: URL.createObjectURL(blob),
+                    pageStart: array.startpage,
+                    pageEnd: array.endpage,
+                });
+
+                console.log(`Subsection: ${array.subsection}; Score: ${array.score}; Page: ${array.startpage} to ${array.endpage}`);
+
+                for (let j = array.startpage; j <= array.endpage; j++) {
+                    if (!pages.includes(j)) {
+                        pages.push(j);
+                    }
+                }
+            }
+            console.log('Total page count:', pages.length);
+
+            const response = await window.openAI.query(msg, docs)
+            console.log(response)
+
+            console.log('Prompt: ', response.status);
+            console.log('Model: ', response.model);
+            console.log(
+                'Token usage:\n',
+                '   Input:  ', response.usage.input_tokens,
+                '\n    Output: ', response.usage.output_tokens,
+                '\n    Total:  ', response.usage.total_tokens
+            )
+
+            msgDiv.innerHTML = await window.marked.markdownToHtml(response.output_text);
+            this.inputOutputBlock.appendChild(msgDiv);
         }
     }
 
@@ -131,7 +207,7 @@ export class Chatbox {
             if (!this.lookupTable[tableName]) {
                 this.displayError(new Error(`Table "${tableName}" not found.`));
                 return;
-            }else if (msg.toLowerCase().startsWith('table')) {
+            } else if (msg.toLowerCase().startsWith('table')) {
                 var sql = msg.replace(/table\s.*/i, `select * from ${this.lookupTable[tableName]}`);
             } else if (msg.toLowerCase().startsWith('describe')) {
                 var sql = msg.replace(/describe\s.*/i, `describe ${this.lookupTable[tableName]}`);
@@ -164,8 +240,7 @@ export class Chatbox {
             var table = new Table(this.lookupTable[tableName]);
             await table.createTable(result, caption);
             table.createListeners();
-            this.chatMessages.appendChild(table.div);
-            this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+            this.inputOutputBlock.appendChild(table.div);
         }
         else {
             this.displayError(new Error(result || 'No results returned.'));
@@ -176,7 +251,7 @@ export class Chatbox {
     displayError(err) {
         const div = document.createElement('div');
         div.textContent = err.message;
-        this.chatMessages.appendChild(div);
+        this.inputOutputBlock.appendChild(div);
         this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
     }
 
@@ -244,7 +319,7 @@ export class Chatbox {
             this.originalInput = '';
         }
     }
-        
+
 }
 
 

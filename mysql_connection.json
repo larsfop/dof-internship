@@ -1,8 +1,7 @@
 {
     "user": {
         "host": "localhost",
-        "user": "lars",
-        "password": "Lilleaker01",
+        "user": "test",
         "database": "tables"
     }
 }

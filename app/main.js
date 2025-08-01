@@ -5,9 +5,12 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import mysql from 'mysql2';
 import mupdf from 'mupdf';
+import openAI from 'openai';
 import Dropbox from 'dropbox';
+import { createClient } from 'redis';
 import { arrayBufferToBinaryString } from 'blob-util'
 import fs from 'fs';
+import { marked } from 'marked';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -92,6 +95,12 @@ async function getPdfLink (event, filePath) {
         });
     })
 }
+
+const openai = new openAI()
+
+const redisClient = createClient();
+
+await redisClient.connect()
 
 const dbxAuth = new Dropbox.DropboxAuth({
     clientId: '25qnd8cmj0jv2vv',
@@ -203,12 +212,15 @@ app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         app.quit();
     }
+    if (redisClient) {
+        redisClient.quit();
+    }
 });
 
 // Handle chatbox SQL query
 ipcMain.handle('db:query', async (event, query) => {
     if (!connection) {
-        return { success: false, message: 'No database connection.' };
+        return 'No database connection.';
     }
     return new Promise((resolve, reject) => {
         connection.query(query, (error, results) => {
@@ -223,3 +235,147 @@ ipcMain.handle('db:query', async (event, query) => {
     });
 });
 
+ipcMain.handle('vector-search', async (event, query) => {
+    if (!redisClient) {
+        return 'No Redis client connected.';
+    }
+
+    const response = await openai.embeddings.create({
+        model: 'text-embedding-3-large',
+        input: query,
+        // encoding_format: 'base64'
+    });
+
+    return new Promise((resolve, reject) => {
+        redisClient.ft.search(
+            'test_index',
+            '*=> [KNN 10 @embedding $vec AS score]',
+            {
+                PARAMS: {
+                    'vec': Buffer.from(
+                        new Float32Array(response.data[0].embedding).buffer
+                    )
+                },
+                SORTBY: 'score',
+                RETURN: ['document', 'section', 'subsection', 'startpage', 'endpage', 'score'],
+                LIMIT: { from: 0, size: 10 },
+                DIALECT: 2
+            }
+        ).then(results => {
+            var embeds = []
+            results.documents.forEach(doc => {
+                embeds.push({
+                    section: doc.value.section,
+                    subsection: doc.value.subsection,
+                    startpage: doc.value.startpage,
+                    endpage: doc.value.endpage,
+                    score: doc.value.score
+                });
+            });
+
+            console.log('Vector search results:', embeds);
+            resolve(embeds);
+        }).catch(error => {
+            console.error('Error executing vector search:', error);
+                resolve(error.message);
+            });
+    });
+});
+
+
+class PDFCopy {
+    constructor() {
+        this.doc = new mupdf.PDFDocument();
+        this.documentPageCopies = {};
+    }
+
+    graftPage(otherDoc, name, pageIndex) {
+        pageIndex = Number(pageIndex);
+        if (pageIndex < 0 || pageIndex >= otherDoc.countPages()) {
+            throw new Error('Invalid page index');
+        }
+        if (!this.documentPageCopies[name]) {
+            this.documentPageCopies[name] = [];
+        }
+        if (this.documentPageCopies[name].includes(pageIndex)) {
+            console.warn(`Page ${pageIndex} from document ${name} is already grafted.`);
+            return;
+        }
+        this.documentPageCopies[name].push(pageIndex);
+        console.log(`Grafting page ${pageIndex} from document ${name}`);
+        this.doc.graftPage(-1, otherDoc, pageIndex);
+    }
+
+    countPages() {
+        return this.doc.countPages();
+    }
+
+    buffer() {
+        return this.doc.saveToBuffer();
+    }
+
+    saveTmpDocument() {
+        const tmpFilePath = path.join(__dirname, 'tmp.pdf');
+        this.doc.save(tmpFilePath);
+        return tmpFilePath;
+    }
+}
+
+ipcMain.handle('chat-query', async (event, query, docs) => {
+
+    // Copy the required pages into a new document to be sent to the openAI API
+    const doc = new PDFCopy();
+    var pdfs = []
+    for (const item of docs) {
+        var pdf = pdfs[item.name];
+
+        if (!pdf) {
+            pdf = new mupdf.PDFDocument(Buffer.from(item.blob), 'application/pdf');
+            pdfs[item.name] = pdf;
+        }
+        for (let i = item.pageStart; i < item.pageEnd + 1; i++) {
+            doc.graftPage(pdf, item.name, i);
+        }
+    };
+
+    // Save the pdf as tmp.pdf
+    doc.saveTmpDocument();
+
+    const file = await openai.files.create({
+        file: fs.createReadStream('tmp.pdf'),
+        purpose: 'user_data'
+    });
+
+    const response = await openai.responses.create({
+        // model: 'o4-mini',
+        model: 'gpt-4.1',
+        input: [
+            {
+                role: 'developer',
+                content: 'Formatting re-enabled'
+            },
+            {
+                role: 'user',
+                content: [
+                    {
+                        type: 'input_file',
+                        file_id: file.id
+                    },
+                    {
+                        type: 'input_text',
+                        text: query
+                    }
+                ]
+            }
+        ]
+    });
+
+    return response
+
+})
+
+
+ipcMain.handle('markdown-render', (event, markdown) => {
+    const html = marked.parse(markdown);
+    return html;
+});

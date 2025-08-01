@@ -4,31 +4,50 @@
 
 @media (prefers-color-scheme: dark) {
   body { background: #333; color: white; border-color: white; }
-  table, td, th {border-color: white;}
+  table, td, th, .border-color {border-color: white;}
+  .tabs-list, .tab, .chat-messages {border-color: #959595}
   tr:hover {background-color: #444;}
   .tab:hover, .tab-close:hover, .tab-new:hover { background: #555; }
 }
 
 @media (prefers-color-scheme: light) {
-  body { background: #ddd; color: black; border-color: black; }
+  body { background: #ddd; color: black; border-color: gray; }
+  .window-container, .tab:hover, .tab-close:hover, .tab-new:hover, .active { background: white}
   table, td, th {border-color: black;}
+  .tabs-list, .tab, .chat-messages {border-color: #b5b5b5}
+  .tab-new:hover, .tab-close:hover, #splitter:hover, #splitter.dragging { background: #c2c0c0; }
   tr:hover {background-color: #eee;}
-  .tab:hover, .tab-close:hover, .tab-new:hover { background: #f0f0f0; }
+}
+
+[data-tooltip]:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  border: 1px solid #ccc;
+  background: #f9f9f9;
+  padding: .25em;
+  border-radius: 2px;
+  
 }
 
 #splitter {
   position: relative;
-  background: #ccc;
+  background: transparent;
+}
+
+#splitter:hover, #splitter.dragging {
+  transition: background-color 0.3s ease;
 }
 
 .splitter-vertical {
-  width: 9px;
+  width: 8px;
   cursor: ew-resize;
+  flex-shrink: 0;
 }
 
 .splitter-horizontal {
-  height: 9px;
+  height: 8px;
   cursor: ns-resize;
+  flex-shrink: 0;
 }
 
 .horisontal-container {
@@ -134,12 +153,56 @@
   box-sizing: border-box;
 }
 
+.chat {
+  margin: 12px 0px;
+}
+
+.chat-messages {
+  height: calc(100% - 19px);
+  overflow-y: auto;
+  overflow-x: hidden; /* Prevents horizontal scrollbar */
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  margin: 0px 0px 12px;
+  padding-bottom: 5px;
+  padding-top: 9px;
+}
+
+.chat-input {
+  width: calc(100% - 80px);
+  margin-left: 15px;
+  margin-bottom: 12px;
+}
+
+.input-message {
+  padding: 4px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  float: right;
+  max-width: 69%;
+  align-self: flex-end;
+}
+
+.input-output-block {
+  margin-right: 8px;
+  margin-left: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden; /* Prevents vertical scrollbar */
+}
+
 table {
   width: 100%;
 }
 
 table, th, td {
-  border: 1px, solid;
+  border-width: 1px;
+  border-style: solid;
   border-collapse: collapse;
 }
 
@@ -151,6 +214,7 @@ caption {
   text-align: left;
   font-weight: bold;
   font-size: 1.2em;
+  width: fit-content;
 }
 
 .button-show-in-pdf {
@@ -161,46 +225,33 @@ caption {
 .tabs-list {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  margin: 0px 10px;
-  gap: 1px;
+  align-items: stretch;
+  height: 22px;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-top-width: 1px;
+  border-top-style: solid;
 }
 
 .tab {
+  max-width: 150px;
   position: relative;
-  border: 1px solid #ccc;
-  border-radius: 4px;
   padding: 2px 8px;
   cursor: pointer;
-  background: rgb(34, 34, 34);
+  border-right-width: 1px;
+  border-right-style: solid;
 }
 
-.tab-dark-mode {
-  background: #222;
-  color: #bbb;
-  font-weight: normal;
-  box-shadow: none;
+.tab-text {
+  width: calc(100% - 18px);
+  float: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.tab-dark-mode.active {
-  background: #333;
-  color: #fff;
-  font-weight: bold;
-  box-shadow: 0 2px 8px #1118;
-}
-
-.tab-light-mode {
-  background: #e0e0e0;
-  color: #222;
-  font-weight: normal;
-  box-shadow: none;
-}
-
-.tab-light-mode.active {
-  background: #e0e0e0;
-  color: #222;
-  font-weight: bold;
-  box-shadow: 0 2px 8px #ccc8;
+.active {
+  height: 19px;
 }
 
 .tab-hover {
@@ -216,13 +267,13 @@ caption {
 }
 
 .tab-new {
-  margin-left: 6px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  margin: 2px 2px 2px 6px;
+  border: none;
   cursor: pointer;
   font-size: 16px;
   position: relative;
-  padding: 2px 8px;
+  background-color: transparent;
+  border-radius: 6px;
 }
 
 .tab-close {
@@ -235,19 +286,6 @@ caption {
   padding: 0px;
   position: relative;
   right: -3px;
-}
-
-
-
-.lm_tabs {
-  margin: 0;
-  padding: 0;
-}
-
-.lm_tab {
-  list-style: none;
-}
-
-.lm_tab::marker {
-  display: none; /* Hide the default marker */
+  float: right;
+  border-radius: 6px;
 }

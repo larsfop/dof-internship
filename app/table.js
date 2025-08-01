@@ -47,21 +47,25 @@ export class Table {
     async createTable(data, caption) {
         this.caption = caption;
         this.div = document.createElement('div');
-        this.div.style.overflowX = 'auto';
+        this.div.className = 'table-wrapper';
 
         const table = document.createElement('table');
 
-        const title = document.createElement('caption');
-        title.innerHTML = caption.replace(/B.*\sB/, (x) => `<sub>${x.slice(1, -2)}</sub>`);
+        this.title = document.createElement('caption');
+        this.title.innerHTML = caption.replace(/B.*\sB/, (x) => `<sub>${x.slice(1, -2)}</sub>`);
+        if (caption !== 'Document Tables') {
+            this.title.style.cursor = 'pointer';
+            this.title.setAttribute('data-tooltip', 'Show table in PDF');
+        }
 
         const query = await window.database.queryTable(`select * from pdf_page where table_name = '${caption}'`);
         const results = query[0];
-        this.pdfButton = document.createElement('button');
-        if (results) {
-            this.pdfButton.className = 'button-show-in-pdf';
-            this.pdfButton.textContent = 'Show in PDF';
-            title.appendChild(this.pdfButton);  
-        }
+        // this.pdfButton = document.createElement('button');
+        // if (results) {
+        //     this.pdfButton.className = 'button-show-in-pdf';
+        //     this.pdfButton.textContent = 'Show in PDF';
+        //     this.title.appendChild(this.pdfButton);  
+        // }
 
         const head = document.createElement('thead');
         const headRow = document.createElement('tr');
@@ -72,10 +76,14 @@ export class Table {
         data.forEach(row => {
             const tr = document.createElement('tr');
             tr.innerHTML = Object.values(row).map(v => `<td>${v}</td>`).join('');
+            if (caption === 'Document Tables') {
+                tr.style.cursor = 'pointer';
+                // tr.setAttribute('data-tooltip', 'Show in PDF');
+            }
             body.appendChild(tr);
         });
 
-        table.appendChild(title);
+        table.appendChild(this.title);
         table.appendChild(head);
         table.appendChild(body);
 

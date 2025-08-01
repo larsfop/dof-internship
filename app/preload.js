@@ -30,3 +30,12 @@ contextBridge.exposeInMainWorld('dropbox', {
         resolve(token);
     })
 });
+
+contextBridge.exposeInMainWorld('openAI', {
+    vectorSearch: (query) => ipcRenderer.invoke('vector-search', query),
+    query: (query, docs) => ipcRenderer.invoke('chat-query', query, docs),
+});
+
+contextBridge.exposeInMainWorld('marked', {
+    markdownToHtml: (markdown) => ipcRenderer.invoke('markdown-render', markdown)
+});

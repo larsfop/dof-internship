@@ -48,9 +48,12 @@ export class Splitter {
                 offsetLeft: self.splitter.offsetLeft,
                 offsetTop: self.splitter.offsetTop,
                 elm1Width: elm1.offsetWidth,
+                elm1Height: elm1.offsetHeight,
                 elm2Width: elm2.offsetWidth,
+                elm2Height: elm2.offsetHeight
             };
-        
+
+            self.splitter.classList.add('dragging');
             document.onmousemove = onMouseMove;
             document.onmouseup = onMouseUp;
         }
@@ -69,13 +72,13 @@ export class Splitter {
                 elm1.style.width = `${((md.elm1Width / totalWidth) * 100) + percentageDelta}%`;
                 elm2.style.width = `${((md.elm2Width / totalWidth) * 100) - percentageDelta}%`;
             } else if (self.direction === 'horizontal') {
-                delta.y = Math.min(Math.max(delta.y, -md.elm1Width), md.elm2Width);
+                delta.y = Math.min(Math.max(delta.y, -md.elm1Height), md.elm2Height);
 
-                const totalHeight = md.elm1Width + md.elm2Width;
+                const totalHeight = md.elm1Height + md.elm2Height;
                 const percentageDelta = (delta.y / totalHeight) * 100;
 
-                elm1.style.height = `${((md.elm1Width / totalHeight) * 100) + percentageDelta}%`;
-                elm2.style.height = `${((md.elm2Width / totalHeight) * 100) - percentageDelta}%`;
+                elm1.style.height = `${((md.elm1Height / totalHeight) * 100) + percentageDelta}%`;
+                elm2.style.height = `${((md.elm2Height / totalHeight) * 100) - percentageDelta}%`;
             }
         }
 
@@ -89,6 +92,7 @@ export class Splitter {
                 panel.style.pointerEvents = 'auto'; // Re-enable pointer events on panels after drag
             });
 
+            self.splitter.classList.remove('dragging');
             document.onmousemove = document.onmouseup = null; // Clean up event listeners
         }
     }

@@ -13,6 +13,55 @@ export class Tabs {
         this.tabDiv.addEventListener('dragstart', (e) => {
             const self = this; // Store reference to the current instance
             this.tabDiv.classList.add('dragging'); // Add a class to indicate
+
+
+            e.dataTransfer.effectAllowed = 'move'; // Set the effect allowed for the drag operation
+            if (e.target.classList.contains('tab')) {
+                function isMouseInElement(e, element) {
+                    const rect = element.getBoundingClientRect();
+                    return (
+                        e.clientX >= rect.left &&
+                        e.clientX <= rect.right &&
+                        e.clientY >= rect.top &&
+                        e.clientY <= rect.bottom
+                    );
+                }
+
+
+                const tab = e.target; // Get the tab being dragged
+                const tabList = tab.closest('.tabs-list'); // Get the parent element of the tab
+   
+                console.log('target', tab, tabList, e, this.tabDiv)
+                console.log(tab.offsetWidth)
+
+                const { left, top, width, height } = tab.getBoundingClientRect();
+                const x = left + width / 2; // Calculate the x position to center the tab under the mouse cursor
+
+
+                tab.addEventListener('drag', (e) => {
+                    e.stopPropagation(); // Prevent event bubbling
+
+                    if (isMouseInElement(e, tabList)) {
+
+                        tab.style.left = `${e.clientX - x}px`; // Center the tab under the mouse cursor
+
+
+                    }
+
+                });
+
+
+                tab.addEventListener('dragend', (e) => {
+                    e.stopPropagation(); // Prevent event bubbling
+                    tab.style.left = ''; // Reset the left position of the tab
+                    self.tabDiv.classList.remove('dragging'); // Remove the dragging class from the tab
+                });
+
+            }
+
+
+
+
             const tabs = document.getElementsByClassName('tab');
             [...tabs].forEach((tab, index) => {
                 tab.addEventListener('dragenter', (e) => {
@@ -139,6 +188,52 @@ export class Tabs {
             });
         })
 
+        async function displayPDF(path, page, table) {
+            var pdf = document.getElementById(path);
+            if (!pdf) {
+                // Get the PDF blob
+                var blob = this.panel.documents[path];
+                // First PDF reference, download it from dropbox
+                if ( !blob ) {
+                    const file = await this.panel.dbx.dbx.filesDownload({path: `/wip_lo/codes/${path}`});
+                    blob = file.result.fileBlob;
+                    this.panel.documents[path] = blob;
+                }
+                // Create a new tab with the PDF
+                const tab = await this.panel.addTab(this.tabIdx++, 'pdf', URL.createObjectURL(blob), path);
+                const panel = this.panel.layoutContainer.firstChild;
+                // If the top panel is split, place the PDF in the right/bottom most panel
+                if ( panel.classList.contains('split-row') || panel.classList.contains('split-column') )
+                {
+                    tab.appendContainer(panel.lastChild);
+                    tab.changeTab();
+                // Else split the panel to the right and place the PDF there
+                } else {
+                    const { panel1, panel2 } = this.panel.splitPanel('right', panel);
+                    tab.appendContainer(panel2);
+                    tab.changeTab();
+
+                    const tabsList = panel.querySelector('.tabs-list');
+                    const contents = panel.querySelector('.window-container');
+
+                    panel1.appendChild(tabsList);
+                    panel1.appendChild(contents);
+                }
+
+                pdf = document.getElementById(path);
+            }
+            const pdfParent = pdf.parentElement;
+            const idx = Array.from(pdfParent.children).indexOf(pdf);
+
+            // Attach the pdf to the DOM such that the page number can be changed
+            table.title.appendChild(pdf);
+            console.log(pdf.src.split('#')[0] + `#page=${page}`);
+            pdf.src = pdf.src.split('#')[0] + `#page=${page}`;
+
+            // Move the pdf back to its original position
+            pdfParent.insertBefore(pdf, pdfParent.children[idx]);
+        }
+
         try {
             // Move to the PDF page containing the table
             // If the PDF is not loaded, download it from Dropbox
@@ -146,59 +241,35 @@ export class Tabs {
                 const msg = this.content.chatInput.value.trim();
 
                 // Add event listeners for the PDF button if a table is created
-                const table = await this.content.input(msg);
-                if (table && table.pdfButton && table.tableID) {
-                    table.pdfButton.addEventListener('click', async () => {
-                        const query = await window.database.queryTable(`select * from document_metadata where tableID = '${table.tableID}'`);
-                        const results = query[0];
+                const table = await this.content.input(msg, this.panel);
+                if (table && table.title) {
+                    console.log(table.div.querySelectorAll('tr'))
+                    const rows = table.div.querySelectorAll('tr');
+                    rows.forEach((row) => {
+                        row.addEventListener('click', async () => {
+                            const title = row.children[0].textContent;
+                            const page = row.children[2].textContent;
+                            const query = await window.database.queryTable(`select pdfPath, page from document_metadata where title = '${title}'`);
+                            const pdfPath = query[0].pdfPath;
 
-                        var pdf = document.getElementById(results.pdfPath);
-                        if (!pdf) {
-                            // Get the PDF url
-                            var url = this.panel.documents[results.pdfPath];
-                            // First PDF reference, download it from dropbox
-                            if ( !url ) {
-                                const file = await this.panel.dbx.dbx.filesDownload({path: `/wip_lo/codes/${results.pdfPath}`});
-                                const blob = file.result.fileBlob;
-                                url = URL.createObjectURL(blob);
-                                this.panel.documents[results.pdfPath] = url; // Store the URL in the documents object
-                            }
-                            // Create a new tab with the PDF
-                            const tab = await this.panel.addTab(this.tabIdx++, 'pdf', url, results.pdfPath);
-                            const panel = this.panel.layoutContainer.firstChild;
-                            // If the top panel is split, place the PDF in the right/bottom most panel
-                            if ( panel.classList.contains('split-row') || panel.classList.contains('split-column') )
-                            {
-                                tab.appendContainer(panel.lastChild);
-                                tab.changeTab();
-                            // Else split the panel to the right and place the PDF there
-                            } else {
-                                const { panel1, panel2 } = this.panel.splitPanel('right', panel);
-                                tab.appendContainer(panel2);
-                                tab.changeTab();
-
-                                const tabsList = panel.querySelector('.tabs-list');
-                                const contents = panel.querySelector('.window-container');
-
-                                panel1.appendChild(tabsList);
-                                panel1.appendChild(contents);
-                            }
-
-                            pdf = document.getElementById(results.pdfPath);
-                        }
-                        const pdfParent = pdf.parentElement;
-                        const idx = Array.from(pdfParent.children).indexOf(pdf);
-
-                        // Attach the pdf to the DOM such that the page number can be changed
-                        table.pdfButton.appendChild(pdf);
-                        console.log(pdf.src.split('#')[0] + `#page=${results.page}`) 
-                        pdf.src = pdf.src.split('#')[0] + `#page=${results.page}`;
-
-                        // Move the pdf back to its original position
-                        pdfParent.insertBefore(pdf, pdfParent.children[idx]);
+                            await displayPDF.call(this, pdfPath, page, table);
+                        });
                     });
+
+
+                    if (table.tableID) {
+                        table.title.addEventListener('click', async () => {
+                            const query = await window.database.queryTable(`select pdfPath, page from document_metadata where tableID = '${table.tableID}'`);
+                            const results = query[0];
+                            const { pdfPath, page } = results;
+
+                            await displayPDF.call(this, pdfPath, page, table);
+                        });
+                    }
                 }
             });
+
+            
 
             // this.content.chatInput.addEventListener('keydown', (e) => {
             //     this.content.hotkeys(e); // Handle hotkeys for the chat input
@@ -217,7 +288,11 @@ export class Tabs {
         this.tabDiv.id = `t${this.tabIdx}`; // Unique ID for each tab
         this.tabDiv.className = 'tab'; // Add a class for styling if needed
         this.tabDiv.className += window.matchMedia('(prefers-color-scheme: dark)').matches ? ' tab-dark-mode' : ' tab-light-mode'; // Add class based on color scheme
-        this.tabDiv.textContent = `Tab ${this.tabIdx + 1}`;
+        // this.tabDiv.textContent = `Tab ${this.tabIdx + 1}`;
+        const div = document.createElement('div');
+        div.className = 'tab-text';
+        div.textContent = `Tab ${this.tabIdx + 1}`; // Set the tab text
+        this.tabDiv.appendChild(div); // Append the text to the tab
         this.tabDiv.draggable = true;
 
         this.tabDiv.onclick = (e) => {
@@ -231,6 +306,11 @@ export class Tabs {
         closeButton.textContent = '×'; // Close button symbol
         closeButton.onclick = (e) => {
             e.stopPropagation(); // Prevent event bubbling
+            
+            this.panel.removeTab(closeButton, this); // Remove the tab when the close button is clicked
+            
+            
+            /*
             const parent = this.tabDiv.parentNode; // Get the parent container of the tab
             const contentParent = this.content.mainContainer.parentNode; // Get the parent container of the content
 
@@ -242,7 +322,7 @@ export class Tabs {
             const remainingTabs = parent.getElementsByClassName('tab');
             if (this.tabDiv.classList.contains('active') && remainingTabs.length > 0) {
             this.toggleActive(true, remainingTabs[0]); // Activate the first remaining tab
-            }
+            }*/
         };
 
         this.tabDiv.appendChild(closeButton); // Append the close button to the tab
