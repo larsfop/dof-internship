@@ -70,8 +70,8 @@
   position: relative;
   height: 100%;
   width: 100%;
-  min-width: 0;   /* Prevents flexbox overflow */
-  min-height: 0;  /* Prevents flexbox overflow */
+  min-width: 20%;  
+  min-height: 20%; 
   box-sizing: border-box;
 }
 
@@ -288,4 +288,8 @@ caption {
   right: -3px;
   float: right;
   border-radius: 6px;
+}
+
+.tab.dragging {
+  opacity: 0.5;
 }

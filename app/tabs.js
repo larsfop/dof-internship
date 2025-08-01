@@ -10,56 +10,10 @@ export class Tabs {
     }
 
     createListeners() {
+        /*
         this.tabDiv.addEventListener('dragstart', (e) => {
             const self = this; // Store reference to the current instance
             this.tabDiv.classList.add('dragging'); // Add a class to indicate
-
-
-            e.dataTransfer.effectAllowed = 'move'; // Set the effect allowed for the drag operation
-            if (e.target.classList.contains('tab')) {
-                function isMouseInElement(e, element) {
-                    const rect = element.getBoundingClientRect();
-                    return (
-                        e.clientX >= rect.left &&
-                        e.clientX <= rect.right &&
-                        e.clientY >= rect.top &&
-                        e.clientY <= rect.bottom
-                    );
-                }
-
-
-                const tab = e.target; // Get the tab being dragged
-                const tabList = tab.closest('.tabs-list'); // Get the parent element of the tab
-   
-                console.log('target', tab, tabList, e, this.tabDiv)
-                console.log(tab.offsetWidth)
-
-                const { left, top, width, height } = tab.getBoundingClientRect();
-                const x = left + width / 2; // Calculate the x position to center the tab under the mouse cursor
-
-
-                tab.addEventListener('drag', (e) => {
-                    e.stopPropagation(); // Prevent event bubbling
-
-                    if (isMouseInElement(e, tabList)) {
-
-                        tab.style.left = `${e.clientX - x}px`; // Center the tab under the mouse cursor
-
-
-                    }
-
-                });
-
-
-                tab.addEventListener('dragend', (e) => {
-                    e.stopPropagation(); // Prevent event bubbling
-                    tab.style.left = ''; // Reset the left position of the tab
-                    self.tabDiv.classList.remove('dragging'); // Remove the dragging class from the tab
-                });
-
-            }
-
-
 
 
             const tabs = document.getElementsByClassName('tab');
@@ -78,9 +32,7 @@ export class Tabs {
             })
 
             function moveTab(e, container) {
-                console.log(e.target, container)
                 const panelChildren = container ? container.children : e.target.closest('.panel-container').children;
-                console.log(panelChildren);
                 const tabList = panelChildren[0]; // Get the tabs list container
                 const content = panelChildren[1]; // Get the content container
                 const activeTab = tabList.querySelector('.active'); // Get the currently active tab
@@ -174,7 +126,7 @@ export class Tabs {
                 })
             })  
 
-        })
+        })*/
 
         this.tabDiv.addEventListener('dragend', (e) => {
             this.tabDiv.classList.remove('dragging');
@@ -187,6 +139,13 @@ export class Tabs {
                 d.remove(); // Remove the hover indicator
             });
         })
+
+
+
+
+
+
+        
 
         async function displayPDF(path, page, table) {
             var pdf = document.getElementById(path);
@@ -286,6 +245,7 @@ export class Tabs {
         // Create a container for the tabs
         this.tabDiv = document.createElement('div');
         this.tabDiv.id = `t${this.tabIdx}`; // Unique ID for each tab
+        this.tabDiv.dataset.index = this.tabIdx; // Store the index of the tab in a data attribute
         this.tabDiv.className = 'tab'; // Add a class for styling if needed
         this.tabDiv.className += window.matchMedia('(prefers-color-scheme: dark)').matches ? ' tab-dark-mode' : ' tab-light-mode'; // Add class based on color scheme
         // this.tabDiv.textContent = `Tab ${this.tabIdx + 1}`;

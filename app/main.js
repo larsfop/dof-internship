@@ -11,6 +11,7 @@ import { createClient } from 'redis';
 import { arrayBufferToBinaryString } from 'blob-util'
 import fs from 'fs';
 import { marked } from 'marked';
+import dotenv from 'dotenv/config';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -96,7 +97,9 @@ async function getPdfLink (event, filePath) {
     })
 }
 
-const openai = new openAI()
+const openai = new openAI({
+    apiKey: process.env.OPENAI_API_KEY
+})
 
 const redisClient = createClient();
 

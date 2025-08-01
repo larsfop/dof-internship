@@ -42,10 +42,5 @@ if (typeof window !== 'undefined') {
         const dbx = new Dropbox(token);
         const appLayout = new Layout(dbx);
 
-        const worker = new Worker('./worker.js', { type: 'module' });
-        console.log(worker)
-        console.log(worker.methods)
-        const readPDF = await worker.openDocument();
-
     });
 }
