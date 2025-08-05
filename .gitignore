@@ -1,5 +1,5 @@
 app/node_modules
-app/mysql_connection.json
+mysql_connection.json
 *.txt
 .vscode
 .env

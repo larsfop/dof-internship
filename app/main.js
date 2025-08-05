@@ -101,7 +101,9 @@ const openai = new openAI({
     apiKey: process.env.OPENAI_API_KEY
 })
 
-const redisClient = createClient();
+const redisClient = createClient({
+    url: 'redis://192.168.0.41:6379'
+});
 
 await redisClient.connect()
 
