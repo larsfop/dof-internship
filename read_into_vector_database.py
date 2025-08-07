@@ -24,7 +24,7 @@ class VectorDatabase:
     ) -> None:
         self.openai: OpenAI = OpenAI()
         self.redis: redis.Redis = redis.Redis(
-            host='localhost',
+            host='192.168.0.41',
             port=6379,
             decode_responses=True
         )
@@ -113,8 +113,11 @@ class VectorDatabase:
         self,
         start_page: int = 0,
         end_page: int = -1,
+        recreate: bool = False,
     ) -> None:
-        self.create_database()
+        if recreate:
+            print('Recreating the vector database index...')
+            self.create_database()
         
         self.start_page = start_page
         end_page = end_page if end_page != -1 else self.doc.page_count
@@ -193,7 +196,7 @@ class VectorDatabase:
         
         # And fill the Redis database with the data
         self.redis.hset(
-            f'sec:{self.subsection[:2*self.section_depth + 1]}',
+            f'sec:{re.search(r'^\d+(\.\d+)*', self.subsection).group(0)}',
             mapping=self.output[self.section][self.subsection]
         )
         
@@ -212,7 +215,7 @@ if __name__ == '__main__':
         '-vm', '--vectormodel', type=str, default='text-embedding-3-large', help='Vector model to use for embeddings.'
     )
     parser.add_argument(
-        '-i', '--index', type=str, default='test_index', help='Name of the vector database index.'
+        '-i', '--index', type=str, default='vector_db', help='Name of the vector database index.'
     )
     parser.add_argument(
         '-d', '--depth', type=int, default=1, help='Depth of the section hierarchy to read.'
@@ -225,6 +228,9 @@ if __name__ == '__main__':
     )
     parser.add_argument(
         '-e', '--endpage', type=int, default=-1, help='End page to read from the document. Use -1 for the last page.'
+    )
+    parser.add_argument(
+        '--recreate', action='store_true', help='Recreate the vector database index.'
     )
 
     argcomplete.autocomplete(parser, exclude=['--chatmodel', '--vectormodel', '--index', '--depth', '--aisummary'])
@@ -241,5 +247,6 @@ if __name__ == '__main__':
     
     db.read_into_vector_database(
         start_page=args.startpage,
-        end_page=args.endpage
+        end_page=args.endpage,
+        recreate=args.recreate
     )

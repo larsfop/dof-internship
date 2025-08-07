@@ -51,17 +51,6 @@ const createWindow = () => {
     try {
         connection = mysql.createConnection(config.user);
         console.log('Connected to MySQL database');
-        connection.query('SHOW TABLES', (error, results) => {
-            if (error) {
-                console.error('Error fetching tables:', error);
-            } else {
-                db_tables = results.map(row => Object.values(row)[0]); // Extract table names
-                console.log('Database tables:', db_tables);
-
-                // Expose tables to renderer process for autocompletion
-                ipcMain.handle('get-db-tables', () => db_tables);
-            }
-        });
     } catch (err) {
         console.error('MySQL connection error:', err.message);
     }
@@ -233,7 +222,6 @@ ipcMain.handle('db:query', async (event, query) => {
                 console.error('Error executing query:', error);
                 resolve(error.message); // Resolve with error message
             } else {
-                console.log(results);
                 resolve(results); // Resolve with query results
             }
         });
@@ -278,7 +266,6 @@ ipcMain.handle('vector-search', async (event, query) => {
                 });
             });
 
-            console.log('Vector search results:', embeds);
             resolve(embeds);
         }).catch(error => {
             console.error('Error executing vector search:', error);
