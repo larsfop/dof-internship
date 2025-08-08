@@ -35,15 +35,17 @@ class VectorDatabase:
         self.vector_model: str = vector_model
         self.ai_summary: bool = ai_summary
 
-        self.rec: pymupdf.Rect = pymupdf.Rect(72, 72, 523, 770)
+        self.rec: pymupdf.Rect = pymupdf.Rect(42, 72, 563, 772)
         
-        self.section = None
+        self.section = False
         self.subsection = None
         self.section_depth = section_depth
         self.section_regex = re.compile(
-            r'^Section\s\d' if section_depth == 0 else r'^\d' + r'+[.]\d' * section_depth + r'\s'
+            r'^(SECTION\s\d\d?|Section\s\d\d?|\d\d?)\s+[A-Z].+[a-zA-Z]$' if section_depth == 0 else r'^\d' + r'+[.]\d' * section_depth + r'\s'
+            #r'^Section\s\d' if section_depth == 0 else r'^\d' + r'+[.]\d' * section_depth + r'\s'
         )
         self.content = ''
+        self.header = ''
         self.output = {}
         
         
@@ -93,8 +95,7 @@ class VectorDatabase:
         
         schema = (
             TagField('document'),
-            TagField("section"),
-            TagField('subsection'),
+            # TagField("section"),
             TagField('startpage'),
             TagField('endpage'),
             # TextField("content"),
@@ -121,21 +122,36 @@ class VectorDatabase:
         
         self.start_page = start_page
         end_page = end_page if end_page != -1 else self.doc.page_count
+        self.origin_y = 1000
         for self.page in self.doc[start_page:end_page]:
-            if  not self.read_page():
+            complete = self.read_page()
+            if complete:
                 break
             
-        if self.subsection:
-            print(f'Section {self.section} subsection {self.subsection}; Page {self.start_page}:{self.page.number - 1}')
+        if self.section:
+            print(f'Section {self.section}; Page {self.start_page}:{self.page.number - 1}')
             self.fill_database(self.start_page, self.page.number - 1)
 
 
     def read_page(self) -> bool:
-        text = self.page.get_text("text", clip=self.rec)
-        
+        text = self.page.get_text("dict", clip=self.rec)
+
+        if self.page.get_text('text', clip=self.rec).startswith('Annex'):
+            print(f'Annex found on page {self.page.number}, stopping read.')
+            return True
+
+        for i, block in enumerate(text['blocks']):
+            if 'lines' not in block:
+                continue
+            for j, line in enumerate(block['lines']):
+                for k, span in enumerate(line['spans']):
+                    self.read_span(span, i)
+
+        return False
+        """
         if text.startswith('Annex'):
             print(f'Annex found on page {self.page.number}, stopping read.')
-            return False
+            return True
         
         text = re.sub(r'B.*\nB', lambda x: x.group(0)[1:-2], text)
         text = re.sub(r'\n..', lambda x: x.group(0)[1:], text)
@@ -144,7 +160,44 @@ class VectorDatabase:
         for i, block in enumerate(text):
             self.read_block(block, i)
             
-        return True
+        return False
+        """
+    
+
+    def read_span(self, span: dict, index: int) -> None:
+        font = span['font']
+        size = span['size']
+        text = span['text']
+
+        if text.strip():
+            if 'bold' in font.lower() and not 'times' in font.lower() and size > 10:
+                if abs(span['origin'][1] - self.origin_y) > 15:
+                    if not self.section_regex.match(self.header.strip()):
+                        self.content += self.header.strip() + ' '
+                        self.header = ''
+
+
+                text = ' '.join(text.split())
+                self.header += text.strip() + ' '
+                self.origin_y = span['origin'][1]
+
+            else:
+                self.content += text.strip() + ' '
+
+            if self.section_regex.match(self.header.strip()):
+                if self.section:
+                    page = self.page.number if self.origin_y > 120 else self.page.number - 1
+                    print(f'Section: {self.section.strip()}; Page {self.start_page}:{page}')
+                    self.fill_database(
+                        self.start_page,
+                        page
+                    )
+
+                self.start_page = self.page.number
+                self.section = self.header.strip()
+                self.header = ''
+                self.content = ''
+
 
 
     def read_block(self, block: str, index: int) -> None:
@@ -184,20 +237,26 @@ class VectorDatabase:
         )
         
         # Store the embeddings, content and metadata in a dictionary
-        self.output[self.section][self.subsection] = {
+        """self.output[self.header.strip()] = {
             'document': self.doc.name,
-            'section': self.section,
-            'subsection': self.subsection,
+            'section': self.header.strip(),
             'startpage': start_page,
             'endpage': end_page,
             'embedding': np.array(embedding.data[0].embedding, dtype=np.float32).tobytes(),
             'content': self.content
-        }
+        }"""
         
         # And fill the Redis database with the data
         self.redis.hset(
-            f'sec:{re.search(r'^\d+(\.\d+)*', self.subsection).group(0)}',
-            mapping=self.output[self.section][self.subsection]
+            f'sec:{re.search(r'^\d+(\.\d+)*', self.section).group(0)}',
+            mapping={
+                'document': self.doc.name,
+                # 'section': self.section,
+                'startpage': start_page,
+                'endpage': end_page,
+                'embedding': np.array(embedding.data[0].embedding, dtype=np.float32).tobytes(),
+                # 'content': self.content
+            }
         )
         
         
