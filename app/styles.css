@@ -240,6 +240,7 @@ caption {
   cursor: pointer;
   border-right-width: 1px;
   border-right-style: solid;
+  transition: transform 300ms ease;
 }
 
 .tab-text {
@@ -292,4 +293,6 @@ caption {
 
 .tab.dragging {
   opacity: 0.5;
+  transition: none;
+  cursor: grabbing;
 }

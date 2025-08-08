@@ -3,7 +3,9 @@ import pymupdf
 import redis
 import numpy as np
 from openai import OpenAI
+import tiktoken
 from argparse import ArgumentParser
+from tqdm import tqdm
 
 from redis.commands.search.query import Query
 from redis.commands.search.field import TextField, TagField, VectorField
@@ -18,7 +20,7 @@ class VectorDatabase:
         document: str,
         chat_model: str = 'gpt-4.1',
         vector_model: str = 'text-embedding-3-large',
-        vector_db_index: str = 'test_index',
+        vector_db_index: str = 'vector_index',
         section_depth: int = 1,
         ai_summary: bool = False
     ) -> None:
@@ -30,10 +32,18 @@ class VectorDatabase:
         )
         self.index_name: str = vector_db_index
         self.doc: pymupdf.Document = pymupdf.open(document)
+        
+        prefixes = {
+            'ns-en-1992-1-1_2004+a1_2014+na_2024_en_002.pdf': 'EC2:',
+            'ns-en-1993-1-3_2006+na_2015_en_001.pdf': 'EC3:',
+            'ns-en-1995-1-1_2004+a2_2014+na_2024_en_001.pdf': 'EC5:',
+        }
+        self.prefix = prefixes[self.doc.name]
 
         self.chat_model: str = chat_model
         self.vector_model: str = vector_model
         self.ai_summary: bool = ai_summary
+        self.tokenizer = tiktoken.get_encoding('cl100k_base')
 
         self.rec: pymupdf.Rect = pymupdf.Rect(42, 72, 563, 772)
         
@@ -46,7 +56,10 @@ class VectorDatabase:
         )
         self.content = ''
         self.header = ''
-        self.output = {}
+
+        self.token_buffer = []
+        self.page_buffer = []
+        self.output = []
         
         
     def summary_content(self) -> Response:
@@ -74,7 +87,7 @@ class VectorDatabase:
         return response
     
     
-    def create_database(self) -> None:
+    def create_index(self) -> None:
         try:
             self.redis.ft(self.index_name).dropindex(True)
         except:
@@ -96,73 +109,74 @@ class VectorDatabase:
         schema = (
             TagField('document'),
             # TagField("section"),
-            TagField('startpage'),
-            TagField('endpage'),
+            TagField('start_page'),
+            TagField('end_page'),
             # TextField("content"),
             VectorField("embedding", "HNSW", attributes[self.vector_model])
         )
 
+        definition = IndexDefinition(
+            prefix=['EC2:', 'EC3:', 'EC5:'], 
+            index_type=IndexType.HASH
+        )
+
         self.redis.ft(self.index_name).create_index(
-            schema,
-            definition=IndexDefinition(
-                prefix=["sec:"], index_type=IndexType.HASH
-            )
+            fields=schema,
+            definition=definition
         )
         
         
     def read_into_vector_database(
         self,
+        chunk_size: int = 800,
+        chunk_overlap: int = 400,
         start_page: int = 0,
         end_page: int = -1,
         recreate: bool = False,
     ) -> None:
         if recreate:
             print('Recreating the vector database index...')
-            self.create_database()
-        
-        self.start_page = start_page
-        end_page = end_page if end_page != -1 else self.doc.page_count
-        self.origin_y = 1000
+            self.create_index()
+
         for self.page in self.doc[start_page:end_page]:
-            complete = self.read_page()
-            if complete:
-                break
+            self.read_page(chunk_size, chunk_overlap)
             
-        if self.section:
-            print(f'Section {self.section}; Page {self.start_page}:{self.page.number - 1}')
-            self.fill_database(self.start_page, self.page.number - 1)
+        if self.token_buffer:
+            chunk_text = self.tokenizer.decode(self.token_buffer)
+            self.output.append({
+                'document': self.doc.name,
+                'start_page': self.page_buffer[0],
+                'end_page': self.page_buffer[-1],
+                'text': chunk_text,
+            })
+
+        self.fill_database()
 
 
-    def read_page(self) -> bool:
-        text = self.page.get_text("dict", clip=self.rec)
+    def read_page(self, chunk_size: int, chunk_overlap: int) -> bool:
+        text = self.page.get_text('text', clip=self.rec)
+        tokens = self.tokenizer.encode(text)
+        self.token_buffer.extend(tokens)
+        self.page_buffer.extend([self.page.number] * len(tokens))
 
-        if self.page.get_text('text', clip=self.rec).startswith('Annex'):
-            print(f'Annex found on page {self.page.number}, stopping read.')
-            return True
+        start = 0
+        while len(self.token_buffer) - start >= chunk_size:
+            end = start + chunk_size
+            chunk_tokens = self.token_buffer[start:end]
+            chunk_pages = self.page_buffer[start:end]
+            chunk_text = self.tokenizer.decode(chunk_tokens)
+            self.output.append({
+                'document': self.doc.name,
+                'start_page': chunk_pages[0],
+                'end_page': chunk_pages[-1],
+                'text': chunk_text,
+            })
+            start += chunk_size - chunk_overlap
 
-        for i, block in enumerate(text['blocks']):
-            if 'lines' not in block:
-                continue
-            for j, line in enumerate(block['lines']):
-                for k, span in enumerate(line['spans']):
-                    self.read_span(span, i)
+        if start > 0:
+            self.token_buffer = self.token_buffer[start:]
+            self.page_buffer = self.page_buffer[start:]
 
-        return False
-        """
-        if text.startswith('Annex'):
-            print(f'Annex found on page {self.page.number}, stopping read.')
-            return True
-        
-        text = re.sub(r'B.*\nB', lambda x: x.group(0)[1:-2], text)
-        text = re.sub(r'\n..', lambda x: x.group(0)[1:], text)
-        text = [block.strip() for block in text.split('\n')]
-        
-        for i, block in enumerate(text):
-            self.read_block(block, i)
-            
-        return False
-        """
-    
 
     def read_span(self, span: dict, index: int) -> None:
         font = span['font']
@@ -225,39 +239,28 @@ class VectorDatabase:
             self.content += block + '\n'
             
             
-    def fill_database(self, start_page: int, end_page: int) -> None:
-        if self.ai_summary:
-            # Get AI summary of the content
-            response = self.summary_content()
+    def fill_database(self) -> None:
+        for i, output in enumerate(tqdm(self.output, desc='Filling vector database')):
+            if self.ai_summary:
+                # Get AI summary of the content
+                response = self.summary_content()
+                
+            # Get the embedding for the content
+            embedding = self.openai.embeddings.create(
+                input=output['text'],
+                model=self.vector_model
+            )
             
-        # Get the embedding for the content
-        embedding = self.openai.embeddings.create(
-            input=self.content,
-            model=self.vector_model
-        )
-        
-        # Store the embeddings, content and metadata in a dictionary
-        """self.output[self.header.strip()] = {
-            'document': self.doc.name,
-            'section': self.header.strip(),
-            'startpage': start_page,
-            'endpage': end_page,
-            'embedding': np.array(embedding.data[0].embedding, dtype=np.float32).tobytes(),
-            'content': self.content
-        }"""
-        
-        # And fill the Redis database with the data
-        self.redis.hset(
-            f'sec:{re.search(r'^\d+(\.\d+)*', self.section).group(0)}',
-            mapping={
-                'document': self.doc.name,
-                # 'section': self.section,
-                'startpage': start_page,
-                'endpage': end_page,
-                'embedding': np.array(embedding.data[0].embedding, dtype=np.float32).tobytes(),
-                # 'content': self.content
-            }
-        )
+            # And fill the Redis database with the data
+            self.redis.hset(
+                self.prefix + str(i),
+                mapping={
+                    'document': output['document'],
+                    'start_page': output['start_page'],
+                    'end_page': output['end_page'],
+                    'embedding': np.array(embedding.data[0].embedding, dtype=np.float32).tobytes(),
+                }
+            )
         
         
 if __name__ == '__main__':
@@ -274,7 +277,7 @@ if __name__ == '__main__':
         '-vm', '--vectormodel', type=str, default='text-embedding-3-large', help='Vector model to use for embeddings.'
     )
     parser.add_argument(
-        '-i', '--index', type=str, default='vector_db', help='Name of the vector database index.'
+        '-i', '--index', type=str, default='vector_index', help='Name of the vector database index.'
     )
     parser.add_argument(
         '-d', '--depth', type=int, default=1, help='Depth of the section hierarchy to read.'
@@ -291,6 +294,9 @@ if __name__ == '__main__':
     parser.add_argument(
         '--recreate', action='store_true', help='Recreate the vector database index.'
     )
+    parser.add_argument(
+        '--create-index', action='store_true', help='Create the vector database index.'
+    )
 
     argcomplete.autocomplete(parser, exclude=['--chatmodel', '--vectormodel', '--index', '--depth', '--aisummary'])
     args = parser.parse_args()
@@ -303,9 +309,12 @@ if __name__ == '__main__':
         section_depth=args.depth,
         ai_summary=args.aisummary
     )
-    
-    db.read_into_vector_database(
-        start_page=args.startpage,
-        end_page=args.endpage,
-        recreate=args.recreate
-    )
+
+    if args.create_index:
+        db.create_index()
+    else:
+        db.read_into_vector_database(
+            start_page=args.startpage,
+            end_page=args.endpage,
+            recreate=args.recreate
+        )

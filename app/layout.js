@@ -1,6 +1,7 @@
 import { Splitter } from './splitter.js';
 import { Tabs } from './tabs.js';
 import { Chatbox, Pdf } from './content.js';
+import * as eventHandlers from './event-handlers.js';
 
 export class Layout {
     constructor(dbx) {
@@ -138,7 +139,7 @@ export class Layout {
                 tab.changeTab(); // Change to the newly created tab
             };
             tabsList.appendChild(newTabBtn);
-            tabsList.addEventListener('dragstart', this.tabListEventHandler.bind(this));
+            tabsList.addEventListener('dragstart', eventHandlers.tabListEventHandler);
 
             // Create a container for the window content
             const windowContainer = document.createElement('div');
@@ -177,14 +178,14 @@ export class Layout {
         }
     }
 
-    async addTab(tabIdx, type = 'chatbox', file = null, id = null) {
+    async addTab(tabIdx, type = 'chatbox', file = null) {
         // Fill window content
         let content;
         if (type === 'chatbox') {
-            content = new Chatbox(id = id);
+            content = new Chatbox(tabIdx);
             await content.setupTables(); // Setup tables for the chatbox
         } else if (type === 'pdf' && file) {
-            content = new Pdf(file, id);
+            content = new Pdf(file, tabIdx);
         }
 
         const tab = new Tabs(this.panelIdx, tabIdx, content, this);
@@ -314,83 +315,5 @@ export class Layout {
         }
     }
 
-    // TODO
-    // Make work
-    // Handle tab dragging and reordering tabs
-    // Fix from previous implementation
-    tabListEventHandler(e) {
-        e.preventDefault();
-
-        console.log(e.target)
-        const tab = e.target
-        tab.classList.add('dragging'); // Add a class to indicate the tab is being dragged
-
-        e.dataTransfer.effectAllowed = 'move'; // Set the effect allowed for the drag operation
-        if (e.target.classList.contains('tab')) {
-            function isMouseInElement(e, element) {
-                const rect = element.getBoundingClientRect();
-                return (
-                    e.clientX >= rect.left &&
-                    e.clientX <= rect.right &&
-                    e.clientY >= rect.top &&
-                    e.clientY <= rect.bottom
-                );
-            }
-
-
-            const { left, width } = tab.getBoundingClientRect();
-            const x = left + width / 2; // Calculate the x position to center the tab under the mouse cursor
-            console.log(x)
-
-            let tabList = tab.closest('.tabs-list'); // Get the closest tabs list container
-
-            function dragHandler(e) {
-                console.log('dragging', e.target)
-                e.stopPropagation(); // Prevent event bubbling
-
-                tabList.style.backgroundColor = isMouseInElement(e, tabList) ? 'red' : ''; // Highlight the tabs list if the mouse is over it
-
-                if (e.clientY <= 24 && e.clientY > 0) { // Check if the mouse is within the window height
-                    tab.style.left = `${e.clientX - x}px`; // Center the tab under the mouse cursor
-                }
-            }
-
-
-            tab.addEventListener('drag', dragHandler);
-
-
-            // Get bounding rectangles for the tabs in the list
-            const tabListChildren = Array.from(tabList.children); // Get all children of the tabs list
-            tabListChildren.pop();
-            console.log(tabListChildren)
-            // tabListChildren.forEach((t) => {
-            //     console.log(tabListChildren.indexOf(t), t.getBoundingClientRect())
-            // });
-
-
-            tabList.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                for (let t of tabListChildren) {
-                    const { right } = t.getBoundingClientRect();
-                    if (e.clientX < right && tab !== t) {
-                        // console.log(tab !== t, tab, t)
-                        break
-                    }
-                }
-            });
-
-
-            tab.addEventListener('dragend', (e) => {
-                e.stopPropagation(); // Prevent event bubbling
-                tab.style.left = ''; // Reset the left position of the tab
-                self.tabDiv.classList.remove('dragging'); // Remove the dragging class from the tab
-                tabList.style.backgroundColor = ''; // Reset the background color of the tabs list
-
-                tab.removeEventListener('drag', dragHandler); // Remove the drag event listener
-            });
-
-        }
-
-    };
 
 }

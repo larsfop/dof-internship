@@ -6,7 +6,7 @@ export class Tabs {
         this.panel = panel; // Store the panel reference
 
         this.createUI(); // Create UI elements for tabs and window
-        this.createListeners(); // Create event listeners for drag and drop
+        // this.createListeners(); // Create event listeners for drag and drop
     }
 
     createListeners() {

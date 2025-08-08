@@ -2,9 +2,9 @@ import { Table } from "./table.js";
 import { Commands } from "./commands.js";
 
 export class Chatbox {
-    constructor(goldenLayout = false, id = null) {
+    constructor(id = null) {
         this.id = id
-        this.createUI(goldenLayout);
+        this.createUI();
 
         this.inputHistory = [];
         this.historyIndex = -1;
@@ -32,16 +32,10 @@ export class Chatbox {
         this.chatInput.addEventListener('keydown', this.hotkeys.bind(this));
     }
 
-    createUI(goldenLayout) {
-        if (goldenLayout) {
-            this.mainContainer = document.createElement('div');
-            this.mainContainer.id = 'chat-container';
-            this.mainContainer.style.width = 'inherit';
-            this.mainContainer.style.height = 'inherit';
-        } else {
-            this.mainContainer = document.createElement('div');
-            this.mainContainer.className = 'chat-container'; // Add a class for styling if needed
-        }
+    createUI() {
+        this.mainContainer = document.createElement('div');
+        this.mainContainer.className = 'chat-container'; // Add a class for styling if needed
+        this.mainContainer.dataset.index = this.id;
 
         // create chat messages area
         this.chatMessages = document.createElement('div');
@@ -139,8 +133,8 @@ export class Chatbox {
             if (Array.isArray(embeds)) {
                 embeds.forEach(embed => {
                     if (embed) {
-                        if (typeof embed.startpage === "string") embed.startpage = Number(embed.startpage);
-                        if (typeof embed.endpage === "string") embed.endpage = Number(embed.endpage);
+                        if (typeof embed.start_page === "string") embed.start_page = Number(embed.start_page);
+                        if (typeof embed.end_page === "string") embed.end_page = Number(embed.end_page);
                         if (typeof embed.score === "string") embed.score = Number(embed.score);
                     }
                 });
@@ -148,31 +142,32 @@ export class Chatbox {
 
             var docs = []
             var pages = [];
-            for (let i = 0; i < 1; i++) {
+            for (let i = 0; i < 10; i++) {
+                const array = embeds[i];
+                if (array.score > 0.4 && i > 5) {
+                    break;
+                }
                 // Should be dynamically aquired from the vector database query
                 // For testing it is set to a static value
-                var path = 'ns-en-1995-1-1_2004+a2_2014+na_2024_en_001.pdf';
-                const array = embeds[i];
-
-                var blob = panel.documents[path]
+                var blob = panel.documents[array.document]
                 if (!blob) {
-                    const file = await panel.dbx.dbx.filesDownload({ path: `/wip_lo/codes/${path}` });
+                    const file = await panel.dbx.dbx.filesDownload({ path: `/wip_lo/codes/${array.document}` });
                     blob = file.result.fileBlob;
-                    panel.documents[path] = blob;
+                    panel.documents[array.document] = blob;
                 }
 
 
                 docs.push({
-                    name: path,
+                    name: array.document,
                     blob: await blob.arrayBuffer(),
                     url: URL.createObjectURL(blob),
-                    pageStart: array.startpage,
-                    pageEnd: array.endpage,
+                    pageStart: array.start_page,
+                    pageEnd: array.end_page,
                 });
 
-                console.log(`Subsection: ${array.subsection}; Score: ${array.score}; Page: ${array.startpage} to ${array.endpage}`);
+                console.log(`Score: ${array.score}; Page: ${array.start_page} to ${array.end_page}`);
 
-                for (let j = array.startpage; j <= array.endpage; j++) {
+                for (let j = array.start_page; j <= array.end_page; j++) {
                     if (!pages.includes(j)) {
                         pages.push(j);
                     }
@@ -347,6 +342,7 @@ export class Pdf {
         this.mainContainer.src = this.viewer;
         this.mainContainer.width = '100%';
         this.mainContainer.height = '100%';
+        this.mainContainer.dataset.index = this.id; // Add index for identification
     }
 
     setPage(page) {

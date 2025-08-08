@@ -241,8 +241,8 @@ ipcMain.handle('vector-search', async (event, query) => {
 
     return new Promise((resolve, reject) => {
         redisClient.ft.search(
-            'test_index',
-            '*=> [KNN 10 @embedding $vec AS score]',
+            'vector_index',
+            '*=> [KNN 100 @embedding $vec AS score]',
             {
                 PARAMS: {
                     'vec': Buffer.from(
@@ -250,18 +250,17 @@ ipcMain.handle('vector-search', async (event, query) => {
                     )
                 },
                 SORTBY: 'score',
-                RETURN: ['document', 'section', 'subsection', 'startpage', 'endpage', 'score'],
-                LIMIT: { from: 0, size: 10 },
+                RETURN: ['document', 'start_page', 'end_page', 'score'],
+                LIMIT: { from: 0, size: 100 },
                 DIALECT: 2
             }
         ).then(results => {
             var embeds = []
             results.documents.forEach(doc => {
                 embeds.push({
-                    section: doc.value.section,
-                    subsection: doc.value.subsection,
-                    startpage: doc.value.startpage,
-                    endpage: doc.value.endpage,
+                    document: doc.value.document,
+                    start_page: doc.value.start_page,
+                    end_page: doc.value.end_page,
                     score: doc.value.score
                 });
             });
