@@ -1,3 +1,5 @@
+import { chatSendHandler } from "./event-handlers.js";
+
 export class Tabs {
     constructor(panelIdx, tabIdx, content, panel) {
         this.panelIdx = panelIdx; // Store the index of the tab
@@ -6,239 +8,6 @@ export class Tabs {
         this.panel = panel; // Store the panel reference
 
         this.createUI(); // Create UI elements for tabs and window
-        // this.createListeners(); // Create event listeners for drag and drop
-    }
-
-    createListeners() {
-        /*
-        this.tabDiv.addEventListener('dragstart', (e) => {
-            const self = this; // Store reference to the current instance
-            this.tabDiv.classList.add('dragging'); // Add a class to indicate
-
-
-            const tabs = document.getElementsByClassName('tab');
-            [...tabs].forEach((tab, index) => {
-                tab.addEventListener('dragenter', (e) => {
-                    e.preventDefault(); // Prevent default dragover behavior
-                    const div = document.createElement('div');
-                    div.className = 'tab-hover';
-                    tab.appendChild(div); // Append a div to the tab to indicate hover
-                });
-
-                tab.addEventListener('dragleave', (e) => {
-                    tab.style.backgroundColor = ''; // Reset background color on drag leave
-                    tab.removeChild(tab.lastChild)
-                });
-            })
-
-            function moveTab(e, container) {
-                const panelChildren = container ? container.children : e.target.closest('.panel-container').children;
-                const tabList = panelChildren[0]; // Get the tabs list container
-                const content = panelChildren[1]; // Get the content container
-                const activeTab = tabList.querySelector('.active'); // Get the currently active tab
-
-                // Select new active tab if the moved tab was active
-                if (self.tabDiv.classList.contains('active') && !tabList.contains(self.tabDiv)) {
-                    const srcTabs = Array.from(self.tabDiv.closest('.tabs-list').children);
-                    srcTabs.pop(); // Remove the new tab button from the source tabs
-                    const srcIdx = srcTabs.indexOf(self.tabDiv);
-
-                    if (srcTabs.length > 1) {
-                        if (srcIdx === 0) {
-                            self.toggleActive(true, srcTabs[1]); // Activate the next tab if the first tab is dropped
-                        } else {
-                            self.toggleActive(true, srcTabs[srcIdx - 1]); // Activate the previous tab if not the first
-                        }
-                    }
-                }
-
-                // Move the tab and content to the new position
-                if (e.target.classList.contains('tab')) {
-                    tabList.insertBefore(self.tabDiv, e.target); // Move the tab to the new position
-                    content.insertBefore(self.content.mainContainer, content.lastChild); // Move the content to the new position
-                } else {
-                    tabList.insertBefore(self.tabDiv, tabList.lastChild); // Append the tab to the end of the list
-                    content.insertBefore(self.content.mainContainer, content.lastChild); // Move the content to the new position
-                }
-
-                // Deactivate the currently active tab if it exists and activate the moved tab
-                if (activeTab) {
-                    self.toggleActive(false, activeTab); // Deactivate the currently active tab
-                }
-                self.toggleActive(true); // Activate the newly dropped tab
-            }
-                
-            
-            function handleDrop(e) {
-                e.preventDefault();
-                const target = e.target; // Get the target element where the tab is dropped
-                target.classList.remove('highlight-display'); // Remove the class indicating the dragenter event
-
-                if (target.classList.contains('window-highlight') && !target.classList.contains('highlight-center')) {
-                    const direction = target.classList[1].split('-')[1]; // Get the direction from the class name
-                    const panelDiv = e.target.closest('.panel-container');
-
-                    const { panel1, panel2 } = self.panel.splitPanel(direction, panelDiv); // Split the panel to the right
-                    moveTab(e, panel2)
-
-                    // Move the tabs list and content to the correct child panel
-                    const tabsList = panelDiv.querySelector('.tabs-list');
-                    const contents = panelDiv.querySelector('.window-container');
-                    panel1.appendChild(tabsList); // Move the tabs list to the new panel
-                    panel1.appendChild(contents); // Move the content container to the new panel
-                }
-                else {
-                    moveTab(e); // Move the tab to the new position
-                }
-
-
-                document.removeEventListener('drop', handleDrop); // Remove the event listener after handling the drop
-                const windowsHighlights = document.getElementsByClassName('window-highlight');
-                [...windowsHighlights].forEach((windowsHighlight) => {
-                    windowsHighlight.style.pointerEvents = 'none'; // Disable pointer events on window highlights
-                    [...windowsHighlight.children].forEach((div) => {
-                        div.removeEventListener('dragenter', handleDragenter);
-                        div.removeEventListener('dragleave', handleDragleave); // Handle drag leave on window containers
-                    })
-                })  
-            }
-
-
-            function handleDragenter(e) {
-                e.preventDefault(); // Prevent default dragover behavior
-                
-                e.target.classList.add('highlight-display'); // Add a class to indicate the dragenter event
-            }
-
-            function handleDragleave(e) {
-                e.preventDefault(); // Prevent default dragleave behavior
-
-                e.target.classList.remove('highlight-display'); // Remove the class indicating the dragenter event
-            }
-
-            document.addEventListener('drop', handleDrop);
-            const windowsHighlights = document.getElementsByClassName('window-highlight');
-            [...windowsHighlights].forEach((windowsHighlight) => {
-                windowsHighlight.style.pointerEvents = 'auto'; // Enable pointer events on window highlights
-                [...windowsHighlight.children].forEach((div) => {
-                    div.addEventListener('dragenter', handleDragenter);
-                    div.addEventListener('dragleave', handleDragleave); // Handle drag leave on window containers
-                })
-            })  
-
-        })*/
-
-        this.tabDiv.addEventListener('dragend', (e) => {
-            this.tabDiv.classList.remove('dragging');
-        })
-
-        this.tabDiv.addEventListener('drop', (e) => {
-            e.preventDefault(); // Prevent default drop behavior
-            const div = document.getElementsByClassName('tab-hover');
-            [...div].forEach((d) => {
-                d.remove(); // Remove the hover indicator
-            });
-        })
-
-
-
-
-
-
-        
-
-        async function displayPDF(path, page, table) {
-            var pdf = document.getElementById(path);
-            if (!pdf) {
-                // Get the PDF blob
-                var blob = this.panel.documents[path];
-                // First PDF reference, download it from dropbox
-                if ( !blob ) {
-                    const file = await this.panel.dbx.dbx.filesDownload({path: `/wip_lo/codes/${path}`});
-                    blob = file.result.fileBlob;
-                    this.panel.documents[path] = blob;
-                }
-                // Create a new tab with the PDF
-                const tab = await this.panel.addTab(this.tabIdx++, 'pdf', URL.createObjectURL(blob), path);
-                const panel = this.panel.layoutContainer.firstChild;
-                // If the top panel is split, place the PDF in the right/bottom most panel
-                if ( panel.classList.contains('split-row') || panel.classList.contains('split-column') )
-                {
-                    tab.appendContainer(panel.lastChild);
-                    tab.changeTab();
-                // Else split the panel to the right and place the PDF there
-                } else {
-                    const { panel1, panel2 } = this.panel.splitPanel('right', panel);
-                    tab.appendContainer(panel2);
-                    tab.changeTab();
-
-                    const tabsList = panel.querySelector('.tabs-list');
-                    const contents = panel.querySelector('.window-container');
-
-                    panel1.appendChild(tabsList);
-                    panel1.appendChild(contents);
-                }
-
-                pdf = document.getElementById(path);
-            }
-            const pdfParent = pdf.parentElement;
-            const idx = Array.from(pdfParent.children).indexOf(pdf);
-
-            // Attach the pdf to the DOM such that the page number can be changed
-            table.title.appendChild(pdf);
-            console.log(pdf.src.split('#')[0] + `#page=${page}`);
-            pdf.src = pdf.src.split('#')[0] + `#page=${page}`;
-
-            // Move the pdf back to its original position
-            pdfParent.insertBefore(pdf, pdfParent.children[idx]);
-        }
-
-        try {
-            // Move to the PDF page containing the table
-            // If the PDF is not loaded, download it from Dropbox
-            this.content.chatSend.addEventListener('click', async () => {
-                const msg = this.content.chatInput.value.trim();
-
-                // Add event listeners for the PDF button if a table is created
-                const table = await this.content.input(msg, this.panel);
-                if (table && table.title) {
-                    console.log(table.div.querySelectorAll('tr'))
-                    const rows = table.div.querySelectorAll('tr');
-                    rows.forEach((row) => {
-                        row.addEventListener('click', async () => {
-                            const title = row.children[0].textContent;
-                            const page = row.children[2].textContent;
-                            const query = await window.database.queryTable(`select pdfPath, page from document_metadata where title = '${title}'`);
-                            const pdfPath = query[0].pdfPath;
-
-                            await displayPDF.call(this, pdfPath, page, table);
-                        });
-                    });
-
-
-                    if (table.tableID) {
-                        table.title.addEventListener('click', async () => {
-                            const query = await window.database.queryTable(`select pdfPath, page from document_metadata where tableID = '${table.tableID}'`);
-                            const results = query[0];
-                            const { pdfPath, page } = results;
-
-                            await displayPDF.call(this, pdfPath, page, table);
-                        });
-                    }
-                }
-            });
-
-            
-
-            // this.content.chatInput.addEventListener('keydown', (e) => {
-            //     this.content.hotkeys(e); // Handle hotkeys for the chat input
-            // });
-        } catch (e) {
-            console.error(`${this.content} is not a chatbox`);
-        }
-
-
-
     }
 
     createUI() {
@@ -247,7 +16,6 @@ export class Tabs {
         this.tabDiv.id = `t${this.tabIdx}`; // Unique ID for each tab
         this.tabDiv.dataset.index = this.tabIdx; // Store the index of the tab in a data attribute
         this.tabDiv.className = 'tab'; // Add a class for styling if needed
-        this.tabDiv.className += window.matchMedia('(prefers-color-scheme: dark)').matches ? ' tab-dark-mode' : ' tab-light-mode'; // Add class based on color scheme
         // this.tabDiv.textContent = `Tab ${this.tabIdx + 1}`;
         const div = document.createElement('div');
         div.className = 'tab-text';
@@ -266,25 +34,14 @@ export class Tabs {
         closeButton.textContent = '×'; // Close button symbol
         closeButton.onclick = (e) => {
             e.stopPropagation(); // Prevent event bubbling
-            
             this.panel.removeTab(closeButton, this); // Remove the tab when the close button is clicked
-            
-            
-            /*
-            const parent = this.tabDiv.parentNode; // Get the parent container of the tab
-            const contentParent = this.content.mainContainer.parentNode; // Get the parent container of the content
-
-            // Remove the tab and its associated content
-            parent.removeChild(this.tabDiv);
-            contentParent.removeChild(this.content.mainContainer);
-
-            // Activate another tab if the closed tab was active
-            const remainingTabs = parent.getElementsByClassName('tab');
-            if (this.tabDiv.classList.contains('active') && remainingTabs.length > 0) {
-            this.toggleActive(true, remainingTabs[0]); // Activate the first remaining tab
-            }*/
         };
 
+        try {
+            this.content.chatSend.onclick = chatSendHandler.bind(this);
+        } catch (error) {
+            console.error(`${this.content} is not a chatbox`);
+        }
         this.tabDiv.appendChild(closeButton); // Append the close button to the tab
     }
 
@@ -307,10 +64,8 @@ export class Tabs {
     }
 
     toggleActive(force = null, tabDiv = this.tabDiv) {
-        // const idx = Number(tabDiv.id.split('')[1]); // Extract the index from the ID
-        // const content = document.getElementById(`c${idx}`); // Get the content
-        const idx = Array.from(tabDiv.parentNode.children).indexOf(tabDiv); // Get the index of the tab in its parent
-        const content = tabDiv.closest('.panel-container').querySelector('.window-container').children[idx]
+        const index = tabDiv.dataset.index;
+        const content = document.querySelector(`.chat-container[data-index="${index}"], .pdf-viewer[data-index="${index}"]`);
 
         const active = tabDiv.classList.toggle('active', force); // Toggle the active class for the tab
         if (active) {
@@ -320,21 +75,6 @@ export class Tabs {
         }
     }
 
-    renderActive(active) {
-        // Highlight current tab with adaptive color
-        if (active) {
-            this.tabDiv.
-            this.tabDiv.style.background = window.matchMedia('(prefers-color-scheme: dark)').matches ? '#333' : '#e0e0e0';
-            this.tabDiv.style.color = window.matchMedia('(prefers-color-scheme: dark)').matches ? '#fff' : '#222';
-            this.tabDiv.style.fontWeight = 'bold';
-            this.tabDiv.style.boxShadow = window.matchMedia('(prefers-color-scheme: dark)').matches ? '0 2px 8px #1118' : '0 2px 8px #ccc8';
-        } else {
-            this.tabDiv.style.background = window.matchMedia('(prefers-color-scheme: dark)').matches ? '#222' : '#fff';
-            this.tabDiv.style.color = window.matchMedia('(prefers-color-scheme: dark)').matches ? '#bbb' : '#222';
-            this.tabDiv.style.fontWeight = 'normal';
-            this.tabDiv.style.boxShadow = 'none';
-        }
-    }
 
 }  
     

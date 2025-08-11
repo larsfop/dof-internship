@@ -2,8 +2,8 @@ import { Table } from "./table.js";
 import { Commands } from "./commands.js";
 
 export class Chatbox {
-    constructor(id = null) {
-        this.id = id
+    constructor(index) {
+        this.index = index;
         this.createUI();
 
         this.inputHistory = [];
@@ -35,12 +35,11 @@ export class Chatbox {
     createUI() {
         this.mainContainer = document.createElement('div');
         this.mainContainer.className = 'chat-container'; // Add a class for styling if needed
-        this.mainContainer.dataset.index = this.id;
+        this.mainContainer.dataset.index = this.index;
 
         // create chat messages area
         this.chatMessages = document.createElement('div');
         this.chatMessages.className = 'chat-messages border-color';
-        if (this.id) this.chatMessages.id = this.id;
 
         // create chat input area
         const div = document.createElement('div');
@@ -319,12 +318,11 @@ export class Chatbox {
 
 
 export class Pdf {
-    constructor(pdfPath, id = null) {
+    constructor(pdfPath, index, id) {
         this.id = id;
+        this.index = index;
         this.viewer = `./pdfjs/web/viewer.html?file=${encodeURIComponent(pdfPath)}`; // Path to the PDF.js viewer
         this.createPdfViewer();
-
-        console.log(pdfPath)
     }
 
     createPdfViewer() {
@@ -342,7 +340,7 @@ export class Pdf {
         this.mainContainer.src = this.viewer;
         this.mainContainer.width = '100%';
         this.mainContainer.height = '100%';
-        this.mainContainer.dataset.index = this.id; // Add index for identification
+        this.mainContainer.dataset.index = this.index; // Add index for identification
     }
 
     setPage(page) {

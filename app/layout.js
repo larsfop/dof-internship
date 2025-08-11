@@ -18,93 +18,19 @@ export class Layout {
         this.createUI();
         this.addPanel(); // Create tabs list if it doesn't exist
 
+        this.dragEntered = true;
         this.createListeners(); // Create event listeners for layout changes
     }
 
     createListeners() {
 
-        // DROPPING FILES AFTER A TAB PANEL SPLIT DOES NOT SHOW THE HIGHLIGHTS!!!
+        // Add event listeners for window highlights
+        document.addEventListener('dragenter', eventHandlers.dragEnterHandler);
+        document.addEventListener('dragend', eventHandlers.dragEndHandler);
 
-        // Add event listeners for layout changes, if needed
-        const self = this;
-        var dragEntered = true
-        document.addEventListener('dragenter', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
+        // Add event listener for file dropping
+        document.addEventListener('drop', this.dropFile.bind(this));
 
-            function handleDragenter(e) {
-                e.preventDefault(); // Prevent default dragover behavior
-                
-                e.target.classList.add('highlight-display'); // Add a class to indicate the dragenter event
-            }
-
-            function handleDragleave(e) {
-                e.preventDefault(); // Prevent default dragleave behavior
-
-                e.target.classList.remove('highlight-display'); // Remove the class indicating the dragenter event
-            }
-
-            async function handleDrop(e) {
-                e.preventDefault(); // Prevent default drop behavior
-                e.stopPropagation();
-
-                if (e.dataTransfer.files.length === 0) return; // No files to process
-
-
-                for (const file of e.dataTransfer.files) {
-                    if (file.type === 'application/pdf') {
-                        const filePath = window.file.getPath(file);
-                        const tab = await self.addTab(self.tabIdx++, 'pdf', filePath);
-                        e.target.classList.remove('highlight-display'); // Remove the class indicating the dragenter event
-                        if (e.target.classList.contains('window-highlight') && !e.target.classList.contains('highlight-center')) {
-                            const direction = e.target.classList[1].split('-')[1]; // Get the direction from the class name
-                            const panelDiv = e.target.closest('.panel-container');
-
-
-                            const { panel1, panel2 } = self.splitPanel(direction, panelDiv); // Split the panel in the specified direction
-                            console.log(panel1, panel2);
-                            
-                            tab.appendContainer(panel2); // Append the first panel to the new tab
-
-                            const tabsList = panelDiv.querySelector('.tabs-list');
-                            const contents = panelDiv.querySelector('.window-container');
-                            panel1.appendChild(tabsList); // Append the tabs list to the first panel
-                            panel1.appendChild(contents); // Append the contents to the first panel
-
-                        } else {
-                            const panel = e.target.closest('.panel-container');
-                            tab.appendContainer(panel);
-                        }
-                        tab.changeTab(); // Change to the newly created tab
-                    }
-                }
-
-                document.removeEventListener('drop', handleDrop);
-                const windowsHighlights = document.getElementsByClassName('window-highlight');
-                [...windowsHighlights].forEach((windowsHighlight) => {
-                    windowsHighlight.style.pointerEvents = 'none'; // Disable pointer events on window highlights
-                    [...windowsHighlight.children].forEach((div) => {
-                        div.removeEventListener('dragenter', handleDragenter);
-                        div.removeEventListener('dragleave', handleDragleave); // Remove drag leave event listener
-                    })
-                });
-                dragEntered = true; // Prevent multiple dragenter events
-            }
-
-            if (dragEntered) {
-                document.addEventListener('drop', handleDrop);
-                const windowsHighlights = document.getElementsByClassName('window-highlight');
-                [...windowsHighlights].forEach((windowsHighlight) => {
-                    windowsHighlight.style.pointerEvents = 'auto'; // Enable pointer events on window highlights
-                    [...windowsHighlight.children].forEach((div) => {
-                        div.addEventListener('dragenter', handleDragenter);
-                        div.addEventListener('dragleave', handleDragleave); // Handle drag leave on window containers
-                    })
-                })  
-                dragEntered = false; // Prevent multiple dragenter events
-            }
-    
-        });
     }
 
     createUI() {
@@ -139,7 +65,7 @@ export class Layout {
                 tab.changeTab(); // Change to the newly created tab
             };
             tabsList.appendChild(newTabBtn);
-            tabsList.addEventListener('dragstart', eventHandlers.tabListEventHandler);
+            tabsList.addEventListener('dragstart', eventHandlers.tabListEventHandler.bind(this));
 
             // Create a container for the window content
             const windowContainer = document.createElement('div');
@@ -178,14 +104,14 @@ export class Layout {
         }
     }
 
-    async addTab(tabIdx, type = 'chatbox', file = null) {
+    async addTab(tabIdx, type = 'chatbox', file = null, id = null) {
         // Fill window content
         let content;
         if (type === 'chatbox') {
             content = new Chatbox(tabIdx);
             await content.setupTables(); // Setup tables for the chatbox
         } else if (type === 'pdf' && file) {
-            content = new Pdf(file, tabIdx);
+            content = new Pdf(file, tabIdx, id);
         }
 
         const tab = new Tabs(this.panelIdx, tabIdx, content, this);
@@ -313,6 +239,43 @@ export class Layout {
 
             parent.remove(); // Remove the empty parent container
         }
+    }
+
+
+    async dropFile(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        for (const file of e.dataTransfer.files) {
+            if (file.type === 'application/pdf') {
+                const filePath = window.file.getPath(file);
+                const tab = await this.addTab(this.tabIdx++, 'pdf', filePath);
+                e.target.classList.remove('highlight-display'); // Remove the class indicating the dragenter event
+                if (e.target.classList.contains('window-highlight') && !e.target.classList.contains('highlight-center')) {
+                    const direction = e.target.classList[1].split('-')[1]; // Get the direction from the class name
+                    const panelDiv = e.target.closest('.panel-container');
+
+
+                    const { panel1, panel2 } = this.splitPanel(direction, panelDiv); // Split the panel in the specified direction
+                    console.log(panel1, panel2);
+                    
+                    tab.appendContainer(panel2); // Append the first panel to the new tab
+
+                    const tabsList = panelDiv.querySelector('.tabs-list');
+                    const contents = panelDiv.querySelector('.window-container');
+                    panel1.appendChild(tabsList); // Append the tabs list to the first panel
+                    panel1.appendChild(contents); // Append the contents to the first panel
+
+                } else {
+                    const panel = e.target.closest('.panel-container');
+                    tab.appendContainer(panel);
+                }
+                tab.changeTab(); // Change to the newly created tab
+            }
+        }
+
+        // Call the drag end handler manually
+        eventHandlers.dragEndHandler(e);
     }
 
 
