@@ -1,5 +1,6 @@
 import { Table } from "./table.js";
 import { Commands } from "./commands.js";
+import { settingsButtonHandler } from "./event-handlers.js";
 
 export class Chatbox {
     constructor(index) {
@@ -45,6 +46,11 @@ export class Chatbox {
         const div = document.createElement('div');
         div.className = 'chat';
 
+        this.settingsButton = document.createElement('button');
+        this.settingsButton.className = 'chat-settings';
+        this.settingsButton.textContent = '...';
+        this.settingsButton.onclick = settingsButtonHandler.bind(this);
+
         this.chatInput = document.createElement('input');
         this.chatInput.className = 'chat-input';
         this.chatInput.type = 'text';
@@ -55,6 +61,7 @@ export class Chatbox {
         this.chatSend.className = 'chat-send';
         this.chatSend.textContent = 'Send';
 
+        div.appendChild(this.settingsButton);
         div.appendChild(this.chatInput);
         div.appendChild(this.chatSend);
 
@@ -125,9 +132,19 @@ export class Chatbox {
             return await this.displayTable(msg);
         } else {
             const msgDiv = document.createElement('div');
+            this.inputOutputBlock.appendChild(msgDiv);
+
+            let gptCreated = false;
+            const waitingLoop = async () => {
+                let i = 0;
+                while (!gptCreated) {
+                    msgDiv.innerHTML = `Processing documents ${".".repeat(i++ % 3 + 1)}`;
+                    await new Promise(resolve => setTimeout(resolve, 400));
+                }
+            }
+            waitingLoop();
 
             const embeds = await window.openAI.vectorSearch(msg);
-
             console.log(embeds)
             if (Array.isArray(embeds)) {
                 embeds.forEach(embed => {
@@ -141,7 +158,7 @@ export class Chatbox {
 
             var docs = []
             var pages = [];
-            for (let i = 0; i < 10; i++) {
+            for (let i = 0; i < 0; i++) {
                 const array = embeds[i];
                 if (array.score > 0.4 && i > 5) {
                     break;
@@ -174,20 +191,40 @@ export class Chatbox {
             }
             console.log('Total page count:', pages.length);
 
-            const response = await window.openAI.query(msg, docs)
-            console.log(response)
+            window.openAI.created((data) => {
+                gptCreated = true;
+            });
 
-            console.log('Prompt: ', response.status);
-            console.log('Model: ', response.model);
-            console.log(
-                'Token usage:\n',
-                '   Input:  ', response.usage.input_tokens,
-                '\n    Output: ', response.usage.output_tokens,
-                '\n    Total:  ', response.usage.total_tokens
-            )
 
-            msgDiv.innerHTML = await window.marked.markdownToHtml(response.output_text);
-            this.inputOutputBlock.appendChild(msgDiv);
+            let htmlBuffer = ''
+            window.openAI.stream((data) => {
+                htmlBuffer += data;
+                msgDiv.innerHTML = htmlBuffer;
+                this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+            });
+
+            window.openAI.done((data) => {
+                console.log(data);
+            });
+
+            window.openAI.completed(async (data) => {
+                console.log(data);
+                
+                const response = data.response;
+                console.log('Prompt: ', response.status);
+                console.log('Model: ', response.model);
+                console.log(
+                    'Token usage:\n',
+                    '   Input:  ', response.usage.input_tokens,
+                    '\n    Output: ', response.usage.output_tokens,
+                    '\n    Total:  ', response.usage.total_tokens
+                )
+
+                // Remove all openAI listeners
+                window.openAI.removeListeners();
+            });
+            
+            window.openAI.query(msg, docs);
         }
     }
 
@@ -242,11 +279,12 @@ export class Chatbox {
         return table;
     }
 
-    displayError(err) {
-        const div = document.createElement('div');
-        div.textContent = err.message;
-        this.inputOutputBlock.appendChild(div);
-        this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+    async displayWaitingMessage(div) {
+        let i = 0;
+        while (this.gptCreated) {
+            div.innerHTML = `Processing documents ${".".repeat(i++ % 3 + 1)}`;
+            await new Promise(resolve => setTimeout(resolve, 400));
+        }
     }
 
     hotkeys(input) {

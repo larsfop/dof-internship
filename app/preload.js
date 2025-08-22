@@ -17,7 +17,7 @@ contextBridge.exposeInMainWorld('paths', {
 
 contextBridge.exposeInMainWorld('file', {
     getPath: (file) => {
-      return webUtils.getPathForFile(file)
+        return webUtils.getPathForFile(file)
     }
 })
 
@@ -33,7 +33,26 @@ contextBridge.exposeInMainWorld('dropbox', {
 
 contextBridge.exposeInMainWorld('openAI', {
     vectorSearch: (query) => ipcRenderer.invoke('vector-search', query),
-    query: (query, docs) => ipcRenderer.invoke('chat-query', query, docs),
+    // query: (query, docs) => ipcRenderer.invoke('chat-query', query, docs),
+    query: (query, docs) => ipcRenderer.send('gpt-query', { query, docs }),
+    stream: (callback) => ipcRenderer.on('gpt-stream', (event, data) => {
+        callback(data);
+    }),
+    done: (callback) => ipcRenderer.on('gpt-done', (event, data) => {
+        callback(data);
+    }),
+    completed: (callback) => ipcRenderer.on('gpt-completed', (event, data) => {
+        callback(data);
+    }),
+    created: (callback) => ipcRenderer.on('gpt-created', (event, data) => {
+        callback(data);
+    }),
+    removeListeners: () => {
+        ipcRenderer.removeAllListeners('gpt-stream');
+        ipcRenderer.removeAllListeners('gpt-done');
+        ipcRenderer.removeAllListeners('gpt-completed');
+        ipcRenderer.removeAllListeners('gpt-created');
+    }
 });
 
 contextBridge.exposeInMainWorld('marked', {

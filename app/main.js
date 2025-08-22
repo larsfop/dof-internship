@@ -28,6 +28,7 @@ let dropboxAccessToken = null;
 let dbx;
 let connection;
 let db_tables;
+let AIModel = 'gpt-4.1';
 let mainWindow;
 const createWindow = () => {
     mainWindow = new BrowserWindow({
@@ -170,7 +171,35 @@ app.whenReady().then(() => {
                 { role: 'copy' },
                 { role: 'paste' },
                 { type: 'separator' },
-                { role: 'selectAll' }
+                { role: 'selectAll' },
+                { type: 'separator' },
+                { 
+                    label: 'AI model',
+                    submenu: [
+                        { 
+                            label: 'GPT-4.1', 
+                            type: 'radio', 
+                            checked: true,
+                            click: () => {
+                                AIModel = 'gpt-4.1';
+                            }
+                        },
+                        { 
+                            label: 'o4-mini', 
+                            type: 'radio',
+                            click: () => {
+                                AIModel = 'o4-mini';
+                            }
+                        },
+                        // { 
+                        //     label: 'GPT-5', 
+                        //     type: 'radio',
+                        //     click: () => {
+                        //         AIModel = 'gpt-5';
+                        //     }
+                        // }
+                    ]
+                }
             ]
         },
         {
@@ -261,7 +290,7 @@ ipcMain.handle('vector-search', async (event, query) => {
                     document: doc.value.document,
                     start_page: doc.value.start_page,
                     end_page: doc.value.end_page,
-                    score: doc.value.score
+                    score: doc.value.score,
                 });
             });
 
@@ -312,7 +341,8 @@ class PDFCopy {
     }
 }
 
-ipcMain.handle('chat-query', async (event, query, docs) => {
+// ipcMain.handle('chat-query', async (event, query, docs) => {
+ipcMain.on('gpt-query', async (event, { query, docs }) => {
 
     // Copy the required pages into a new document to be sent to the openAI API
     const doc = new PDFCopy();
@@ -337,13 +367,12 @@ ipcMain.handle('chat-query', async (event, query, docs) => {
         purpose: 'user_data'
     });
 
-    const response = await openai.responses.create({
-        // model: 'o4-mini',
-        model: 'gpt-4.1',
+    const stream = await openai.responses.create({
+        model: AIModel,
         input: [
             {
                 role: 'developer',
-                content: 'Formatting re-enabled'
+                content: 'Provide output in valid HTML only, no markdown, do not create a HTML style or title'
             },
             {
                 role: 'user',
@@ -358,10 +387,25 @@ ipcMain.handle('chat-query', async (event, query, docs) => {
                     }
                 ]
             }
-        ]
+        ],
+        stream: true
     });
 
-    return response
+    for await (const event of stream) {
+        if (event.type === 'response.output_text.delta') {
+            mainWindow.webContents.send('gpt-stream', event.delta);
+        }
+        else if (event.type === 'response.output_text.done') {
+            mainWindow.webContents.send('gpt-done', event);
+        }
+        else if (event.type === 'response.completed') {
+            mainWindow.webContents.send('gpt-completed', event);
+        } else if (event.type === 'response.created') {
+            mainWindow.webContents.send('gpt-created', event);
+        } else {
+            console.log(event.type);
+        }
+    }
 
 })
 

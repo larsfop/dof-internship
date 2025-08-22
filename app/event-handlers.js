@@ -53,6 +53,7 @@ export function tabListEventHandler(e) {
     changeTab(tab);
 
     tab.classList.add('dragging'); // Add a class to indicate the tab is being dragged
+    tab.classList.add('no-transition');
     var currentTabContainer = tab.parentElement;
     var { left, right, width } = tab.getBoundingClientRect();
 
@@ -139,12 +140,14 @@ export function tabListEventHandler(e) {
     function dragEndHandler(e) {
         const tabTransform = parseFloat(tab.style.transform.slice(11)) || 0;
         const tabs = [...tab.parentElement.querySelectorAll('.tab')];
-        console.log(tabs);
-        console.log(tabTransform)
 
         // 1. Remove transitions before DOM changes
         for (let t of tabs) {
-            t.classList.add('no-transition');
+            if (t === tab) {
+                t.classList.remove('no-transition');
+            } else {
+                t.classList.add('no-transition');
+            }
         }
 
         // 2. Move tab in DOM and reset transforms
@@ -331,6 +334,43 @@ export async function chatSendHandler() {
             });
         }
     }
+}
+
+
+
+export function settingsButtonHandler() {
+    // Open settings menu
+
+    console.log(this.settingsButton)
+    const panel = this.settingsButton.closest('.panel-container')
+    if (panel.querySelector('.chat-menu')) return;
+
+    const chatMenu = document.createElement('div');
+    chatMenu.classList.add('chat-menu');
+
+    const aiModelChange = document.createElement('div')
+    aiModelChange.textContent = 'Change AI model';
+    aiModelChange.classList.add('chat-submenu');
+
+
+    const embedDepth = document.createElement('div')
+    embedDepth.textContent = 'Set embedding depth';
+    embedDepth.classList.add('chat-submenu');
+
+    panel.appendChild(chatMenu);
+    chatMenu.appendChild(aiModelChange);
+    chatMenu.appendChild(embedDepth);
+
+
+    function closeChatMenu(e) {
+        e.preventDefault();
+        if (!chatMenu.contains(e.target) && !e.target.classList.contains('chat-settings')) {
+            chatMenu.remove();
+            document.removeEventListener('click', closeChatMenu);
+        }
+    }
+
+    document.addEventListener('click', closeChatMenu);
 }
 
 

@@ -2,6 +2,8 @@ from openai.types.responses.response import Response
 import pymupdf
 import redis
 import numpy as np
+import json
+import base64
 from openai import OpenAI
 import tiktoken
 from argparse import ArgumentParser
@@ -22,7 +24,8 @@ class VectorDatabase:
         vector_model: str = 'text-embedding-3-large',
         vector_db_index: str = 'vector_index',
         section_depth: int = 1,
-        ai_summary: bool = False
+        ai_summary: bool = False,
+        recreate: bool = False
     ) -> None:
         self.openai: OpenAI = OpenAI()
         self.redis: redis.Redis = redis.Redis(
@@ -32,7 +35,8 @@ class VectorDatabase:
         )
         self.index_name: str = vector_db_index
         self.doc: pymupdf.Document = pymupdf.open(document)
-        
+        self.config = json.load(open("redis_db_config.json"))
+
         prefixes = {
             'ns-en-1992-1-1_2004+a1_2014+na_2024_en_002.pdf': 'EC2:',
             'ns-en-1993-1-3_2006+na_2015_en_001.pdf': 'EC3:',
@@ -60,8 +64,12 @@ class VectorDatabase:
         self.token_buffer = []
         self.page_buffer = []
         self.output = []
-        
-        
+
+        if recreate:
+            keys = self.redis.scan_iter(f'{self.prefix}*')
+            for key in keys:
+                self.redis.delete(key)
+
     def summary_content(self) -> Response:
         response = self.openai.responses.create(
             model=self.chat_model,
@@ -112,7 +120,11 @@ class VectorDatabase:
             TagField('start_page'),
             TagField('end_page'),
             # TextField("content"),
-            VectorField("embedding", "HNSW", attributes[self.vector_model])
+            VectorField(
+                "embedding", 
+                "FLAT", 
+                attributes[self.vector_model]
+            )
         )
 
         definition = IndexDefinition(
@@ -132,12 +144,7 @@ class VectorDatabase:
         chunk_overlap: int = 400,
         start_page: int = 0,
         end_page: int = -1,
-        recreate: bool = False,
     ) -> None:
-        if recreate:
-            print('Recreating the vector database index...')
-            self.create_index()
-
         for self.page in self.doc[start_page:end_page]:
             self.read_page(chunk_size, chunk_overlap)
             
@@ -307,7 +314,8 @@ if __name__ == '__main__':
         vector_model=args.vectormodel,
         vector_db_index=args.index,
         section_depth=args.depth,
-        ai_summary=args.aisummary
+        ai_summary=args.aisummary,
+        recreate=args.recreate
     )
 
     if args.create_index:
@@ -316,5 +324,4 @@ if __name__ == '__main__':
         db.read_into_vector_database(
             start_page=args.startpage,
             end_page=args.endpage,
-            recreate=args.recreate
         )
