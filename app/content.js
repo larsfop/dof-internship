@@ -15,6 +15,9 @@ export class Chatbox {
         this.lastTabPrefix = '';
         this.originalInput = '';
 
+        this.model = 'gpt-4.1';
+        this.embedDepth = 0;
+
         this.commands = new Commands(this.chatInput);
 
         this.createListeners();
@@ -158,7 +161,7 @@ export class Chatbox {
 
             var docs = []
             var pages = [];
-            for (let i = 0; i < 0; i++) {
+            for (let i = 0; i < this.embedDepth; i++) {
                 const array = embeds[i];
                 if (array.score > 0.4 && i > 5) {
                     break;
@@ -224,7 +227,7 @@ export class Chatbox {
                 window.openAI.removeListeners();
             });
             
-            window.openAI.query(msg, docs);
+            window.openAI.query(msg, docs, this.model);
         }
     }
 

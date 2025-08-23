@@ -9,17 +9,17 @@
   .tabs-list, .tab, .chat-messages {border-color: #959595}
   .chat-settings:hover, .chat-send:hover, .chat-submenu:hover, .tab-new:hover, .tab-close:hover, #splitter:hover, #splitter.dragging { background: #555; }
   tr:hover, tr.hover {background-color: #444;}
-  .chat, .chat-menu {background-color: #3b3b3b;}
+  .chat, .chat-menu, .hover-menu {background-color: #3b3b3b;}
 }
 
 @media (prefers-color-scheme: light) {
   body { background: #ddd; color: black; border-color: gray; }
-  .window-container, .tab:hover, .active { background: white}
+  .window-container, .tab:hover, .active { background: white; }
   table, td, th {border-color: black;}
   .tabs-list, .tab, .chat-messages {border-color: #b5b5b5}
   .chat-settings:hover, .chat-send:hover, .chat-submenu:hover, .tab-new:hover, .tab-close:hover, #splitter:hover, #splitter.dragging { background: #c2c0c0; }
   tr:hover, tr.hover {background-color: #eee;}
-  .chat, .chat-menu {background-color: #ffffff;}
+  .chat, .chat-menu, .hover-menu {background-color: #ffffff;}
 }
 
 [data-tooltip]:hover::after {
@@ -231,7 +231,7 @@
   position: relative;
   left: 24px;
   bottom: calc(140px - 100%);
-  border-style: none;
+  border: none;
   border-radius: 9px;
   padding: 6px 0px;
   display: flex;
@@ -247,6 +247,21 @@
   border: none;
   border-radius: 8px;
   margin: 0px 6px;
+}
+
+.hover-menu {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  padding: 6px 0px;
+  border: none;
+  border-radius: 9px;
+  box-shadow: 0px 0px 8px #151515;
+}
+
+input[type="number"] {
+  padding: 6px 8px;
+  outline: none;
 }
 
 .input-output-block {

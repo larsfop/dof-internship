@@ -341,8 +341,13 @@ class PDFCopy {
     }
 }
 
+ipcMain.handle('set-ai-model', (event, model) => {
+    console.log(`Setting AI model to: ${model}`);
+    AIModel = model;
+});
+
 // ipcMain.handle('chat-query', async (event, query, docs) => {
-ipcMain.on('gpt-query', async (event, { query, docs }) => {
+ipcMain.on('gpt-query', async (event, { query, docs, model }) => {
 
     // Copy the required pages into a new document to be sent to the openAI API
     const doc = new PDFCopy();
@@ -367,8 +372,9 @@ ipcMain.on('gpt-query', async (event, { query, docs }) => {
         purpose: 'user_data'
     });
 
+    console.log(`Using model: ${model}`);
     const stream = await openai.responses.create({
-        model: AIModel,
+        model: model,
         input: [
             {
                 role: 'developer',

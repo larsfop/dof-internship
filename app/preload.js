@@ -33,8 +33,9 @@ contextBridge.exposeInMainWorld('dropbox', {
 
 contextBridge.exposeInMainWorld('openAI', {
     vectorSearch: (query) => ipcRenderer.invoke('vector-search', query),
+    setAIModel: (model) => ipcRenderer.invoke('set-ai-model', model),
     // query: (query, docs) => ipcRenderer.invoke('chat-query', query, docs),
-    query: (query, docs) => ipcRenderer.send('gpt-query', { query, docs }),
+    query: (query, docs, model) => ipcRenderer.send('gpt-query', { query, docs, model }),
     stream: (callback) => ipcRenderer.on('gpt-stream', (event, data) => {
         callback(data);
     }),

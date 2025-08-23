@@ -70,6 +70,9 @@ export class Tabs {
         const active = tabDiv.classList.toggle('active', force); // Toggle the active class for the tab
         if (active) {
             content.style.display = 'block'; // Show content when active
+            // insert new active content as first child
+            // The order of the content elements is used for active tab memory
+            content.parentElement.insertBefore(content, content.parentElement.firstChild);
         } else {
             content.style.display = 'none'; // Hide content when inactive
         }

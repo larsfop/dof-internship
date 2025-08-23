@@ -10,6 +10,9 @@ function toggleActive(tab, force = null) {
     const active = tab.classList.toggle('active', force);
     if (active) {
         content.style.display = 'block';
+            // insert new active content as first child
+            // The order of the content elements is used for active tab memory
+        content.parentElement.insertBefore(content, content.parentElement.firstChild);
     } else {
         content.style.display = 'none';
     }
@@ -32,14 +35,20 @@ function changeTab(tab) {
 function moveTab(tab, panel) {
     const index = tab.dataset.index;
     const content = document.querySelector(`.chat-container[data-index="${index}"], .pdf-viewer[data-index="${index}"]`);
+    const oldContainer = tab.parentElement;
 
     const tabContainer = panel.querySelector('.tabs-list');
     const contentContainer = panel.querySelector('.window-container');
 
     tabContainer.insertBefore(tab, tabContainer.lastChild);
-    contentContainer.insertBefore(content, contentContainer.lastChild);
+    contentContainer.insertBefore(content, contentContainer.firstChild);
 
     changeTab(tab);
+
+    
+    // Toggle previously active tab
+    const oldIndex = oldContainer.nextSibling.firstChild.dataset.index;
+    toggleActive(oldContainer.querySelector(`.tab[data-index="${oldIndex}"]`), true);
 }
 
 
@@ -92,12 +101,6 @@ export function tabListEventHandler(e) {
         const tabTransform = parseFloat(tab.style.transform.slice(11)) || 0;
         const tabs = [...tab.parentElement.querySelectorAll('.tab')];
         const tabIndex = tabs.indexOf(tab);
-
-        // Check if we're moving before or after the hovered tab
-        // const shouldInsertBefore = e.clientX < hoverRect.left + hoverRect.width / 2;
-
-        // Move in DOM
-        // container.insertBefore(dragging, shouldInsertBefore ? hoverTab : hoverTab.nextSibling);
 
         if (tabTransform <= 0) {
             for (let i = 0; i < tabs.length; i++) {
@@ -238,6 +241,10 @@ export function tabListEventHandler(e) {
         });
         moveTab(tab, tabContainer.parentElement);
 
+        // Toggle previously active tab
+        // const index = oldContainer.nextSibling.firstChild.dataset.index;
+        // toggleActive(oldContainer.querySelector(`.tab[data-index="${index}"]`), true);
+
         console.log(tabContainer);
         currentTabContainer = tabContainer;
     }
@@ -340,31 +347,125 @@ export async function chatSendHandler() {
 
 export function settingsButtonHandler() {
     // Open settings menu
+    const self = this;
 
-    console.log(this.settingsButton)
-    const panel = this.settingsButton.closest('.panel-container')
+    const panel = self.settingsButton.closest('.panel-container')
     if (panel.querySelector('.chat-menu')) return;
 
     const chatMenu = document.createElement('div');
     chatMenu.classList.add('chat-menu');
+    panel.appendChild(chatMenu);
 
     const aiModelChange = document.createElement('div')
+    chatMenu.appendChild(aiModelChange);
+
     aiModelChange.textContent = 'Change AI model';
     aiModelChange.classList.add('chat-submenu');
 
+    let modelSubMenuExists = false;
+    aiModelChange.addEventListener('mouseenter', () => {
+        if (modelSubMenuExists) return;
+        modelSubMenuExists = true;
 
-    const embedDepth = document.createElement('div')
-    embedDepth.textContent = 'Set embedding depth';
-    embedDepth.classList.add('chat-submenu');
+        const hoverMenu = document.createElement('div');
+        panel.appendChild(hoverMenu);
+        hoverMenu.classList.add('hover-menu');
 
-    panel.appendChild(chatMenu);
-    chatMenu.appendChild(aiModelChange);
+        const models = ['gpt-4.1', 'o4-mini', 'gpt-5.1'];
+        for (let model of models) {
+            const option = document.createElement('li');
+            option.classList.add('chat-submenu');
+            option.textContent = model;
+
+            option.onclick = () => {
+                self.model = model;
+            };
+
+            hoverMenu.appendChild(option);
+        }
+
+        const { right, top, height } = aiModelChange.getBoundingClientRect();
+        hoverMenu.style.transform = `translate(${right}px, ${top + height - hoverMenu.offsetHeight}px)`;
+
+        function handleMouseLeave(e) {
+            if (!hoverMenu.contains(e.relatedTarget) && e.relatedTarget !== aiModelChange) {
+                hoverMenu.remove();
+                modelSubMenuExists = false;
+
+                hoverMenu.removeEventListener('mouseleave', handleMouseLeave);
+                aiModelChange.removeEventListener('mouseleave', handleMouseLeave);
+            }
+        }
+
+        hoverMenu.addEventListener('mouseleave', handleMouseLeave);
+        aiModelChange.addEventListener('mouseleave', handleMouseLeave);
+    });
+
+
+    const embedDepth = document.createElement('div');
     chatMenu.appendChild(embedDepth);
 
+    function scroll(e) {
+        e.preventDefault(); // Prevent page scroll
+        const step = Number(this.step) || 1;
+        const min = this.min !== '' ? Number(this.min) : -Infinity;
+        const max = this.max !== '' ? Number(this.max) : Infinity;
+        let value = Number(this.value) || 0;
+
+        if (e.deltaY < 0) {
+            // Scroll up: increase value
+            value = Math.min(value + step, max);
+        } else {
+            // Scroll down: decrease value
+            value = Math.max(value - step, min);
+        }
+        this.value = value;
+        self.embedDepth = value;
+    }
+
+    embedDepth.textContent = 'Set embedding depth';
+    embedDepth.classList.add('chat-submenu');
+    let embedSubMenuExists = false;
+    let i = 0;
+    embedDepth.addEventListener('mouseenter', () => {
+        if (embedSubMenuExists) return;
+        embedSubMenuExists = true;
+
+        const option = document.createElement('input');
+        option.id = `${i++}`;
+        option.type = 'number';
+        option.min = 0;
+        option.max = 100;
+        option.value = self.embedDepth;
+        option.classList.add('hover-menu');
+        panel.appendChild(option);
+
+        option.addEventListener('wheel', scroll);
+
+        const { right, top, height } = embedDepth.getBoundingClientRect();
+        option.style.transform = `translate(${right}px, ${top + height - option.offsetHeight}px)`;
+
+        function handleMouseLeave(e) {
+            if (!option.contains(e.relatedTarget) && e.relatedTarget !== embedDepth) {
+                option.remove();
+                embedSubMenuExists = false;
+
+                option.removeEventListener('mouseleave', handleMouseLeave);
+                embedDepth.removeEventListener('mouseleave', handleMouseLeave);
+            }
+        }
+
+        option.addEventListener('mouseleave', handleMouseLeave);
+        embedDepth.addEventListener('mouseleave', handleMouseLeave);
+    });
 
     function closeChatMenu(e) {
         e.preventDefault();
-        if (!chatMenu.contains(e.target) && !e.target.classList.contains('chat-settings')) {
+        if (
+            !chatMenu.contains(e.target) && 
+            e.target !== self.settingsButton &&
+            !e.target.closest('.hover-menu')
+        ) {
             chatMenu.remove();
             document.removeEventListener('click', closeChatMenu);
         }
