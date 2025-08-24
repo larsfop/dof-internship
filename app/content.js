@@ -16,7 +16,7 @@ export class Chatbox {
         this.originalInput = '';
 
         this.model = 'gpt-4.1';
-        this.embedDepth = 0;
+        this.embedDepth = 1;
 
         this.commands = new Commands(this.chatInput);
 
