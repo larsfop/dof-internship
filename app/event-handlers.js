@@ -459,6 +459,58 @@ export function settingsButtonHandler() {
         embedDepth.addEventListener('mouseleave', handleMouseLeave);
     });
 
+    const conversation = document.createElement('div');
+    chatMenu.appendChild(conversation);
+    conversation.classList.add('chat-submenu');
+    conversation.textContent = 'Conversation';
+
+    let conversationSubMenuExists = false;
+    let conversationChecked;
+    if (self.conversationCheckBox) {
+        conversationChecked = self.conversation;
+    } else {
+        conversationChecked = true;
+    }
+    conversation.addEventListener('mouseenter', () => {
+        if (conversationSubMenuExists) return;
+        conversationSubMenuExists = true;
+
+        const wrapper = document.createElement('div');
+        wrapper.classList.add('hover-menu');
+        panel.appendChild(wrapper);
+
+        self.conversationCheckBox = document.createElement('input');
+        self.conversationCheckBox.type = 'checkbox';
+        self.conversationCheckBox.id = 'conversation';
+        self.conversationCheckBox.value = 'conversation';
+        self.conversationCheckBox.name = 'conversation';
+        self.conversationCheckBox.checked = conversationChecked;
+        wrapper.appendChild(self.conversationCheckBox);
+
+        const label = document.createElement('label');
+        label.textContent = 'Use conversation';
+        label.htmlFor = self.conversationCheckBox.id;
+        wrapper.appendChild(label);
+
+        const { right, top, height } = conversation.getBoundingClientRect();
+        wrapper.style.transform = `translate(${right}px, ${top + height - wrapper.offsetHeight}px)`;
+
+        function handleMouseLeave(e) {
+            if (!wrapper.contains(e.relatedTarget) && e.relatedTarget !== conversation) {
+                wrapper.remove();
+                conversationSubMenuExists = false;
+
+                wrapper.removeEventListener('mouseleave', handleMouseLeave);
+                conversation.removeEventListener('mouseleave', handleMouseLeave);
+            }
+        }
+
+        // wrapper.addEventListener('mouseleave', handleMouseLeave);
+        // conversation.addEventListener('mouseleave', handleMouseLeave);
+
+
+    });
+
     function closeChatMenu(e) {
         e.preventDefault();
         if (

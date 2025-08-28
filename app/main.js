@@ -347,7 +347,7 @@ ipcMain.handle('set-ai-model', (event, model) => {
 });
 
 // ipcMain.handle('chat-query', async (event, query, docs) => {
-ipcMain.on('gpt-query', async (event, { query, docs, model }) => {
+ipcMain.on('gpt-query', async (event, { query, docs, model, responseID }) => {
 
     // Copy the required pages into a new document to be sent to the openAI API
     const doc = new PDFCopy();
@@ -375,6 +375,7 @@ ipcMain.on('gpt-query', async (event, { query, docs, model }) => {
     console.log(`Using model: ${model}`);
     const stream = await openai.responses.create({
         model: model,
+        previous_response_id: responseID,
         input: [
             {
                 role: 'developer',

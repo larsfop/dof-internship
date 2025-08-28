@@ -17,6 +17,8 @@ export class Chatbox {
 
         this.model = 'gpt-4.1';
         this.embedDepth = 1;
+        this.responseID = null;
+        this.usePreviousResponse = true;
 
         this.commands = new Commands(this.chatInput);
 
@@ -214,6 +216,8 @@ export class Chatbox {
                 console.log(data);
                 
                 const response = data.response;
+                this.responseID = response.id;
+
                 console.log('Prompt: ', response.status);
                 console.log('Model: ', response.model);
                 console.log(
@@ -227,7 +231,12 @@ export class Chatbox {
                 window.openAI.removeListeners();
             });
             
-            window.openAI.query(msg, docs, this.model);
+            window.openAI.query(
+                msg, 
+                docs, 
+                this.model, 
+                this.usePreviousResponse ? this.responseID : null
+            );
         }
     }
 
