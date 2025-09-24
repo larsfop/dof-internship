@@ -1,11 +1,17 @@
 import { Table } from "./table.js";
 import { Commands } from "./commands.js";
-import { settingsButtonHandler } from "./event-handlers.js";
+import { settingsButtonHandler, displayPDF } from "./event-handlers.js";
 
 export class Chatbox {
-    constructor(index) {
+    constructor(index, panel) {
         this.index = index;
+        this.panel = panel;
         this.createUI();
+
+        this.documents = {
+            'EN_1992': 'ns-en-1992-1-1_2004+a1_2014+na_2024_en_002.pdf',
+            'EN_1995': 'ns-en-1995-1-1_2004+a2_2014+na_2024_en_001.pdf'
+        }
 
         this.inputHistory = [];
         this.historyIndex = -1;
@@ -18,7 +24,7 @@ export class Chatbox {
         this.model = 'gpt-4.1';
         this.embedDepth = 1;
         this.responseID = null;
-        this.usePreviousResponse = true;
+        this.usePreviousResponse = false;
 
         this.commands = new Commands(this.chatInput);
 
@@ -137,6 +143,7 @@ export class Chatbox {
             return await this.displayTable(msg);
         } else {
             const msgDiv = document.createElement('div');
+            msgDiv.className = 'output-message';
             this.inputOutputBlock.appendChild(msgDiv);
 
             let gptCreated = false;
@@ -212,8 +219,24 @@ export class Chatbox {
                 console.log(data);
             });
 
-            window.openAI.completed(async (data) => {
+            window.openAI.completed(async (data, documentPageCorrections) => {
+                console.log('Document Page Corrections:', documentPageCorrections);
                 console.log(data);
+
+                const references = msgDiv.getElementsByTagName('cite');
+                Array.from(references).forEach(ref => {
+                    const str = ref.textContent;
+                    const name = str.match(/EN\s\d+/g)[0].replace(' ', '_');
+                    const page = str.match(/pages*\s\d+/g)[0].match(/\d+/g)[0];
+
+                    const document = this.documents[name];
+                    const truePage = documentPageCorrections[document][page];
+
+                    ref.onclick = async (e) => {
+                        e.stopPropagation();
+                        await displayPDF(document, truePage, this.panel, ref);
+                    }
+                });
                 
                 const response = data.response;
                 this.responseID = response.id;

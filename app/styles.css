@@ -176,6 +176,18 @@
   padding-top: 9px;
 }
 
+.output-message {
+  transition: all 4s ease-in-out 3s;
+}
+
+.output-message > * {
+  transition: inherit;
+}
+
+cite {
+  cursor: pointer;
+}
+
 .chat-input {
   width: 100%;
   background-color: transparent;

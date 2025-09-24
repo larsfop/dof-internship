@@ -42,8 +42,8 @@ contextBridge.exposeInMainWorld('openAI', {
     done: (callback) => ipcRenderer.on('gpt-done', (event, data) => {
         callback(data);
     }),
-    completed: (callback) => ipcRenderer.on('gpt-completed', (event, data) => {
-        callback(data);
+    completed: (callback) => ipcRenderer.on('gpt-completed', (event, data, documentPageCorrections) => {
+        callback(data, documentPageCorrections);
     }),
     created: (callback) => ipcRenderer.on('gpt-created', (event, data) => {
         callback(data);

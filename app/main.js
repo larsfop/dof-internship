@@ -307,6 +307,7 @@ class PDFCopy {
     constructor() {
         this.doc = new mupdf.PDFDocument();
         this.documentPageCopies = {};
+        this.documentPageCorrections = {};
     }
 
     graftPage(otherDoc, name, pageIndex) {
@@ -322,16 +323,19 @@ class PDFCopy {
             return;
         }
         this.documentPageCopies[name].push(pageIndex);
-        console.log(`Grafting page ${pageIndex} from document ${name}`);
+
+        const page = otherDoc.loadPage(pageIndex);
+        var truePage = page.toStructuredText('clip-rect=42:786:564:808').asText();
+        truePage = Number(truePage)
+
+        if (!this.documentPageCorrections[name]) {
+            this.documentPageCorrections[name] = {};
+        }
+        this.documentPageCorrections[name][truePage] = pageIndex + 1;
+
+        console.log(`Grafting page ${pageIndex + 1} (${truePage}) from document ${name}`);
+
         this.doc.graftPage(-1, otherDoc, pageIndex);
-    }
-
-    countPages() {
-        return this.doc.countPages();
-    }
-
-    buffer() {
-        return this.doc.saveToBuffer();
     }
 
     saveTmpDocument() {
@@ -367,6 +371,9 @@ ipcMain.on('gpt-query', async (event, { query, docs, model, responseID }) => {
     // Save the pdf as tmp.pdf
     doc.saveTmpDocument();
 
+    const documentPageCorrections = doc.documentPageCorrections;
+    console.log(documentPageCorrections);
+
     const file = await openai.files.create({
         file: fs.createReadStream('tmp.pdf'),
         purpose: 'user_data'
@@ -379,7 +386,7 @@ ipcMain.on('gpt-query', async (event, { query, docs, model, responseID }) => {
         input: [
             {
                 role: 'developer',
-                content: 'Provide output in valid HTML only, no markdown, do not create a HTML style or title'
+                content: 'Provide output in valid HTML only, no markdown, do not create a HTML style or title. If you use a page from the input file, reference the document always on its own line, section and the document page number like this: <cite>Reference: "info" page 1.</cite>'
             },
             {
                 role: 'user',
@@ -406,7 +413,7 @@ ipcMain.on('gpt-query', async (event, { query, docs, model, responseID }) => {
             mainWindow.webContents.send('gpt-done', event);
         }
         else if (event.type === 'response.completed') {
-            mainWindow.webContents.send('gpt-completed', event);
+            mainWindow.webContents.send('gpt-completed', event, documentPageCorrections);
         } else if (event.type === 'response.created') {
             mainWindow.webContents.send('gpt-created', event);
         } else {

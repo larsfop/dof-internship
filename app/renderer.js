@@ -3,6 +3,10 @@ import { Pdf } from './pdf.js';
 import { Layout } from './layout.js';
 import { Dropbox } from './dropbox.js';
 
+var _documents = {
+    'EN_1992-1-1:2004': 'ns-en-1992-1-1_2004+a1_2014+na_2024_en_002.pdf',
+}
+
 async function getDropboxAccessToken() {
     return new Promise((resolve) => {
         const authWin = window.open('http://localhost:3000', '_blank');

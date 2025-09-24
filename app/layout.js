@@ -108,7 +108,7 @@ export class Layout {
         // Fill window content
         let content;
         if (type === 'chatbox') {
-            content = new Chatbox(tabIdx);
+            content = new Chatbox(tabIdx, this);
             await content.setupTables(); // Setup tables for the chatbox
         } else if (type === 'pdf' && file) {
             content = new Pdf(file, tabIdx, id);

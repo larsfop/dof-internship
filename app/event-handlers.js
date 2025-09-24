@@ -5,7 +5,7 @@
 // Toggle a tab active or inactive, can be forced for better control
 function toggleActive(tab, force = null) {
     const index = tab.dataset.index;
-    const content = document.querySelector(`.chat-container[data-index="${index}"], pdf-viewer[data-index="${index}"]`);
+    const content = document.querySelector(`.chat-container[data-index="${index}"], .pdf-viewer[data-index="${index}"]`);
 
     const active = tab.classList.toggle('active', force);
     if (active) {
@@ -266,30 +266,28 @@ export function tabListEventHandler(e) {
 //                      Content event handler functions
 // --------------------------------------------------------------------------------------
 
-async function displayPDF(path, page, table) {
+export async function displayPDF(path, page, layout, div) {
     var pdf = document.getElementById(path);
     if (!pdf) {
         // Get the PDF blob
-        var blob = this.panel.documents[path];
+        var blob = layout.documents[path];
         // First PDF reference, download it from dropbox
         if ( !blob ) {
-            const file = await this.panel.dbx.dbx.filesDownload({path: `/wip_lo/codes/${path}`});
+            const file = await layout.dbx.dbx.filesDownload({path: `/wip_lo/codes/${path}`});
             blob = file.result.fileBlob;
-            this.panel.documents[path] = blob;
+            layout.documents[path] = blob;
         }
         // Create a new tab with the PDF
-        const tab = await this.panel.addTab(this.panel.tabIdx++, 'pdf', URL.createObjectURL(blob), path);
-        const panel = this.panel.layoutContainer.firstChild;
+        const tab = await layout.addTab(layout.tabIdx++, 'pdf', URL.createObjectURL(blob), path);
+        const panel = layout.layoutContainer.firstChild;
         // If the top panel is split, place the PDF in the right/bottom most panel
         if ( panel.classList.contains('split-row') || panel.classList.contains('split-column') )
         {
             tab.appendContainer(panel.lastChild);
-            tab.changeTab();
         // Else split the panel to the right and place the PDF there
         } else {
-            const { panel1, panel2 } = this.panel.splitPanel('right', panel);
+            const { panel1, panel2 } = layout.splitPanel('right', panel);
             tab.appendContainer(panel2);
-            tab.changeTab();
 
             const tabsList = panel.querySelector('.tabs-list');
             const contents = panel.querySelector('.window-container');
@@ -302,13 +300,15 @@ async function displayPDF(path, page, table) {
     }
     const pdfParent = pdf.parentElement;
     const idx = Array.from(pdfParent.children).indexOf(pdf);
+    const tab = document.querySelector(`.tab[data-index="${pdf.dataset.index}"]`);
 
     // Attach the pdf to the DOM such that the page number can be changed
-    table.title.appendChild(pdf);
+    div.appendChild(pdf);
     pdf.src = pdf.src.split('#')[0] + `#page=${page}`;
 
     // Move the pdf back to its original position
     pdfParent.insertBefore(pdf, pdfParent.children[idx]);
+    changeTab(tab);
 }
 
 
@@ -326,7 +326,7 @@ export async function chatSendHandler() {
                 const query = await window.database.queryTable(`select pdfPath, page from document_metadata where title = '${title}'`);
                 const pdfPath = query[0].pdfPath;
 
-                await displayPDF.call(this, pdfPath, page, table);
+                await displayPDF(pdfPath, page, this.panel, table.title);
             });
         });
 
@@ -337,7 +337,7 @@ export async function chatSendHandler() {
                 const results = query[0];
                 const { pdfPath, page } = results;
 
-                await displayPDF.call(this, pdfPath, page, table);
+                await displayPDF(pdfPath, page, this.panel, table.title);
             });
         }
     }
@@ -505,8 +505,8 @@ export function settingsButtonHandler() {
             }
         }
 
-        // wrapper.addEventListener('mouseleave', handleMouseLeave);
-        // conversation.addEventListener('mouseleave', handleMouseLeave);
+        wrapper.addEventListener('mouseleave', handleMouseLeave);
+        conversation.addEventListener('mouseleave', handleMouseLeave);
 
 
     });
