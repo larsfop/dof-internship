@@ -11,7 +11,6 @@ import { createClient } from 'redis';
 import { arrayBufferToBinaryString } from 'blob-util'
 import fs from 'fs';
 import { marked } from 'marked';
-import dotenv from 'dotenv/config';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
