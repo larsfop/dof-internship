@@ -172,9 +172,9 @@ export class Chatbox {
             var pages = [];
             for (let i = 0; i < this.embedDepth; i++) {
                 const array = embeds[i];
-                if (array.score > 0.4 && i > 5) {
-                    break;
-                }
+                // if (array.score > 0.4 && i > 5) {
+                //     break;
+                // }
                 // Should be dynamically aquired from the vector database query
                 // For testing it is set to a static value
                 var blob = panel.documents[array.document]

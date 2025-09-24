@@ -97,7 +97,7 @@ export class Layout {
     async addPanel() {
         const panelContainer = this.createPanelUI(); // Create the UI for the panel
         this.layoutContainer.appendChild(panelContainer); // Append the panel container to the layout container
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 1; i++) {
             const tab = await this.addTab(this.tabIdx++); // Initialize with one tab
             tab.appendContainer(panelContainer);
             tab.changeTab(); // Change to the newly created tab
