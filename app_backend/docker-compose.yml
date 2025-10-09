@@ -17,7 +17,6 @@ services:
       interval: 30s
       timeout: 20s
       retries: 3
-    restart: always
 
   minio:
     container_name: milvus-minio
@@ -36,7 +35,6 @@ services:
       interval: 30s
       timeout: 20s
       retries: 3
-    restart: always
 
   standalone:
     container_name: milvus-standalone
@@ -48,6 +46,7 @@ services:
       ETCD_ENDPOINTS: etcd:2379
       MINIO_ADDRESS: minio:9000
       MQ_TYPE: woodpecker
+      LOG_TO_STDOUT: "true"
     volumes:
       - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/milvus:/var/lib/milvus
     healthcheck:
@@ -62,7 +61,20 @@ services:
     depends_on:
       - "etcd"
       - "minio"
-    restart: always
+
+  backend:
+    build: .
+    container_name: app-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DROPBOX_API_KEY=${DROPBOX_API_KEY}
+      - DROPBOX_REFRESH_TOKEN=${DROPBOX_REFRESH_TOKEN}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - MILVUS_HOST=localhost
+      - MILVUS_PORT=19530
+    depends_on:
+      - "standalone"
 
 networks:
   default:

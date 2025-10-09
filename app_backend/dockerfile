@@ -1,0 +1,10 @@
+FROM python:3.12.10-slim
+
+WORKDIR /src
+
+COPY requirement.txt .
+RUN pip install --no-cache-dir -r requirement.txt
+
+COPY /src /src
+
+CMD ["sh", "-c", "python3 setup_database.py && gunicorn main:app -w 1 -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000"]

@@ -1,7 +1,10 @@
 app/node_modules
 app/*.pdf
+app/*.yml
+
 mysql_connection.json
 *.txt
 .vscode
 .env
 __pycache__
+volumes
