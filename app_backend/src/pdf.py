@@ -1,10 +1,9 @@
-from dropbox import DropboxOAuth2FlowNoRedirect, Dropbox
+from dropbox import Dropbox
+from dropbox.files import FileMetadata
 import base64
 import os
-import subprocess
 import pymupdf
 from typing import Self
-
 
 class dbx_handler:
     def __init__(
@@ -17,24 +16,39 @@ class dbx_handler:
             app_key=os.environ['DROPBOX_API_KEY']
         )
 
-   
-    def download_file_to_memory(self, name: str):
-        path = self.search_files(name)
-        _, res = self.dbx.files_download(path)
-        return res.content
+
+    def download_file_to_memory(self, file: str|FileMetadata) -> tuple[FileMetadata, bytes]:
+        if isinstance(file, FileMetadata):
+            path = file.path_lower
+        else:
+            path = self.search_files(file)
+
+        metadata, res = self.dbx.files_download(path)
+        return metadata, res.content
     
 
     def search_files(self, name: str) -> str:
         results = self.dbx.files_search('/wip_lo', name, max_results=1)
         path = results.matches[0].metadata.path_lower
         return path
+    
 
+    def list_files(self, folder: str = '') -> list[FileMetadata]:
+        results = self.dbx.files_list_folder(f'/wip_lo/{folder}', recursive=True)
+        entries = results.entries
+
+        while results.has_more:
+            results = self.dbx.files_list_folder_continue(results.cursor)
+            entries.extend(results.entries)
+
+        return [entry for entry in entries if isinstance(entry, FileMetadata)]
+    
 
     def get_pdf_document(self, name: str) -> pymupdf.Document:
         if name in self.pdf_documents:
             file_data = self.pdf_documents[name]
         else:
-            file_data = self.download_file_to_memory(name)
+            _, file_data = self.download_file_to_memory(name)
             self.pdf_documents[name] = file_data
 
         doc = pymupdf.open(
@@ -53,17 +67,14 @@ class pdf:
         self.inserted_pages = {}
 
 
-    def insert_pages(self, doc: Self, start: int = 0, end: int = -1) -> None:
-        if end == -1:
-            end = doc.page_count
-
+    def insert_pages(self, doc: Self, page_numbers: list[int]) -> None:
         try:
             self.inserted_pages[doc.name]
         except KeyError:
             self.inserted_pages[doc.name] = []
 
         pages = self.inserted_pages[doc.name]
-        for i in range(start, end + 1):
+        for i in page_numbers:
             if i in pages:
                 continue
             pages.append(i)

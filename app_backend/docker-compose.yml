@@ -74,7 +74,8 @@ services:
       - MILVUS_HOST=localhost
       - MILVUS_PORT=19530
     depends_on:
-      - "standalone"
+      standalone:
+        condition: service_healthy
 
 networks:
   default:

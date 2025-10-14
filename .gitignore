@@ -1,9 +1,9 @@
 app/node_modules
-app/*.pdf
 app/*.yml
 
 mysql_connection.json
 *.txt
+*.pdf
 .vscode
 .env
 __pycache__

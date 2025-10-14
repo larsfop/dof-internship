@@ -4,20 +4,19 @@ import secrets
 import hashlib
 import requests
 from dotenv import load_dotenv, set_key, get_key
+import os
+import signal
 
 from fastapi import FastAPI, Request
 from fastapi.responses import RedirectResponse, HTMLResponse
 import uvicorn
 
-
 load_dotenv()
-# get_key('.env', 'DROPBOX_API_KEY')
-# set_key('.env', 'DROPBOX_API_KEY', '25qnd8cmj0jv2vv')
 
 DROPBOX_API_KEY = get_key('.env', 'DROPBOX_API_KEY')
 REDIRECT_URI = "http://localhost:3000/auth"
 
-code_verifier = secrets.token_urlsafe(64)  # Generates a valid PKCE code_verifier
+code_verifier = secrets.token_urlsafe(64)
 code_challenge = base64.urlsafe_b64encode(hashlib.sha256(code_verifier.encode('utf-8')).digest()).rstrip(b'=').decode('utf-8')
 
 app = FastAPI()
@@ -54,8 +53,10 @@ def auth_callback(request: Request):
         refresh_token = token_data['refresh_token']
 
         set_key('.env', 'DROPBOX_REFRESH_TOKEN', refresh_token)
+        os.kill(os.getpid(), signal.SIGINT)
         return HTMLResponse("<h2>Authorization successful! You can close this tab.</h2>")
     else:
+        os.kill(os.getpid(), signal.SIGINT)
         return HTMLResponse("<h2>Authorization failed. Please try again.</h2>")
     
 
