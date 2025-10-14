@@ -22,7 +22,7 @@ export class Chatbox {
         this.originalInput = '';
 
         this.model = 'gpt-4.1';
-        this.embedDepth = 1;
+        this.embedDepth = 0;
         this.responseID = null;
         this.usePreviousResponse = false;
 
@@ -32,14 +32,6 @@ export class Chatbox {
     }
 
     async createListeners() {
-        const tables = await window.database.queryTable('SELECT tableID,caption from document_metadata');
-        this.lookupTable = {};
-        this.tableList = [];
-        tables.forEach((table) => {
-            this.lookupTable[table.caption] = table.tableID;
-            this.tableList.push(table.caption);
-        });
-
         // Tab autocomplete for table name after 'from' with cycling support
         this.chatInput.addEventListener('keydown', this.hotkeys.bind(this));
     }
@@ -137,6 +129,78 @@ export class Chatbox {
     }
 
     async output(msg, panel) {
+        const queryParams = new URLSearchParams({
+            query: msg,
+            embed_depth: this.embedDepth,
+        })
+
+        const msgDiv = document.createElement('div');
+        msgDiv.className = 'output-message';
+        this.inputOutputBlock.appendChild(msgDiv);
+
+        let modelCreated = false;
+        const waitingLoop = async () => {
+            let i = 0;
+            while (!modelCreated) {
+                msgDiv.innerHTML = `Processing prompt ${".".repeat(i++ % 3 + 1)}`;
+                await new Promise(resolve => setTimeout(resolve, 400));
+            }
+        }
+        waitingLoop();
+
+        const response = await fetch(`http://localhost:8000/query?${queryParams.toString()}`);
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder("utf-8");
+
+        let buffer = '';
+        let htmlBuffer = '';
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            buffer += decoder.decode(value, { stream: true });
+            const event = buffer.split('\n');
+            buffer = event.pop(); // Keep the last partial event in the buffer
+
+            for (const evt of event) {
+                if (evt.trim()) {
+                    try {
+                        const data = JSON.parse(evt);
+                        if (data.event === 'on_chat_model_start') {
+                            console.log('Response started:', data);
+                        }
+                        else if (data.event === 'on_chat_model_stream') {
+                            modelCreated = true;
+                            const content = data.content;
+                            if (!content.trim()) continue;
+
+                            htmlBuffer += content;
+                            msgDiv.innerHTML = htmlBuffer;
+                            this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+                        }
+
+                        else if (data.event === 'on_chat_model_end') {
+                            console.log('Response complete:', data);
+                        }
+
+                    } catch (err) {
+                        console.error('Failed to parse event:', err);
+                    }
+                }
+            }
+        }
+
+        const pdfResponse = await fetch(`http://localhost:8000/pdf?name=ns-en-1995-1-1_2004+a2_2014+na_2024_en_001.pdf`);
+        const pdfBlob = await pdfResponse.blob();
+        const pdfUrl = URL.createObjectURL(pdfBlob);
+        console.log('PDF URL:', pdfUrl);
+        console.log('Panel:', panel);
+
+        const tab = await this.panel.addTab(1, 'pdf', pdfUrl);
+        tab.appendContainer(panel.layoutContainer.firstChild);
+
+
+        /*
         const msg_lower = msg.toLowerCase();
         if (msg_lower.startsWith('table') || msg_lower.startsWith('select') || msg_lower.startsWith('show') || msg_lower.startsWith('describe')) {
             // if (msg.startsWith('select ') || msg.startsWith('SELECT ') || msg.startsWith('show ') || msg.startsWith('SHOW ') || msg.startsWith('describe ') || msg.startsWith('DESCRIBE ')) {
@@ -261,6 +325,7 @@ export class Chatbox {
                 this.usePreviousResponse ? this.responseID : null
             );
         }
+            */
     }
 
     async displayTable(msg) {
@@ -399,13 +464,6 @@ export class Pdf {
     }
 
     createPdfViewer() {
-        // built-in PDF viewer
-        // this.mainContainer = document.createElement('div');
-        // this.mainContainer.className = 'pdf-viewer'; // Add a class for styling if needed
-        // this.mainContainer.innerHTML = `<embed src="${this.pdfPath}" width="100%" height="100%"></embed>`;
-        // this.mainContainer.style.width = '100%';
-        // this.mainContainer.style.height = '100%'; // Adjust height as needed
-
         // Use Mozilla's PDF.js viewer
         this.mainContainer = document.createElement('embed');
         this.mainContainer.className = 'pdf-viewer';
@@ -413,7 +471,7 @@ export class Pdf {
         this.mainContainer.src = this.viewer;
         this.mainContainer.width = '100%';
         this.mainContainer.height = '100%';
-        this.mainContainer.dataset.index = this.index; // Add index for identification
+        this.mainContainer.dataset.index = this.index;
     }
 
     setPage(page) {

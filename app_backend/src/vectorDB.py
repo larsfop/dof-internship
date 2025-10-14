@@ -8,6 +8,7 @@ from uuid import uuid4
 import os
 import re
 import json
+import asyncio
 
 """
 
@@ -112,7 +113,7 @@ class chatbot_pipeline:
 
                 # Create document from chunk
                 metadata = {
-                    'Document': 'ns-en-1995-1-1_2004+a2_2014+na_2024_en_001.pdf',
+                    'Document': name,
                     'pages': ';'.join(map(str, page_buffer)),
                     'page_labels': ';'.join(page_labels),
                 }
@@ -139,7 +140,7 @@ class chatbot_pipeline:
             chunk_content = tokenizer.decode(token_buffer)
 
             metadata = {
-                'Document': 'ns-en-1995-1-1_2004+a2_2014+na_2024_en_001.pdf',
+                'Document': name,
                 'pages': ';'.join(map(str, page_buffer)),
                 'page_labels': ';'.join(page_labels),
             }
@@ -194,24 +195,23 @@ class chatbot_pipeline:
         self,
         query: str,
         pdf_data: str|None = None,
-        ):
-        
+    ):
         msg = [
-                {
-                    'role': 'developer',
-                    'content': 'Provide output in valid HTML only, no markdown, do not create a HTML style or title. If you use a page from the input file, reference the document always on its own line, section and the document page number like this: <cite>Reference: "info" page 1.</cite>'
-                },
-                {
-                    'role': 'user',
-                    'content': [
-                        {
-                            'type': 'text',
-                            'text': query
-                        }
-                    ]
-                }
-            ]
-        
+            {
+                'role': 'developer',
+                'content': 'Provide output in valid HTML only, no markdown, do not create a HTML style or title. If you use a page from the input file, reference the document always on its own line, section and the document page number like this: <cite>Reference: "info" page 1.</cite>'
+            },
+            {
+                'role': 'user',
+                'content': [
+                    {
+                        'type': 'text',
+                        'text': query
+                    }
+                ]
+            }
+        ]
+
         if pdf_data:
             msg[1]['content'].insert(0, {
                 'type': 'file',
@@ -223,21 +223,29 @@ class chatbot_pipeline:
 
         async for event in self.llm.astream_events(msg):
             if event['event'] == 'on_chat_model_start':
-                continue
                 # print(event['event'])
+                yield json.dumps({
+                    'event': event['event'],
+                    'id': event['run_id'],
+                }) + '\n'
             elif event['event'] == 'on_chat_model_stream':
                 # print(event['data']['chunk'].content, end='', flush=True)
                 yield json.dumps({
                     'event': event['event'],
                     'content': event['data']['chunk'].content
-                })
+                }) + '\n'
             elif event['event'] == 'on_chat_model_end':
                 # print()
                 # print(event['event'])
                 data = event['data']['output']
+
+                # End event fires to quickly, wait 200 ms to ensure this event is sent after the last stream event
+                await asyncio.sleep(0.2)
+                
                 yield json.dumps({
                     'event': event['event'],
                     'id': event['run_id'],
+                    'content': data.content,
                     'response_metadata': data.response_metadata,
                     'usage_metadata': data.usage_metadata
-                })
+                }) + '\n'

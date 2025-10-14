@@ -71,7 +71,7 @@ services:
       - DROPBOX_API_KEY=${DROPBOX_API_KEY}
       - DROPBOX_REFRESH_TOKEN=${DROPBOX_REFRESH_TOKEN}
       - OPENAI_API_KEY=${OPENAI_API_KEY}
-      - MILVUS_HOST=localhost
+      - MILVUS_HOST=milvus-standalone
       - MILVUS_PORT=19530
     depends_on:
       standalone:

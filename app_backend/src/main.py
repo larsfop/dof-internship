@@ -1,5 +1,5 @@
-from fastapi import FastAPI
-from fastapi.responses import StreamingResponse
+from fastapi import FastAPI, Response
+from fastapi.responses import StreamingResponse, FileResponse
 import uvicorn
 import asyncio
 
@@ -29,11 +29,23 @@ async def query(query: str, embed_depth: int):
 
         pdf_data = newdoc.as_base64()
 
-    return StreamingResponse(chatbot.response(
-        query,
-        pdf_data,
-    ))
+    return StreamingResponse(
+        chatbot.response(query, pdf_data),
+        media_type='text/event-stream'
+    )
 
+
+@app.get("/pdf")
+def get_pdf(name: str):
+    doc = dbx.get_pdf_document(name)
+    pdf_bytes = doc.tobytes()
+    doc.close()
+
+    return Response(
+        content=pdf_bytes,
+        media_type='application/pdf',
+    )
+    
 
 async def main():
     config = uvicorn.Config("main:app", port=8000, log_level="info", reload=True)

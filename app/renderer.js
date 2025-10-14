@@ -1,15 +1,4 @@
-import { Chatbox } from './content.js';
-import { Pdf } from './pdf.js';
 import { Layout } from './layout.js';
-import { Dropbox } from './dropbox.js';
-
-async function getDropboxAccessToken() {
-    return new Promise((resolve) => {
-        const authWin = window.open('http://localhost:3000', '_blank');
-
-        window.dropbox.authSuccess(resolve, authWin);
-    });
-}
 
 // Chatbox and tabs logic for renderer process
 if (typeof window !== 'undefined') {
@@ -37,10 +26,7 @@ if (typeof window !== 'undefined') {
         // Listen for theme changes
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateTabTheme);
 
-        const token = await getDropboxAccessToken();
-
-        const dbx = new Dropbox(token);
-        const appLayout = new Layout(dbx);
+        const appLayout = new Layout();
 
     });
 }

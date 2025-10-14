@@ -4,11 +4,10 @@ import { Chatbox, Pdf } from './content.js';
 import * as eventHandlers from './event-handlers.js';
 
 export class Layout {
-    constructor(dbx) {
+    constructor() {
         this.panels = {};
         this.documents = {};
 
-        this.dbx = dbx; // Store the Dropbox instance for later use
         this.panelIdx = 0; // Index for the next panel to be added
         this.columns = 1; // Default to one column
         this.rows = 1; // Default to one row
@@ -109,7 +108,7 @@ export class Layout {
         let content;
         if (type === 'chatbox') {
             content = new Chatbox(tabIdx, this);
-            await content.setupTables(); // Setup tables for the chatbox
+            // await content.setupTables(); // Setup tables for the chatbox
         } else if (type === 'pdf' && file) {
             content = new Pdf(file, tabIdx, id);
         }
