@@ -188,6 +188,9 @@ class chatbot_pipeline:
             **kwargs
         )
 
+        for result in results:
+            print(result.metadata, flush=True)
+
         return results
 
 

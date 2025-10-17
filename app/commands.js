@@ -62,3 +62,32 @@ export class Commands {
         }
     }
 }
+
+
+export function chatHistoryNavigation(e) {
+    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+        const chatInputs = this.mainContainer.querySelectorAll('.input-message');
+        const nInputs = chatInputs.length;
+        const msg = this.chatInput.value.trim();
+        
+        const delta = e.key === 'ArrowUp' ? 1 : -1;
+        let index = this.historyIndex + delta;
+        while (index > -2 && index < nInputs) {
+            const input = chatInputs[index];
+
+            if (index === -1) {
+                this.chatInput.value = '';
+                this.historyIndex = index;
+                break;
+            } else if (input.innerText != msg) {
+                this.chatInput.value = input.innerText;
+                this.historyIndex = index;
+                break;
+            }
+
+            index += delta;
+        }
+
+        setTimeout(() => this.chatInput.setSelectionRange(this.chatInput.value.length, this.chatInput.value.length), 0);
+    }
+}

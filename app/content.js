@@ -1,5 +1,5 @@
 import { Table } from "./table.js";
-import { Commands } from "./commands.js";
+import { Commands, chatHistoryNavigation } from "./commands.js";
 import { settingsButtonHandler, displayPDF } from "./event-handlers.js";
 
 export class Chatbox {
@@ -32,8 +32,16 @@ export class Chatbox {
     }
 
     async createListeners() {
-        // Tab autocomplete for table name after 'from' with cycling support
-        this.chatInput.addEventListener('keydown', this.hotkeys.bind(this));
+        // ENTER key to send message
+        this.chatInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                this.chatSend.click();
+            }
+        });
+
+        // Chat history navigation
+        this.mainContainer.addEventListener('keydown', chatHistoryNavigation.bind(this));
     }
 
     createUI() {
@@ -103,17 +111,18 @@ export class Chatbox {
                 this.inputHistory.push(msg);
             }
             this.chatInput.value = '';
-            this.historyIndex = this.inputHistory.length;
+            this.historyIndex = -1;
             this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
 
             this.inputOutputBlock = document.createElement('div');
             this.inputOutputBlock.className = 'input-output-block';
-            this.chatMessages.appendChild(this.inputOutputBlock);
 
-            if (this.chatMessages.children.length > 1) {
+            if (this.chatMessages.children.length > 0) {
                 const hr = document.createElement('hr');
-                this.chatMessages.insertBefore(hr, this.chatMessages.lastChild);
+                hr.style.width = '100%';
+                this.chatMessages.insertBefore(hr, this.chatMessages.firstChild);
             }
+            this.chatMessages.insertBefore(this.inputOutputBlock, this.chatMessages.firstChild);
 
             // Display input message
             const msgDiv = document.createElement('div');
@@ -196,8 +205,8 @@ export class Chatbox {
         console.log('PDF URL:', pdfUrl);
         console.log('Panel:', panel);
 
-        const tab = await this.panel.addTab(1, 'pdf', pdfUrl);
-        tab.appendContainer(panel.layoutContainer.firstChild);
+        // const tab = await this.panel.addTab(1, 'pdf', pdfUrl);
+        // tab.appendContainer(panel.layoutContainer.firstChild);
 
 
         /*
@@ -384,36 +393,6 @@ export class Chatbox {
         while (this.gptCreated) {
             div.innerHTML = `Processing documents ${".".repeat(i++ % 3 + 1)}`;
             await new Promise(resolve => setTimeout(resolve, 400));
-        }
-    }
-
-    hotkeys(input) {
-        if (input.key === 'Enter') {
-            this.chatSend.click();
-        } else if (input.key === 'ArrowUp') {
-            if (this.inputHistory.length > 0 && this.historyIndex > 0) {
-                this.historyIndex--;
-                this.chatInput.value = this.inputHistory[this.historyIndex];
-                setTimeout(() => this.chatInput.setSelectionRange(this.chatInput.value.length, this.chatInput.value.length), 0);
-            }
-        } else if (input.key === 'ArrowDown') {
-            if (this.inputHistory.length > 0 && this.historyIndex < this.inputHistory.length - 1) {
-                this.historyIndex++;
-                this.chatInput.value = this.inputHistory[this.historyIndex];
-                setTimeout(() => this.chatInput.setSelectionRange(this.chatInput.value.length, this.chatInput.value.length), 0);
-            } else if (this.historyIndex === this.inputHistory.length - 1) {
-                this.historyIndex++;
-                this.chatInput.value = '';
-            }
-        } else if (input.key === 'Tab') {
-            // Tab autocomplete for table name after 'from' with cycling, mid-word support
-            this.autocomplete(input);
-        } else {
-            // Reset tab matches if not typing a table name
-            this.tabmatches = [];
-            this.tabIndex = 0;
-            this.lastTabPrefix = '';
-            this.originalInput = '';
         }
     }
 

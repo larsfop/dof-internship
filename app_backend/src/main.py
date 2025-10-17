@@ -1,10 +1,14 @@
 from fastapi import FastAPI, Response
 from fastapi.responses import StreamingResponse, FileResponse
+from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 import asyncio
+import os
 
 from vectorDB import chatbot_pipeline
 from pdf import dbx_handler, pdf
+
+os.environ['PYTHONUNBUFFERED'] = '1'
 
 dbx = dbx_handler()
 
@@ -12,6 +16,14 @@ chatbot = chatbot_pipeline()
 chatbot.setup_retriever()
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/query")
 async def query(query: str, embed_depth: int):
