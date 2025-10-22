@@ -9,12 +9,13 @@ export class Chatbox {
         this.createUI();
 
         this.documents = {
-            'EN_1992': 'ns-en-1992-1-1_2004+a1_2014+na_2024_en_002.pdf',
-            'EN_1995': 'ns-en-1995-1-1_2004+a2_2014+na_2024_en_001.pdf'
+            'EN1992': 'ns-en-1992-1-1_2004+a1_2014+na_2024_en_002.pdf',
+            'EN1995': 'ns-en-1995-1-1_2004+a2_2014+na_2024_en_001.pdf'
         }
 
         this.inputHistory = [];
         this.historyIndex = -1;
+        this.sessionID = crypto.randomUUID();
 
         this.tabmatches = [];
         this.tabIndex = 0;
@@ -120,9 +121,9 @@ export class Chatbox {
             if (this.chatMessages.children.length > 0) {
                 const hr = document.createElement('hr');
                 hr.style.width = '100%';
-                this.chatMessages.insertBefore(hr, this.chatMessages.firstChild);
+                this.chatMessages.appendChild(hr);
             }
-            this.chatMessages.insertBefore(this.inputOutputBlock, this.chatMessages.firstChild);
+            this.chatMessages.appendChild(this.inputOutputBlock);
 
             // Display input message
             const msgDiv = document.createElement('div');
@@ -141,6 +142,10 @@ export class Chatbox {
         const queryParams = new URLSearchParams({
             query: msg,
             embed_depth: this.embedDepth,
+            model: this.model,
+            user_id: localStorage.getItem('userID'),
+            session_id: this.sessionID,
+            entry_id: crypto.randomUUID(),
         })
 
         const msgDiv = document.createElement('div');
@@ -157,7 +162,7 @@ export class Chatbox {
         }
         waitingLoop();
 
-        const response = await fetch(`http://localhost:8000/query?${queryParams.toString()}`);
+        const response = await fetch(`http://localhost:8015/query?${queryParams.toString()}`);
         const reader = response.body.getReader();
         const decoder = new TextDecoder("utf-8");
 
@@ -190,6 +195,22 @@ export class Chatbox {
 
                         else if (data.event === 'on_chat_model_end') {
                             console.log('Response complete:', data);
+                            const pageCorrections = data.page_corrections
+
+                            const references = msgDiv.getElementsByTagName('cite');
+                            Array.from(references).forEach(async ref => {
+                                const str = ref.textContent;
+                                const name = str.match(/EN.\d+/g)[0].replace(' ', '');
+                                const pageLabel = str.match(/page*.\d+/g)[0].match(/\d+/g)[0];
+
+                                const document = this.documents[name];
+                                const page = pageCorrections[document][pageLabel];
+
+                                ref.onclick = async (e) => {
+                                    e.stopPropagation();
+                                    await displayPDF(document, page, this.panel, ref);
+                                }
+                            });
                         }
 
                     } catch (err) {
@@ -198,143 +219,6 @@ export class Chatbox {
                 }
             }
         }
-
-        const pdfResponse = await fetch(`http://localhost:8000/pdf?name=ns-en-1995-1-1_2004+a2_2014+na_2024_en_001.pdf`);
-        const pdfBlob = await pdfResponse.blob();
-        const pdfUrl = URL.createObjectURL(pdfBlob);
-        console.log('PDF URL:', pdfUrl);
-        console.log('Panel:', panel);
-
-        // const tab = await this.panel.addTab(1, 'pdf', pdfUrl);
-        // tab.appendContainer(panel.layoutContainer.firstChild);
-
-
-        /*
-        const msg_lower = msg.toLowerCase();
-        if (msg_lower.startsWith('table') || msg_lower.startsWith('select') || msg_lower.startsWith('show') || msg_lower.startsWith('describe')) {
-            // if (msg.startsWith('select ') || msg.startsWith('SELECT ') || msg.startsWith('show ') || msg.startsWith('SHOW ') || msg.startsWith('describe ') || msg.startsWith('DESCRIBE ')) {
-            return await this.displayTable(msg);
-        } else {
-            const msgDiv = document.createElement('div');
-            msgDiv.className = 'output-message';
-            this.inputOutputBlock.appendChild(msgDiv);
-
-            let gptCreated = false;
-            const waitingLoop = async () => {
-                let i = 0;
-                while (!gptCreated) {
-                    msgDiv.innerHTML = `Processing documents ${".".repeat(i++ % 3 + 1)}`;
-                    await new Promise(resolve => setTimeout(resolve, 400));
-                }
-            }
-            waitingLoop();
-
-            const embeds = await window.openAI.vectorSearch(msg);
-            console.log(embeds)
-            if (Array.isArray(embeds)) {
-                embeds.forEach(embed => {
-                    if (embed) {
-                        if (typeof embed.start_page === "string") embed.start_page = Number(embed.start_page);
-                        if (typeof embed.end_page === "string") embed.end_page = Number(embed.end_page);
-                        if (typeof embed.score === "string") embed.score = Number(embed.score);
-                    }
-                });
-            }
-
-            var docs = []
-            var pages = [];
-            for (let i = 0; i < this.embedDepth; i++) {
-                const array = embeds[i];
-                // if (array.score > 0.4 && i > 5) {
-                //     break;
-                // }
-                // Should be dynamically aquired from the vector database query
-                // For testing it is set to a static value
-                var blob = panel.documents[array.document]
-                if (!blob) {
-                    const file = await panel.dbx.dbx.filesDownload({ path: `/wip_lo/codes/${array.document}` });
-                    blob = file.result.fileBlob;
-                    panel.documents[array.document] = blob;
-                }
-
-
-                docs.push({
-                    name: array.document,
-                    blob: await blob.arrayBuffer(),
-                    url: URL.createObjectURL(blob),
-                    pageStart: array.start_page,
-                    pageEnd: array.end_page,
-                });
-
-                console.log(`Score: ${array.score}; Page: ${array.start_page} to ${array.end_page}`);
-
-                for (let j = array.start_page; j <= array.end_page; j++) {
-                    if (!pages.includes(j)) {
-                        pages.push(j);
-                    }
-                }
-            }
-            console.log('Total page count:', pages.length);
-
-            window.openAI.created((data) => {
-                gptCreated = true;
-            });
-
-
-            let htmlBuffer = ''
-            window.openAI.stream((data) => {
-                htmlBuffer += data;
-                msgDiv.innerHTML = htmlBuffer;
-                this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
-            });
-
-            window.openAI.done((data) => {
-                console.log(data);
-            });
-
-            window.openAI.completed(async (data, documentPageCorrections) => {
-                console.log('Document Page Corrections:', documentPageCorrections);
-                console.log(data);
-
-                const references = msgDiv.getElementsByTagName('cite');
-                Array.from(references).forEach(ref => {
-                    const str = ref.textContent;
-                    const name = str.match(/EN\s\d+/g)[0].replace(' ', '_');
-                    const page = str.match(/pages*\s\d+/g)[0].match(/\d+/g)[0];
-
-                    const document = this.documents[name];
-                    const truePage = documentPageCorrections[document][page];
-
-                    ref.onclick = async (e) => {
-                        e.stopPropagation();
-                        await displayPDF(document, truePage, this.panel, ref);
-                    }
-                });
-                
-                const response = data.response;
-                this.responseID = response.id;
-
-                console.log('Prompt: ', response.status);
-                console.log('Model: ', response.model);
-                console.log(
-                    'Token usage:\n',
-                    '   Input:  ', response.usage.input_tokens,
-                    '\n    Output: ', response.usage.output_tokens,
-                    '\n    Total:  ', response.usage.total_tokens
-                )
-
-                // Remove all openAI listeners
-                window.openAI.removeListeners();
-            });
-            
-            window.openAI.query(
-                msg, 
-                docs, 
-                this.model, 
-                this.usePreviousResponse ? this.responseID : null
-            );
-        }
-            */
     }
 
     async displayTable(msg) {

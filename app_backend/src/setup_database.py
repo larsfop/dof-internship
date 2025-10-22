@@ -4,8 +4,8 @@ from argparse import ArgumentParser
 from dotenv import load_dotenv, get_key
 from time import time
 
-from src.vectorDB import chatbot_pipeline
-from src.pdf import dbx_handler
+from vectorDB import chatbot_pipeline
+from pdf import dbx_handler
 
 load_dotenv()
 
@@ -15,8 +15,8 @@ def setup_database(
         recreate: bool = False
     ):
 
-    MILVUS_HOST = get_key(".env", "MILVUS_HOST")
-    MILVUS_PORT = get_key(".env", "MILVUS_PORT")
+    MILVUS_HOST = get_key("../.env", "MILVUS_HOST")
+    MILVUS_PORT = get_key("../.env", "MILVUS_PORT")
 
     db_uri = f'http://{MILVUS_HOST}:{MILVUS_PORT}'
 
@@ -49,10 +49,14 @@ def setup_database(
         db_uri=db_uri,
     )
 
+    if len(path) == 0:
+        path = ['/wip_lo']
     for p in path:
         if p.endswith('.pdf'):
             files = [p]
         else:
+            if not 'wip_lo' in p:
+                p = f'/wip_lo/{p}'
             files = dbx.list_files(folder=p)
 
         for file in files:

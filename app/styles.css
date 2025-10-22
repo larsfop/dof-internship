@@ -168,15 +168,21 @@
 
 .chat-messages {
   height: calc(100% - 19px);
-  overflow-y: auto;
-  overflow-x: hidden; /* Prevents horizontal scrollbar */
+  overflow: auto;
   border-bottom-width: 2px;
   border-bottom-style: solid;
   padding-bottom: 5px;
   padding-top: 9px;
-  display: flex;
-  flex-direction: column-reverse;
-  justify-content: flex-end;
+}
+
+.chat-messages::-webkit-scrollbar {
+  height: 0px;
+  width: 8px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
 }
 
 .output-message {

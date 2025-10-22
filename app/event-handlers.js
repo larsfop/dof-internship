@@ -44,17 +44,64 @@ function moveTab(tab, panel) {
     contentContainer.insertBefore(content, contentContainer.firstChild);
 
     changeTab(tab);
-
     
     // Toggle previously active tab
     const oldIndex = oldContainer.nextSibling.firstChild.dataset.index;
-    toggleActive(oldContainer.querySelector(`.tab[data-index="${oldIndex}"]`), true);
+    const oldTab = oldContainer.querySelector(`.tab[data-index="${oldIndex}"]`);
+    if (oldTab) {
+        toggleActive(oldTab, true);
+    }
+}
+
+
+function removePanel(panel) {
+    const parent = panel.parentNode; // Get the parent container of the panel
+    if (parent.classList.contains('layout-container')) {
+        // If the panel is the only one in the layout, remove it
+        parent.removeChild(panel);
+    }
+    else if (parent.classList.contains('split-row') || parent.classList.contains('split-column')) {
+        // Remove splitter
+        if (parent.firstChild === panel) {
+            parent.removeChild(panel.nextSibling);
+        } else {
+            parent.removeChild(panel.previousSibling);
+        }
+
+        panel.remove(); // Remove the panel
+    }
+
+    if (parent.getElementsByClassName('panel-container').length === 1) {
+        // If one panel remains, move the panel up one level
+        const child = parent.firstChild; // Get the first child of the parent
+        const parentParent = parent.parentNode; // Get the parent of the parent
+        child.style.margin = '0'; // Reset margin
+        child.style.border = 'none'; // Reset border
+        child.style.width = '100%'; // Reset width to full
+        child.style.height = '100%'; // Reset height to full
+
+        if (parentParent.firstChild === parent) {
+            parentParent.insertBefore(child, parent); // Insert the child before the parent
+            if (parentParent.classList.contains('split-row')) {
+                child.style.marginRight = '-8px'; // Adjust margin for row split
+                child.style.borderRight = '4px solid gray'; // Add a border to the right side
+            } else if (parentParent.classList.contains('split-column')) {
+                child.style.marginBottom = '-8px'; // Adjust margin for column split
+                child.style.borderBottom = '4px solid gray'; // Add a border to the bottom side
+            }
+        } else {
+            parent.parentNode.appendChild(child);   
+        }
+
+        parent.remove(); // Remove the empty parent container
+    }
 }
 
 
 // Tab visual movement handler
 export function tabListEventHandler(e) {
     const tab = e.target.closest('.tab');
+    const tabsList = tab.parentElement;
     e.dataTransfer.setDragImage(e.target, -20, -20);
     if (!tab) return;
 
@@ -191,12 +238,22 @@ export function tabListEventHandler(e) {
             tContainer.removeEventListener('dragenter', tabDragEnterHandler);
             tContainer.removeEventListener('dragover', dragOverHandler);
         }
+
+        // Remove empty panels
+        const panels = document.querySelectorAll('.panel-container');
+        for (let panel of panels) {
+            const tabsList = panel.querySelector('.tabs-list');
+            if (tabsList.children.length === 1) {
+                removePanel(panel);
+            }
+        }
     }
 
 
     // Handles the dropping of tabs
     function dropHandler(e) {
         e.preventDefault();
+        const tabsList = tab.parentElement;
 
         const target = e.target;
         if (!target.classList.contains('window-highlight')) return;
@@ -216,6 +273,11 @@ export function tabListEventHandler(e) {
             panel1.appendChild(contentContainer);
         } else if (!panel.contains(tab)) {
             moveTab(tab, target.closest('.panel-container'));
+        }
+
+        if (tabsList.children.length === 1) {
+            const panel = tabsList.parentElement;
+            removePanel(panel);
         }
 
     }
@@ -245,7 +307,6 @@ export function tabListEventHandler(e) {
         // const index = oldContainer.nextSibling.firstChild.dataset.index;
         // toggleActive(oldContainer.querySelector(`.tab[data-index="${index}"]`), true);
 
-        console.log(tabContainer);
         currentTabContainer = tabContainer;
     }
 
@@ -266,19 +327,15 @@ export function tabListEventHandler(e) {
 //                      Content event handler functions
 // --------------------------------------------------------------------------------------
 
-export async function displayPDF(path, page, layout, div) {
-    var pdf = document.getElementById(path);
+export async function displayPDF(name, page, layout, div) {
+    var pdf = document.getElementById(name);
     if (!pdf) {
         // Get the PDF blob
-        var blob = layout.documents[path];
-        // First PDF reference, download it from dropbox
-        if ( !blob ) {
-            const file = await layout.dbx.dbx.filesDownload({path: `/wip_lo/codes/${path}`});
-            blob = file.result.fileBlob;
-            layout.documents[path] = blob;
-        }
-        // Create a new tab with the PDF
-        const tab = await layout.addTab(layout.tabIdx++, 'pdf', URL.createObjectURL(blob), path);
+        const pdfResponse = await fetch(`http://localhost:8000/pdf?name=${name}.pdf`);
+        const pdfBlob = await pdfResponse.blob();
+        const pdfUrl = URL.createObjectURL(pdfBlob);
+
+        const tab = await layout.addTab(layout.tabIdx++, 'pdf', pdfUrl, name);
         const panel = layout.layoutContainer.firstChild;
         // If the top panel is split, place the PDF in the right/bottom most panel
         if ( panel.classList.contains('split-row') || panel.classList.contains('split-column') )
@@ -296,13 +353,14 @@ export async function displayPDF(path, page, layout, div) {
             panel1.appendChild(contents);
         }
 
-        pdf = document.getElementById(path);
+        // URL.revokeObjectURL(pdfUrl);
+        pdf = document.getElementById(name);
     }
     const pdfParent = pdf.parentElement;
     const idx = Array.from(pdfParent.children).indexOf(pdf);
     const tab = document.querySelector(`.tab[data-index="${pdf.dataset.index}"]`);
 
-    // Attach the pdf to the DOM such that the page number can be changed
+    // Attach the pdf to the DOM temporarily to change page
     div.appendChild(pdf);
     pdf.src = pdf.src.split('#')[0] + `#page=${page}`;
 

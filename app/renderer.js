@@ -1,5 +1,12 @@
 import { Layout } from './layout.js';
 
+function createUserID() {
+    if (!localStorage.getItem('userID')) {
+        const userID = crypto.randomUUID();
+        localStorage.setItem('userID', userID);
+    }
+}
+
 // Chatbox and tabs logic for renderer process
 if (typeof window !== 'undefined') {
     window.addEventListener('DOMContentLoaded', async () => {
@@ -20,6 +27,9 @@ if (typeof window !== 'undefined') {
                 tab.classList.add(isDark ? 'tab-dark-mode' : 'tab-light-mode');
             });
         }
+
+        // Ensure a user ID is set for logging purposes
+        createUserID();
 
         // Initial theme set
         updateTabTheme();

@@ -34,7 +34,7 @@ class dbx_handler:
     
 
     def list_files(self, folder: str = '') -> list[FileMetadata]:
-        results = self.dbx.files_list_folder(f'/wip_lo/{folder}', recursive=True)
+        results = self.dbx.files_list_folder(folder, recursive=True)
         entries = results.entries
 
         while results.has_more:

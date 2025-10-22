@@ -4,9 +4,12 @@ from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 import asyncio
 import os
+from uuid import uuid4
+from langchain_core.documents import Document
 
 from vectorDB import chatbot_pipeline
 from pdf import dbx_handler, pdf
+from logger.logger import Logger
 
 os.environ['PYTHONUNBUFFERED'] = '1'
 
@@ -25,24 +28,60 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+def create_pdfs_from_embeddings(embeddings: list[Document]):
+    map_func = lambda label, page: (label, int(page) + 1)
+    page_corrections = {}
+
+    newdoc = pdf()
+    for embed in embeddings:
+        doc_name = embed.metadata['Document']
+        pages = embed.metadata['pages']
+        page_labels = embed.metadata['page_labels']
+
+        doc = dbx.get_pdf_document(doc_name)
+        newdoc.insert_pages(doc, list(map(int, pages.split(';'))))
+
+        if doc_name not in page_corrections:
+            page_corrections[doc_name] = {}
+
+        page_corrections[doc_name].update(
+            dict(
+                map(
+                    map_func,
+                    page_labels.split(';'),
+                    pages.split(';')
+                )
+            )
+        )
+
+    return newdoc, page_corrections
+
+
 @app.get("/query")
-async def query(query: str, embed_depth: int):
+async def query(
+    query: str, 
+    embed_depth: int = 0,
+    model: str = 'o4-mini',
+    user_id: str = 'test_user',
+    session_id: str = 'test_session',
+    entry_id: str = 'test_entry'
+):
+
+    logger = Logger(user_id=user_id, session_id=session_id, entry_id=entry_id)
     pdf_data = None
+    page_corrections = None
     if embed_depth > 0:
         embeds = chatbot.retrieve(query, k=embed_depth)
 
-        newdoc = pdf()
-        for embed in embeds:
-            doc_name = embed.metadata['Document']
-            pages = embed.metadata['pages']
+        logger.log_vector_search(embeds)
 
-            doc = dbx.get_pdf_document(doc_name)
-            newdoc.insert_pages(doc, list(map(int, pages.split(';'))))
-
+        newdoc, page_corrections = create_pdfs_from_embeddings(embeds)
         pdf_data = newdoc.as_base64()
 
+        logger.log_input_page_count(newdoc.page_count)
+
     return StreamingResponse(
-        chatbot.response(query, pdf_data),
+        chatbot.response(query, model, pdf_data, logger=logger, page_corrections=page_corrections),
         media_type='text/event-stream'
     )
 
@@ -59,8 +98,13 @@ def get_pdf(name: str):
     )
     
 
+@app.get("/")
+def root():
+    return {"status": "ok"}
+
+
 async def main():
-    config = uvicorn.Config("main:app", port=8000, log_level="info", reload=True)
+    config = uvicorn.Config("main:app", port=8015, log_level="info", reload=True)
     server = uvicorn.Server(config)
     await server.serve()
 

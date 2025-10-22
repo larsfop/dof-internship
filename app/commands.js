@@ -66,7 +66,7 @@ export class Commands {
 
 export function chatHistoryNavigation(e) {
     if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
-        const chatInputs = this.mainContainer.querySelectorAll('.input-message');
+        const chatInputs = Array.from(this.mainContainer.querySelectorAll('.input-message')).reverse();
         const nInputs = chatInputs.length;
         const msg = this.chatInput.value.trim();
         

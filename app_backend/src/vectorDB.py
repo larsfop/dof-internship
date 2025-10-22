@@ -10,18 +10,7 @@ import re
 import json
 import asyncio
 
-"""
-
-Module for vector database operations.
-Handles:
-- Connecting to Milvus
-- Setting up collections
-- Performing vector searches
-- Document preparation
-- Generating GPT responses
-
-"""
-
+from logger.logger import Logger
 
 
 class chatbot_pipeline:
@@ -53,11 +42,23 @@ class chatbot_pipeline:
             consistency_level="Strong"
         )
 
-        self.llm = ChatOpenAI(
-            model=llm_model,
-            api_key=os.environ['OPENAI_API_KEY'],
-            streaming=True,
-        )
+        # self.llm = ChatOpenAI(
+        #     model=llm_model,
+        #     api_key=os.environ['OPENAI_API_KEY'],
+        #     streaming=True,
+        # )
+        self.llm = {
+            'o4-mini': ChatOpenAI(
+                model='o4-mini',
+                api_key=os.environ['OPENAI_API_KEY'],
+                streaming=True,
+            ),
+            'gpt-4.1': ChatOpenAI(
+                model='gpt-4.1',
+                api_key=os.environ['OPENAI_API_KEY'],
+                streaming=True,
+            )
+        }
 
         self.page_label_regex = re.compile(r'^\d{1,3}')
 
@@ -197,7 +198,10 @@ class chatbot_pipeline:
     async def response(
         self,
         query: str,
+        model: str,
         pdf_data: str|None = None,
+        logger: None|Logger = None,
+        page_corrections: dict|None = None
     ):
         msg = [
             {
@@ -224,7 +228,7 @@ class chatbot_pipeline:
                 'filename': 'document.pdf'
             })
 
-        async for event in self.llm.astream_events(msg):
+        async for event in self.llm[model].astream_events(msg):
             if event['event'] == 'on_chat_model_start':
                 # print(event['event'])
                 yield json.dumps({
@@ -242,13 +246,17 @@ class chatbot_pipeline:
                 # print(event['event'])
                 data = event['data']['output']
 
-                # End event fires to quickly, wait 200 ms to ensure this event is sent after the last stream event
-                await asyncio.sleep(0.2)
-                
-                yield json.dumps({
-                    'event': event['event'],
-                    'id': event['run_id'],
-                    'content': data.content,
-                    'response_metadata': data.response_metadata,
-                    'usage_metadata': data.usage_metadata
-                }) + '\n'
+                output = {
+                    'response_id': event['run_id'],
+                    'model': data.response_metadata['model_name'],
+                    'token_usage': data.usage_metadata,
+                    'content': data.content
+                }
+
+                if logger:
+                    logger.log_response(output)
+                    
+                if page_corrections:
+                    output['page_corrections'] = page_corrections
+
+                yield json.dumps({'event': event['event']} | output) + '\n'
