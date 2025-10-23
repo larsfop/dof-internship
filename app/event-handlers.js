@@ -331,7 +331,7 @@ export async function displayPDF(name, page, layout, div) {
     var pdf = document.getElementById(name);
     if (!pdf) {
         // Get the PDF blob
-        const pdfResponse = await fetch(`http://localhost:8000/pdf?name=${name}.pdf`);
+        const pdfResponse = await fetch(`http://localhost:8015/pdf?name=${name}.pdf`);
         const pdfBlob = await pdfResponse.blob();
         const pdfUrl = URL.createObjectURL(pdfBlob);
 
@@ -368,39 +368,6 @@ export async function displayPDF(name, page, layout, div) {
     pdfParent.insertBefore(pdf, pdfParent.children[idx]);
     changeTab(tab);
 }
-
-
-export async function chatSendHandler() {
-    const msg = this.content.chatInput.value.trim();
-
-    // Add event listeners for the PDF button if a table is created
-    const table = await this.content.input(msg, this.panel);
-    if (table && table.title) {
-        const rows = table.div.querySelectorAll('tr');
-        rows.forEach((row) => {
-            row.addEventListener('click', async () => {
-                const title = row.children[0].textContent;
-                const page = row.children[2].textContent;
-                const query = await window.database.queryTable(`select pdfPath, page from document_metadata where title = '${title}'`);
-                const pdfPath = query[0].pdfPath;
-
-                await displayPDF(pdfPath, page, this.panel, table.title);
-            });
-        });
-
-
-        if (table.tableID) {
-            table.title.addEventListener('click', async () => {
-                const query = await window.database.queryTable(`select pdfPath, page from document_metadata where tableID = '${table.tableID}'`);
-                const results = query[0];
-                const { pdfPath, page } = results;
-
-                await displayPDF(pdfPath, page, this.panel, table.title);
-            });
-        }
-    }
-}
-
 
 
 export function settingsButtonHandler() {

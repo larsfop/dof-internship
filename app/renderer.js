@@ -3,7 +3,7 @@ import { Layout } from './layout.js';
 function createUserID() {
     if (!localStorage.getItem('userID')) {
         const userID = crypto.randomUUID();
-        localStorage.setItem('userID', userID);
+        localStorage.setItem('userID', 'test_user');
     }
 }
 
@@ -37,6 +37,7 @@ if (typeof window !== 'undefined') {
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateTabTheme);
 
         const appLayout = new Layout();
+
 
     });
 }

@@ -189,9 +189,6 @@ class chatbot_pipeline:
             **kwargs
         )
 
-        for result in results:
-            print(result.metadata, flush=True)
-
         return results
 
 
@@ -203,6 +200,7 @@ class chatbot_pipeline:
         logger: None|Logger = None,
         page_corrections: dict|None = None
     ):
+        is_streaming = False
         msg = [
             {
                 'role': 'developer',
@@ -231,12 +229,16 @@ class chatbot_pipeline:
         async for event in self.llm[model].astream_events(msg):
             if event['event'] == 'on_chat_model_start':
                 # print(event['event'])
+                logger.log_info(f'Response generation started')
                 yield json.dumps({
                     'event': event['event'],
                     'id': event['run_id'],
                 }) + '\n'
             elif event['event'] == 'on_chat_model_stream':
                 # print(event['data']['chunk'].content, end='', flush=True)
+                if not is_streaming:
+                    is_streaming = True
+                    logger.log_info(f'Begin response stream')
                 yield json.dumps({
                     'event': event['event'],
                     'content': event['data']['chunk'].content
@@ -255,7 +257,12 @@ class chatbot_pipeline:
 
                 if logger:
                     logger.log_response(output)
-                    
+
+                logger.log_info(f'Response generation ended'
+                                f' - Response ID: {event["run_id"]}'
+                                f' - Token Usage: Input Tokens: {data.usage_metadata["input_tokens"]}, Output Tokens: {data.usage_metadata["output_tokens"]}, Total Tokens: {data.usage_metadata["total_tokens"]}'
+                )
+
                 if page_corrections:
                     output['page_corrections'] = page_corrections
 

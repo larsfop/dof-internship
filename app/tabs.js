@@ -1,5 +1,3 @@
-import { chatSendHandler } from "./event-handlers.js";
-
 export class Tabs {
     constructor(panelIdx, tabIdx, content, panel) {
         this.panelIdx = panelIdx; // Store the index of the tab
@@ -36,12 +34,6 @@ export class Tabs {
             e.stopPropagation(); // Prevent event bubbling
             this.panel.removeTab(closeButton, this); // Remove the tab when the close button is clicked
         };
-
-        try {
-            this.content.chatSend.onclick = chatSendHandler.bind(this);
-        } catch (error) {
-            console.error(`${this.content} is not a chatbox`);
-        }
         this.tabDiv.appendChild(closeButton); // Append the close button to the tab
     }
 

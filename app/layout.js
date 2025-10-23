@@ -2,6 +2,7 @@ import { Splitter } from './splitter.js';
 import { Tabs } from './tabs.js';
 import { Chatbox, Pdf } from './content.js';
 import * as eventHandlers from './event-handlers.js';
+import { HistoryMenu } from './history/history.js';
 
 export class Layout {
     constructor() {
@@ -14,8 +15,13 @@ export class Layout {
 
         this.tabIdx = 0; // Index for the next tab to be added
 
+        this.history = new HistoryMenu(this);
+
         this.createUI();
         this.addPanel(); // Create tabs list if it doesn't exist
+
+        this.history.createUI(this.sidebarDiv);
+        this.history.loadHistory();
 
         this.dragEntered = true;
         this.createListeners(); // Create event listeners for layout changes
@@ -33,10 +39,28 @@ export class Layout {
     }
 
     createUI() {
+        this.sidebarDiv = document.createElement('div');
+        this.sidebarDiv.id = 'sidebar';
+        this.sidebarDiv.className = 'sidebar';
+        document.body.appendChild(this.sidebarDiv);
+
+        // Add button to expand menu
+        this.expandButton = document.createElement('button');
+        this.expandButton.id = 'sidebar-expand-button';
+        this.expandButton.className = 'sidebar-button';
+        this.expandButton.textContent = '☰';
+        this.sidebarDiv.appendChild(this.expandButton);
+
+        this.expandButton.onclick = () => {
+            this.sidebarDiv.classList.toggle('expanded');
+            this.expandButton.classList.toggle('expanded');
+            this.history.toggleExpand();
+        };
+
         // Create a container for the layout
         this.layoutContainer = document.createElement('div');
         this.layoutContainer.id = 'layout-container';
-        this.layoutContainer.className = 'horisontal-container'; // Use grid layout for the main container
+        this.layoutContainer.className = 'layout-container'; // Use grid layout for the main container
         document.body.appendChild(this.layoutContainer); // Append to body or a specific container
     }
 
@@ -59,7 +83,7 @@ export class Layout {
             newTabBtn.onclick = async (e) => {
                 e.stopPropagation();
                 const panelDiv = e.target.closest('.panel-container');
-                const tab = await this.addTab(this.tabIdx++);
+                const tab = this.addTab(this.tabIdx++);
                 tab.appendContainer(panelDiv);
                 tab.changeTab(); // Change to the newly created tab
             };
@@ -97,20 +121,29 @@ export class Layout {
         const panelContainer = this.createPanelUI(); // Create the UI for the panel
         this.layoutContainer.appendChild(panelContainer); // Append the panel container to the layout container
         for (let i = 0; i < 1; i++) {
-            const tab = await this.addTab(this.tabIdx++); // Initialize with one tab
+            const tab = this.addTab(this.tabIdx++); // Initialize with one tab
             tab.appendContainer(panelContainer);
             tab.changeTab(); // Change to the newly created tab
         }
     }
 
-    async addTab(tabIdx, type = 'chatbox', file = null, id = null) {
+    async chatSendHandler(content) {
+        const msg = content.chatInput.value.trim();
+        content.input(msg);
+
+        this.history.addEntry(content.sessionID);
+    }
+
+    addTab(tabIdx, type = 'chatbox', file = null, sessionID = null, data = null) {
         // Fill window content
         let content;
         if (type === 'chatbox') {
-            content = new Chatbox(tabIdx, this);
-            // await content.setupTables(); // Setup tables for the chatbox
+            content = new Chatbox(tabIdx, this, sessionID, data);
+
+            // Setup chat send handler
+            content.chatSend.onclick = this.chatSendHandler.bind(this, content);
         } else if (type === 'pdf' && file) {
-            content = new Pdf(file, tabIdx, id);
+            content = new Pdf(file, tabIdx, sessionID);
         }
 
         const tab = new Tabs(this.panelIdx, tabIdx, content, this);
@@ -248,7 +281,7 @@ export class Layout {
         for (const file of e.dataTransfer.files) {
             if (file.type === 'application/pdf') {
                 const filePath = window.file.getPath(file);
-                const tab = await this.addTab(this.tabIdx++, 'pdf', filePath);
+                const tab = this.addTab(this.tabIdx++, 'pdf', filePath);
                 e.target.classList.remove('highlight-display'); // Remove the class indicating the dragenter event
                 if (e.target.classList.contains('window-highlight') && !e.target.classList.contains('highlight-center')) {
                     const direction = e.target.classList[1].split('-')[1]; // Get the direction from the class name

@@ -1,35 +1,40 @@
-import { Table } from "./table.js";
 import { Commands, chatHistoryNavigation } from "./commands.js";
 import { settingsButtonHandler, displayPDF } from "./event-handlers.js";
 
 export class Chatbox {
-    constructor(index, panel) {
+    constructor(index, panel, sessionID = null, history = null) {
         this.index = index;
         this.panel = panel;
-        this.createUI();
+        this.sessionID = sessionID || crypto.randomUUID();
+        console.log('Chatbox sessionID:', this.sessionID);
 
         this.documents = {
             'EN1992': 'ns-en-1992-1-1_2004+a1_2014+na_2024_en_002.pdf',
             'EN1995': 'ns-en-1995-1-1_2004+a2_2014+na_2024_en_001.pdf'
-        }
+        };
 
         this.inputHistory = [];
         this.historyIndex = -1;
-        this.sessionID = crypto.randomUUID();
 
         this.tabmatches = [];
         this.tabIndex = 0;
         this.lastTabPrefix = '';
         this.originalInput = '';
 
-        this.model = 'gpt-4.1';
+        this.model = 'o4-mini';
         this.embedDepth = 0;
         this.responseID = null;
         this.usePreviousResponse = false;
 
         this.commands = new Commands(this.chatInput);
 
+        this.createUI();
         this.createListeners();
+
+        // Load history if provided
+        if (history) {
+            this.loadHistory(history);
+        }
     }
 
     async createListeners() {
@@ -49,6 +54,7 @@ export class Chatbox {
         this.mainContainer = document.createElement('div');
         this.mainContainer.className = 'chat-container'; // Add a class for styling if needed
         this.mainContainer.dataset.index = this.index;
+        this.mainContainer.id = `chatbox-${this.sessionID}`;
 
         // create chat messages area
         this.chatMessages = document.createElement('div');
@@ -81,15 +87,30 @@ export class Chatbox {
         this.mainContainer.appendChild(div);
     }
 
-    async setupTables() {
-        const tables = await window.database.queryTable('SELECT tableID,caption from document_metadata');
-        console.log('Tables:', tables);
+    loadHistory(history) {
+        for (const { input, output } of history) {
+            const inputOutputBlock = document.createElement('div');
+            inputOutputBlock.className = 'input-output-block';
 
-        this.lookupTable = {};
-        tables.forEach((table) => {
-            this.lookupTable[table.caption] = table.tableID;
-        })
-        console.log('Lookup Table:', this.lookupTable);
+            if (this.chatMessages.children.length > 0) {
+                const hr = document.createElement('hr');
+                hr.style.width = '100%';
+                this.chatMessages.appendChild(hr);
+            }
+            this.chatMessages.appendChild(inputOutputBlock);
+
+            // Display input message
+            const inputDiv = document.createElement('div');
+            inputDiv.className = 'input-message';
+            inputDiv.innerHTML = this.capitalizeSentences(input);
+            inputOutputBlock.appendChild(inputDiv);
+
+            // Display output message
+            const outputDiv = document.createElement('div');
+            outputDiv.className = 'output-message';
+            outputDiv.innerHTML = output;
+            inputOutputBlock.appendChild(outputDiv);
+        }
     }
 
     appendContainer(container) {
@@ -105,12 +126,8 @@ export class Chatbox {
         return msg.replace(/(^\w{1}|\.\s*\w{1})/g, (c) => c.toUpperCase());
     }
 
-    async input(msg, panel) {
+    async input(msg) {
         if (msg) {
-            // Only save if not a repeat of the last input
-            if (this.inputHistory.length === 0 || this.inputHistory[this.inputHistory.length - 1] !== msg) {
-                this.inputHistory.push(msg);
-            }
             this.chatInput.value = '';
             this.historyIndex = -1;
             this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
@@ -131,16 +148,15 @@ export class Chatbox {
             msgDiv.innerHTML = this.capitalizeSentences(msg);
             this.inputOutputBlock.appendChild(msgDiv);
 
-            const output = await this.output(msg, panel);
+            await this.output(msg);
 
             this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
-            return output;
         }
     }
 
-    async output(msg, panel) {
+    async output(msg) {
         const queryParams = new URLSearchParams({
-            query: msg,
+            prompt: msg,
             embed_depth: this.embedDepth,
             model: this.model,
             user_id: localStorage.getItem('userID'),
@@ -211,6 +227,13 @@ export class Chatbox {
                                     await displayPDF(document, page, this.panel, ref);
                                 }
                             });
+
+                            // Write to history file
+                            console.log('Writing to history file');
+                            await window.app.history.write(this.sessionID, {
+                                input: msg,
+                                output: htmlBuffer
+                            });
                         }
 
                     } catch (err) {
@@ -219,57 +242,6 @@ export class Chatbox {
                 }
             }
         }
-    }
-
-    async displayTable(msg) {
-        const tableCmds = ['table', 'select', 'describe'];
-
-        const msgSplit = msg.trim().split(/\s+/);
-        var tableName = msgSplit.pop();
-        console.log(msg, msgSplit, tableName);
-        if (tableCmds.includes(msg.split(/\s+/)[0].toLowerCase())) {
-            if (!this.lookupTable[tableName]) {
-                this.displayError(new Error(`Table "${tableName}" not found.`));
-                return;
-            } else if (msg.toLowerCase().startsWith('table')) {
-                var sql = msg.replace(/table\s.*/i, `select * from ${this.lookupTable[tableName]}`);
-            } else if (msg.toLowerCase().startsWith('describe')) {
-                var sql = msg.replace(/describe\s.*/i, `describe ${this.lookupTable[tableName]}`);
-            } else if (msg.toLowerCase().startsWith('select')) {
-                var sql = msg.replace(/from\s.*(\w+)/i, `from ${this.lookupTable[tableName]}`);
-            }
-        } else if (msg.toLowerCase().startsWith('show')) {
-            if (msgSplit.length > 0) {
-                console.log('Searching for table:', tableName);
-                var sql = `select title, tableName, page, tableNumber from document_metadata where title like "%${tableName}%" order by page`
-            } else {
-                var sql = 'select title, tableName, page, tableNumber from document_metadata order by page'
-            }
-            tableName = 'Document Tables'
-        } else {
-            this.displayError(new Error(`Invalid command: ${msg}`));
-            return;
-        }
-
-        console.log('Executing SQL:', sql);
-        // Call backend to execute SQL and get result
-        const result = await window.database.queryTable(sql);
-        console.log('SQL Result:', result);
-
-        if (result) {
-            const query = await window.database.queryTable(
-                `select tableName from document_metadata where caption = "${tableName}"` // Get the table name from metadata
-            )
-            const caption = query[0] ? query[0].tableName : tableName; // Use the table name from metadata or fallback to the last part of the SQL command
-            var table = new Table(this.lookupTable[tableName]);
-            await table.createTable(result, caption);
-            table.createListeners();
-            this.inputOutputBlock.appendChild(table.div);
-        }
-        else {
-            this.displayError(new Error(result || 'No results returned.'));
-        }
-        return table;
     }
 
     async displayWaitingMessage(div) {
@@ -319,8 +291,8 @@ export class Chatbox {
 
 
 export class Pdf {
-    constructor(pdfPath, index, id) {
-        this.id = id;
+    constructor(pdfPath, index, sessionID = null) {
+        this.sessionID = sessionID || crypto.randomUUID();
         this.index = index;
         this.viewer = `./pdfjs/web/viewer.html?file=${encodeURIComponent(pdfPath)}`; // Path to the PDF.js viewer
         this.createPdfViewer();
@@ -330,7 +302,7 @@ export class Pdf {
         // Use Mozilla's PDF.js viewer
         this.mainContainer = document.createElement('embed');
         this.mainContainer.className = 'pdf-viewer';
-        if (this.id) this.mainContainer.id = this.id;
+        if (this.sessionID) this.mainContainer.id = `pdfviewer-${this.sessionID}`;
         this.mainContainer.src = this.viewer;
         this.mainContainer.width = '100%';
         this.mainContainer.height = '100%';

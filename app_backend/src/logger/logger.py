@@ -5,11 +5,13 @@ import json
 import csv
 from pathlib import Path
 import textwrap
+import logging
 
 
 class Logger:
     def __init__(
             self,
+            logger: logging.Logger,
             user_id: str,
             session_id: str,
             entry_id: str,
@@ -17,6 +19,7 @@ class Logger:
 
         self.user_id = user_id
         self.session_id = session_id
+        self.logger = logger
 
         self.json_text = {
             'entry_id': entry_id,
@@ -25,8 +28,7 @@ class Logger:
             'response': {}
         }
 
-        os.makedirs(f'logs/users/{self.user_id}', exist_ok=True)
-        self.path = Path(f'logs/users/{self.user_id}/{self.session_id}.json')
+        self.path = Path(f'logs/users/{self.user_id}/{self.session_id}.log')
 
         if not self.path.exists():
             with open(self.path, 'w') as f:
@@ -86,9 +88,17 @@ class Logger:
 
         for i, embed in enumerate(data, start=1):
             self.json_text['vector_search'].append({'embed_rank': i} | embed.metadata)
+            self.logger.info(f'Embed rank: {i} - '
+                             f'Document: {embed.metadata["Document"]} - '
+                             f'Pages: {embed.metadata["pages"]} - '
+                             f'Page Labels: {embed.metadata["page_labels"]} - '
+                             f'ID: {embed.metadata["pk"]}',
+                            extra={'user': self.user_id}
+            )
 
     def log_input_page_count(self, count: int) -> None:
         self.json_text['input_page_count'] = count
+        self.logger.info(f'Pages loaded for input: {count}', extra={'user': self.user_id})
 
     def log_response(
             self,
@@ -98,3 +108,6 @@ class Logger:
         self.json_text['response'] = data
 
         self.end()
+
+    def log_info(self, message: str) -> None:
+        self.logger.info(message, extra={'user': self.user_id})

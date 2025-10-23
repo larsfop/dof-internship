@@ -4,6 +4,7 @@ app/*.yml
 mysql_connection.json
 *.txt
 *.pdf
+*.json
 .vscode
 .env
 __pycache__
