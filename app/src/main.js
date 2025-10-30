@@ -208,7 +208,6 @@ async function setupSSH(username, password) {
 
 }
 
-await setupSSH(
-    'lars',
-    'Lilleaker01'
-)
+ipcMain.handle('ssh:connect', (event, username, password) => {
+    setupSSH(username, password);
+});

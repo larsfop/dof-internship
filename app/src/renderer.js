@@ -1,4 +1,5 @@
 import { Layout } from './layout.js';
+import { StatusBar } from './status-bar.js';
 
 function createUserID() {
     if (!localStorage.getItem('userID')) {
@@ -36,7 +37,7 @@ if (typeof window !== 'undefined') {
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateTabTheme);
 
         const appLayout = new Layout();
-
+        const statusBar = new StatusBar();
 
         document.addEventListener('click', function(e) {
             const chatMenus = document.querySelectorAll('.chat-menu');

@@ -1,7 +1,15 @@
 import { Panel } from '../panel.js';
 import { Splitter } from '../splitter.js';
 
-export function newHTMLElement(tag, attributes, styles) {
+/**
+ * Create a new HTML element with optional attributes and styles.
+ * @param {string} tag - The HTML tag to create.
+ * @param {HTMLElement} [parent=null] - The parent element to append the new element to.
+ * @param {Object} [attributes] - The attributes to set on the element.
+ * @param {Object} [styles] - The styles to apply to the element.
+ * @returns {HTMLElement} The newly created HTML element.
+ */
+export function newHTMLElement(tag, parent = null, attributes, styles) {
     const element = document.createElement(tag);
     if (attributes) {
         for (const [key, value] of Object.entries(attributes)) {
@@ -13,7 +21,23 @@ export function newHTMLElement(tag, attributes, styles) {
             element.style[key] = value;
         }
     }
+    if (parent) {
+        parent.appendChild(element);
+    }
     return element;
+}
+
+
+/** * Toggle the 'hidden' class on an HTML element and manage its inert attribute.
+ * @param {HTMLElement} element - The HTML element to toggle.
+ */
+export function toggleHidden(element) {
+    const isHidden = element.classList.toggle('hidden');
+    if (isHidden) {
+        element.setAttribute('inert', '');
+    } else {
+        element.removeAttribute('inert');
+    }
 }
 
 

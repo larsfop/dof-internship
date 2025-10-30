@@ -49,50 +49,43 @@ export class Chatbox {
     }
 
     createUI() {
-        this.mainContainer = newHTMLElement('div', {
+        this.mainContainer = newHTMLElement('div', null, {
             className: 'chat-container',
             id: `content:${this.sessionID}`
         });
 
         // create chat messages area
-        this.chatMessages = newHTMLElement('div', {
+        this.chatMessages = newHTMLElement('div', this.mainContainer, {
             className: 'chat-messages border-color'
         });
 
         // create chat input area
-        const div = newHTMLElement('div', {
+        const div = newHTMLElement('div', this.mainContainer, {
             className: 'chat'
         });
 
-        this.settingsButton = newHTMLElement('button', {
+        this.settingsButton = newHTMLElement('button', div, {
             className: 'chat-settings',
             innerText: '+'
         });
 
-        this.chatInput = newHTMLElement('input', {
+        this.chatInput = newHTMLElement('input', div, {
             className: 'chat-input',
             type: 'text',
             placeholder: 'Type your message here...'
         });
 
         // create send button
-        this.chatSend = newHTMLElement('button', {
+        this.chatSend = newHTMLElement('button', div, {
             className: 'chat-send',
             innerText: 'Send'
         });
-
-        div.appendChild(this.settingsButton);
-        div.appendChild(this.chatInput);
-        div.appendChild(this.chatSend);
-
-        this.mainContainer.appendChild(this.chatMessages);
-        this.mainContainer.appendChild(div);
 
         this.createSettingsMenu();
     }
 
     createSettingsMenu() {
-        const chatSettings = newHTMLElement('div', {
+        const chatSettings = newHTMLElement('div', this.mainContainer, {
             className: 'chat-menu hidden'
         });
         chatSettings.setAttribute('inert', '');
@@ -102,12 +95,12 @@ export class Chatbox {
             chatSettings.removeAttribute('inert');
         };
 
-        const embedDepthLabel = newHTMLElement('p', {
+        const embedDepthLabel = newHTMLElement('p', chatSettings, {
             innerText: 'Embedding Depth:',
             className: 'chat-menu-item'
         });
 
-        const embedDepthInput = newHTMLElement('input', {
+        const embedDepthInput = newHTMLElement('input', embedDepthLabel, {
             type: 'number',
             min: '0',
             value: this.embedDepth
@@ -115,9 +108,8 @@ export class Chatbox {
         embedDepthInput.onchange = (e) => {
             this.embedDepth = parseInt(e.target.value);
         }
-        embedDepthLabel.appendChild(embedDepthInput);
 
-        const aiModel = newHTMLElement('p', {
+        const aiModel = newHTMLElement('p', chatSettings, {
             innerText: 'AI Model:',
             className: 'chat-menu-item'
         });
@@ -126,11 +118,6 @@ export class Chatbox {
         aiModel.onchange = (e) => {
             this.model = e.target.value;
         };
-
-        chatSettings.appendChild(embedDepthLabel);
-        chatSettings.appendChild(aiModel);
-
-        this.mainContainer.appendChild(chatSettings);
     }
 
     loadHistory(history) {
