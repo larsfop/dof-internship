@@ -1,7 +1,7 @@
 {
   "name": "app",
   "version": "1.0.0",
-  "main": "main.js",
+  "main": "src/main.js",
   "type": "module",
   "scripts": {
     "start": "electron .",
@@ -29,6 +29,7 @@
     "pdfjs-dist": "^5.4.149",
     "pg": "^8.11.3",
     "redis": "^5.8.2",
+    "ssh2": "^1.17.0",
     "tslib": "^2.8.1",
     "uuid": "^9.0.1"
   }

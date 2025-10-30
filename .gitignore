@@ -5,6 +5,8 @@ mysql_connection.json
 *.txt
 *.pdf
 *.json
+*.jpg
+*.png
 .vscode
 .env
 __pycache__
