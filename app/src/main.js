@@ -1,8 +1,9 @@
-import { app, BrowserWindow, ipcMain, nativeTheme, Menu } from 'electron';
+import { app, BrowserWindow, ipcMain, nativeTheme, Menu} from 'electron';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import fs from 'node:fs';
 import { Client } from 'ssh2';
+import { net } from 'net';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -183,19 +184,28 @@ async function setupSSH(username, password) {
 
     const conn = new Client();
     conn.on('ready', () => {
-        console.log('Client :: ready');
-        conn.forwardIn('localhost', LOCALPORT, (err) => {
-            if (err) throw err;
-            console.log(`Listening for connections on localhost:${LOCALPORT}`);
+        console.log('SSH Connection established.');
+        net.createServer((socket) => {
+            conn.forwardOut(
+                socket.remoteAddress || 'localhost',
+                socket.remotePort || 0,
+                REMOTE_HOST,
+                REMOTE_PORT,
+                (err, stream) => {
+                    if (err) {
+                        console.error('ForwardOut error:', err);
+                        socket.end();
+                        return;
+                    }
+                 
+                    socket.pipe(stream).pipe(socket);
+                }
+            );
+        }).listen(LOCALPORT, () => {
+            console.log(`Local server listening on port ${LOCALPORT}`);
         });
-    }).on('tcp connection', (info, accept, reject) => {
-        console.log('TCP :: INCOMING CONNECTION:', info);
-        accept().on('close', () => {
-            console.log('TCP :: CLOSED');
-        });
-    }).on('data', (data) => {
-        console.log('TCP :: DATA: ' + data);
     }).connect(sshConfig);
+
 }
 
 await setupSSH(
