@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+        <meta
+            http-equiv="Content-Security-Policy"
+            content="script-src 'self' 'unsafe-inline';"
+        />
+        <link rel="stylesheet" href="styles.css" />
+        <title>name of app</title>
+    </head>
+    <body style=" overflow: hidden; margin: 0px;">
+        <script type="module" src="./renderer.js"></script>
+        <script src="../node_modules/pdfjs-dist/build/pdf.mjs" type="module"></script>
+    </body>
+</html>
