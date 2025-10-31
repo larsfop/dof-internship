@@ -80,6 +80,13 @@ export class Chatbox {
             className: 'chat-send',
             innerText: 'Send'
         });
+        this.chatSend.onclick = function() {
+            const msg = this.chatInput.value.trim();
+            if (msg) {
+                this.input(msg);
+            }
+
+        }.bind(this);
 
         this.createSettingsMenu();
     }

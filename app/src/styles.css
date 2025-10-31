@@ -75,6 +75,7 @@ body {
   transition: 0.2s ease;
   overflow: hidden;
   padding-top: 8px;
+  grid-area: sidebar;
 }
 
 .sidebar.expanded {
@@ -182,6 +183,26 @@ body {
   flex-shrink: 0;
 }
 
+.gutter {
+  background: var(--highlight);
+  transition: opacity 0.2s ease;
+  opacity: 0;
+}
+
+.gutter-col {
+  grid-row: 1 / -1;
+  cursor: col-resize;
+}
+
+.gutter-row {
+  grid-column: 1 / -1;
+  cursor: row-resize;
+}
+
+.gutter:hover, .gutter.dragging {
+  opacity: 1;
+}
+
 .splitter-horizontal {
   height: 8px;
   cursor: ns-resize;
@@ -189,28 +210,23 @@ body {
 }
 
 .layout-container {
-  display: flex;
-  flex-direction: row;
-  height: calc(100vh - 24px);
-  transition: width 0.2s ease;
-  width: calc(100vw - 40.667px);
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: 1fr auto;
+  grid-template-areas: 
+    "sidebar main"
+    "status-bar status-bar";
 }
 
 .layout-container.expanded {
   width: calc(100vw - 215.667px);
 }
 
-.split-row {
-  display: flex;
-  flex-direction: row;
-}
-
-.split-column {
-  display: flex;
-  flex-direction: column;
-}
-
 .panel-container {
+  display: grid;
+  grid-template-rows: auto 1fr;
   height: 100%;
   width: 100%;
   min-width: 20%;  
@@ -218,20 +234,34 @@ body {
   box-sizing: border-box;
 }
 
+.panel-container.split-row {
+  display: grid;
+  grid-template-columns: 1fr 8px 1fr;
+  grid-template-rows: 1fr;
+}
+
+.panel-container.split-column {
+  display: grid;
+  grid-template-rows: 1fr 8px 1fr;
+  grid-template-columns: 1fr;
+}
+
 .window-container {
   background: var(--bg);
   width: 100%;
-  height: calc(100% - 31.33px);
-  position: relative;
+  display: grid;
+  grid-template-areas: "stack";
 }
 
 .window-highlight {
-  position: relative;
-  top: 0;
-  left: 0;
+  grid-area: stack;
   width: 100%;
   height: 100%;
   pointer-events: none;
+
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: 1fr 2fr 1fr;
 }
 
 .window-highlight.highlight-display {
@@ -243,55 +273,50 @@ body {
 
 /* Inner red grid highlights (top, left, right, bottom) */
 .window-highlight.highlight-top {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 99.5%;
-  height: 25%;
+  grid-column: 1 / -1;
+  grid-row: 1 / 2;
   pointer-events: none;
 }
 
 .window-highlight.highlight-bottom {
-  position: absolute;
-  top: 74.5%;
-  left: 0;
-  width: 99.5%;
-  height: 25%;
+  grid-column: 1 / -1;
+  grid-row: -1 / -2;
   pointer-events: none;
 }
 
+
 .window-highlight.highlight-left {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 25%;
-  height: 99.5%;
+  grid-column: 1 / 2;
+  grid-row: 1 / -1;
   pointer-events: none;
 }
 
 .window-highlight.highlight-right {
-  position: absolute;
-  top: 0;
-  left: 74.5%;
-  width: 25%;
-  height: 99.5%;
+  grid-column: -1 / -2;
+  grid-row: 1 / -1;
   pointer-events: none;
 }
 
 /* Center green rectangle highlight */
 .window-highlight.highlight-center {
-  position: absolute;
-  top: 25%;
-  left: 25%;
-  width: 50%;
-  height: 50%;
+  grid-column: 2 / -2;
+  grid-row: 2 / -2;
   pointer-events: none;
+}
+
+.chat-container {
+  grid-area: stack;
+  display: grid;
+  grid-template-areas: "stack";
+  opacity: 1;
+}
+
+.chat-container.hidden {
+  opacity: 0;
 }
 
 .chat {
   background: var(--bg-light);
-  position: absolute;
-  bottom: 0;
   height: 24px;
   width: -webkit-fill-available;
   display: flex;
@@ -300,7 +325,13 @@ body {
   margin: 24px 24px;
   border: none;
   border-radius: 18px;
+  grid-area: stack;
+  align-self: end;
   z-index: 2;
+}
+
+.chat-messages {
+  grid-area: stack;
 }
 
 cite {
@@ -571,12 +602,11 @@ caption {
 
 .status-bar {
   background: var(--bg-dark);
-  position: absolute;
-  bottom: 0;
   width: 100%;
   min-height: 24px;
   box-sizing: border-box;
   border-top: 1px solid var(--border);
+  grid-area: status-bar;
 }
 
 .ssh-status {

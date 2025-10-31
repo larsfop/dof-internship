@@ -30,9 +30,10 @@ export function newHTMLElement(tag, parent = null, attributes, styles) {
 
 /** * Toggle the 'hidden' class on an HTML element and manage its inert attribute.
  * @param {HTMLElement} element - The HTML element to toggle.
+ * @param {boolean|null} [force=null] - If true, add 'hidden'; if false, remove 'hidden'; if null, toggle.
  */
-export function toggleHidden(element) {
-    const isHidden = element.classList.toggle('hidden');
+export function toggleHidden(element, force = null) {
+    const isHidden = element.classList.toggle('hidden', force);
     if (isHidden) {
         element.setAttribute('inert', '');
     } else {
@@ -49,35 +50,57 @@ export function splitPanel(panelDiv, direction) {
     const panel2Div = panel2.panelContainer;
 
     let splitter;
+    const split = window.Split({
+        minSize: 240,
+        snapOffset: 0,
+        onDragStart: function(direction, track) {
+            console.log(this)
+            this.element.classList.add('dragging');
+        },
+        onDragEnd: function(direction, track) {
+            this.element.classList.remove('dragging');
+        }
+    })
     if (direction === 'right' || direction === 'left') {
         panelDiv.classList.add('split-row'); // Add a class for styling
         // Split the panel horizontally
         if (direction === 'right') {
             panelDiv.appendChild(panel1Div); // Move the current panel to the new panel
-            splitter = new Splitter('vertical', panelDiv);
+            // splitter = new Splitter('vertical', panelDiv);
             panelDiv.appendChild(panel2Div); // Append the new panel UI
         } else if (direction === 'left') {
             panelDiv.appendChild(panel2Div); // Move the current panel to the new panel
-            splitter = new Splitter('vertical', panelDiv);
+            // splitter = new Splitter('vertical', panelDiv);
             panelDiv.appendChild(panel1Div); // Append the new panel UI
         }
 
-        splitter.dragElement(); // Enable dragging between the two panels
+        const gutter = newHTMLElement('div', panelDiv, 
+            { className: 'gutter gutter-col' },
+            { 'grid-column': '2' }
+        )
+        split.addColumnGutter(gutter, 1);
+        // splitter.dragElement(); // Enable dragging between the two panels
 
     } else if (direction === 'bottom' || direction === 'top') {
         // Split the panel vertically
         panelDiv.classList.add('split-column'); // Add a class for styling
         if (direction === 'bottom') {
             panelDiv.appendChild(panel1Div); // Move the current panel to the new panel
-            splitter = new Splitter('horizontal', panelDiv);
+            // splitter = new Splitter('horizontal', panelDiv);
             panelDiv.appendChild(panel2Div); // Append the new panel UI
         } else if (direction === 'top') {
             panelDiv.appendChild(panel2Div); // Move the current panel to the new panel
-            splitter = new Splitter('horizontal', panelDiv);
+            // splitter = new Splitter('horizontal', panelDiv);
             panelDiv.appendChild(panel1Div); // Append the new panel UI
         }
 
-        splitter.dragElement(); // Enable dragging between the two panels
+        const gutter = newHTMLElement('div', panelDiv, 
+            { className: 'gutter gutter-row' },
+            { 'grid-row': '2' }
+        )
+        split.addRowGutter(gutter, 1);
+        console.log(split);
+        // splitter.dragElement(); // Enable dragging between the two panels
 
     } else {
         throw new Error('Invalid direction for splitting panel');

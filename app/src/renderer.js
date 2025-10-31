@@ -1,11 +1,40 @@
-import { Layout } from './layout.js';
 import { StatusBar } from './status-bar.js';
+import { HistoryMenu } from './history/history.js';
+import { Panel } from './panel.js';
+import { newHTMLElement } from './utils/html-helper-functions.js';
+import * as Split from '../node_modules/split-grid/dist/split-grid.js';
 
 function createUserID() {
     if (!localStorage.getItem('userID')) {
         const userID = crypto.randomUUID();
         localStorage.setItem('userID', 'test_user');
     }
+}
+
+function setupLayout() {
+    const layout = newHTMLElement('div', document.body, { className: 'layout-container' }, {});
+    const sidebar = newHTMLElement('div', layout, 
+        { className: 'sidebar' }, 
+    );
+    const sidebarExpandBtn = newHTMLElement('button', sidebar,
+        { className: 'sidebar-button', textContent: '☰' }, 
+    );
+
+    const history = new HistoryMenu();
+    history.createUI(sidebar);
+    history.loadHistory();
+
+    sidebarExpandBtn.onclick = () => {
+        sidebar.classList.toggle('expanded');
+        sidebarExpandBtn.classList.toggle('expanded');
+    };
+
+    const panel = new Panel(layout, null, true);
+    panel.panelContainer.style.gridArea = 'main';
+    const tab = panel.addTab('chatbox', null);
+
+    const statusBar = new StatusBar(layout);
+
 }
 
 // Chatbox and tabs logic for renderer process
@@ -36,8 +65,8 @@ if (typeof window !== 'undefined') {
         // Listen for theme changes
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateTabTheme);
 
-        const appLayout = new Layout();
-        const statusBar = new StatusBar();
+        // Set up the main layout
+        setupLayout();
 
         document.addEventListener('click', function(e) {
             const chatMenus = document.querySelectorAll('.chat-menu');

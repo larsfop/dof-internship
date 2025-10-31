@@ -1,5 +1,5 @@
 import { Chatbox, Pdf } from "./content.js";
-import { splitPanel, removePanel } from "./utils/html-helper-functions.js";
+import { splitPanel, removePanel, toggleHidden } from "./utils/html-helper-functions.js";
 
 export class Tabs {
     constructor(tabIdx, panel) {
@@ -283,12 +283,12 @@ export class Tabs {
 
         const active = tabDiv.classList.toggle('active', force); // Toggle the active class for the tab
         if (active) {
-            content.style.display = 'block'; // Show content when active
+            toggleHidden(content, false);
             // insert new active content as first child
             // The order of the content elements is used for active tab memory
             content.parentElement.insertBefore(content, content.parentElement.firstChild);
         } else {
-            content.style.display = 'none'; // Hide content when inactive
+            toggleHidden(content, true);
         }
     }
 

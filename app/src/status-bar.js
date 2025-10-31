@@ -1,7 +1,8 @@
 import { newHTMLElement, toggleHidden } from "./utils/html-helper-functions.js";
 
 export class StatusBar {
-    constructor() {
+    constructor(parentDiv = document.body) {
+        this.parentDiv = parentDiv;
         this.createUI();
     }
 
@@ -49,9 +50,12 @@ export class StatusBar {
             if (username && password) {
                 await window.app.ssh.connect(username, password);
                 console.log('SSH connect invoked');
+                ssh.classList.remove('disconnected');
+                ssh.classList.add('connected');
+                toggleHidden(sshMenu);
             }
         }
 
-        document.body.appendChild(this.statusBarDiv);
+        this.parentDiv.appendChild(this.statusBarDiv);
     }
 }
