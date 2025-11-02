@@ -1,7 +1,7 @@
 import { StatusBar } from './status-bar.js';
 import { HistoryMenu } from './history/history.js';
 import { Panel } from './panel.js';
-import { newHTMLElement } from './utils/html-helper-functions.js';
+import { newHTMLElement, toggleHidden } from './utils/html-helper-functions.js';
 import * as Split from '../node_modules/split-grid/dist/split-grid.js';
 
 function createUserID() {
@@ -26,7 +26,7 @@ function setupLayout() {
 
     sidebarExpandBtn.onclick = () => {
         sidebar.classList.toggle('expanded');
-        sidebarExpandBtn.classList.toggle('expanded');
+        history.toggleExpand();
     };
 
     const panel = new Panel(layout, null, true);
@@ -69,19 +69,22 @@ if (typeof window !== 'undefined') {
         setupLayout();
 
         document.addEventListener('click', function(e) {
-            const chatMenus = document.querySelectorAll('.chat-menu');
+            const chatMenus = document.querySelectorAll('.chat-menu-container');
             console.log(e.target);
             if (e.target.classList.contains('chat-settings')) return;
             
             for (const menu of chatMenus) {
-                const rect = menu.getBoundingClientRect();
-                if (e.clientX >= rect.left && e.clientX <= rect.right &&
-                    e.clientY >= rect.top && e.clientY <= rect.bottom) {
-                    return; // Click inside the menu, do nothing
-                }
+                if (menu.contains(e.target)) continue;
+                const children = Array.from(menu.children);
+                for (const child of children) {
+                    const rect = child.getBoundingClientRect();
+                    if (e.clientX >= rect.left && e.clientX <= rect.right &&
+                        e.clientY >= rect.top && e.clientY <= rect.bottom) {
+                        return; // Click inside the menu, do nothing
+                    }
 
-                menu.classList.add('hidden');
-                menu.setAttribute('inert', '');
+                    toggleHidden(child, true);
+                }
             }
         });
 

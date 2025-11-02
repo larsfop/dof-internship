@@ -1,6 +1,7 @@
+import { Tabs } from "../tabs.js";
+
 export class HistoryMenu {
-    constructor(layout) {
-        this.layout = layout;
+    constructor() {
     }
 
     createUI(div) {
@@ -68,7 +69,8 @@ export class HistoryMenu {
         } else {
             const data = await window.app.history.read(`history/chats/${sessionID}.json`);
             const panel = document.querySelector('.panel-container');
-            const tab = this.layout.addTab(this.layout.tabIdx++, 'chatbox', sessionID, data);
+            const tab = new Tabs();
+            tab.setupContent('chatbox', data);
             tab.appendContainer(panel);
             tab.changeTab(); // Change to the newly created tab
         }

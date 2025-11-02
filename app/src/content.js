@@ -1,6 +1,6 @@
 import { Commands, chatHistoryNavigation } from "./commands.js";
 import { displayPDF } from "./event-handlers.js";
-import { newHTMLElement } from "./utils/html-helper-functions.js";
+import { newHTMLElement, toggleHidden, scrollInputHandler } from "./utils/html-helper-functions.js";
 
 export class Chatbox {
     constructor(sessionID = null, history = null) {
@@ -91,40 +91,117 @@ export class Chatbox {
         this.createSettingsMenu();
     }
 
-    createSettingsMenu() {
-        const chatSettings = newHTMLElement('div', this.mainContainer, {
-            className: 'chat-menu hidden'
-        });
-        chatSettings.setAttribute('inert', '');
-
-        this.settingsButton.onclick = function(e) {
-            chatSettings.classList.remove('hidden');
-            chatSettings.removeAttribute('inert');
-        };
-
-        const embedDepthLabel = newHTMLElement('p', chatSettings, {
-            innerText: 'Embedding Depth:',
+    addChatMenuItem(labelText, x, y, menuItems) {
+        const label = newHTMLElement('label', this.chatSettings, {
+            innerText: labelText,
             className: 'chat-menu-item'
         });
 
-        const embedDepthInput = newHTMLElement('input', embedDepthLabel, {
+        const subMenu = newHTMLElement('div', this.chatMenuContainer, {
+            className: 'chat-submenu hidden'
+        }, {
+            transform: `translate(${x}px, ${y}px)`
+        });
+        subMenu.setAttribute('inert', '');
+
+        for (const item of menuItems) {
+            subMenu.appendChild(item);
+        }
+
+        label.addEventListener('mouseenter', function() {
+            this.menuItemMouseEnterHandler(subMenu);
+        }.bind(this));
+
+    }
+
+    menuItemMouseEnterHandler(subMenu) {
+        const subMenus = Array.from(document.getElementsByClassName('chat-submenu'));
+        for (const menu of subMenus) {
+            toggleHidden(menu, true);
+        }
+
+        toggleHidden(subMenu, false);
+    }
+
+    createSettingsMenu() {
+        const self = this;
+        this.chatMenuContainer = newHTMLElement('div', this.mainContainer, {
+            className: 'chat-menu-container'
+        });
+
+        this.chatSettings = newHTMLElement('div', this.chatMenuContainer, {
+            className: 'chat-menu hidden'
+        }, {
+            transform: 'translate(24px, -68px)'
+        });
+        this.chatSettings.setAttribute('inert', '');
+
+        this.settingsButton.onclick = function(e) {
+            const chatMenus = Array.from(document.getElementsByClassName('chat-menu-container'));
+            for (const menu of chatMenus) {
+                const children = Array.from(menu.children);
+                for (const child of children) {
+                    toggleHidden(child, true);
+                }
+            }
+
+            toggleHidden(this.chatSettings, false);
+        }.bind(this);
+
+        // Embed depth setting
+        const embedDepthInput = newHTMLElement('input', null, {
             type: 'number',
             min: '0',
             value: this.embedDepth
         });
         embedDepthInput.onchange = (e) => {
             this.embedDepth = parseInt(e.target.value);
-        }
-
-        const aiModel = newHTMLElement('p', chatSettings, {
-            innerText: 'AI Model:',
-            className: 'chat-menu-item'
+        };
+        embedDepthInput.addEventListener('wheel', function(e) {
+            const newValue = scrollInputHandler.call(this, e);
+            self.embedDepth = newValue;
+        });
+        embedDepthInput.addEventListener('input', function(e) {
+            self.embedDepth = Number(this.value);
         });
 
-        aiModel.value = this.model;
-        aiModel.onchange = (e) => {
-            this.model = e.target.value;
-        };
+        this.addChatMenuItem('Embed Depth:', 166, -70, [embedDepthInput]);
+
+
+        // AI model setting
+        const aiModelItems = this.createAIModelItems();
+        this.addChatMenuItem('AI Model:', 166, -70, aiModelItems);
+    }
+
+    createAIModelItems() {
+        const models = ['o4-mini', 'gpt-4.1']
+        const items = [];
+        for (const model of models) {
+            const div = newHTMLElement('div', null, {
+                className: 'ai-model-item'
+            });
+            const modelItem = newHTMLElement('input', div, {
+                type: 'radio',
+                name: 'ai-model',
+                className: 'ai-model-radio',
+                id: model,
+                checked: this.model === model
+            });
+            newHTMLElement('label', div, {
+                for: model,
+                innerText: model,
+                className: 'ai-model-label'
+            });
+
+            div.onclick = function() {
+                this.model = model;
+                console.log(`AI model set to ${model}`);
+                modelItem.checked = true;
+            }.bind(this);
+
+            items.push(div);
+        }
+        return items;
     }
 
     loadHistory(history) {

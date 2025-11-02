@@ -42,6 +42,25 @@ export function toggleHidden(element, force = null) {
 }
 
 
+export function scrollInputHandler(e,) {
+    e.preventDefault();
+    const step = Number(this.step) || 1;
+    const min = this.min !== '' ? Number(this.min) : -Infinity;
+    const max = this.max !== '' ? Number(this.max) : Infinity;
+    let value = Number(this.value) || 0;
+
+    if (e.deltaY < 0) {
+        // Scroll up: increase value
+        value = Math.min(value + step, max);
+    } else {
+        // Scroll down: decrease value
+        value = Math.max(value - step, min);
+    }
+    this.value = value;
+    return value;
+}
+
+
 export function splitPanel(panelDiv, direction) {
     const panel1 = new Panel(panelDiv, null, false); // Create new empty panel
     const panel2 = new Panel(panelDiv, null, true); // Create new filled panel
@@ -74,11 +93,13 @@ export function splitPanel(panelDiv, direction) {
             panelDiv.appendChild(panel1Div); // Append the new panel UI
         }
 
-        const gutter = newHTMLElement('div', panelDiv, 
+        const gutter = newHTMLElement('div', null, 
             { className: 'gutter gutter-col' },
             { 'grid-column': '2' }
         )
+        panelDiv.insertBefore(gutter, panelDiv.lastChild);
         split.addColumnGutter(gutter, 1);
+        console.log(split);
         // splitter.dragElement(); // Enable dragging between the two panels
 
     } else if (direction === 'bottom' || direction === 'top') {
@@ -94,10 +115,11 @@ export function splitPanel(panelDiv, direction) {
             panelDiv.appendChild(panel1Div); // Append the new panel UI
         }
 
-        const gutter = newHTMLElement('div', panelDiv, 
+        const gutter = newHTMLElement('div', null, 
             { className: 'gutter gutter-row' },
             { 'grid-row': '2' }
         )
+        panelDiv.insertBefore(gutter, panelDiv.lastChild);
         split.addRowGutter(gutter, 1);
         console.log(split);
         // splitter.dragElement(); // Enable dragging between the two panels

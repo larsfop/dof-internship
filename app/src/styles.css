@@ -36,6 +36,12 @@
   }
 }
 
+* {
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: #ccc transparent;
+}
+
 body {
   display: flex;
   background: var(--bg-dark);
@@ -70,39 +76,37 @@ body {
 .sidebar {
   background: var(--bg-dark);
   border-right: 1px solid var(--border);
-  width: 40px;
-  min-width: 40px;
+  width: 46px;
   transition: 0.2s ease;
   overflow: hidden;
   padding-top: 8px;
+  padding-inline: 6px;
   grid-area: sidebar;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  row-gap: 12px;
 }
 
 .sidebar.expanded {
   width: 260px;
-  min-width: 215px;
 }
 
 .sidebar-button {
   background: var(--bg-light);
-  position: relative;
-  left: 3px;
   width: 34px;
   height: 34px;
   border: none;
   border-radius: 12px;
   background: transparent;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  justify-self: end;
 }
 
 .sidebar-button:hover {
   background: var(--highlight);
 }
 
-.sidebar-button.expanded {
-  transform: translate(174px);
-}
 
 .history-menu {
   opacity: 0;
@@ -114,6 +118,7 @@ body {
   cursor: pointer;
   height: 30px;
   scrollbar-gutter: stable;
+  white-space: nowrap;
 }
 
 .history-summary {
@@ -185,7 +190,7 @@ body {
 
 .gutter {
   background: var(--highlight);
-  transition: opacity 0.2s ease;
+  transition: opacity 1.2s ease;
   opacity: 0;
 }
 
@@ -225,8 +230,8 @@ body {
 }
 
 .panel-container {
-  display: grid;
-  grid-template-rows: auto 1fr;
+  display: flex;
+  flex-direction: column;
   height: 100%;
   width: 100%;
   min-width: 20%;  
@@ -249,6 +254,7 @@ body {
 .window-container {
   background: var(--bg);
   width: 100%;
+  flex: 1;
   display: grid;
   grid-template-areas: "stack";
 }
@@ -317,10 +323,11 @@ body {
 
 .chat {
   background: var(--bg-light);
-  height: 24px;
+  height: 40px;
   width: -webkit-fill-available;
   display: flex;
-  padding: 8px 12px;
+  gap: 8px;
+  padding-inline: 12px;
   align-items: center;
   margin: 24px 24px;
   border: none;
@@ -344,8 +351,7 @@ cite {
   border: none;
   outline: none;
   font-size: 16px;
-  height: 34px;
-  padding: 0px 12px;
+  height: 32px;
 }
 
 .input-message {
@@ -359,8 +365,9 @@ cite {
 
 .chat-settings {
   border: none;
+  width: 32px;
+  height: 32px;
   border-radius: 12px;
-  padding: 1px 7.49px;
   letter-spacing: 1px;
   font-size: 24px;
   cursor: pointer;
@@ -373,8 +380,9 @@ cite {
 
 .chat-send {
   border: none;
+  height: 32px;
+  padding-inline: 8px;
   border-radius: 8px;
-  padding: 4px 6px;
   font-size: 16px;
   cursor: pointer;
   background-color: transparent;
@@ -388,37 +396,79 @@ cite {
   background: var(--bg-light);
   width: fit-content;
   height: fit-content;
-  position: absolute;
-  bottom: 65px;
-  left: 20px;
   border: none;
   border-radius: 12px;
-  padding: 12px 16px;
+  padding: 6px 6px;
   display: flex;
   flex-direction: column;
   align-items: start;
-  gap: 8px;
   box-shadow: 0px 0px 8px #151515;
   z-index: 10;
   opacity: 1;
-  transition: opacity 0.2s ease;
+  grid-area: stack;
+  transition: opacity 0.4s ease;
 }
 
 .chat-menu.hidden {
   opacity: 0;
 }
 
+.chat-menu-container {
+  grid-area: stack;
+  align-self: end;
+  display: grid;
+  justify-content: start;
+}
+
 .chat-menu-item {
-  cursor: pointer;
   width: -webkit-fill-available;
-  padding: 5px 12px;
+  cursor: pointer;
+  padding: 8px 16px;
   border: none;
-  border-radius: 8px;
-  margin: 0px 6px;
+  border-radius: 12px;
 }
 
 .chat-menu-item:hover {
   background: var(--highlight);
+}
+
+.chat-submenu {
+  background: var(--bg-light);
+  height: fit-content;
+  width: fit-content;
+  padding: 6px 6px;
+  border: none;
+  border-radius: 12px;
+  grid-area: stack;
+  z-index: 20;
+  transition: opacity 0.4s ease;
+  opacity: 1;
+}
+
+.chat-submenu.hidden {
+  opacity: 0;
+}
+
+.ai-model-item {
+  width: -webkit-fill-available;
+  cursor: pointer;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ai-model-item:hover {
+  background: var(--highlight);
+}
+
+.ai-model-radio {
+}
+
+.ai-model-label {
+  color: var(--text);
 }
 
 .hover-menu {
@@ -432,8 +482,10 @@ cite {
 }
 
 input[type="number"] {
-  padding: 6px 8px;
+  padding: 8px 12px;
   outline: none;
+  border: none;
+  border-radius: 8px;
 }
 
 .input-output-block {
