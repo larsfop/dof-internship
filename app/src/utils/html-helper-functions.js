@@ -41,6 +41,40 @@ export function toggleHidden(element, force = null) {
     }
 }
 
+export function setLastActive(element) {
+    const panels = document.querySelectorAll('.panel-container');
+    for (const panel of panels) {
+        panel.classList.remove('last-active');
+    }
+    element.classList.add('last-active');
+}
+
+export function documentBodyClickHandler(e) {
+    const target = e.target;
+    const chatMenus = document.querySelectorAll('.chat-menu-container');
+    console.log(target);
+    if (target.classList.contains('chat-settings')) return;
+
+    for (const menu of chatMenus) {
+        if (menu.contains(target)) continue;
+        const children = Array.from(menu.children);
+        for (const child of children) {
+            const rect = child.getBoundingClientRect();
+            if (e.clientX >= rect.left && e.clientX <= rect.right &&
+                e.clientY >= rect.top && e.clientY <= rect.bottom) {
+                return; // Click inside the menu, do nothing
+            }
+
+            toggleHidden(child, true);
+        }
+    }
+
+    const activePanel = target.closest('.panel-container');
+    if (activePanel) {
+        setLastActive(activePanel);
+    }
+}
+
 
 export function scrollInputHandler(e,) {
     e.preventDefault();

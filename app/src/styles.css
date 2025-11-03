@@ -561,11 +561,16 @@ caption {
 
 .tab {
   width: 150px;
+  min-width: 90px;
   border-right: 1px solid var(--border);
   padding: 2px 8px;
   align-content: center;
   cursor: pointer;
   transition: transform 300ms ease;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 6px;
 }
 
 .tab:hover:not(.active) {
@@ -577,9 +582,6 @@ caption {
 }
 
 .tab-text {
-  width: calc(100% - 30px);
-  padding-inline: 6px;
-  float: left;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -678,8 +680,8 @@ caption {
 }
 
 .ssh-menu {
-  --width: 120px;
-  --height: 140px;
+  --width: 140px;
+  --height: 145px;
   background: var(--bg-light);
   width: var(--width);
   height: var(--height);

@@ -1,7 +1,7 @@
 import { StatusBar } from './status-bar.js';
 import { HistoryMenu } from './history/history.js';
 import { Panel } from './panel.js';
-import { newHTMLElement, toggleHidden } from './utils/html-helper-functions.js';
+import { newHTMLElement, setLastActive, toggleHidden, documentBodyClickHandler } from './utils/html-helper-functions.js';
 import * as Split from '../node_modules/split-grid/dist/split-grid.js';
 
 function createUserID() {
@@ -68,26 +68,7 @@ if (typeof window !== 'undefined') {
         // Set up the main layout
         setupLayout();
 
-        document.addEventListener('click', function(e) {
-            const chatMenus = document.querySelectorAll('.chat-menu-container');
-            console.log(e.target);
-            if (e.target.classList.contains('chat-settings')) return;
-            
-            for (const menu of chatMenus) {
-                if (menu.contains(e.target)) continue;
-                const children = Array.from(menu.children);
-                for (const child of children) {
-                    const rect = child.getBoundingClientRect();
-                    if (e.clientX >= rect.left && e.clientX <= rect.right &&
-                        e.clientY >= rect.top && e.clientY <= rect.bottom) {
-                        return; // Click inside the menu, do nothing
-                    }
-
-                    toggleHidden(child, true);
-                }
-            }
-        });
-
+        document.addEventListener('click', documentBodyClickHandler);
 
     });
 }

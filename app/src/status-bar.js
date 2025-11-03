@@ -38,9 +38,18 @@ export class StatusBar {
             textContent: 'Connect'
         });
 
+        function hideSSHMenuOnClickOutside(e) {
+            if (!sshMenu.contains(e.target) && e.target !== ssh) {
+                toggleHidden(sshMenu, true);
+                document.removeEventListener('click', hideSSHMenuOnClickOutside);
+            }
+        }
+
         ssh.onclick = function() {
             toggleHidden(sshMenu);
             sshUser.focus();
+
+            document.addEventListener('click', hideSSHMenuOnClickOutside);
         }
 
         sshSubmit.onclick = async function () {

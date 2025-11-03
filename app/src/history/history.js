@@ -68,7 +68,7 @@ export class HistoryMenu {
             changeTab(tabDiv);
         } else {
             const data = await window.app.history.read(`history/chats/${sessionID}.json`);
-            const panel = document.querySelector('.panel-container');
+            const panel = document.querySelector('.panel-container .last-active');
             const tab = new Tabs();
             tab.setupContent('chatbox', data);
             tab.appendContainer(panel);
