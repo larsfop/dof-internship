@@ -1,4 +1,5 @@
 import { Tabs } from "../tabs.js";
+import { newHTMLElement, toggleHidden } from "../utils/html-helper-functions.js";
 
 export class HistoryMenu {
     constructor() {
@@ -39,11 +40,11 @@ export class HistoryMenu {
     }
 
     addEntry(sessionID) {
-        let entryDiv = document.getElementById(`history-${sessionID}`);
+        let entryDiv = document.getElementById(`history:${sessionID}`);
         if (!entryDiv) {
             entryDiv = document.createElement('div');
             entryDiv.className = 'history-entry';
-            entryDiv.id = `history-${sessionID}`;
+            entryDiv.id = `history:${sessionID}`;
             entryDiv.textContent = sessionID;
 
             entryDiv.onclick = this.onClickHandler.bind(this, sessionID);
@@ -61,44 +62,32 @@ export class HistoryMenu {
     }
 
     async onClickHandler(sessionID) {
-        const chatDiv = document.getElementById(`chatbox-${sessionID}`);
+        const chatDiv = document.getElementById(`content:${sessionID}`);
         if (chatDiv) {
-            const index = chatDiv.dataset.index;
-            const tabDiv = document.querySelector(`.tab[data-index="${index}"]`);
-            changeTab(tabDiv);
+            const tabDiv = document.getElementById(`tab:${sessionID}`);
+            tabDiv.click();
         } else {
             const data = await window.app.history.read(`history/chats/${sessionID}.json`);
-            const panel = document.querySelector('.panel-container .last-active');
-            const tab = new Tabs();
+            const panel = document.querySelector('.panel-container.last-active');
+            console.log(panel)
+            const tab = new Tabs(sessionID);
             tab.setupContent('chatbox', data);
             tab.appendContainer(panel);
             tab.changeTab(); // Change to the newly created tab
         }
         this.addEntry(sessionID);
     }
-}
 
+    loadLastTab() {
+        const historyEntries = this.historyDiv.getElementsByClassName('history-entry');
+        if (historyEntries.length < 1) return;
 
-function changeTab(tabDiv) {
-    const parent = tabDiv.parentNode; // Get the parent container of the tab
-    const activeTab = parent.getElementsByClassName('active')[0]; // Get the active tab
-    if (activeTab) {
-        if (activeTab !== tabDiv) {
-            toggleActive(activeTab, false); // Deactivate the currently active tab
+        for (const entry of historyEntries) {
+            const sessionID = entry.id.replace('history:', '');
+            const contentDiv = document.getElementById(`content:${sessionID}`);
+            if (contentDiv) continue; // Skip if tab is already open
+            this.onClickHandler(sessionID);
+            break;
         }
-    }
-    toggleActive(tabDiv, true); // Activate the clicked tab
-}
-
-
-function toggleActive(tabDiv, force = null) {
-    const index = tabDiv.dataset.index;
-    const content = document.querySelector(`.chat-container[data-index="${index}"], .pdf-viewer[data-index="${index}"]`);
-
-    const active = tabDiv.classList.toggle('active', force); // Toggle the active class for the tab
-    if (active) {
-        content.style.display = 'block';
-    } else {
-        content.style.display = 'none';
     }
 }

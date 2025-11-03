@@ -2,8 +2,8 @@ import { Chatbox, Pdf } from "./content.js";
 import { splitPanel, removePanel, toggleHidden } from "./utils/html-helper-functions.js";
 
 export class Tabs {
-    constructor(tabIdx, panel) {
-        this.id = crypto.randomUUID();
+    constructor(sessionID = null) {
+        this.id = sessionID ? sessionID : crypto.randomUUID();
 
         this.boundDragHandler = this.dragHandler.bind(this);
         this.boundDragEnterHandler = this.dragEnterHandler.bind(this);
@@ -46,7 +46,6 @@ export class Tabs {
         this.tabDiv.draggable = true;
 
         this.tabDiv.onclick = (e) => {
-            e.stopPropagation(); // Prevent event bubbling
             if (!this.tabDiv) return;
             this.changeTab(); // Change to the clicked tab
         };
@@ -278,7 +277,7 @@ export class Tabs {
     }
 
     toggleActive(tabDiv, force = null) {
-        const id = tabDiv.id.split(':')[1];
+        const id = tabDiv.id.replace('tab:', '');
         const content = document.getElementById(`content:${id}`);
 
         const active = tabDiv.classList.toggle('active', force); // Toggle the active class for the tab
@@ -303,7 +302,7 @@ export class Tabs {
 
         if (this.tabsContainer.children.length != 0) {
             const element = this.tabsContainer.parentNode.nextSibling.firstChild;
-            const id = element.id.split(':')[1];
+            const id = element.id.replace('content:', '');
             const oldTab = document.getElementById(`tab:${id}`);
             this.toggleActive(oldTab, true); // Activate the next tab if it exists
         }
@@ -330,7 +329,7 @@ export class Tabs {
         }
 
         if (this.tabDiv.classList.contains('active')) {
-            const id = this.content.mainContainer.nextSibling.id.split(':')[1];
+            const id = this.content.mainContainer.nextSibling.id.replace('content:', '');
             const nextTab = document.getElementById(`tab:${id}`);
             this.toggleActive(nextTab, true); // Activate the next tab if it exists
         }

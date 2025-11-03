@@ -61,7 +61,7 @@ export class StatusBar {
                 console.log('SSH connect invoked');
                 ssh.classList.remove('disconnected');
                 ssh.classList.add('connected');
-                toggleHidden(sshMenu);
+                toggleHidden(sshMenu, true);
             }
         }
 
