@@ -253,6 +253,7 @@ body {
 
 .window-container {
   background: var(--bg);
+  overflow: hidden;
   width: 100%;
   flex: 1;
   display: grid;
@@ -311,6 +312,7 @@ body {
 }
 
 .chat-container {
+  overflow: hidden;
   grid-area: stack;
   display: grid;
   grid-template-areas: "stack";
@@ -338,6 +340,7 @@ body {
 }
 
 .chat-messages {
+  overflow-y: auto;
   grid-area: stack;
 }
 
