@@ -286,6 +286,7 @@ export class Tabs {
             // insert new active content as first child
             // The order of the content elements is used for active tab memory
             content.parentElement.insertBefore(content, content.parentElement.firstChild);
+            content.querySelector('input').focus();
         } else {
             toggleHidden(content, true);
         }
@@ -319,7 +320,8 @@ export class Tabs {
         
     }
 
-    removeTab() {
+    removeTab(e) {
+        e.stopPropagation(); // Prevent triggering the tab click event
         this.tabDiv.remove(); // Remove the tab from the DOM
 
         if (this.tabsContainer.children.length === 0) {
@@ -329,8 +331,10 @@ export class Tabs {
         }
 
         if (this.tabDiv.classList.contains('active')) {
+            console.log(this.content.mainContainer.parentNode.children);
             const id = this.content.mainContainer.nextSibling.id.replace('content:', '');
             const nextTab = document.getElementById(`tab:${id}`);
+            console.log(nextTab, id);
             this.toggleActive(nextTab, true); // Activate the next tab if it exists
         }
 

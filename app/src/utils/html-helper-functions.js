@@ -41,6 +41,9 @@ export function toggleHidden(element, force = null) {
     }
 }
 
+/** Set the last active panel element. 
+ * @param {HTMLElement} element - The panel element to set as last active.
+*/
 export function setLastActive(element) {
     const panels = document.querySelectorAll('.panel-container');
     for (const panel of panels) {

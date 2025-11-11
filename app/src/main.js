@@ -136,7 +136,9 @@ async function readHistoryFile(filePath) {
         const file = await fs.promises.readFile(filePath, 'utf-8');
         data = JSON.parse(file);
     } catch (error) {
-        console.error('Error reading history file:', error);
+        if (error.code !== 'ENOENT') {
+            console.error('Error reading history file:', error);
+        }
     }
 
     return data;
@@ -166,6 +168,9 @@ ipcMain.handle('history:read', (event, filePath) => {
 
 ipcMain.handle('history:write', (event, sessionID, history) => {
     writeHistoryFile(sessionID, history);
+
+    // Notify renderer processes to update their history menus
+    mainWindow.webContents.send('update:history', sessionID);
 });
 
 

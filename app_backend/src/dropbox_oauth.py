@@ -54,11 +54,11 @@ def auth_callback(request: Request):
 
         set_key('.env', 'DROPBOX_REFRESH_TOKEN', refresh_token)
         os.kill(os.getpid(), signal.SIGINT)
-        return HTMLResponse("<h2>Authorization successful! You can close this tab.</h2>")
+        print("Dropbox OAuth successful. Refresh token saved to .env file.", flush=True)
     else:
         os.kill(os.getpid(), signal.SIGINT)
-        return HTMLResponse("<h2>Authorization failed. Please try again.</h2>")
-    
+        print("Dropbox OAuth failed. Please try again.", flush=True)
+
 
 
 if __name__ == "__main__":

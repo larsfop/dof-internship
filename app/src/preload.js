@@ -8,7 +8,8 @@ contextBridge.exposeInMainWorld('app', {
   },
   history: {
     read: (filePath) => ipcRenderer.invoke('history:read', filePath),
-    write: (sessionID, history) => ipcRenderer.invoke('history:write', sessionID, history)
+    write: (sessionID, history) => ipcRenderer.invoke('history:write', sessionID, history),
+    update: (callback) => { ipcRenderer.on('update:history', (event, sessionID) => callback(sessionID)); }
   },
   ssh: {
     connect: (username, password) => ipcRenderer.invoke('ssh:connect', username, password)

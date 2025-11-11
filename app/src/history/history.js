@@ -3,6 +3,10 @@ import { newHTMLElement, toggleHidden } from "../utils/html-helper-functions.js"
 
 export class HistoryMenu {
     constructor() {
+        // Listen for history updates from main process
+        window.app.history.update((sessionID) => {
+            this.addEntry(sessionID);
+        });
     }
 
     createUI(div) {

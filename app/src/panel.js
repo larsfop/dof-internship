@@ -46,8 +46,7 @@ export class Panel {
                 textContent: '+',
                 title: 'New Tab'
             });
-            newTabBtn.onclick = async (e) => {
-                e.stopPropagation();
+            newTabBtn.onclick = (e) => {
                 const panelDiv = e.target.closest('.panel-container');
                 const tab = this.addTab('chatbox', null);
                 tab.appendContainer(panelDiv);
