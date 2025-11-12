@@ -19,6 +19,9 @@ with redirect_stdout(f), redirect_stderr(f):
     from pdf import dbx_handler
 
 
+    
+
+
 def crop_elements(elements: list[Element], x0: float = 0, y0: float = 0, x1: float = np.inf, y1: float = np.inf) -> Dict:
 
     elements_dict = elements_to_dicts(elements)
