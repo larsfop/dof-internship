@@ -52,9 +52,10 @@ def chunk_pdf(
     tmp_dir.mkdir(exist_ok=True)
 
     output_dir = path_dir / output_dir
+
     output_dir.mkdir(exist_ok=True, parents=True)
 
-    if not (tmp_dir / filename).exists():
+    """if not (tmp_dir / filename).exists():
         # Download the PDF from Dropbox if needed
         if is_dbx:
             dbx = dbx_handler()
@@ -63,25 +64,25 @@ def chunk_pdf(
             doc = pymupdf.open(filename)
 
         # Create a temporary directory to store the cropped PDF
-        doc.save(tmp_dir / filename)
+        doc.save(tmp_dir / filename)"""
 
     # Partition the cropped PDF with high-res image and table extraction
     elements = partition_pdf(
-        filename=tmp_dir / filename,
+        filename=filename,
         # file=io.BytesIO(doc.write()),
         strategy='hi_res',
         extract_images_in_pdf=True,
         extract_image_block_types=['image', 'table'],
         extract_image_block_to_payload=False,
-        extract_image_block_output_dir='./test_images',
+        # extract_image_block_output_dir='./test_images',
         extract_image_block_format='png',
         high_res_image=True,
         pdf_image_dpi=400,
     )
 
     # Crop and save partitions to JSON
-    with open(output_dir / f"{Path(filename).stem}_elements.json", 'w') as f:
-        json.dump(elements_to_dicts(elements, 140, 280), f, indent=4)
+    with open(output_dir / f"{Path(filename).stem}.json", 'w') as f:
+        json.dump(crop_elements(elements, 140, 280), f, indent=4)
 
 
 if __name__ == "__main__":
@@ -89,7 +90,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="Partition a PDF file and save the output as JSON.")
     parser.add_argument("filename", type=str, help="Path to the input PDF file.")
-    parser.add_argument("--output_dir", type=Path, default=Path('/partition'), help="Directory to save the output JSON file.")
+    parser.add_argument("--output_dir", type=Path, default=Path('partition'), help="Directory to save the output JSON file.")
     parser.add_argument("--dbx", action="store_false", help="Indicates if the file is in Dropbox. Default: True.")
     parser.add_argument("--path_dir", type=Path, default=None, help="Temporary directory for processing.")
 
