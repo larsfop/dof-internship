@@ -11,3 +11,5 @@ mysql_connection.json
 .env
 __pycache__
 volumes
+
+!app_backend/src/partition/*json
