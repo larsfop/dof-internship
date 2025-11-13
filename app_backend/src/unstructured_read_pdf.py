@@ -89,7 +89,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="Partition a PDF file and save the output as JSON.")
     parser.add_argument("filename", type=str, help="Path to the input PDF file.")
-    parser.add_argument("output_dir", type=Path, help="Directory to save the output JSON file.")
+    parser.add_argument("--output_dir", type=Path, default=Path('/partition'), help="Directory to save the output JSON file.")
     parser.add_argument("--dbx", action="store_false", help="Indicates if the file is in Dropbox. Default: True.")
     parser.add_argument("--path_dir", type=Path, default=None, help="Temporary directory for processing.")
 
