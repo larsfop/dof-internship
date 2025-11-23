@@ -11,6 +11,7 @@ import json
 import asyncio
 
 from logger.logger import Logger
+from database import new_response
 
 
 class chatbot_pipeline:
@@ -195,6 +196,9 @@ class chatbot_pipeline:
     async def response(
         self,
         query: str,
+        user_id: str,
+        session_id: str,
+        session_name: str,
         model: str,
         pdf_data: str|None = None,
         logger: None|Logger = None,
@@ -226,16 +230,28 @@ class chatbot_pipeline:
                 'filename': 'document.pdf'
             })
 
+        if session_name.strip() == '':
+            response = self.llm[model].invoke(
+                [{
+                    'role': 'system',
+                    'content': 'Summarize this message into a short chat title.'
+                },
+                {
+                    'role': 'user',
+                    'content': query
+                }]
+            )
+            session_name = response.content
+
         async for event in self.llm[model].astream_events(msg):
             if event['event'] == 'on_chat_model_start':
-                # print(event['event'])
                 logger.log_info(f'Response generation started')
                 yield json.dumps({
                     'event': event['event'],
                     'id': event['run_id'],
+                    'session_name': session_name
                 }) + '\n'
             elif event['event'] == 'on_chat_model_stream':
-                # print(event['data']['chunk'].content, end='', flush=True)
                 if not is_streaming:
                     is_streaming = True
                     logger.log_info(f'Begin response stream')
@@ -244,8 +260,6 @@ class chatbot_pipeline:
                     'content': event['data']['chunk'].content
                 }) + '\n'
             elif event['event'] == 'on_chat_model_end':
-                # print()
-                # print(event['event'])
                 data = event['data']['output']
 
                 output = {
@@ -265,5 +279,15 @@ class chatbot_pipeline:
 
                 if page_corrections:
                     output['page_corrections'] = page_corrections
+
+                # Store response in database
+                new_response(
+                    user_id=user_id,
+                    session_id=session_id,
+                    response_id=event['run_id'],
+                    session_name=session_name,
+                    prompt=query,
+                    response=data.content
+                )
 
                 yield json.dumps({'event': event['event']} | output) + '\n'

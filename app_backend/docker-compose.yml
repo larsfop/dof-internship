@@ -40,7 +40,7 @@ services:
 
   standalone:
     container_name: milvus-standalone
-    image: milvusdb/milvus:v2.6.2
+    image: milvusdb/milvus:v2.6.4
     command: ["milvus", "run", "standalone"]
     security_opt:
     - seccomp:unconfined
@@ -68,9 +68,12 @@ services:
   backend:
     build: .
     container_name: app-backend
+    volumes:
+      - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/data:/app/data
     ports:
       - "8015:8015"
     environment:
+      - DATABASE_URL=../app/data/app.db
       - DROPBOX_API_KEY=${DROPBOX_API_KEY}
       - DROPBOX_REFRESH_TOKEN=${DROPBOX_REFRESH_TOKEN}
       - OPENAI_API_KEY=${OPENAI_API_KEY}

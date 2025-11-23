@@ -1,5 +1,6 @@
 app/node_modules
 app/*.yml
+app/out
 
 mysql_connection.json
 *.txt
@@ -13,3 +14,4 @@ __pycache__
 volumes
 
 !app_backend/src/partition/*json
+!app_backend/requirement.txt

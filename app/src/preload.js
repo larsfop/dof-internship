@@ -2,15 +2,7 @@ const { contextBridge, ipcRenderer, webUtils } = require('electron/renderer')
 
 
 contextBridge.exposeInMainWorld('app', {
-  darkMode: {
-    toggle: () => ipcRenderer.invoke('dark-mode:toggle'),
-    system: () => ipcRenderer.invoke('dark-mode:system')
-  },
-  history: {
-    read: (filePath) => ipcRenderer.invoke('history:read', filePath),
-    write: (sessionID, history) => ipcRenderer.invoke('history:write', sessionID, history),
-    update: (callback) => { ipcRenderer.on('update:history', (event, sessionID) => callback(sessionID)); }
-  },
+  quit: () => ipcRenderer.invoke('app:quit'),
   ssh: {
     connect: (username, password) => ipcRenderer.invoke('ssh:connect', username, password)
   }

@@ -1,42 +1,55 @@
-import { StatusBar } from './status-bar.js';
-import { HistoryMenu } from './history/history.js';
-import { Panel } from './panel.js';
-import { Tabs } from './tabs.js';
-import { newHTMLElement, setLastActive, toggleHidden, documentBodyClickHandler } from './utils/html-helper-functions.js';
-import * as Split from '../node_modules/split-grid/dist/split-grid.js';
+import { setupStatusBarMenu } from './status-bar.js';
+import { setupHistoryMenu } from './history/history.js';
+import { createPanel } from './panel.js';
+import { newTab, loadLastTab } from './tab.js';
+import { newHTMLElement, toggleHidden, documentBodyClickHandler } from './utils/html-helper-functions.js';
+import { dragEndHandler, dragEnterHandler } from './event-handlers.js';
+// import * as Split from '../node_modules/split-grid/dist/split-grid.js';
 
-function createUserID() {
+async function createUserID() {
     if (!localStorage.getItem('userID')) {
         const userID = crypto.randomUUID();
-        localStorage.setItem('userID', 'test_user');
+        localStorage.setItem('userID', userID);
+
+        const params = new URLSearchParams({
+            userID: userID,
+            username: 'test_user',
+        });
+        await fetch(`http://localhost:8015/create_user?${params.toString()}`)
     }
 }
 
-function setupLayout() {
-    const layout = newHTMLElement('div', document.body, { className: 'layout-container' }, {});
-    const sidebar = newHTMLElement('div', layout, 
+function setupSidebarMenu(layoutDiv) {
+    const sidebar = newHTMLElement('div', layoutDiv, 
         { className: 'sidebar' }, 
     );
     const sidebarExpandBtn = newHTMLElement('button', sidebar,
         { className: 'sidebar-button', textContent: '☰' }, 
     );
 
-    const history = new HistoryMenu();
-    history.createUI(sidebar);
-    history.loadHistory();
+    const historyDiv = setupHistoryMenu(sidebar);
 
-    sidebarExpandBtn.onclick = () => {
+    sidebarExpandBtn.onclick = function() {
         sidebar.classList.toggle('expanded');
-        history.toggleExpand();
-    };
+        toggleHidden(historyDiv);
+    }
+}
 
-    const panel = new Panel(layout, null, true);
-    panel.panelContainer.style.gridArea = 'main';
-    const tab = panel.addTab('chatbox', null);
+function setupLayout() {
+    const layout = newHTMLElement('div', document.body, 
+        { className: 'layout-container' },
+    );
+    
+    setupSidebarMenu(layout);
 
-    const statusBar = new StatusBar(layout);
+    const panel = createPanel(layout, true);
+    newTab(panel, 'chatbot');
+    
+    // Event listeners for highlights
+    document.addEventListener('dragenter', dragEnterHandler);
+    document.addEventListener('dragend', dragEndHandler);
 
-    return { layout, sidebar, statusBar, history}
+    setupStatusBarMenu(layout);
 }
 
 // Chatbox and tabs logic for renderer process
@@ -50,54 +63,43 @@ if (typeof window !== 'undefined') {
             e.preventDefault();
         });
 
-        function updateTabTheme() {
-            const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const tabs = document.getElementsByClassName('tab');
-            [...tabs].forEach(tab => {
-                tab.classList.remove('tab-dark-mode', 'tab-light-mode');
-                tab.classList.add(isDark ? 'tab-dark-mode' : 'tab-light-mode');
-            });
-        }
-
         // Ensure a user ID is set for logging purposes
-        createUserID();
-
-        // Initial theme set
-        updateTabTheme();
-        // Listen for theme changes
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateTabTheme);
+        await createUserID();
 
         // Set up the main layout
-        const { layout, sidebar, statusBar, history } = setupLayout();
+        setupLayout();
 
         document.addEventListener('click', documentBodyClickHandler);
+
+
+        // Mouse and keyboard shortcuts
+
+        document.addEventListener('mousedown', function(e) {
+            switch (e.button) {
+            case 1:
+                // Middle mouse button: Close tab
+                e.preventDefault();
+                const tab = e.target.closest('.tab');
+                if (tab) {
+                    tab.lastChild.click(); // Simulate click on close button
+                }
+                break;
+            default:
+                break;
+            }
+        })
 
         document.addEventListener('keydown', (e) => {
             const activePanel = document.querySelector('.panel-container.last-active');
             const activeTab = activePanel.querySelector('.tab.active');
 
-            switch (e.key) {
-                case e.ctrlKey && 't':
-                    // Ctrl+T: New tab
-                    e.preventDefault();
-                    if (!activePanel) return;
-                    const tab = new Tabs();
-                    tab.setupContent('chatbox', null);
-                    tab.appendContainer(activePanel);
-                    tab.changeTab();
-                    break;
-                case e.ctrlKey && 'w':
-                    // Ctrl+W: Close tab
-                    e.preventDefault();
-                    if (!activeTab) return;
-                    activeTab.lastChild.click();
-                    break;
-                case e.ctrlKey && 'T':
+            switch (e.key.toLowerCase()) {
+                case e.ctrlKey && e.shiftKey && 't':
                     // Ctrl+Shift+T: Reopen previously closed tab
                     e.preventDefault();
-                    history.loadLastTab();
+                    loadLastTab();
                     break;
-                case e.ctrlKey && 'W':
+                case e.ctrlKey && e.shiftKey && 'w':
                     // Ctrl+Shift+W: Close all tabs in active panel
                     e.preventDefault();
                     if (!activePanel) return;
@@ -105,6 +107,18 @@ if (typeof window !== 'undefined') {
                     for (const tab of tabs) {
                         tab.lastChild.click();
                     }
+                    break;
+                case e.ctrlKey && 't':
+                    // Ctrl+T: New tab
+                    e.preventDefault();
+                    if (!activePanel) return;
+                    newTab(activePanel, 'chatbot');
+                    break;
+                case e.ctrlKey && 'w':
+                    // Ctrl+W: Close tab
+                    e.preventDefault();
+                    if (!activeTab) return;
+                    activeTab.lastChild.click();
                     break;
 
                 default:

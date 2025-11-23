@@ -1,97 +1,95 @@
-import { Tabs } from "../tabs.js";
-import { newHTMLElement, toggleHidden } from "../utils/html-helper-functions.js";
+import { newTab } from "../tab.js";
+import { newHTMLElement, toggleHidden, getOtherElementByID } from "../utils/html-helper-functions.js";
 
-export class HistoryMenu {
-    constructor() {
-        // Listen for history updates from main process
-        window.app.history.update((sessionID) => {
-            this.addEntry(sessionID);
+
+export function setupHistoryMenu(parentDiv) {
+    const historyDiv = newHTMLElement('details', parentDiv,
+        { id: 'history-menu', className: 'history-menu hidden', inert: true },
+    )
+
+    // Hide scrollbar until details fully opened
+    historyDiv.addEventListener('transitionend', function(e) {
+        if (e.propertyName === 'height') {
+            // Check that the details is still open after transition
+            if (historyDiv.hasAttribute('open')) {
+                historyDiv.classList.add('opened');
+            } else {
+                historyDiv.classList.remove('opened');
+            }
+        }
+    })
+
+    newHTMLElement('summary', historyDiv,
+        { className: 'history-summary', textContent: 'History' },
+    );
+
+    loadHistory();
+
+    return historyDiv;
+}
+
+
+async function loadHistory() {
+    const userID = localStorage.getItem('userID');
+    const response = await fetch(`http://localhost:8015/get_sessions?user_id=${userID}`)
+    const data = await response.json();
+
+    for (let i = data.length - 1; i >= 0; i--) {
+        addHistoryEntry(data[i].sessionID, data[i].sessionName);
+    }
+}
+
+
+export function addHistoryEntry(sessionID, sessionName) {
+    let entryContainer = document.getElementById(`history:${sessionID}`);
+    if (!entryContainer) {
+        entryContainer = newHTMLElement('div', null, {
+            className: 'history-entry-container',
+            id: `history:${sessionID}`,
+        });
+
+        newHTMLElement('div', entryContainer, {
+            className: 'history-entry',
+            textContent: sessionName,
+            onclick: function() {
+                onClickHandler(sessionID, sessionName);
+            }
+        });
+
+        newHTMLElement('button', entryContainer, {
+            className: 'history-entry-delete-button',
+            textContent: '✕',
+            onclick: function(e) {
+                e.stopPropagation();
+                removeHistoryEntry(sessionID);
+            }
         });
     }
 
-    createUI(div) {
-        this.historyDiv = document.createElement('details');
-        this.historyDiv.id = 'history-menu';
-        this.historyDiv.className = 'history-menu';
-        this.historyDiv.setAttribute('inert', '');
-        div.appendChild(this.historyDiv);
+    const historyDiv = document.getElementById('history-menu');
+    historyDiv.insertBefore(entryContainer, historyDiv.firstChild);
+}
 
-        // Hide scrollbar until details fully opened
-        this.historyDiv.addEventListener('transitionend', (e) => {
-            if (e.propertyName === 'height') {
-                // Check that the details is still open after transition
-                if (this.historyDiv.hasAttribute('open')) {
-                    this.historyDiv.classList.add('opened');
-                } else {
-                    this.historyDiv.classList.remove('opened');
-                }
-            }
-        })
 
-        const summary = document.createElement('summary');
-        summary.className = 'history-summary';
-        summary.textContent = 'History';
-        this.historyDiv.appendChild(summary);
+async function onClickHandler(sessionID, sessionName) {
+    const chatDiv = document.getElementById(`content:${sessionID}`);
+    if (chatDiv) {
+        const tabDiv = document.getElementById(`tab:${sessionID}`);
+        tabDiv.click();
+    } else {
+        const response = await fetch(`http://localhost:8015/get_chat?session_id=${sessionID}`);
+        const data = await response.json();
+        const panel = document.querySelector('.panel-container.last-active');
+        newTab(panel, 'chatbot', data, sessionID, sessionName);
     }
+}
 
-    toggleExpand() {
-        const isExpanded = this.historyDiv.classList.toggle('expanded');
-        if (isExpanded) {
-            this.historyDiv.removeAttribute('inert');
-        } else {
-            this.historyDiv.setAttribute('inert', '');
-        }
-    }
 
-    addEntry(sessionID) {
-        let entryDiv = document.getElementById(`history:${sessionID}`);
-        if (!entryDiv) {
-            entryDiv = document.createElement('div');
-            entryDiv.className = 'history-entry';
-            entryDiv.id = `history:${sessionID}`;
-            entryDiv.textContent = sessionID;
+export async function removeHistoryEntry(sessionID) {
+    const entryDiv = document.getElementById(`history:${sessionID}`);
+    if (entryDiv) {
+        entryDiv.remove();
 
-            entryDiv.onclick = this.onClickHandler.bind(this, sessionID);
-        }
-
-        this.historyDiv.insertBefore(entryDiv, this.historyDiv.firstChild.nextSibling);
-    }
-
-    async loadHistory() {
-        const data = await window.app.history.read('history/history-index.json');
-
-        for (let i = data.length - 1; i >= 0; i--) {
-            this.addEntry(data[i].sessionID);
-        }
-    }
-
-    async onClickHandler(sessionID) {
-        const chatDiv = document.getElementById(`content:${sessionID}`);
-        if (chatDiv) {
-            const tabDiv = document.getElementById(`tab:${sessionID}`);
-            tabDiv.click();
-        } else {
-            const data = await window.app.history.read(`history/chats/${sessionID}.json`);
-            const panel = document.querySelector('.panel-container.last-active');
-            console.log(panel)
-            const tab = new Tabs(sessionID);
-            tab.setupContent('chatbox', data);
-            tab.appendContainer(panel);
-            tab.changeTab(); // Change to the newly created tab
-        }
-        this.addEntry(sessionID);
-    }
-
-    loadLastTab() {
-        const historyEntries = this.historyDiv.getElementsByClassName('history-entry');
-        if (historyEntries.length < 1) return;
-
-        for (const entry of historyEntries) {
-            const sessionID = entry.id.replace('history:', '');
-            const contentDiv = document.getElementById(`content:${sessionID}`);
-            if (contentDiv) continue; // Skip if tab is already open
-            this.onClickHandler(sessionID);
-            break;
-        }
+        await fetch(`http://localhost:8015/remove_session?session_id=${sessionID}`);
     }
 }

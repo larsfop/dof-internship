@@ -47,6 +47,10 @@ body {
   background: var(--bg-dark);
   color: var(--text);
   border-color: var(--border);
+  
+  p::first-letter {
+    text-transform: capitalize;
+  }
 }
 
 [data-tooltip]:hover::after {
@@ -109,12 +113,12 @@ body {
 
 
 .history-menu {
-  opacity: 0;
+  opacity: 1;
   transition: 
     opacity 0.2s ease, 
     height 0.01s ease;
   padding: 0px 6px 0px 12px;
-  overflow-y: hidden;
+  overflow: hidden;
   cursor: pointer;
   height: 30px;
   scrollbar-gutter: stable;
@@ -131,8 +135,8 @@ body {
   background: var(--highlight);
 }
 
-.history-menu.expanded {
-  opacity: 1;
+.history-menu.hidden {
+  opacity: 0;
 }
 
 .history-menu:open {
@@ -150,7 +154,14 @@ body {
   width: 2px;
 }
 
+.history-entry-container {
+  display: grid;
+  grid-template-areas: "stack";
+  align-items: center;
+}
+
 .history-entry {
+  grid-area: stack;
   padding-block: 8px;
   padding-inline: 6px;
   border-width: 0px;
@@ -162,6 +173,27 @@ body {
 }
 
 .history-entry:hover {
+  background: var(--highlight);
+}
+
+.history-entry-container:hover > * {
+  opacity: 1;
+}
+
+.history-entry-delete-button {
+  grid-area: stack;
+  justify-self: end;
+  width: 30px;
+  height: 30px;
+  background: radial-gradient(var(--highlight), 80%, transparent);
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 12px;
+  opacity: 0;
+}
+
+.history-entry-delete-button:hover {
   background: var(--highlight);
 }
 
@@ -260,6 +292,10 @@ body {
   grid-template-areas: "stack";
 }
 
+/* ------------------------------------------------------------------------------
+                              Window highlight styles
+   ------------------------------------------------------------------------------ */
+
 .window-highlight {
   grid-area: stack;
   width: 100%;
@@ -272,13 +308,9 @@ body {
 }
 
 .window-highlight.highlight-display {
-  background: rgba(21, 21, 21, 0.452);
   border: 2px dashed rgb(193, 193, 193);
-  width: -webkit-fill-available;
-  height: -webkit-fill-available;
 }
 
-/* Inner red grid highlights (top, left, right, bottom) */
 .window-highlight.highlight-top {
   grid-column: 1 / -1;
   grid-row: 1 / 2;
@@ -304,11 +336,23 @@ body {
   pointer-events: none;
 }
 
-/* Center green rectangle highlight */
 .window-highlight.highlight-center {
   grid-column: 2 / -2;
   grid-row: 2 / -2;
   pointer-events: none;
+}
+
+/* ------------------------------------------------------------------------------
+                                  Content styles
+   ------------------------------------------------------------------------------ */
+
+.pdf-viewer {
+  grid-area: stack;
+  opacity: 1;
+}
+
+.pdf-viewer.hidden {
+  opacity: 0;
 }
 
 .chat-container {
@@ -342,6 +386,7 @@ body {
 .chat-messages {
   overflow-y: auto;
   grid-area: stack;
+  padding-bottom: 100px;
 }
 
 cite {
@@ -491,10 +536,14 @@ input[type="number"] {
   border-radius: 8px;
 }
 
-.input-output-block {
+.content-block {
   margin-inline: 12px;
   display: flex;
   flex-direction: column;
+
+  hr {
+    width: 100%;
+  }
 }
 
 .table-wrapper {
@@ -543,37 +592,34 @@ caption {
   flex-direction: row;
   align-items: center;
   width: 100%;
+  background: linear-gradient(180deg, var(--bg-dark), 80%, var(--bg));
 }
 
 .tabs-list {
-  background: var(--bg-dark);
-  border-color: var(--border);
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  height: 30px;
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-  border-top-width: 1px;
-  border-top-style: solid;
+  height: 34px;
+  gap: 4px;
+  margin-inline: 4px;
   overflow-y: hidden;
   overflow-x: auto;
   scrollbar-width: none;
 }
 
 .tab {
-  width: 150px;
+  width: fit-content;
   min-width: 90px;
-  border-right: 1px solid var(--border);
+  max-width: 250px;
   padding: 2px 8px;
   align-content: center;
   cursor: pointer;
   transition: transform 300ms ease;
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-areas: "stack";
   align-items: center;
-  gap: 6px;
+  border-radius: 6px;
 }
 
 .tab:hover:not(.active) {
@@ -588,27 +634,14 @@ caption {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  grid-area: stack;
 }
 
 .active {
-  background: var(--bg);
-  height: 26.667px;
-}
-
-.tab-hover {
-  position: absolute;
-  top: -3%;
-  left: -2%;
-  width: 100%;
-  height: 100%;
-  border-left: 6px solid #ccc;
-  border-radius: 0px;
-  padding-top: 3%;
-  pointer-events: none; /* Prevents hover from blocking mouse events */
+  background: var(--bg-light);
 }
 
 .tab-new {
-  margin-inline: 6px;
   padding: 0px;
   width: 24px;
   height: 24px;
@@ -626,21 +659,23 @@ caption {
 }
 
 .tab-close {
+  transition: opacity 0.1s ease;
   opacity: 1;
-  width: 18px;
-  height: 18px;
-  background: transparent;
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(var(--bg-light), 85%, transparent);
   border: none;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 18px;
   padding: 0px;
   border-radius: 6px;
   pointer-events: auto;
+  grid-area: stack;
+  justify-self: end;
 }
 
-.tab-close .tab:not(.active) {
+.tab-close.hidden {
   opacity: 0;
-  pointer-events: none;
 }
 
 .tab-close:hover {

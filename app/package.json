@@ -4,35 +4,30 @@
   "main": "src/main.js",
   "type": "module",
   "scripts": {
-    "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "electron-forge start",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@electron-forge/cli": "^7.10.2",
+    "@electron-forge/maker-deb": "^7.10.2",
+    "@electron-forge/maker-rpm": "^7.10.2",
+    "@electron-forge/maker-squirrel": "^7.10.2",
+    "@electron-forge/maker-zip": "^7.10.2",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.10.2",
+    "@electron-forge/plugin-fuses": "^7.10.2",
+    "@electron/fuses": "^1.8.0",
     "electron": "^37.5.1"
   },
   "dependencies": {
-    "@langchain/community": "^0.3.56",
-    "@langchain/core": "^0.3.63",
-    "@langchain/openai": "^0.6.13",
-    "blob-util": "^2.0.2",
-    "dotenv": "^16.6.1",
-    "dropbox": "^10.34.0",
-    "express": "^5.1.0",
-    "jquery": "^3.7.1",
-    "marked": "^16.3.0",
-    "mupdf": "^1.26.4",
-    "mysql2": "^3.15.1",
+    "electron-squirrel-startup": "^1.0.1",
     "net": "^1.0.2",
-    "openai": "^4.62.1",
     "pdfjs-dist": "^5.4.149",
-    "pg": "^8.11.3",
-    "redis": "^5.8.2",
     "split-grid": "^1.0.11",
-    "ssh2": "^1.17.0",
-    "tslib": "^2.8.1",
-    "uuid": "^9.0.1"
+    "ssh2": "^1.17.0"
   }
 }
