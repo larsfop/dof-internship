@@ -6,10 +6,11 @@ import { splitPanel, getOtherElementByID } from "./utils/html-helper-functions.j
 // --------------------------------------------------------------------------------------
 
 export async function displayPDF(name, page, div) {
-    var pdf = document.getElementById(name);
+    console.log(`Displaying PDF: ${name} at page ${page}`);
+    var pdf = document.querySelector(`[data-name="${name}"]`);
     if (!pdf) {
         // Get the PDF blob
-        const pdfResponse = await fetch(`http://localhost:8015/pdf?name=${name}.pdf`);
+        const pdfResponse = await fetch(`http://localhost:8015/pdf?name=${encodeURIComponent(name)}`);
         const pdfBlob = await pdfResponse.blob();
         const pdfUrl = URL.createObjectURL(pdfBlob);
 

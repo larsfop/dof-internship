@@ -3,7 +3,12 @@ from dropbox.files import FileMetadata
 import base64
 import os
 import pymupdf
-from typing import Self
+from typing import Optional, Self
+from langchain_core.documents import Document
+from pydantic import BaseModel, Field
+from typing import List, Tuple
+from pathlib import Path
+
 
 class dbx_handler:
     def __init__(
@@ -67,6 +72,14 @@ class pdf:
         self.inserted_pages = {}
 
 
+    def __enter__(self) -> Self:
+        return self
+    
+
+    def __exit__(self, exc_type, exc_value, traceback) -> None:
+        self.doc.close()
+
+
     def insert_pages(self, doc: Self, page_numbers: list[int]) -> None:
         try:
             self.inserted_pages[doc.name]
@@ -93,3 +106,51 @@ class pdf:
 
     def __len__(self) -> int:
         return self.page_count
+
+
+class PDFMetadata(BaseModel):
+    name: str
+    page_labels: List[int]
+    pages: List[int]
+    data: str
+
+
+class PDFData(BaseModel):
+    documents: Optional[List[PDFMetadata]] = Field(default_factory=list)
+
+
+    def append(self, metadata: PDFMetadata) -> None:
+        self.documents.append(metadata)
+
+
+def get_pdf_path(name: str) -> Path:
+    path = Path(os.environ['DATA_PATH']) / 'PDFs'
+    try:
+        return next(path.rglob(name))
+    except StopIteration:
+        raise FileNotFoundError(f"No PDF found with name: {name} in path: {path}")
+
+
+def create_pdfs_from_embeddings(documents: list):
+    filtered_docs = documents.filter_by_score(0.95).merge_same_documents()
+
+    pdf_data = []
+    for i, document in enumerate(filtered_docs):
+        with pdf() as newdoc:
+            name, pages, page_labels, score = document.values()
+            print(f'Processing embedding {i+1}/{len(filtered_docs)} for document: {name} with pages {pages} and page labels {page_labels}', flush=True)
+            
+            pdf_path = get_pdf_path(name)
+            with pymupdf.open(pdf_path) as doc:
+                newdoc.insert_pages(doc, pages)
+
+            newdoc.doc.save(os.environ['DATA_PATH'] + f'temp_{i}.pdf')
+            
+            pdf_data.append({
+                'name': name,
+                'page_labels': page_labels,
+                'pages': pages,
+                'data': newdoc.as_base64()
+            })
+
+    return pdf_data

@@ -1,293 +1,289 @@
+from langchain_core.vectorstores.base import VectorStoreRetriever
 from langchain_milvus import Milvus
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from langchain_core.documents import Document
+from langchain_core.runnables.schema import StreamEvent
+from langchain_core.prompts import ChatPromptTemplate, HumanMessagePromptTemplate
+from langchain_core.messages import HumanMessage
+from langchain_core.callbacks import UsageMetadataCallbackHandler
+from langchain_core.callbacks.base import BaseCallbackHandler
 
-import tiktoken
-import pymupdf
 from uuid import uuid4
 import os
 import re
 import json
-import asyncio
+from _collections_abc import AsyncIterator
+from typing import Self, Tuple, List, Dict
+from pydantic import BaseModel
 
 from logger.logger import Logger
 from database import new_response
+from pdf import create_pdfs_from_embeddings
+from config.config import RAGConfig
 
 
-class chatbot_pipeline:
-    def __init__(
-            self,
-            embedding_model: str = "text-embedding-3-large",
-            vector_db_name: str = "document_embeddings",
-            db_uri: str = None,
-            llm_model: str = "o4-mini",
-        ) -> None:
+class MetadataCallback(BaseCallbackHandler):
+    def __init__(self):
+        self.metadata = {}
 
-        host = os.environ['MILVUS_HOST']
-        port = os.environ['MILVUS_PORT']
+    def on_llm_start(self, serialized, prompts, **kwargs):
+        self.metadata["run_id"] = str(kwargs.get("run_id"))
+        self.metadata["model_name"] = serialized['kwargs'].get("model_name")
 
-        if not db_uri:
-            db_uri = f'http://{host}:{port}'
+    def on_llm_end(self, response, run_id, **kwargs):
+        print(response.generations[0][0].generation_info, flush=True)
+        metadata = response.generations[0][0].generation_info
 
-        self.vector_store = Milvus(
-            embedding_function=OpenAIEmbeddings(model=embedding_model),
-            connection_args={
-                'uri': db_uri,
-                'token': 'root:Milvus',
-                'db_name': vector_db_name
-            },
-            index_params={
-                "index_type": "FLAT",
-                "metric_type": "L2",
-            },
-            consistency_level="Strong"
+        if metadata:
+            self.metadata["run_id"] = str(run_id)
+            self.metadata["model_name"] = metadata.get("model_name", "")
+
+            usage = metadata.get("token_usage", {})
+            self.metadata["prompt_tokens"] = usage.get("prompt_tokens", 0)
+            self.metadata["completion_tokens"] = usage.get("completion_tokens", 0)
+            self.metadata["total_tokens"] = usage.get("total_tokens", 0)
+            # self.metadata['input_token_details'] = usage.get("input_token_details", {})
+
+
+class Citations(BaseModel):
+    document_name: str
+    page_labels: List[str]
+    pdf_page_numbers: List[int]
+
+
+class ResponseMetadata(BaseModel):
+    run_id: str
+    model_name: str
+    prompt_tokens: int
+    completion_tokens: int
+    total_tokens: int
+
+
+class ResponseOutput(BaseModel):
+    content: str
+    summary_title: str
+    citations: List[Citations]
+    response_metadata: ResponseMetadata
+
+
+    def fill_metadata(self, metadata: MetadataCallback) -> None:
+        self.response_metadata = ResponseMetadata(
+            run_id=metadata.metadata.get('run_id', ''),
+            model_name=metadata.metadata.get('model_name', ''),
+            prompt_tokens=metadata.metadata.get('prompt_tokens', 0),
+            completion_tokens=metadata.metadata.get('completion_tokens', 0),
+            total_tokens=metadata.metadata.get('total_tokens', 0),
+    )
+
+
+    def update_citation_pages(self, new_pdf_pages: list[int], new_page_labels: list[str], document_name: str) -> None:
+        for citation in self.citations:
+            print(citation.model_dump(), flush=True)
+            if citation.document_name == document_name:
+                print(citation.pdf_page_numbers, citation.page_labels, flush=True)
+                try:
+                    try:
+                        citation.pdf_page_numbers = [new_pdf_pages[page - 1] + 1 for page in citation.pdf_page_numbers]
+                        citation.page_labels = [new_page_labels[page - 1] for page in citation.pdf_page_numbers]
+                    except:
+                        citation.pdf_page_numbers = [new_pdf_pages[new_page_labels.index(page_label)] for page_label in citation.page_labels]
+                        citation.page_labels = [new_page_labels[new_pdf_pages.index(page)] for page in citation.pdf_page_numbers]
+                except:
+                    print(f"Could not update citation pages for document {document_name}", flush=True)
+
+
+class RerankedDocument(BaseModel):
+    pk: str
+    document_name: str
+    pages: List[int]
+    page_labels: List[int]
+    score: float
+
+
+    def values(self) -> Tuple[str, List[int], List[int], float]:
+        return (self.document_name, self.pages, self.page_labels, self.score)
+    
+
+class RerankResults(BaseModel):
+    documents: List[RerankedDocument]
+    # response_metadata: ResponseMetadata
+
+
+    def fill_metadata(self, metadata: MetadataCallback) -> None:
+        self.response_metadata = ResponseMetadata(
+            run_id=metadata.metadata.get('run_id', ''),
+            model_name=metadata.metadata.get('model_name', ''),
+            prompt_tokens=metadata.metadata.get('prompt_tokens', 0),
+            completion_tokens=metadata.metadata.get('completion_tokens', 0),
+            total_tokens=metadata.metadata.get('total_tokens', 0),
+    )
+
+
+    def __getitem__(self, index: int) -> RerankedDocument:
+        return self.documents[index]
+    
+
+    def __iter__(self):
+        for doc in self.documents:
+            yield doc
+    
+
+    def __len__(self) -> int:
+        return len(self.documents)
+    
+
+    def filter_by_score(self, threshold: float) -> Self:
+        filtered_docs = [doc for doc in self.documents if doc.score > threshold]
+        return RerankResults(documents=filtered_docs)
+    
+
+    def merge_same_documents(self):
+        for i in range(len(self.documents)):
+            for j in range(len(self.documents) - 1, i, -1):
+                if self.documents[i].document_name == self.documents[j].document_name:
+                    # Merge page labels and pages
+                    self.documents[i].page_labels = list(set(self.documents[i].page_labels + self.documents[j].page_labels))
+                    self.documents[i].pages = list(set(self.documents[i].pages + self.documents[j].pages))
+                    # Remove the duplicate document
+                    del self.documents[j]
+
+        return self
+
+
+def setup_RAG(config: RAGConfig) -> Tuple[VectorStoreRetriever, ChatOpenAI]:
+    db_uri = f'http://{os.environ["MILVUS_HOST"]}:{os.environ["MILVUS_PORT"]}'
+    vector_db = Milvus(
+        embedding_function=OpenAIEmbeddings(model=config.embedding_model),
+        connection_args={
+            'uri': db_uri,
+            'token': 'root:Milvus',
+            'db_name': config.vector_db_name
+        },
+        index_params={
+            "index_type": config.index_type,
+            "metric_type": config.metric_type,
+        },
+        consistency_level="Strong"
+    )
+    retriever = vector_db.as_retriever(
+        search_type=config.search_type,
+        search_kwargs=config.search_kwargs
+    )
+
+    llm = {}
+    for model in config.llm_models:
+        llm[model] = ChatOpenAI(
+            model=model,
+            api_key=os.environ['OPENAI_API_KEY'],
+            streaming=True,
         )
 
-        # self.llm = ChatOpenAI(
-        #     model=llm_model,
-        #     api_key=os.environ['OPENAI_API_KEY'],
-        #     streaming=True,
-        # )
-        self.llm = {
-            'o4-mini': ChatOpenAI(
-                model='o4-mini',
-                api_key=os.environ['OPENAI_API_KEY'],
-                streaming=True,
-            ),
-            'gpt-4.1': ChatOpenAI(
-                model='gpt-4.1',
-                api_key=os.environ['OPENAI_API_KEY'],
-                streaming=True,
-            )
-        }
-
-        self.page_label_regex = re.compile(r'^\d{1,3}')
-
-
-    def extract_page_label(self, page: pymupdf.Page) -> str|None:
-        if page.number % 2:
-            label = page.get_textbox(pymupdf.Rect(42, 784, 100, 808)).strip()
-        else:
-            label = page.get_textbox(pymupdf.Rect(400, 784, 564, 808)).strip()
-
-        match = self.page_label_regex.search(label)
-        
-        return match
-
-    def fill_vector_store(
-            self, 
-            document,
-            name: str,
-            chunk_size: int = 800,
-            chunk_overlap: int = 400,
-            tokenizer: str = "cl100k_base",
-        ) -> None:
-
-        tokenizer = tiktoken.get_encoding(tokenizer)
-        rec: pymupdf.Rect = pymupdf.Rect(42, 72, 563, 772)
-
-        doc = pymupdf.open(
-            stream=document,
-            filetype='pdf'
+    rerank_llm = ChatOpenAI(
+        model='gpt-4.1',
+        temperature=0,
+    )
+    rerank_prompt = ChatPromptTemplate.from_messages([
+        ('system', 'You are an expert at reranking documents with score between 0 and 1 based on their relevance to a user query.'),
+        ('user',
+         'Query:\n{query}\n\n'
+         'Documents:\n{documents}\n\n'
+         'Return a JSON object containing a list of {schema}.'
         )
-        
-        token_buffer = []
-        page_buffer = []
-        page_labels = []
-        documents = []
-        for page in doc:
-            page_label = self.extract_page_label(page)
-            # Skip page without valid label (e.g., title page, blank pages)
-            if not page_label:
-                continue
+    ])
 
-            page_label = page_label.group(0)
+    rerank_chain = rerank_prompt | rerank_llm.with_structured_output(schema=RerankResults)
 
-            text = page.get_textbox(rec).strip()
-            tokens = tokenizer.encode(text)
-            token_buffer.extend(tokens)
-            page_buffer.append(page.number)
-            page_labels.append(page_label)
-
-            while len(token_buffer) >= chunk_size + chunk_overlap:
-                chunk_tokens = token_buffer[:chunk_size + chunk_overlap]
-                chunk_content = tokenizer.decode(chunk_tokens)
-
-                # Create document from chunk
-                metadata = {
-                    'Document': name,
-                    'pages': ';'.join(map(str, page_buffer)),
-                    'page_labels': ';'.join(page_labels),
-                }
-                document = Document(
-                    page_content=chunk_content,
-                    metadata=metadata
-                )
-
-                documents.append(document)
-
-                # Remove used tokens from buffer, keeping overlap tokens
-                del token_buffer[:chunk_size + chunk_overlap // 2]
+    return retriever, llm, rerank_chain
 
 
-                if token_buffer:
-                    page_buffer = page_buffer[-1:]
-                    page_labels = page_labels[-1:]
-                else:
-                    page_buffer = []
-                    page_labels = []
+def format_documents(documents: List[Document]) -> List[Dict[str, str]]:
+    return [
+        {'document': doc.page_content, 'metadata': doc.metadata} for doc in documents
+    ]
 
 
-        if token_buffer:
-            chunk_content = tokenizer.decode(token_buffer)
+def retrieve_documents(retriever: VectorStoreRetriever, prompt: str, k: int = 0, rerank=None, **kwargs) -> str|None:
+    pdf_data = []
+    if k == 0:
+        return []
 
-            metadata = {
-                'Document': name,
-                'pages': ';'.join(map(str, page_buffer)),
-                'page_labels': ';'.join(page_labels),
-            }
-            document = Document(
-                page_content=chunk_content,
-                metadata=metadata
-            )
+    vector_results = retriever.invoke(prompt, k=k, **kwargs)
 
-            documents.append(document)
-
-        self.vector_store.add_documents(
-            documents,
-            ids=[str(uuid4()) for _ in range(len(documents))]
-        )
-
-    def setup_retriever(
-        self,
-        search_type: str = "similarity",
-        k: int = 10,
-        **kwargs,
-    ) -> None:
-
-        self.retriever = self.vector_store.as_retriever(
-            search_type=search_type,
-            search_kwargs={
-                'k': k,
-                **kwargs,
-            }
-        )
-
-
-    def retrieve(
-            self,
-            query: str,
-            k: int = 10,
-            **kwargs,
-        ) -> list[Document]:
-
-        if not hasattr(self, 'retriever'):
-            raise ValueError("Retriever not set up. Call setup_retriever() first.")
-        
-        results = self.retriever.invoke(
-            query,
-            k=k,
-            **kwargs
-        )
-
-        return results
-
-
-    async def response(
-        self,
-        query: str,
-        user_id: str,
-        session_id: str,
-        session_name: str,
-        model: str,
-        pdf_data: str|None = None,
-        logger: None|Logger = None,
-        page_corrections: dict|None = None
-    ):
-        is_streaming = False
-        msg = [
+    if rerank is not None:
+        formatted_docs = format_documents(vector_results)
+        callback = MetadataCallback()
+        results: RerankResults = rerank.invoke(
             {
-                'role': 'developer',
-                'content': 'Provide output in valid HTML only, no markdown, do not create a HTML style or title. If you use a page from the input file, reference the document always on its own line, section and the document page number like this: <cite>Reference: "info" page 1.</cite>'
+                'query': prompt,
+                'documents': formatted_docs,
+                'schema': 'RerankedDocument objects'
             },
-            {
-                'role': 'user',
-                'content': [
-                    {
-                        'type': 'text',
-                        'text': query
-                    }
-                ]
-            }
-        ]
+            config={'callbacks': [callback]}
+        )
+        # results.fill_metadata(callback)
 
-        if pdf_data:
-            msg[1]['content'].insert(0, {
-                'type': 'file',
+        print(results, flush=True)
+
+    if len(vector_results) > 0:
+        pdf_data = create_pdfs_from_embeddings(results)
+
+    return pdf_data
+
+
+def generate_session_name(llm: ChatOpenAI, prompt: str) -> str:
+    response = llm.invoke(
+        [{
+            'role': 'system',
+            'content': 'Summarize this user input and response into a short chat title. Ignore the HTML formatting off the user input.'
+        },
+        {
+            'role': 'user',
+            'content': prompt
+        }]
+    )
+    return response.content
+
+
+
+    
+def generate_response(prompt: str, llm: ChatOpenAI, pdf_data: str|None = None) -> ResponseOutput:
+    prompt_template = ChatPromptTemplate.from_messages([
+        (
+            'system',
+            'You answer the questions only using provided PDF document pages.\n'\
+            'Use document names from provided documents: {document_name}\n'\
+            'Provide only valid HTML output, no markdown and do not create a HTML style or title.\n'\
+        ),
+        HumanMessage(content=[
+            {
+                'type': 'file', 
                 'source_type': 'base64',
-                'data': pdf_data,
-                'mime_type': 'application/pdf',
-                'filename': 'document.pdf'
-            })
+                'mime_type': 'application/pdf', 
+                'data': pdf['data'],
+                'filename': pdf['name']
+            }
+             for pdf in pdf_data]),
+        (
+            'user',
+            'Question: {prompt}\n\n'\
+        )
+    ])
 
-        if session_name.strip() == '':
-            response = self.llm[model].invoke(
-                [{
-                    'role': 'system',
-                    'content': 'Summarize this message into a short chat title.'
-                },
-                {
-                    'role': 'user',
-                    'content': query
-                }]
-            )
-            session_name = response.content
+    callback = MetadataCallback()
+    response: ResponseOutput = (prompt_template | llm.with_structured_output(schema=ResponseOutput)).invoke(
+        {
+            'prompt': prompt, 
+            'document_name': [pdf['name'] for pdf in pdf_data], 
+            },
+            config={'callbacks': [callback]}
+        )
 
-        async for event in self.llm[model].astream_events(msg):
-            if event['event'] == 'on_chat_model_start':
-                logger.log_info(f'Response generation started')
-                yield json.dumps({
-                    'event': event['event'],
-                    'id': event['run_id'],
-                    'session_name': session_name
-                }) + '\n'
-            elif event['event'] == 'on_chat_model_stream':
-                if not is_streaming:
-                    is_streaming = True
-                    logger.log_info(f'Begin response stream')
-                yield json.dumps({
-                    'event': event['event'],
-                    'content': event['data']['chunk'].content
-                }) + '\n'
-            elif event['event'] == 'on_chat_model_end':
-                data = event['data']['output']
+    response.fill_metadata(callback)
+    
+    print(callback, flush=True)
 
-                output = {
-                    'response_id': event['run_id'],
-                    'model': data.response_metadata['model_name'],
-                    'token_usage': data.usage_metadata,
-                    'content': data.content
-                }
+    # Hard update the label and pdf page numbers after response generation, since ai is a bit of a dum-dum
+    for pdf in pdf_data:
+        response.update_citation_pages(pdf['pages'], pdf['page_labels'], pdf['name'])
 
-                if logger:
-                    logger.log_response(output)
-
-                logger.log_info(f'Response generation ended'
-                                f' - Response ID: {event["run_id"]}'
-                                f' - Token Usage: Input Tokens: {data.usage_metadata["input_tokens"]}, Output Tokens: {data.usage_metadata["output_tokens"]}, Total Tokens: {data.usage_metadata["total_tokens"]}'
-                )
-
-                if page_corrections:
-                    output['page_corrections'] = page_corrections
-
-                # Store response in database
-                new_response(
-                    user_id=user_id,
-                    session_id=session_id,
-                    response_id=event['run_id'],
-                    session_name=session_name,
-                    prompt=query,
-                    response=data.content
-                )
-
-                yield json.dumps({'event': event['event']} | output) + '\n'
+    return response

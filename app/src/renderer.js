@@ -52,6 +52,7 @@ function setupLayout() {
     setupStatusBarMenu(layout);
 }
 
+
 // Chatbox and tabs logic for renderer process
 if (typeof window !== 'undefined') {
     window.addEventListener('DOMContentLoaded', async () => {

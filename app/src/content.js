@@ -25,7 +25,7 @@ export function setupContent(parentDiv, type = 'chatbot', data = null, sessionID
             id: `content:${id}`,
             dataset: {
                 name: sessionName || '',
-                embedDepth: '0',
+                embedDepth: '10',
                 model: 'o4-mini',
                 historyIndex: '-1'
             }
@@ -68,7 +68,8 @@ function setupPDFViewer(parentDiv, pdfPath, sessionID = null, sessionName = null
 
 
 function loadHistory(chatMessages, history) {
-    for (const { input, output, metadata } of history) {
+    console.log('Loading chat history:', history);
+    for (const { prompt, response, citations } of history) {
         if (chatMessages.children.length > 0) {
             newHTMLElement('hr', chatMessages);
         }
@@ -80,19 +81,32 @@ function loadHistory(chatMessages, history) {
         // Display input message
         newHTMLElement('p', contentBlock, {
             className: 'input-message',
-            innerHTML: input
+            innerHTML: prompt
         });
 
         // Display output message
         const outputDiv = newHTMLElement('div', contentBlock, {
             className: 'output-message',
-            innerHTML: output
+            innerHTML: response
         });
 
-        // const references = outputDiv.getElementsByTagName('cite');
-        // for (const ref of references) {
-        //     onReferenceClick(ref, metadata.pageCorrections);
-        // }
+        // Handle citations
+        let i = 0;
+        for (const citation of citations) {
+            if (i > 0) {
+                newHTMLElement('br', outputDiv);
+            }
+            const pdf_pages = citation.pdfPages.split(';').map(num => parseInt(num));
+            const cite = newHTMLElement('cite', outputDiv, {
+                innerText: `${citation.documentName} - Page(s): ${citation.pageLabels}`,
+                onclick: function(e) {
+                    e.stopPropagation();
+                    console.log('Citation', citation)
+                    displayPDF(citation.documentName, pdf_pages[0], cite);
+                }
+            });
+            i++;
+        }
     }
 }
 
@@ -110,14 +124,14 @@ function setupChatbot(content, history) {
     });
     
     const chatMenuContainer = newHTMLElement('div', content, {
-        className: 'chat-menu-container'
+        className: 'chat-menu-container',
     });
 
     const chatSettings = newHTMLElement('div', chatMenuContainer, {
         className: 'chat-menu hidden',
         inert: true
     }, {
-        transform: 'translate(24px, -68px)'
+        transform: 'translate(24px, -146px)'
     });
 
     const settingsButton = newHTMLElement('button', chat, {
@@ -168,10 +182,10 @@ function setupChatbot(content, history) {
     embedDepthInput.addEventListener('input', function(e) {
         content.dataset.embedDepth = Number(this.value);
     });
-    addChatMenuItem(chatSettings, chatMenuContainer, 'Embed Depth:', 166, -70, [embedDepthInput]);
+    addChatMenuItem(chatSettings, chatMenuContainer, 'Embed Depth:', 166, -146, [embedDepthInput]);
 
     const aiModelItems = createAIModelItems(content);
-    addChatMenuItem(chatSettings, chatMenuContainer, 'AI Model:', 166, -70, aiModelItems);
+    addChatMenuItem(chatSettings, chatMenuContainer, 'AI Model:', 166, -214, aiModelItems);
 
     chatInput.addEventListener('keydown', function(e) {
         if (e.key === 'Enter') {
@@ -309,56 +323,31 @@ async function chatResponse(content, contentBlock, message) {
     waitingLoop();
 
     const response = await fetch(`http://localhost:8015/query?${queryParams.toString()}`);
-    const reader = response.body.getReader();
-    const decoder = new TextDecoder("utf-8");
 
-    let buffer = '';
-    let htmlBuffer = '';
-    while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
+    const data = await response.json();
+    console.log('Received response:', data);
+    modelCreated = true;
+    msgDiv.innerHTML = data.content;
 
-        buffer += decoder.decode(value, { stream: true });
-        const event = buffer.split('\n');
-        buffer = event.pop(); // Keep the last partial event in the buffer
-
-        for (const evt of event) {
-            if (evt.trim()) {
-                try {
-                    const data = JSON.parse(evt);
-                    if (data.event === 'on_chat_model_start') {
-                        console.log('Response started:', data);
-
-                        // Creating session name if not set
-                        if (!content.dataset.name) {
-                            sessionName = data.session_name
-                            content.dataset.name = sessionName;
-                            const tab = getOtherElementByID(content);
-                            tab.dataset.name = sessionName;
-                            tab.firstChild.textContent = sessionName;
-                        }
-                    } else if (data.event === 'on_chat_model_stream') {
-                        modelCreated = true;
-                        const contentData = data.content;
-                        if (!contentData.trim()) continue;
-
-                        htmlBuffer += contentData;
-                        msgDiv.innerHTML = htmlBuffer;
-                        chatMessages.scrollTop = chatMessages.scrollHeight;
-                    } else if (data.event === 'on_chat_model_end') {
-                        console.log('Response complete:', data);
-                        const pageCorrections = data.page_corrections
-
-                        const references = msgDiv.getElementsByTagName('cite');
-                        for (const ref of references) {
-                            onReferenceClick(ref, pageCorrections);
-                        }
-                    }
-                } catch (err) {
-                    console.error('Failed to parse event:', err);
-                }
+    // Handle citations
+    for (const citations of data.citations) {
+        const cite = newHTMLElement('cite', msgDiv, {
+            innerText: `${citations.document_name} - Page(s): ${citations.page_labels.join(', ')}`,
+            onclick: function(e) {
+                e.stopPropagation();
+                console.log('Citation', citations)
+                displayPDF(citations.document_name, citations.pdf_page_numbers[0], cite);
             }
-        }
+        });
+    }
+
+    // Handle session naming
+    if (!content.dataset.name) {
+        sessionName = data.summary_title;
+        content.dataset.name = sessionName;
+        const tab = getOtherElementByID(content);
+        tab.dataset.name = sessionName;
+        tab.firstChild.textContent = sessionName;
     }
 
     // Update chat history UI
@@ -392,6 +381,8 @@ function chatHistoryNavigation(e, content) {
         }
 
         setTimeout(() => chatInput.setSelectionRange(chatInput.value.length, chatInput.value.length), 0);
+    } else {
+        content.dataset.historyIndex = -1;
     }
 }
 

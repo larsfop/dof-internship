@@ -11,3 +11,6 @@ langchain-milvus
 tiktoken
 pymilvus
 unstructured[pdf]
+pyjwt
+pwdlib[argon2]
+pydantic

@@ -2,8 +2,8 @@ import sqlite3
 import os
 from datetime import datetime
 
-DATABASE_URL = os.environ['DATABASE_URL']
-CONNECTION = sqlite3.connect(DATABASE_URL, check_same_thread=False)
+DATA_PATH = os.environ['DATA_PATH']
+CONNECTION = sqlite3.connect(DATA_PATH + 'app.db', check_same_thread=False)
 CURSOR = CONNECTION.cursor()
 
 
@@ -46,3 +46,12 @@ def new_response(user_id: str, session_id: str, response_id: str, session_name: 
         print(f"Response with ID \'{response_id}\' added successfully.")
     except sqlite3.IntegrityError:
         print(f"Response with ID \'{response_id}\' already exists.")
+
+
+def new_citation(response_id: str, document_name: str, page_labels: str, pdf_pages: str) -> None:
+    try:
+        CURSOR.execute("INSERT INTO citations (responseID, documentName, pageLabels, pdfPages) VALUES (?, ?, ?, ?)", (response_id, document_name, page_labels, pdf_pages))
+        CONNECTION.commit()
+        print(f"Citation for response ID \'{response_id}\' added successfully.")
+    except sqlite3.IntegrityError:
+        print(f"Citation for response ID \'{response_id}\' already exists.")

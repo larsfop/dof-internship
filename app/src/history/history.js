@@ -33,9 +33,9 @@ async function loadHistory() {
     const userID = localStorage.getItem('userID');
     const response = await fetch(`http://localhost:8015/get_sessions?user_id=${userID}`)
     const data = await response.json();
-
-    for (let i = data.length - 1; i >= 0; i--) {
-        addHistoryEntry(data[i].sessionID, data[i].sessionName);
+    console.log(data);
+    for (const session of data) {
+        addHistoryEntry(session.sessionID, session.name);
     }
 }
 
@@ -43,7 +43,7 @@ async function loadHistory() {
 export function addHistoryEntry(sessionID, sessionName) {
     let entryContainer = document.getElementById(`history:${sessionID}`);
     if (!entryContainer) {
-        entryContainer = newHTMLElement('div', null, {
+        entryContainer = newHTMLElement('li', null, {
             className: 'history-entry-container',
             id: `history:${sessionID}`,
         });

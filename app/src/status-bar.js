@@ -8,11 +8,15 @@ export function setupStatusBarMenu(parentDiv) {
         textContent: 'SSH: ><'
     });
 
-    const sshMenu = newHTMLElement('div', statusBarDiv, {className: 'ssh-menu hidden'});
+    const sshMenu = newHTMLElement('div', statusBarDiv, {
+        className: 'ssh-menu hidden',
+        inert: 'true'
+    });
 
     newHTMLElement('p', sshMenu, {
         className: 'ssh-connect',
-        textContent: 'Connect to SSH'
+        textContent: 'Connect to SSH',
+        inert: 'true'
     });
 
     const sshUser = newHTMLElement('input', sshMenu, {

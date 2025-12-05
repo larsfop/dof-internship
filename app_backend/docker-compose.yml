@@ -73,7 +73,7 @@ services:
     ports:
       - "8015:8015"
     environment:
-      - DATABASE_URL=../app/data/app.db
+      - DATA_PATH=../app/data/
       - DROPBOX_API_KEY=${DROPBOX_API_KEY}
       - DROPBOX_REFRESH_TOKEN=${DROPBOX_REFRESH_TOKEN}
       - OPENAI_API_KEY=${OPENAI_API_KEY}
