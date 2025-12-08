@@ -38,8 +38,6 @@
 
 * {
   box-sizing: border-box;
-  scrollbar-width: thin;
-  scrollbar-color: #ccc transparent;
   padding: 0;
   margin: 0;
 }
@@ -63,18 +61,17 @@ pre {
 
 ::-webkit-scrollbar {
   height: 0px;
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-thumb {
   background: #ccc;
-  border-radius: 4px;
+  border-radius: 8px;
 }
 
 html {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 12pt;
-  text-align: center;
   color: var(--text);
   background: var(--bg);
 }
@@ -83,6 +80,7 @@ body {
   overflow: hidden;
   min-height: 100vh;
 }
+
 
 /* ------------------------------------------------------------------------------
                                   Signup/Login styles
@@ -96,11 +94,16 @@ body {
   height: 100vh;
   position: absolute;
   width: 100vw;
+
+  &.hidden {
+    display: none;
+  }
 }
 
 #signup-form {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 12px;
   background: var(--bg-light);
   padding: 24px;
@@ -126,26 +129,55 @@ body {
                                   Sidebar styles
    ------------------------------------------------------------------------------ */
 
-.sidebar {
+#sidebar {
   background: var(--bg-dark);
   border-right: 1px solid var(--border);
   width: 46px;
-  transition: 0.2s ease;
+  transition: 200ms ease;
   overflow: hidden;
   padding-top: 8px;
   padding-inline: 6px;
-  grid-area: sidebar;
+  grid-area: nav;
   box-sizing: border-box;
   display: grid;
   grid-template-rows: auto 1fr;
   row-gap: 12px;
+  text-wrap: nowrap;
+  white-space: nowrap;
+  
+  &.expanded {
+    width: 260px;
+    
+    #account {
+      opacity: 1;
+    }
+  }
+
+  > div:first-child {
+    display: grid;
+    grid-template-columns: 0 auto;
+    height: 34px;
+  }
 }
 
-.sidebar.expanded {
-  width: 260px;
+
+#account {
+  transition: 200ms ease;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: red;
+  opacity: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 0.1em;
+  font-size: 18pt;
+  text-transform: uppercase;
 }
 
-.sidebar-button {
+#expand-sidebar-button {
   background: var(--bg-light);
   width: 34px;
   height: 34px;
@@ -154,56 +186,90 @@ body {
   background: transparent;
   cursor: pointer;
   justify-self: end;
+  transition: 400ms ease;
+
+  &:hover {
+    background: var(--highlight);
+  }
+
+  & > span {
+    display: inline-block;
+    vertical-align: middle;
+    padding-bottom: 0.1em;
+    font-size: 16pt;
+  }
 }
 
-.sidebar-button:hover {
-  background: var(--highlight);
+#sidebar.expanded > div:first-child > #expand-sidebar-button {
+  transform: rotate(180deg);
 }
 
+@property --scrollbar-transition {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: rgba(0, 0, 0, 0);
+}
 
-.history-menu {
-  opacity: 1;
-  transition: 
-    opacity 0.2s ease, 
-    height 0.01s ease;
-  padding: 0px 6px 0px 12px;
+#chat-history {
+  height: 38px;
+  transition: 0.2s ease;
   overflow: hidden;
-  cursor: pointer;
-  height: 30px;
-  scrollbar-gutter: stable;
+  opacity: 1;
   white-space: nowrap;
+  list-style: none;
+  transition: 
+    --scrollbar-transition 800ms ease,
+    opacity 200ms ease;
+
+  &.hidden {
+    opacity: 0;
+  }
+
+  &.open {
+    overflow-y: auto;
+    height: auto;
+  }
+
+  > li {
+    height: 38px;
+  }
+
+  &:hover {
+    --scrollbar-transition: #ccc;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-transition);
+  }
 }
 
-.history-summary {
+#chat-history-summary {
+  display: block;
+  height: 38px;
+  width: -webkit-fill-available;
   border: 0px solid;
   border-radius: 12px;
   padding: 6px 10px;
-}
+  cursor: pointer;
 
-.history-summary:hover {
-  background: var(--highlight);
-}
+  &:hover {
+    background: var(--highlight);
+  }
 
-.history-menu.hidden {
-  opacity: 0;
-}
+  &:before {
+    content: '▲';
+    margin-right: 0.5em;
+    display: inline-block;
+    transition: 300ms ease;
+  }
 
-.history-menu:open {
-  height: calc(100vh - 60px);
-  transition: 
-    opacity 0.2s ease,
-    height 0.8s linear;
-}
-
-.history-menu.opened {
-  overflow-y: auto;
-}
-
-.history-menu::-webkit-scrollbar {
-  width: 2px;
+  &.rotate:before {
+    transform: rotate(180deg);
+  }
 }
 
 .history-entry-container {
+  height: 38px;
   display: grid;
   grid-template-areas: "stack";
   align-items: center;
@@ -216,6 +282,7 @@ body {
   border-width: 0px;
   border-style: solid;
   border-radius: 12px;
+  cursor: pointer;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -250,6 +317,9 @@ body {
                                   Layout styles
    ------------------------------------------------------------------------------ */
 
+#main {
+  overflow: hidden;
+}
 
 #splitter {
   position: relative;
@@ -295,19 +365,13 @@ body {
   flex-shrink: 0;
 }
 
-.layout-container {
+#layout {
   height: 100vh;
   width: 100vw;
   display: grid;
   grid-template-columns: auto 1fr;
-  grid-template-rows: 1fr auto;
   grid-template-areas: 
-    "sidebar main"
-    "status-bar status-bar";
-}
-
-.layout-container.expanded {
-  width: calc(100vw - 215.667px);
+    "nav main"
 }
 
 .panel-container {
@@ -333,6 +397,7 @@ body {
 }
 
 .window-container {
+  overflow: hidden;
   background: var(--bg);
   overflow: hidden;
   width: 100%;
@@ -811,9 +876,3 @@ caption {
 .ssh-submit {
   align-self: center;
 }
-
-
-
-/** ------------------------------------------------------------------------------
-                                  Coding styles
-   ------------------------------------------------------------------------------ */

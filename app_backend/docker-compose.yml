@@ -79,11 +79,31 @@ services:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - MILVUS_HOST=milvus-standalone
       - MILVUS_PORT=19530
+      - API_SECRET_KEY=${API_SECRET_KEY}
+      - API_ALGORITHM=${API_ALGORITHM}
     depends_on:
       standalone:
         condition: service_healthy
     restart: always
 
+  caddy:
+    image: caddy:2
+    container_name: caddy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/caddy/Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - backend
+    restart: always
+
 networks:
   default:
     name: milvus
+
+volumes:
+  caddy_data:
+  caddy_config:

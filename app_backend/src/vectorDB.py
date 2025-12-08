@@ -5,6 +5,8 @@ from langchain_core.documents import Document
 from langchain_core.runnables.schema import StreamEvent
 from langchain_core.prompts import ChatPromptTemplate, HumanMessagePromptTemplate
 from langchain_core.messages import HumanMessage
+from langchain.memory import ConversationTokenBufferMemory, ConversationSummaryMemory
+from langchain.chains import conversation
 from langchain_core.callbacks import UsageMetadataCallbackHandler
 from langchain_core.callbacks.base import BaseCallbackHandler
 
@@ -193,6 +195,12 @@ def setup_RAG(config: RAGConfig) -> Tuple[VectorStoreRetriever, ChatOpenAI]:
 
     rerank_chain = rerank_prompt | rerank_llm.with_structured_output(schema=RerankResults)
 
+
+    short_term_memory = ConversationTokenBufferMemory(
+
+    )
+
+
     return retriever, llm, rerank_chain
 
 
@@ -252,7 +260,7 @@ def generate_response(prompt: str, llm: ChatOpenAI, pdf_data: str|None = None) -
             'system',
             'You answer the questions only using provided PDF document pages.\n'\
             'Use document names from provided documents: {document_name}\n'\
-            'Provide only valid HTML output, no markdown and do not create a HTML style or title.\n'\
+            # 'Provide only valid HTML output, no markdown and do not create a HTML style or title.\n'\
         ),
         HumanMessage(content=[
             {

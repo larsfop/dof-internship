@@ -1,15 +1,21 @@
 import sqlite3
+import json
 import os
 from datetime import datetime
+from uuid import uuid4
+from uuid import UUID
+
+from dotenv import load_dotenv
+from pydantic_classes import UserInDB
 
 DATA_PATH = os.environ['DATA_PATH']
 CONNECTION = sqlite3.connect(DATA_PATH + 'app.db', check_same_thread=False)
 CURSOR = CONNECTION.cursor()
 
 
-def create_user(userID: str, username: str):
+def create_user(userID: str|UUID, username: str, hashed_password: str):
     try:
-        CURSOR.execute("INSERT INTO users (userID, username) VALUES (?, ?)", (userID, username))
+        CURSOR.execute("INSERT INTO users (userID, username, hashedPassword) VALUES (?, ?, ?)", (str(userID), username, hashed_password))
         CONNECTION.commit()
         return {"status": "success", "message": f"User '{username}' with ID '{userID}' added successfully."}
     except sqlite3.IntegrityError:
@@ -55,3 +61,9 @@ def new_citation(response_id: str, document_name: str, page_labels: str, pdf_pag
         print(f"Citation for response ID \'{response_id}\' added successfully.")
     except sqlite3.IntegrityError:
         print(f"Citation for response ID \'{response_id}\' already exists.")
+
+
+def fetch_user(username: str) -> UserInDB|None:
+    data = CURSOR.execute("SELECT json_object('userID', userID, 'username', username, 'hashed_password', hashedPassword) FROM users WHERE username = ?", (username,)).fetchone()
+    if data:
+        return UserInDB(**json.loads(data[0]))

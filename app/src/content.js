@@ -139,9 +139,11 @@ function setupChatbot(content, history) {
         innerText: '+',
         onclick: function() {
             const chatMenus = Array.from(document.getElementsByClassName('chat-menu-container'));
+            console.log(chatMenus);
             for (const menu of chatMenus) {
                 const children = menu.children;
                 for (const child of children) {
+                    console.log(child);
                     toggleHidden(child, true);
                 }
             }
@@ -301,7 +303,7 @@ async function chatResponse(content, contentBlock, message) {
             prompt: message,
             embed_depth: embedDepth,
             model: model,
-            user_id: localStorage.getItem('userID'),
+            user_id: sessionStorage.getItem('userID'),
             session_id: sessionID,
             session_name: sessionName,
             entry_id: crypto.randomUUID(),
@@ -322,11 +324,28 @@ async function chatResponse(content, contentBlock, message) {
     }
     waitingLoop();
 
-    const response = await fetch(`http://localhost:8015/query?${queryParams.toString()}`);
+    const response = await fetch(`http://localhost:8015/query?${queryParams.toString()}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`
+        }
+    });
+
+    console.log(response)
 
     const data = await response.json();
     console.log('Received response:', data);
     modelCreated = true;
+    msgDiv.innerHTML = '';
+
+    if (!response.ok) {
+        if (response.status === 401) {
+            alert('Session expired. Please log in again.');
+            return;
+        }
+    }
+
     msgDiv.innerHTML = data.content;
 
     // Handle citations

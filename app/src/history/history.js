@@ -1,37 +1,14 @@
 import { newTab } from "../tab.js";
 import { newHTMLElement, toggleHidden, getOtherElementByID } from "../utils/html-helper-functions.js";
 
-
-export function setupHistoryMenu(parentDiv) {
-    const historyDiv = newHTMLElement('details', parentDiv,
-        { id: 'history-menu', className: 'history-menu hidden', inert: true },
-    )
-
-    // Hide scrollbar until details fully opened
-    historyDiv.addEventListener('transitionend', function(e) {
-        if (e.propertyName === 'height') {
-            // Check that the details is still open after transition
-            if (historyDiv.hasAttribute('open')) {
-                historyDiv.classList.add('opened');
-            } else {
-                historyDiv.classList.remove('opened');
-            }
+export async function loadHistory() {
+    const response = await fetch('http://localhost:8015/get_sessions', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`
         }
-    })
-
-    newHTMLElement('summary', historyDiv,
-        { className: 'history-summary', textContent: 'History' },
-    );
-
-    loadHistory();
-
-    return historyDiv;
-}
-
-
-async function loadHistory() {
-    const userID = localStorage.getItem('userID');
-    const response = await fetch(`http://localhost:8015/get_sessions?user_id=${userID}`)
+    });
     const data = await response.json();
     console.log(data);
     for (const session of data) {
@@ -43,12 +20,12 @@ async function loadHistory() {
 export function addHistoryEntry(sessionID, sessionName) {
     let entryContainer = document.getElementById(`history:${sessionID}`);
     if (!entryContainer) {
-        entryContainer = newHTMLElement('li', null, {
+        entryContainer = newHTMLElement('div', null, {
             className: 'history-entry-container',
             id: `history:${sessionID}`,
         });
 
-        newHTMLElement('div', entryContainer, {
+        newHTMLElement('span', entryContainer, {
             className: 'history-entry',
             textContent: sessionName,
             onclick: function() {
@@ -66,8 +43,8 @@ export function addHistoryEntry(sessionID, sessionName) {
         });
     }
 
-    const historyDiv = document.getElementById('history-menu');
-    historyDiv.insertBefore(entryContainer, historyDiv.firstChild);
+    const historyDiv = document.getElementById('chat-history');
+    historyDiv.insertBefore(entryContainer, historyDiv.children[1]);
 }
 
 
@@ -77,7 +54,13 @@ async function onClickHandler(sessionID, sessionName) {
         const tabDiv = document.getElementById(`tab:${sessionID}`);
         tabDiv.click();
     } else {
-        const response = await fetch(`http://localhost:8015/get_chat?session_id=${sessionID}`);
+        const response = await fetch(`http://localhost:8015/get_chat?session_id=${sessionID}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`
+            }
+        });
         const data = await response.json();
         const panel = document.querySelector('.panel-container.last-active');
         newTab(panel, 'chatbot', data, sessionID, sessionName);
@@ -85,11 +68,17 @@ async function onClickHandler(sessionID, sessionName) {
 }
 
 
-export async function removeHistoryEntry(sessionID) {
+async function removeHistoryEntry(sessionID) {
     const entryDiv = document.getElementById(`history:${sessionID}`);
     if (entryDiv) {
         entryDiv.remove();
 
-        await fetch(`http://localhost:8015/remove_session?session_id=${sessionID}`);
+        await fetch(`http://localhost:8015/remove_session?session_id=${sessionID}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`
+            }
+        });
     }
 }

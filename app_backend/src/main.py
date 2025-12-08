@@ -30,151 +30,8 @@ with redirect_stdout(f), redirect_stderr(f):
     from config.config import load_config, Config
     from database import new_response, new_citation
     from vector_store import query_cache, new_cache_entry
-
-
-os.environ['PYTHONUNBUFFERED'] = '1'
-
-# SECRET_KEY = 'f185065827e4120fd9f1e8724f633e2676a883e49df2b34fb1865fcd3b979fb6'
-SECRET_KEY = "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7"
-ALGORITHM = 'HS256'
-
-
-users = {
-    "test_user": {
-        "username": "test_user",
-        "hashed_password": "$argon2id$v=19$m=65536,t=3,p=4$wagCPXjifgvUFBzq4hqe3w$CYaIb8sB+wtD+Vu/P4uod1+Qof8h+1g7bbDlBID48Rc",
-    }
-}
-
-class Token(BaseModel):
-    access_token: str
-    token_type: str
-
-
-class TokenData(BaseModel):
-    username: str | None = None
-
-
-class User(BaseModel):
-    username: str
-
-
-class UserInDB(User):
-    hashed_password: str
-
-
-password_hash = PasswordHash.recommended()
-
-app = FastAPI()
-
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-def dict_factory(cursor, row):
-    fields = [column[0] for column in cursor.description]
-    return {key: value for key, value in zip(fields, row)}
-
-
-DATA_PATH = os.environ['DATA_PATH']
-CONNECTION = sqlite3.connect(DATA_PATH + 'app.db', check_same_thread=False)
-CONNECTION.row_factory = dict_factory
-CURSOR = CONNECTION.cursor()
-
-CONFIG: Config = load_config(DATA_PATH + 'config.yaml')
-RETRIEVER, LLM_MODELS, RERANK_CHAIN = setup_RAG(CONFIG.rag_config)
-
-
-def verify_password(plain_password, hashed_password):
-    return password_hash.verify(plain_password, hashed_password)
-
-
-def get_password_hash(password):
-    return password_hash.hash(password)
-
-
-def get_user(db, username: str):
-    if username in db:
-        user_dict = db[username]
-        return UserInDB(**user_dict)
-    
-
-def authenticate_user(db, username: str, password: str):
-    user = get_user(db, username)
-    if not user:
-        return False
-    if not verify_password(password, user.hashed_password):
-        return False
-    return user
-
-
-def create_access_token(data: dict):
-    to_encode = data.copy()
-    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
-    return encoded_jwt
-
-
-async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
-    try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        username = payload.get("sub")
-        if username is None:
-            raise credentials_exception
-        token_data = TokenData(username=username)
-    except InvalidTokenError:
-        raise credentials_exception
-    user = get_user(users, username=token_data.username)
-    if user is None:
-        raise credentials_exception
-    return user
-
-
-async def get_current_active_user(
-    current_user: Annotated[User, Depends(get_current_user)],
-):
-    return current_user
-
-
-@app.post("/token")
-async def login_for_access_token(
-    form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
-) -> Token:
-    user = authenticate_user(users, form_data.username, form_data.password)
-    if not user:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect username or password",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
-    access_token = create_access_token(
-        data={"sub": user.username}
-    )
-    return Token(access_token=access_token, token_type="bearer")
-
-
-@app.get("/users/me/", response_model=User)
-async def read_users_me(
-    current_user: Annotated[User, Depends(get_current_active_user)],
-):
-    return current_user
-
-
-@app.get("/users/me/items/")
-async def read_own_items(
-    current_user: Annotated[User, Depends(get_current_active_user)],
-):
-    return [{"item_id": "Foo", "owner": current_user.username}]
+    from user_authentication import login_for_access_token, get_current_user, create_new_user
+    from pydantic_classes import Token, UserInDB
 
 
 user_loggers = {}
@@ -212,39 +69,49 @@ def setup_logger(user_id: str) -> None:
     user_loggers[user_id] = user_logger
 
 
-async def stream_handler(stream, prompt: str, user_id: str, session_id: str, session_name: str, model: str, cache: bool):
-    async for event in stream:
-        output = stream_event_handler(event)
-        if output is None:
-            continue
+os.environ['PYTHONUNBUFFERED'] = '1'
 
-        if event['event'] == 'on_chat_model_end':
-            print('Response generation completed.', flush=True)
-            response = event['data']['output'].content
+app = FastAPI()
 
-            if session_name.strip() == '':
-                session_name = generate_session_name(LLM_MODELS[model], prompt + '\n' + response)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-            new_response(
-                user_id=user_id,
-                session_id=session_id,
-                response_id=event['run_id'],
-                session_name=session_name,
-                prompt=prompt,
-                response=response
-            )
+def dict_factory(cursor, row):
+    fields = [column[0] for column in cursor.description]
+    return {key: value for key, value in zip(fields, row)}
 
-            if cache:
-                new_cache_entry(prompt, response, CONFIG.rag_config)
 
-            output['session_name'] = session_name
-            
-        yield json.dumps(output) + '\n'
+DATA_PATH = os.environ['DATA_PATH']
+CONNECTION = sqlite3.connect(DATA_PATH + 'app.db', check_same_thread=False)
+CONNECTION.row_factory = dict_factory
+CURSOR = CONNECTION.cursor()
+
+CONFIG: Config = load_config(DATA_PATH + 'config.yaml')
+RETRIEVER, LLM_MODELS, RERANK_CHAIN = setup_RAG(CONFIG.rag_config)
+
+
+@app.post("/token")
+async def login(
+    form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
+) -> Token:
+    return login_for_access_token(form_data)
+
+
+@app.get("/users/me/", response_model=UserInDB)
+async def read_users_me(
+    current_user: Annotated[UserInDB, Depends(get_current_user)],
+) -> UserInDB:
+    return current_user
 
 
 @app.get("/query")
 async def query(
-    token: Annotated[str, Depends(oauth2_scheme)],
+    user: Annotated[UserInDB, Depends(get_current_user)],
     prompt: str, 
     embed_depth: int = 0,
     cache: bool = False,
@@ -310,7 +177,10 @@ async def query(
 
 
 @app.get("/pdf")
-def get_pdf(name: str):
+def get_pdf(
+    user: Annotated[UserInDB, Depends(get_current_user)],
+    name: str
+):
     pdf_path = get_pdf_path(name)
     with pymupdf.open(pdf_path) as doc:
         pdf_bytes = doc.tobytes()
@@ -321,29 +191,22 @@ def get_pdf(name: str):
     )
 
 
-@app.get('/connect')
-def connect(url: str):
-    try:
-        sqlite3.connect(url)
-        return {"status": "success", "message": "Database connection successful."}
-    except sqlite3.Error as e:
-        return {"status": "error", "message": str(e), "url": url}
-
-
 @app.get('/create_user')
-def create_user(userID: str, username: str):
-    try:
-        CURSOR.execute("INSERT INTO users (userID, username) VALUES (?, ?)", (userID, username))
-        CONNECTION.commit()
-        return {"status": "success", "message": f"User '{username}' with ID '{userID}' added successfully."}
-    except sqlite3.IntegrityError:
-        return {"status": "warning", "message": f"User '{username}' with ID '{userID}' already exists."}
+def create_user(
+    user: Annotated[UserInDB, Depends(get_current_user)],
+    username: str, 
+    password: str, 
+    user_id: str|None = None
+):
+    create_new_user(username, password, user_id)
     
 
 @app.get('/get_sessions')
-def get_sessions(user_id: str):
+def get_sessions(
+    user: Annotated[UserInDB, Depends(get_current_user)]
+):
     try:
-        CURSOR.execute("SELECT sessionID, name FROM sessions WHERE userID = ? ORDER BY updatedAt DESC", (user_id,))
+        CURSOR.execute("SELECT sessionID, name FROM sessions WHERE userID = ? ORDER BY updatedAt DESC", (user.userID,))
         sessions = CURSOR.fetchall()
         return sessions
     except sqlite3.Error as e:
@@ -351,7 +214,10 @@ def get_sessions(user_id: str):
     
 
 @app.get('/get_chat')
-def get_chat(session_id: str):
+def get_chat(
+    user: Annotated[UserInDB, Depends(get_current_user)],
+    session_id: str
+):
     try:
         responses = CURSOR.execute("""
                 SELECT 
@@ -383,7 +249,10 @@ def get_chat(session_id: str):
     
 
 @app.get('/remove_session')
-def remove_session(session_id: str):
+def remove_session(
+    user: Annotated[UserInDB, Depends(get_current_user)],
+    session_id: str,
+):
     try:
         CURSOR.execute("DELETE FROM responses WHERE sessionID = ?", (session_id,))
         CURSOR.execute("DELETE FROM sessions WHERE sessionID = ?", (session_id,))
@@ -395,7 +264,7 @@ def remove_session(session_id: str):
 
 @app.get("/")
 def root(
-    user: Annotated[User, Depends(get_current_active_user)]
+    user: Annotated[UserInDB, Depends(get_current_user)]
 ):
     return {"status": "ok"}
 

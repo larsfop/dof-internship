@@ -4,7 +4,7 @@ gunicorn
 pymupdf == 1.26.5
 dropbox
 uuid
-langchain[openai]
+langchain
 langchain-core
 langchain-openai
 langchain-milvus

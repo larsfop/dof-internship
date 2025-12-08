@@ -12,6 +12,21 @@ export function newTab(
     const id = sessionID ? sessionID : crypto.randomUUID();
     const name = sessionName ? sessionName : "New Tab";
 
+    const tabDiv = tabUI(panelDiv, id, name);
+
+    const windowContainer = panelDiv.querySelector('.window-container');
+    setupContent(windowContainer, type, data, id, sessionName);
+
+    tabDiv.addEventListener('dragstart', dragStartHandler);
+
+    if (type == 'chatbot') {
+        changeTab(tabDiv); // Activate the new tab
+    }
+
+    return id;
+}
+
+function tabUI(panelDiv, id, name) {
     const tabsList = panelDiv.querySelector('.tabs-list');
     const tabDiv = newHTMLElement('div', tabsList, {
         className: 'tab',
@@ -36,17 +51,7 @@ export function newTab(
             removeTab(tabDiv); // Remove the tab
         }
     });
-
-    const windowContainer = panelDiv.querySelector('.window-container');
-    setupContent(windowContainer, type, data, id, sessionName);
-
-    tabDiv.addEventListener('dragstart', dragStartHandler);
-
-    if (type == 'chatbot') {
-        changeTab(tabDiv); // Activate the new tab
-    }
-
-    return id;
+    return tabDiv;
 }
 
 export function changeTab(tabDiv) {
