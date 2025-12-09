@@ -18,7 +18,7 @@ import logging
 import pymupdf
 from typing import Annotated
 
-from vectorDB import setup_RAG, retrieve_documents, generate_response
+from vectorDB import generate_response_from_prompt
 from pdf import dbx_handler, pdf, get_pdf_path
 from logger.logger import Logger
 from config.config import load_config, Config
@@ -86,7 +86,7 @@ CONNECTION.row_factory = dict_factory
 CURSOR = CONNECTION.cursor()
 
 CONFIG: Config = load_config(DATA_PATH + 'config.yaml')
-RETRIEVER, LLM_MODELS, RERANK_CHAIN = setup_RAG(CONFIG.rag_config)
+# RETRIEVER, LLM_MODELS, RERANK_CHAIN = setup_RAG(CONFIG.rag_config)
 
 
 @app.post("/token")
@@ -137,17 +137,10 @@ async def query(
                 'score': score
             }
 
-    pdf_data = retrieve_documents(
-        RETRIEVER, 
-        prompt, 
-        embed_depth,
-        rerank=RERANK_CHAIN
-    )
-
-    response = generate_response(
+    response = generate_response_from_prompt(
         prompt,
-        LLM_MODELS[model],
-        pdf_data
+        model,
+        embed_depth,
     )
 
     new_response(

@@ -22,9 +22,6 @@ from pdf import create_pdfs_from_embeddings
 from config.config import load_config, Config, RAGConfig
 from pydantic_classes import MetadataCallback, ResponseOutput, RerankResults
 
-# ---------------------------------------------------------------
-#                   Setup global objects
-# ---------------------------------------------------------------
 
 DATA_PATH = os.environ['DATA_PATH']
 CONFIG: Config = load_config(DATA_PATH + 'config.yaml')
@@ -74,16 +71,6 @@ rerank_prompt = ChatPromptTemplate.from_messages([
 rerank_chain = rerank_prompt | rerank_llm.with_structured_output(schema=RerankResults)
 
 
-# ---------------------------------------------------------------
-#                       Class objects
-# ---------------------------------------------------------------
-
-
-# ---------------------------------------------------------------
-#                       Functions
-# ---------------------------------------------------------------
-
-
 def format_documents(documents: List[Document]) -> List[Dict[str, str]]:
     """
     Formats a list of Document objects into a list of dictionaries.
@@ -98,17 +85,42 @@ def format_documents(documents: List[Document]) -> List[Dict[str, str]]:
     ]
 
 
-def retrieve_documents(retriever: VectorStoreRetriever, prompt: str, k: int = 0, rerank=None, **kwargs) -> str|None:
+def generate_response_from_prompt(
+    prompt: str,
+    llm_model: str,
+    embed_depth: int
+) -> ResponseOutput:
+    pdf_data = retrieve_documents(
+        prompt,
+        embed_depth,
+    )
+
+    response = generate_response(
+        prompt,
+        llm_model,
+        pdf_data
+    )
+
+    return response
+
+
+def retrieve_documents(
+    prompt: str, 
+    k: int = 0, 
+    rerank: bool = True, 
+    **kwargs
+) -> str|None:
+    
     pdf_data = []
     if k == 0:
         return []
 
     vector_results = retriever.invoke(prompt, k=k, **kwargs)
 
-    if rerank is not None:
+    if rerank:
         formatted_docs = format_documents(vector_results)
         callback = MetadataCallback()
-        results: RerankResults = rerank.invoke(
+        results: RerankResults = rerank_chain.invoke(
             {
                 'query': prompt,
                 'documents': formatted_docs,
@@ -126,7 +138,12 @@ def retrieve_documents(retriever: VectorStoreRetriever, prompt: str, k: int = 0,
     return pdf_data
 
     
-def generate_response(prompt: str, llm: ChatOpenAI, pdf_data: str|None = None) -> ResponseOutput:
+def generate_response(
+    prompt: str, 
+    llm_model: str, 
+    pdf_data: str|None = None
+) -> ResponseOutput:
+    
     prompt_template = ChatPromptTemplate.from_messages([
         (
             'system',
@@ -150,7 +167,7 @@ def generate_response(prompt: str, llm: ChatOpenAI, pdf_data: str|None = None) -
     ])
 
     callback = MetadataCallback()
-    response: ResponseOutput = (prompt_template | llm.with_structured_output(schema=ResponseOutput)).invoke(
+    response: ResponseOutput = (prompt_template | llm[llm_model].with_structured_output(schema=ResponseOutput)).invoke(
         {
             'prompt': prompt, 
             'document_name': [pdf['name'] for pdf in pdf_data], 

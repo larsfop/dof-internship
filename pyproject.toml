@@ -22,7 +22,7 @@ dependencies = [
     "dotenv",
     "pillow",
     "pwdlib[argon2]",
-    "jwt",
+    "pyjwt",
     "uuid",
     "pydantic",
 ]
