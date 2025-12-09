@@ -35,8 +35,3 @@ def load_config(config_path: str) -> Config:
         config_data = yaml.safe_load(file)
 
     return Config(**config_data)
-
-
-if __name__ == "__main__":
-    config = load_config('config.yaml')
-    print(config)

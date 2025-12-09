@@ -4,34 +4,28 @@ from contextlib import redirect_stdout, redirect_stderr
 
 f = io.StringIO()
 
-with redirect_stdout(f), redirect_stderr(f):
-    import sqlite3
-    import json
-    from fastapi import FastAPI, Response, Depends, status, HTTPException
-    from fastapi.responses import StreamingResponse
-    from fastapi.middleware.cors import CORSMiddleware
-    from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-    import jwt
-    from jwt.exceptions import InvalidTokenError
-    from pwdlib import PasswordHash
-    import uvicorn
-    import asyncio
-    import os
-    from langchain_core.documents import Document
-    import logging
-    from pymilvus import MilvusClient, MilvusException, DataType
-    import pymupdf
-    from typing import Annotated
-    from pydantic import BaseModel
+# with redirect_stdout(f), redirect_stderr(f):
+import sqlite3
+import json
+from fastapi import FastAPI, Response, Depends, status, HTTPException
+from fastapi.responses import StreamingResponse
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security import OAuth2PasswordRequestForm
+import uvicorn
+import asyncio
+import os
+import logging
+import pymupdf
+from typing import Annotated
 
-    from vectorDB import setup_RAG, retrieve_documents, generate_response, generate_session_name
-    from pdf import dbx_handler, pdf, get_pdf_path
-    from logger.logger import Logger
-    from config.config import load_config, Config
-    from database import new_response, new_citation
-    from vector_store import query_cache, new_cache_entry
-    from user_authentication import login_for_access_token, get_current_user, create_new_user
-    from pydantic_classes import Token, UserInDB
+from vectorDB import setup_RAG, retrieve_documents, generate_response
+from pdf import dbx_handler, pdf, get_pdf_path
+from logger.logger import Logger
+from config.config import load_config, Config
+from database import new_response, new_citation
+from vector_store import query_cache, new_cache_entry
+from user_authentication import login_for_access_token, get_current_user, create_new_user
+from pydantic_classes import Token, UserInDB
 
 
 user_loggers = {}

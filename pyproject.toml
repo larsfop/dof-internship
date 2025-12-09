@@ -6,20 +6,30 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "numpy",
-    "pymupdf",
-    "tiktoken",
-    "langchain",
+    "pymupdf==1.26.5",
     "openai",
-    "fastapi",
-    "uvicorn",
-    "dropbox",
+    "langchain",
+    "langchain-core",
+    "langchain-openai",
+    "langchain-milvus",
     "pymilvus",
+    "tiktoken",
+    "fastapi",
+    "uvicorn[standard]",
+    "gunicorn",
+    "unstructured[pdf]",
+    "dropbox",
     "dotenv",
     "pillow",
+    "pwdlib[argon2]",
+    "jwt",
+    "uuid",
+    "pydantic",
 ]
 
 [project.optional-dependencies]
 dev = [
+    "ipykernel",
     "matplotlib==3.7.5",
     "ipympl==0.9.3",
     "notebook",
