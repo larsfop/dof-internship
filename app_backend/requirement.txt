@@ -1,16 +1,20 @@
-fastapi
-uvicorn[standard]
-gunicorn
+numpy
 pymupdf == 1.26.5
-dropbox
-uuid
+openai
 langchain
 langchain-core
 langchain-openai
 langchain-milvus
-tiktoken
 pymilvus
+tiktoken
+fastapi
+uvicorn[standard]
+gunicorn
 unstructured[pdf]
-pyjwt
+dropbox
+dotenv
+pillow
 pwdlib[argon2]
+jwt
+uuid
 pydantic
