@@ -1,11 +1,15 @@
 numpy
 pymupdf == 1.26.5
 openai
-langchain
+langchain[openai,milvus]
 langchain-core
 langchain-openai
 langchain-milvus
+langgraph
+langgraph-checkpoint-postgres
+langmem
 pymilvus
+psycopg[binary]
 tiktoken
 fastapi
 uvicorn[standard]

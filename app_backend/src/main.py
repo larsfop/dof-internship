@@ -26,6 +26,7 @@ from database import new_response, new_citation
 from vector_store import query_cache, new_cache_entry
 from user_authentication import login_for_access_token, get_current_user, create_new_user
 from pydantic_classes import Token, UserInDB
+from response_generation.response_generation import generate_response
 
 
 user_loggers = {}
@@ -101,6 +102,21 @@ async def read_users_me(
     current_user: Annotated[UserInDB, Depends(get_current_user)],
 ) -> UserInDB:
     return current_user
+
+
+@app.get('/prompt')
+def prompt(
+    user: Annotated[UserInDB, Depends(get_current_user)],
+    prompt: str, 
+    user_id: str = 'test_user',
+    session_id: str = 'test_session',
+):
+    response = generate_response(
+        prompt,
+        user_id,
+        session_id
+    )
+    return response
 
 
 @app.get("/query")

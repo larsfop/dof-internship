@@ -7,6 +7,7 @@ from langchain_core.prompts import ChatPromptTemplate, HumanMessagePromptTemplat
 from langchain_core.messages import HumanMessage
 from langchain_core.callbacks import UsageMetadataCallbackHandler
 from langchain_core.callbacks.base import BaseCallbackHandler
+from langchain.tools import tool
 
 from uuid import uuid4
 import os
@@ -26,7 +27,6 @@ from pydantic_classes import MetadataCallback, ResponseOutput, RerankResults
 DATA_PATH = os.environ['DATA_PATH']
 CONFIG: Config = load_config(DATA_PATH + 'config.yaml')
 CONFIG_RAG: RAGConfig = CONFIG.rag_config
-
 
 db_uri = f'http://{os.environ["MILVUS_HOST"]}:{os.environ["MILVUS_PORT"]}'
 vector_db = Milvus(
@@ -147,7 +147,7 @@ def generate_response(
     prompt_template = ChatPromptTemplate.from_messages([
         (
             'system',
-            'You answer the questions only using provided PDF document pages.\n'\
+            # 'You answer the questions only using provided PDF document pages.\n'\
             'Use document names from provided documents: {document_name}\n'\
             # 'Provide only valid HTML output, no markdown and do not create a HTML style or title.\n'\
         ),

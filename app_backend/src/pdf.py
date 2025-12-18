@@ -9,6 +9,8 @@ from pydantic import BaseModel, Field
 from typing import List, Tuple
 from pathlib import Path
 
+from pydantic_classes import DocumentPDF
+
 
 class dbx_handler:
     def __init__(
@@ -146,11 +148,13 @@ def create_pdfs_from_embeddings(documents: list):
 
             newdoc.doc.save(os.environ['DATA_PATH'] + f'temp_{i}.pdf')
             
-            pdf_data.append({
-                'name': name,
-                'page_labels': page_labels,
-                'pages': pages,
-                'data': newdoc.as_base64()
-            })
+            pdf_data.append(
+                DocumentPDF(
+                    name=name,
+                    pages=pages,
+                    page_labels=page_labels,
+                    data=newdoc.as_base64()
+                )
+            )
 
     return pdf_data

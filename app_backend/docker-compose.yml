@@ -1,5 +1,3 @@
-version: '3.5'
-
 services:
   etcd:
     container_name: milvus-etcd
@@ -65,6 +63,24 @@ services:
       - "minio"
     restart: always
 
+  postgres:
+    # image: postgres:18
+    image: pgvector/pgvector:pg18
+    ports:
+      - "5435:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin125
+      POSTGRES_DB: app_backend
+    volumes:
+      - pg-data:/var/lib/postgresql
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+
   backend:
     build: .
     container_name: app-backend
@@ -84,6 +100,8 @@ services:
     depends_on:
       standalone:
         condition: service_healthy
+      postgres:
+        condition: service_healthy
     restart: always
 
   caddy:
@@ -100,10 +118,28 @@ services:
       - backend
     restart: always
 
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "8080:80"
+    depends_on:
+      - postgres
+    restart: always
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
 networks:
   default:
     name: milvus
+  postgres:
+    driver: bridge
 
 volumes:
   caddy_data:
   caddy_config:
+  pg-data:
+  pgadmin-data:
