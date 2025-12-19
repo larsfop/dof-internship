@@ -11,7 +11,7 @@ form.addEventListener('submit', async function (e) {
         password: password.value
     })
 
-    const response = await fetch('http://localhost:8015/token', {
+    const response = await fetch('http://192.168.0.71:8015/token', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',

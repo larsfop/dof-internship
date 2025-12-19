@@ -318,7 +318,7 @@ async function chatResponse(content, contentBlock, message) {
     }
     waitingLoop();
 
-    const response = await fetch(`http://localhost:8015/prompt?${queryParams.toString()}`, {
+    const response = await fetch(`http://192.168.0.71:8015/prompt?${queryParams.toString()}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

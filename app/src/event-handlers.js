@@ -10,7 +10,7 @@ export async function displayPDF(name, page, div) {
     var pdf = document.querySelector(`[data-name="${name}"]`);
     if (!pdf) {
         // Get the PDF blob
-        const pdfResponse = await fetch(`http://localhost:8015/pdf?name=${encodeURIComponent(name)}`, {
+        const pdfResponse = await fetch(`http://192.168.0.71:8015/pdf?name=${encodeURIComponent(name)}`, {
             method: 'GET',
             headers: {
                 'method': 'GET',

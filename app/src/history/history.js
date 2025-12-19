@@ -2,7 +2,7 @@ import { newTab } from "../tab.js";
 import { newHTMLElement, toggleHidden, getOtherElementByID } from "../utils/html-helper-functions.js";
 
 export async function loadHistory() {
-    const response = await fetch('http://localhost:8015/get_sessions', {
+    const response = await fetch('http://192.168.0.71:8015/get_sessions', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -54,7 +54,7 @@ async function onClickHandler(sessionID, sessionName) {
         const tabDiv = document.getElementById(`tab:${sessionID}`);
         tabDiv.click();
     } else {
-        const response = await fetch(`http://localhost:8015/get_chat?session_id=${sessionID}`, {
+        const response = await fetch(`http://192.168.0.71:8015/get_chat?session_id=${sessionID}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ async function removeHistoryEntry(sessionID) {
     if (entryDiv) {
         entryDiv.remove();
 
-        await fetch(`http://localhost:8015/remove_session?session_id=${sessionID}`, {
+        await fetch(`http://192.168.0.71:8015/remove_session?session_id=${sessionID}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
