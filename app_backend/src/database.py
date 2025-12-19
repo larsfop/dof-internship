@@ -15,7 +15,10 @@ CURSOR = CONNECTION.cursor()
 
 def create_user(userID: str|UUID, username: str, hashed_password: str):
     try:
-        CURSOR.execute("INSERT INTO users (userID, username, hashedPassword) VALUES (?, ?, ?)", (str(userID), username, hashed_password))
+        CURSOR.execute(
+            "INSERT INTO users (userID, username, hashedPassword) VALUES (?, ?, ?)",
+            (str(userID), username, hashed_password)
+        )
         CONNECTION.commit()
         return {"status": "success", "message": f"User '{username}' with ID '{userID}' added successfully."}
     except sqlite3.IntegrityError:
@@ -34,7 +37,10 @@ def new_entry(sql_query: str, parameters: tuple):
 def new_session(session_id: str, user_id: str, name: str, date_time: str|None = None) -> None:
     date_time = datetime.now().isoformat() if date_time is None else date_time
     try:
-        CURSOR.execute("INSERT INTO sessions (sessionID, userID, name, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?)", (session_id, user_id, name, date_time, date_time))
+        CURSOR.execute(
+            "INSERT INTO sessions (sessionID, userID, name, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?)",
+            (session_id, user_id, name, date_time, date_time)
+        )
         CONNECTION.commit()
         print(f"Session \'{name}\' with ID \'{session_id}\' added successfully.")
     except sqlite3.IntegrityError:
@@ -47,7 +53,10 @@ def new_response(user_id: str, session_id: str, response_id: str, session_name: 
 
     try:
         CURSOR.execute("UPDATE sessions SET updatedAt = ? WHERE sessionID = ?", (date_time, session_id))
-        CURSOR.execute("INSERT INTO responses (responseID, sessionID, prompt, response, timestamp) VALUES (?, ?, ?, ?, ?)", (response_id, session_id, prompt, response, date_time))
+        CURSOR.execute(
+            "INSERT INTO responses (responseID, sessionID, prompt, response, timestamp) VALUES (?, ?, ?, ?, ?)",
+            (response_id, session_id, prompt, response, date_time)
+        )
         CONNECTION.commit()
         print(f"Response with ID \'{response_id}\' added successfully.")
     except sqlite3.IntegrityError:
@@ -56,7 +65,10 @@ def new_response(user_id: str, session_id: str, response_id: str, session_name: 
 
 def new_citation(response_id: str, document_name: str, page_labels: str, pdf_pages: str) -> None:
     try:
-        CURSOR.execute("INSERT INTO citations (responseID, documentName, pageLabels, pdfPages) VALUES (?, ?, ?, ?)", (response_id, document_name, page_labels, pdf_pages))
+        CURSOR.execute(
+            "INSERT INTO citations (responseID, documentName, pageLabels, pdfPages) VALUES (?, ?, ?, ?)",
+            (response_id, document_name, page_labels, pdf_pages)
+        )
         CONNECTION.commit()
         print(f"Citation for response ID \'{response_id}\' added successfully.")
     except sqlite3.IntegrityError:
@@ -64,6 +76,9 @@ def new_citation(response_id: str, document_name: str, page_labels: str, pdf_pag
 
 
 def fetch_user(username: str) -> UserInDB|None:
-    data = CURSOR.execute("SELECT json_object('userID', userID, 'username', username, 'hashed_password', hashedPassword) FROM users WHERE username = ?", (username,)).fetchone()
+    data = CURSOR.execute(
+        "SELECT json_object('userID', userID, 'username', username, 'hashed_password', hashedPassword) FROM users WHERE username = ?",
+        (username,)
+    ).fetchone()
     if data:
         return UserInDB(**json.loads(data[0]))

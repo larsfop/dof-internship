@@ -92,6 +92,7 @@ function loadHistory(chatMessages, history) {
 
         // Handle citations
         let i = 0;
+        console.log('Citations:', citations);
         for (const citation of citations) {
             if (i > 0) {
                 newHTMLElement('br', outputDiv);
@@ -294,22 +295,15 @@ async function userInput(content, message) {
 
 
 async function chatResponse(content, contentBlock, message) {
-    const embedDepth = parseInt(content.dataset.embedDepth)
-    const model = content.dataset.model
     const sessionID = content.id.replace('content:', '');
     var sessionName = content.dataset.name;
 
     const queryParams = new URLSearchParams({
             prompt: message,
-            embed_depth: embedDepth,
-            model: model,
             user_id: sessionStorage.getItem('userID'),
             session_id: sessionID,
-            session_name: sessionName,
-            entry_id: crypto.randomUUID(),
         })
 
-    const chatMessages = content.querySelector('.chat-messages');
     const msgDiv = newHTMLElement('div', contentBlock, {
         className: 'output-message'
     });
@@ -324,7 +318,7 @@ async function chatResponse(content, contentBlock, message) {
     }
     waitingLoop();
 
-    const response = await fetch(`http://localhost:8015/query?${queryParams.toString()}`, {
+    const response = await fetch(`http://localhost:8015/prompt?${queryParams.toString()}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -332,37 +326,40 @@ async function chatResponse(content, contentBlock, message) {
         }
     });
 
-    console.log(response)
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder('utf-8');
 
-    const data = await response.json();
-    console.log('Received response:', data);
-    modelCreated = true;
-    msgDiv.innerHTML = '';
+    let buffer = '';
+    var data;
+    while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
 
-    if (!response.ok) {
-        if (response.status === 401) {
-            alert('Session expired. Please log in again.');
-            return;
+        const event = decoder.decode(value, { stream: true });
+
+        data = JSON.parse(event);
+        if (data.node === 'generate_answer') {
+            modelCreated = true;
+            console.log('Received data chunk:', data);
+            msgDiv.innerHTML = data.response.answer;
         }
     }
 
-    msgDiv.innerHTML = data.content;
-
     // Handle citations
-    for (const citations of data.citations) {
+    for (const citations of data.response.citations) {
         const cite = newHTMLElement('cite', msgDiv, {
             innerText: `${citations.document_name} - Page(s): ${citations.page_labels.join(', ')}`,
             onclick: function(e) {
                 e.stopPropagation();
                 console.log('Citation', citations)
-                displayPDF(citations.document_name, citations.pdf_page_numbers[0], cite);
+                displayPDF(citations.document_name, citations.pdf_page_indices[0], cite);
             }
         });
     }
 
     // Handle session naming
     if (!content.dataset.name) {
-        sessionName = data.summary_title;
+        sessionName = data.response.summary_title;
         content.dataset.name = sessionName;
         const tab = getOtherElementByID(content);
         tab.dataset.name = sessionName;

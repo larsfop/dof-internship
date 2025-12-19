@@ -44,9 +44,11 @@ if (typeof window !== 'undefined') {
             })
 
             const data = await response.json();
+            if (!response.ok) {
+                alert(`Login failed: ${data.detail}`);
+                return;
+            }
             
-            if (!response.ok) throw new Error(data.detail)
-
             sessionStorage.setItem('userID', data.user_id);
             sessionStorage.setItem('access_token', data.access_token);
             sessionStorage.setItem('token_type', data.token_type);

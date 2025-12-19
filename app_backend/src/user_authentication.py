@@ -57,7 +57,6 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]) -> Use
         detail="Could not validate credentials",
         headers={"WWW-Authenticate": "Bearer"},
     )
-    print(f"Decoding token: {token}", flush=True)
     try:
         payload = jwt.decode(token, os.environ['API_SECRET_KEY'], algorithms=[os.environ['API_ALGORITHM']])
         username = payload.get("sub")

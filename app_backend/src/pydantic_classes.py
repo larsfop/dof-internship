@@ -265,7 +265,7 @@ class ResponseOutput(BaseModel):
         
         try:
             indices = citation.pdf_page_indices
-            citation.pdf_page_indices = [new_pdf_pages[index] for index in indices]
+            citation.pdf_page_indices = [new_pdf_pages[index] + 1 for index in indices]
             citation.page_labels = [new_page_labels[index] for index in indices]
         except:
             print('Not able to write citation!')
@@ -289,5 +289,51 @@ class State(MessagesState):
     context: dict[str, Any]
     documents: List[DocumentPDF]
     parsed: ResponseOutput
-    token_usage: dict[str, int]
 
+
+def extract_token_usage(result) -> dict[str, int]:
+    if result.llm_output and "token_usage" in result.llm_output:
+        return result.llm_output["token_usage"]
+
+    # fallback to first generation
+    gen = result.generations[0][0]
+    return gen.usage_metadata
+
+
+class TokenUsage(BaseModel):
+    prompt_tokens: int = 0
+    completion_tokens: int = 0
+    total_tokens: int = 0
+    reasoning_tokens: int = 0
+
+
+class ResponseMetadata(BaseCallbackHandler):
+    run_id: str = ''
+    token_usage: TokenUsage = TokenUsage()
+
+    def on_llm_end(self, response, run_id, **kwargs):
+        self.run_id = run_id
+
+        token_usage = extract_token_usage(response)
+
+        self.token_usage.prompt_tokens += token_usage.get('prompt_tokens', 0)
+        self.token_usage.completion_tokens += token_usage.get('completion_tokens', 0)
+        self.token_usage.total_tokens += token_usage.get('total_tokens', 0)
+
+        details = token_usage.get('completion_tokens_details', {})
+        self.token_usage.reasoning_tokens += details.get('reasoning_tokens', 0)
+
+
+    def __repr__(self):
+        return (
+            f'ResponseMetadata(run_id={self.run_id}, '
+            f'TokenUsage({self.token_usage}))'
+        )
+    
+
+    def as_dict(self) -> dict[str, int]:
+        return {
+            'run_id': self.run_id,
+            'token_usage': self.token_usage.model_dump()
+        }
+    

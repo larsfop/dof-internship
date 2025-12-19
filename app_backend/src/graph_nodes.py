@@ -132,19 +132,13 @@ def retrieve_documents(state: State):
 
     response = (
         grader_model
-        .with_structured_output(schema=GradeResults, include_raw=True
+        .with_structured_output(schema=GradeResults
         ).invoke([{'role': 'user', 'content': prompt}])
     )
 
-    token_usage = response['raw'].response_metadata['token_usage']
+    pdf_data = create_pdfs_from_embeddings(response)
 
-    pdf_data = create_pdfs_from_embeddings(response['parsed'])
-
-    return {'documents': pdf_data, 'token_usage': {
-        'prompt_tokens': token_usage['prompt_tokens'],
-        'completion_tokens': token_usage['completion_tokens'],
-        'total_tokens': token_usage['total_tokens']
-    }}
+    return {'documents': pdf_data}
 
 
 def create_prompt(question: str, documents: list[DocumentPDF], summary: str):
@@ -155,6 +149,7 @@ def create_prompt(question: str, documents: list[DocumentPDF], summary: str):
             "content": (
                 "You are an assistant for question-answering tasks.\n"
                 "Use provided documents to answer the question as accurately as possible.\n"
+                "Provide only valid HTML output, no markdown and do not create a HTML style or title.\n"
                 f"Use the following document names: {document_names}\n"
                 f'Summary of previous prompts: {summary}'
             )
@@ -208,30 +203,18 @@ def generate_answer(
     prompt = create_prompt(question, docs, summary)
 
     # response = response_model.invoke(state['messages'] + prompt)
-    response = (
-        response_model.with_structured_output(ResponseOutput, include_raw=True
+    response: ResponseOutput = (
+        response_model.with_structured_output(ResponseOutput
         ).invoke(short_term_memory + prompt)    
     )
 
     for pdf in docs:
         print(pdf.name, pdf.pages, pdf.page_labels)
-        response['parsed'].update_citation_pages(
+        response.update_citation_pages(
             new_pdf_pages=pdf.pages,
             new_page_labels=pdf.page_labels,
             document_name=pdf.name
         )
 
-    # Count tokens usage with previous nodes if available
-    new_tokens = response['raw'].response_metadata['token_usage']
-    token_usage = state.get('token_usage', {
-        'prompt_tokens': 0,
-        'completion_tokens': 0,
-        'total_tokens': 0
-    })
-    for key in token_usage.keys():
-        token_usage[key] += new_tokens[key]
-        
-
-    return {'messages': [response['raw']], 'parsed': response['parsed'], 'documents': [], 'token_usage': token_usage}
-    # return {'messages': [response], 'documents': []}
+    return {'messages': [response.answer], 'parsed': response, 'documents': []}
 

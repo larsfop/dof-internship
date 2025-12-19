@@ -64,7 +64,6 @@ services:
     restart: always
 
   postgres:
-    # image: postgres:18
     image: pgvector/pgvector:pg18
     ports:
       - "5435:5432"
@@ -95,6 +94,8 @@ services:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - MILVUS_HOST=milvus-standalone
       - MILVUS_PORT=19530
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - API_SECRET_KEY=${API_SECRET_KEY}
       - API_ALGORITHM=${API_ALGORITHM}
     depends_on:

@@ -26,7 +26,7 @@ from database import new_response, new_citation
 from vector_store import query_cache, new_cache_entry
 from user_authentication import login_for_access_token, get_current_user, create_new_user
 from pydantic_classes import Token, UserInDB
-from response_generation.response_generation import generate_response
+from response_generation import generate_response
 
 
 user_loggers = {}
@@ -116,7 +116,7 @@ def prompt(
         user_id,
         session_id
     )
-    return response
+    return StreamingResponse(response, media_type='text/event-stream')
 
 
 @app.get("/query")
@@ -223,28 +223,38 @@ def get_chat(
 ):
     try:
         responses = CURSOR.execute("""
-                SELECT 
+            SELECT 
                 r.prompt, 
                 r.response,
-                json_group_array(
-                    json_object(
-                        'documentName', c.documentName,
-                        'pageLabels', c.pageLabels,
-                        'pdfPages', c.pdfPages
-                    )
+                COALESCE(
+                    json_group_array(
+                        CASE
+                            WHEN c.responseID IS NOT NULL THEN
+                                json_object(
+                                    'documentName', c.documentName,
+                                    'pageLabels', c.pageLabels,
+                                    'pdfPages', c.pdfPages
+                                )
+                        END
+                    ),
+                    '[]'
                 ) AS citations
-                FROM responses r
-                LEFT JOIN citations c
-                    ON r.responseID = c.responseID
-                WHERE r.sessionID = ?
-                GROUP BY r.responseID
-                ORDER BY r.timestamp
+            FROM responses r
+            LEFT JOIN citations c
+                ON r.responseID = c.responseID
+            WHERE r.sessionID = ?
+            GROUP BY r.responseID
+            ORDER BY r.timestamp
             """,
             (session_id,)
         ).fetchall()
 
         for row in responses:
             row['citations'] = json.loads(row['citations'])
+            
+            # Handle case where there are no citations
+            if row['citations'][0] is None:
+                row['citations'] = []
 
         return responses
     except sqlite3.Error as e:
