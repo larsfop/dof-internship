@@ -8,21 +8,15 @@ with redirect_stdout(f), redirect_stderr(f):
     from unstructured.partition.pdf import partition_pdf
     from unstructured.staging.base import elements_to_dicts
     from unstructured.documents.elements import Element
-    import pymupdf
     import json
     from pathlib import Path
     import argparse
     from typing import Dict
     import numpy as np
-    import io
-
-    from pdf import dbx_handler
+    import yaml
 
 
-    
-
-
-def crop_elements(elements: list[Element], x0: float = 0, y0: float = 0, x1: float = np.inf, y1: float = np.inf) -> Dict:
+def crop_elements(elements: list[Element], x0: float = 0, y0: float = 0, x1: float = np.inf, y1: float = np.inf):
 
     elements_dict = elements_to_dicts(elements)
     cropped_elements = []
@@ -40,65 +34,49 @@ def crop_elements(elements: list[Element], x0: float = 0, y0: float = 0, x1: flo
 
 
 def chunk_pdf(
-        filename: str, 
+        file_path: Path|str, 
         output_dir: Path,
-        is_dbx: bool = True,
-        path_dir: Path|None = None
+        strategy: str = 'hi_res',
     ) -> None:
 
+    print(f"Processing file: {file_path.name} with strategy: {strategy}")
 
-    path_dir = Path(path_dir) if path_dir else Path.cwd()
-    tmp_dir = path_dir / 'tmp'
-    tmp_dir.mkdir(exist_ok=True)
-
-    output_dir = path_dir / output_dir
+    file_path = Path(file_path)
+    output_dir /= file_path.stem
 
     output_dir.mkdir(exist_ok=True, parents=True)
 
-    """if not (tmp_dir / filename).exists():
-        # Download the PDF from Dropbox if needed
-        if is_dbx:
-            dbx = dbx_handler()
-            doc = dbx.get_pdf_document(filename)
-        else:
-            doc = pymupdf.open(filename)
-
-        # Create a temporary directory to store the cropped PDF
-        doc.save(tmp_dir / filename)"""
-
     # Partition the cropped PDF with high-res image and table extraction
     elements = partition_pdf(
-        filename=filename,
-        # file=io.BytesIO(doc.write()),
-        strategy='hi_res',
+        filename=file_path,
+        strategy=strategy,
         extract_images_in_pdf=True,
         extract_image_block_types=['image', 'table'],
         extract_image_block_to_payload=False,
-        # extract_image_block_output_dir='./test_images',
         extract_image_block_format='png',
         high_res_image=True,
         pdf_image_dpi=400,
     )
 
-    # Crop and save partitions to JSON
-    with open(output_dir / f"{Path(filename).stem}.json", 'w') as f:
-        json.dump(crop_elements(elements, 140, 280), f, indent=4)
+    # height = elements[0].metadata['coordinates']['layout_height']
+
+    # Save partitions to JSON
+    with open(output_dir / f"unstructured_partitions_{strategy}.json", 'w') as f:
+        json.dump(elements_to_dicts(elements), f, indent=4)
 
 
 if __name__ == "__main__":
-    
-
     parser = argparse.ArgumentParser(description="Partition a PDF file and save the output as JSON.")
     parser.add_argument("filename", type=str, help="Path to the input PDF file.")
-    parser.add_argument("--output_dir", type=Path, default=Path('partition'), help="Directory to save the output JSON file.")
-    parser.add_argument("--dbx", action="store_false", help="Indicates if the file is in Dropbox. Default: True.")
-    parser.add_argument("--path_dir", type=Path, default=None, help="Temporary directory for processing.")
+    parser.add_argument('-s', '--strategy', type=str, default='hi_res', help="Partitioning strategy: 'fast' or 'hi_res'.")
+    parser.add_argument("--output_dir", type=Path, default=Path('../volumes/data/partitions/'), help="Directory to save the output JSON file.")
 
     args = parser.parse_args()
 
+    file_path = Path('../../pdfs/') / args.filename
+
     chunk_pdf(
-        args.filename,
+        file_path,
         args.output_dir,
-        args.dbx,
-        args.path_dir
+        strategy=args.strategy
     )
