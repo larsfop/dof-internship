@@ -33,6 +33,7 @@ dependencies = [
     "pydantic",
     "markdown-it-py",
     "mdit-py-plugins",
+    "argcomplete",
 ]
 
 [project.optional-dependencies]

@@ -1,7 +1,11 @@
+#!/usr/bin/env python3
+# PYTHON_ARGCOMPLETE_OK
 import os
 from pathlib import Path
 from time import time
 import argparse
+import argcomplete
+from argcomplete.completers import BaseCompleter, FilesCompleter, DirectoriesCompleter, ChoicesCompleter, EnvironCompleter
 import pymupdf
 import numpy as np
 import json
@@ -67,10 +71,14 @@ def main(filename: str, is_partitioning: bool, is_chunking: bool, is_vector_stor
     print(f'Processing file {filename} successfully completed')
 
 if __name__ == "__main__":
+    script_dir = Path(__file__).parent
+    config = load_config(Path(os.environ.get('CONFIG_PATH', '../volumes/configs/')) / 'partitionConfig.yaml')
+    pdf_dir = Path(config.pdf_dir_path)
+
     parser = argparse.ArgumentParser(description="Process document partitions based on configuration.")
-    parser.add_argument(
+    arg = parser.add_argument(
         'filenames', type=str, nargs='*', help="List of filenames to process."
-    )
+    ).completer = FilesCompleter(allowednames=('.pdf',))
     parser.add_argument(
         '-p', action='store_true', help="Process all PDFs in the specified directory."
     )
@@ -81,6 +89,7 @@ if __name__ == "__main__":
         '-d', action='store_true', help='Fill vector store'
     )
 
+    argcomplete.autocomplete(parser)
     args = parser.parse_args()
 
     flag_enabled = not (args.p or args.c or args.d)

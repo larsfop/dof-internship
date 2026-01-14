@@ -2,7 +2,7 @@
 from typing import Literal, List, Dict
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain_core.documents import Document
-from langchain_milvus import Milvus
+from langchain_postgres import PGVector
 from langchain_core.runnables.config import RunnableConfig
 from langchain_core.messages import HumanMessage, AIMessage, trim_messages
 from langgraph.store.memory import BaseStore
@@ -20,19 +20,17 @@ CONFIG: Config = load_config(DATA_PATH + 'config.yaml')
 CONFIG_RAG: RAGConfig = CONFIG.rag_config
 
 # Setup RAG vector database
-db_uri = f'http://{os.environ["MILVUS_HOST"]}:{os.environ["MILVUS_PORT"]}'
-vector_store = Milvus(
-    embedding_function=OpenAIEmbeddings(model=CONFIG_RAG.embedding_model),
-    connection_args={
-        'uri': db_uri,
-        'token': 'root:Milvus',
-        'db_name': CONFIG_RAG.vector_db_name
-    },
-    index_params={
-        "index_type": CONFIG_RAG.index_type,
-        "metric_type": CONFIG_RAG.metric_type,
-    },
-    consistency_level="Strong"
+db_uri = 'postgresql://{user}:{password}@postgres:5432/postgres?sslmode=disable'.format(
+    user=os.environ['POSTGRES_USER'],
+    password=os.environ['POSTGRES_PASSWORD'],
+)
+embeddings = OpenAIEmbeddings(model='text-embedding-3-large')
+vector_store = PGVector(
+    embeddings=embeddings,
+    embedding_length=3072,
+    connection=db_uri,
+    collection_name='document_store',
+    use_jsonb=True,
 )
 retriever = vector_store.as_retriever(
     search_type=CONFIG_RAG.search_type,

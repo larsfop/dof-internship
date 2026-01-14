@@ -5,6 +5,7 @@ langchain[openai,milvus]
 langchain-core
 langchain-openai
 langchain-milvus
+langchain-postgres
 langgraph
 langgraph-checkpoint-postgres
 langmem
