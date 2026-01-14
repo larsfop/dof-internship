@@ -10,6 +10,7 @@ from langmem import create_search_memory_tool, create_manage_memory_tool
 from langmem.short_term import SummarizationNode
 
 import os
+import psycopg
 
 from pydantic_classes import CheckResponse, State, GradeResults, DocumentPDF, ResponseMetadata, ResponseOutput
 from pdf import create_pdfs_from_embeddings
@@ -20,7 +21,7 @@ CONFIG: Config = load_config(DATA_PATH + 'config.yaml')
 CONFIG_RAG: RAGConfig = CONFIG.rag_config
 
 # Setup RAG vector database
-db_uri = 'postgresql://{user}:{password}@postgres:5432/postgres?sslmode=disable'.format(
+db_uri = 'postgresql+psycopg://{user}:{password}@postgres:5432/postgres?sslmode=disable'.format(
     user=os.environ['POSTGRES_USER'],
     password=os.environ['POSTGRES_PASSWORD'],
 )
@@ -89,8 +90,10 @@ def generate_response_or_retrieve_documents(state: State) -> Literal['summary', 
     )
     
     if response.retrieve_documents == 'yes':
+        print("Retrieving documents for the user query.", flush=True)
         return 'retrieve_documents'
     else:
+        print("Generating answer without document retrieval.", flush=True)
         return 'summary'
     
 
@@ -119,6 +122,8 @@ def retrieve_documents(state: State):
     question = state['messages'][-1].content
     documents = retriever.invoke(question)
 
+    for doc in documents:
+        print(doc, flush=True)
 
     prompt = grade_prompt.format(
         question=question,

@@ -501,6 +501,10 @@ body {
   overflow-y: auto;
   grid-area: stack;
   padding-bottom: 100px;
+
+  > hr {
+    margin-block: 12px;
+  }
 }
 
 cite {

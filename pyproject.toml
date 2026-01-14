@@ -19,6 +19,7 @@ dependencies = [
     "langmem",
     "pymilvus",
     "psycopg[binary]",
+    "psycopg2",
     "tiktoken",
     "fastapi",
     "uvicorn[standard]",
