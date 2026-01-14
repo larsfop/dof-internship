@@ -1,13 +1,13 @@
 import numpy as np
 import tiktoken
 import re
-from typing import List, Any
+from typing import List, Any, Iterator
 import pymupdf
 import matplotlib.pyplot as plt
 from pathlib import Path
 import pymupdf
 
-from class_objects import DocumentData, DocumentPartition
+from class_objects import DocumentPartition
 
 def extract_image(page: pymupdf.Page, coords: np.array) -> np.ndarray:
     coords[0,0] = 52
@@ -56,7 +56,7 @@ def plot_images(data: list[dict], document: pymupdf.Document) -> None:
 
 
 def save_images(
-    partition: DocumentData,
+    partition: DocumentPartition,
     data: list[dict],
     document: pymupdf.Document,
     output_dir: Path|str
@@ -111,14 +111,24 @@ def get_chunk_type(element: DocumentPartition) -> str|None:
     return None
 
 
+def partitions_by_page_iterator(
+    partitions: List[DocumentPartition],
+    start: int = 1,
+    end: int = -1
+) -> Iterator[DocumentPartition]:
+    end = partitions[-1].metadata.page_number if end == -1 else end
+    for page_number in range(start, end + 1):
+        page_elements = [element for element in partitions if element.metadata.page_number == page_number]
+        yield page_elements
+
 def extract_full_title(
-    coordinates: np.ndarray,
+    element: DocumentPartition,
     page: pymupdf.Page
 ):
-    coordinates *= 0.179
+    coordinates = element.get_rect()
+    coordinates *= page.rect.height / element.metadata.coordinates.layout_height
     coordinates[0,0] = 52
     coordinates[1,0] = 772
-
     rect = pymupdf.Rect(coordinates.tolist())
 
     content = page.get_text('text', clip=rect).split('\n')
@@ -206,7 +216,7 @@ def process_section(
     index: int,
     content_buffer: str,
     sections: list[str],
-    elements: DocumentData,
+    elements: list[DocumentPartition],
     document: pymupdf.Document,
     page_start: int,
 ) -> tuple[Any]:
@@ -217,7 +227,7 @@ def process_section(
     page = element.metadata.page_number
 
     content = extract_full_title(
-        element.get_rect(),
+        element,
         document[page - 1]
     )
     
@@ -230,6 +240,7 @@ def process_section(
         chunks, list_page_indices = chunk_text(content_buffer)
         for chunk, page_indices in zip(chunks, list_page_indices):
             data.append({
+                'document_name': elements[0].metadata.filename,
                 'page_indices': page_indices,
                 'page_labels': [extract_page_label(document[page - 1]) for page in page_indices],
                 'type': 'text',
@@ -255,7 +266,7 @@ def process_section(
 def process_image(
     data: list[dict],
     index: int,
-    elements: DocumentData,
+    elements: list[DocumentPartition],
     sections: list[str],
     document: pymupdf.Document,
     coords: np.ndarray|None = None
@@ -263,6 +274,7 @@ def process_image(
     coords = np.array([[0, 0]]) if coords is None else coords
     element = elements[index]
     data.append({
+        'document_name': elements[0].metadata.filename,
         'page_indices': [element.metadata.page_number],
         'page_labels': [extract_page_label(document[element.metadata.page_number - 1])],
         'type': 'image',
@@ -280,7 +292,7 @@ def process_image(
 def process_formula(
     data: list[dict],
     index: int,
-    elements: DocumentData,
+    elements: list[DocumentPartition],
     sections: list[str],
     document: pymupdf.Document
 ) -> tuple[list[dict], int]:
@@ -289,6 +301,7 @@ def process_formula(
     coords[0,1] -= 50
     coords[1,1] += 50
     data.append({
+        'document_name': elements[0].metadata.filename,
         'page_indices': [element.metadata.page_number],
         'page_labels': [extract_page_label(document[element.metadata.page_number - 1])],
         'type': 'formula',
@@ -303,7 +316,7 @@ def process_formula(
 def process_figure(
     data: list[dict],
     index: int,
-    elements: DocumentData,
+    elements: list[DocumentPartition],
     sections: list[str],
     document: pymupdf.Document,
     coords: np.ndarray|None = None
@@ -342,7 +355,7 @@ def process_figure(
 def process_table(
     data: list[dict],
     index: int,
-    elements: DocumentData,
+    elements: list[DocumentPartition],
     sections: list[str],
     document: pymupdf.Document
 ) -> tuple[list[dict], int]:
@@ -358,6 +371,7 @@ def process_table(
 
     new_coords = element.get_rect()
     data.append({
+        'document_name': elements[0].metadata.filename,
         'page_indices': [element.metadata.page_number],
         'page_labels': [extract_page_label(document[element.metadata.page_number - 1])],
         'type': 'table',
@@ -373,7 +387,7 @@ def process_table(
 
 
 def process_partitions(
-    partition: DocumentData,
+    partitions: list[DocumentPartition],
     document: pymupdf.Document,
     start: int = 1,
     end: int = -1,
@@ -390,8 +404,7 @@ def process_partitions(
     tokenizer = tiktoken.get_encoding("cl100k_base")
     content_buffer = []
     page_start = start
-    page_iterator = partition.page_iterator(start=start, end=end)
-    for page, elements in enumerate(page_iterator, start=start):
+    for page, elements in enumerate(partitions_by_page_iterator(partitions, start=start, end=end), start=start):
         index = 0
         while index < len(elements):
             element = elements[index]
@@ -448,7 +461,9 @@ def process_partitions(
             
     # Save remaining text buffer
     data.append({
-        'page': list(range(page_start, page + 1)),
+        'document_name': partitions[0].metadata.filename,
+        'page_indices': list(range(page_start, page + 1)),
+        'page_labels': [extract_page_label(document[page - 1]) for page in range(page_start, page + 1)],
         'type': 'text',
         'sections': sections,
         'content': '\n '.join([text for text, _ in content_buffer]),

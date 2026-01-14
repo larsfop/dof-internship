@@ -21,7 +21,7 @@ CONFIG_RAG: RAGConfig = CONFIG.rag_config
 
 # Setup RAG vector database
 db_uri = f'http://{os.environ["MILVUS_HOST"]}:{os.environ["MILVUS_PORT"]}'
-vector_db = Milvus(
+vector_store = Milvus(
     embedding_function=OpenAIEmbeddings(model=CONFIG_RAG.embedding_model),
     connection_args={
         'uri': db_uri,
@@ -34,7 +34,7 @@ vector_db = Milvus(
     },
     consistency_level="Strong"
 )
-retriever = vector_db.as_retriever(
+retriever = vector_store.as_retriever(
     search_type=CONFIG_RAG.search_type,
     search_kwargs=CONFIG_RAG.search_kwargs
 )
@@ -43,10 +43,12 @@ retriever = vector_db.as_retriever(
 model = ChatOpenAI(model='gpt-4.1')
 summary_model = model.bind(max_tokens=512)
 
+# Output response model
 response_model = ChatOpenAI(
     model='o4-mini',
 )
 
+# Model to check if document retrieval is necessary and rerank documents
 check_model = ChatOpenAI(
     model='gpt-4.1',
     temperature=0
@@ -114,11 +116,6 @@ grade_prompt = (
     'Documents:\n{documents}\n\n'
 )
 
-grader_model = ChatOpenAI(
-    model='gpt-4.1',
-    temperature=0,
-)
-
 def retrieve_documents(state: State):
 
     question = state['messages'][-1].content
@@ -131,7 +128,7 @@ def retrieve_documents(state: State):
     )
 
     response = (
-        grader_model
+        check_model
         .with_structured_output(schema=GradeResults
         ).invoke([{'role': 'user', 'content': prompt}])
     )

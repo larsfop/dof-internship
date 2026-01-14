@@ -16,35 +16,13 @@ with redirect_stdout(f), redirect_stderr(f):
     import yaml
 
 
-def crop_elements(elements: list[Element], x0: float = 0, y0: float = 0, x1: float = np.inf, y1: float = np.inf):
-
-    elements_dict = elements_to_dicts(elements)
-    cropped_elements = []
-    for element in elements_dict:
-        coords = np.array(element['metadata']['coordinates']['points'])
-        x_min, y_min = coords.min(axis=0)
-        x_max, y_max = coords.max(axis=0)
-
-        if x_max <= x0 or x_min >= x1 or y_max <= y0 or y_min >= y1:
-            continue
-
-        cropped_elements.append(element)
-
-    return cropped_elements
-
-
 def chunk_pdf(
         file_path: Path|str, 
         output_dir: Path,
         strategy: str = 'hi_res',
     ) -> None:
 
-    print(f"Processing file: {file_path.name} with strategy: {strategy}")
-
     file_path = Path(file_path)
-    output_dir /= file_path.stem
-
-    output_dir.mkdir(exist_ok=True, parents=True)
 
     # Partition the cropped PDF with high-res image and table extraction
     elements = partition_pdf(
