@@ -35,6 +35,10 @@ dependencies = [
     "markdown-it-py",
     "mdit-py-plugins",
     "argcomplete",
+    "unidecode",
+    "pypdf",
+    "jsonb",
+    "tqdm",
 ]
 
 [project.optional-dependencies]

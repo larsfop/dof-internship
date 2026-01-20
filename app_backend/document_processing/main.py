@@ -2,73 +2,127 @@
 # PYTHON_ARGCOMPLETE_OK
 import os
 from pathlib import Path
-from time import time
 import argparse
 import argcomplete
 from argcomplete.completers import BaseCompleter, FilesCompleter, DirectoriesCompleter, ChoicesCompleter, EnvironCompleter
 import pymupdf
 import numpy as np
 import json
+from langchain_core.documents import Document
 
+from utility import load_config, load_partitions, crop_partitions, Timer, write_to_file, read_from_file
 from unstructured_read_pdf import chunk_pdf
 from partition_processing import process_partitions
-from vector_store import add_documents_to_vector_store
-from utility import load_config, load_partitions, crop_partitions
+from vector_store import add_documents_to_vector_store, prepare_documents
 
 
-def main(filename: str, is_partitioning: bool, is_chunking: bool, is_vector_storing: bool) -> None:
-    print(f"Processing file: {filename}")
-    config_path = Path(os.environ.get('CONFIG_PATH', '../volumes/configs/'))
+def main(
+        file_path: Path, 
+        is_partitioning: bool, 
+        is_chunking: bool, 
+        is_vector_storing: bool,
+        load_checkpoint: bool = False
+    ) -> None:
+    filename = file_path.stem
+    with Timer(
+        f"Processing file: {filename}",
+        f'Processing file {filename} successfully completed'
+    ):
+        config_path = Path(os.environ.get('CONFIG_PATH', '../volumes/configs/'))
 
-    # Load configuration
-    config = load_config(config_path / 'partitionConfig.yaml')
-    pdf_path = Path(config.pdf_dir_path)
-    output_path = Path(config.output_dir_path) / filename
-    output_path.mkdir(parents=True, exist_ok=True)
+        # Load configuration
+        config = load_config(config_path / 'partitionConfig.yaml')
+        output_path = Path(config.output_dir_path) / filename
+        output_path.mkdir(parents=True, exist_ok=True)
 
-    # Process partitions using the Unstructured library
-    if is_partitioning:
-        chunk_pdf(
-            file_path=pdf_path / f'{filename}.pdf',
-            output_dir=output_path,
-            strategy=config.strategy
-        )
+        # Process partitions using the Unstructured library
+        if is_partitioning:
+            while True:
+                if load_checkpoint:
+                    try:
+                        with open(output_path / f'unstructured_partitions_{config.strategy}.json', 'r') as f:
+                            _ = json.load(f)
+                        print(f"Loaded existing partitions for {filename}, skipping partitioning step.")
 
-        print('Finished partitioning PDF')
+                        break
+                    except FileNotFoundError:
+                        print(f"No existing partitions found for {filename}, proceeding with partitioning.")
 
-    # Chunk partitions for vector storage
-    data = None
-    if is_chunking:
-        print('Starting post-processing and chunking of partitions')
-        with pymupdf.open(pdf_path / f'{filename}.pdf') as doc:
-            partitions = load_partitions(output_path / f'unstructured_partitions_{config.strategy}.json')
+                with Timer(exit_msg='Finished partitioning PDF'):
+                    chunk_pdf(
+                        file_path=file_path,
+                        output_dir=output_path,
+                        strategy=config.strategy
+                    )
 
-            # Crop partitions
-            crop = np.array(config.crop)
-            partitions = crop_partitions(partitions, doc, crop)
+                break
 
-            start_page = config.get('start_page', 1)
-            end_page = config.get('end_page', doc.page_count)
+        data = None
+        with pymupdf.open(file_path) as doc:
+            # Chunk partitions for vector storage
+            if is_chunking:
+                with Timer(
+                    'Starting post-processing and chunking of partitions',
+                    'Finished processing and chunking partitions'
+                ):
+                    partitions = load_partitions(output_path / f'unstructured_partitions_{config.strategy}.json')
 
-            data = process_partitions(partitions, doc, start_page, end_page)
+                    # Crop partitions
+                    crop = np.array(config.crop)
+                    partitions = crop_partitions(partitions, doc, crop)
 
-            # Save or process `data` as needed
-            with open(output_path / 'document_chunks.json', 'w', encoding='utf-8') as f:
-                json.dump(data, f, ensure_ascii=False, indent=4)
-            print(f"Created {len(data)} chunks from pages {start_page} to {end_page}.")
+                    start_page = config.get('start_page', 1)
+                    end_page = config.get('end_page', doc.page_count)
 
-        print('Finished processing and chunking partitions')
+                    data = process_partitions(partitions, doc, start_page, end_page)
 
-    # Fill vector store
-    if is_vector_storing:
-        print('Filling vector store with document chunks')
-        if not data:
-            with open(output_path / 'document_chunks.json', 'r', encoding='utf-8') as f:
-                data = json.load(f)
+                    # Save or process `data` as needed
+                    write_to_file(data, output_path / 'document_chunks.json')
+                    print(f"Created {len(data)} chunks from pages {start_page} to {end_page}.")
 
-        add_documents_to_vector_store(data, filename, config)
+            # Fill vector store
+            if is_vector_storing:
+                with Timer('Filling vector store with document chunks'):
+                    if not data:
+                        data: list[dict] = read_from_file(output_path / 'document_chunks.json')
 
-    print(f'Processing file {filename} successfully completed')
+                    if load_checkpoint:
+                        try:
+                            json_data = read_from_file(output_path / 'document_vectors.json')
+                            documents: list[Document] = [
+                                Document(
+                                    chunk['content'],
+                                    metadata=chunk['metadata']
+                                ) for chunk in json_data
+                            ]
+                        except FileNotFoundError:
+                            print(f"No existing document vectors found for {filename}, proceeding to create them.")
+                            documents: list[Document] = []
+                    else:
+                        documents: list[Document] = []
+
+                    # Prepare documents for loading into vector store
+                    documents.extend(prepare_documents(
+                        data, 
+                        doc, 
+                        start_index=len(documents)
+                    ))
+
+                    # Load documents into vector store
+                    add_documents_to_vector_store(
+                        documents,
+                        filename,
+                        config,
+                    )
+                    print(f"Added {len(documents)} documents to the vector store.")
+
+                    # Save document vectors to file as checkpoint
+                    output = [
+                        {'content': d.page_content, 'metadata': d.metadata}
+                        for d in documents
+                    ]
+                    write_to_file(output, output_path / 'document_vectors.json')
+
 
 if __name__ == "__main__":
     script_dir = Path(__file__).parent
@@ -76,8 +130,8 @@ if __name__ == "__main__":
     pdf_dir = Path(config.pdf_dir_path)
 
     parser = argparse.ArgumentParser(description="Process document partitions based on configuration.")
-    arg = parser.add_argument(
-        'filenames', type=str, nargs='*', help="List of filenames to process."
+    args = parser.add_argument(
+        'filenames', type=str, nargs='*', help="List of filenames to process. Can be partial names. Default: all PDFs in the specified directory."
     ).completer = FilesCompleter(allowednames=('.pdf',))
     parser.add_argument(
         '-p', action='store_true', help="Process all PDFs in the specified directory."
@@ -88,14 +142,28 @@ if __name__ == "__main__":
     parser.add_argument(
         '-d', action='store_true', help='Fill vector store'
     )
+    parser.add_argument(
+        '--input_dir', type=Path, default=None, help="Directory containing PDF files to process. If empty, uses the directory from the config file."
+    )
+    parser.add_argument(
+        '-cp', '--load_checkpoint', action='store_true', help="Load existing vector store checkpoint if available."
+    )
 
     argcomplete.autocomplete(parser)
     args = parser.parse_args()
+
+    input_dir = Path(args.input_dir) if args.input_dir else pdf_dir
+
+    files = set()
+    for filename in args.filenames:
+        files.update(input_dir.glob(f'*{filename}*.pdf'))
+
+    print(files)
 
     flag_enabled = not (args.p or args.c or args.d)
     is_partitioning = True if flag_enabled else args.p
     is_chunking = True if flag_enabled else args.c
     is_vector_storing = True if flag_enabled else args.d
 
-    for filename in args.filenames:
-        main(filename, is_partitioning, is_chunking, is_vector_storing)
+    for file_path in files:
+        main(file_path, is_partitioning, is_chunking, is_vector_storing, args.load_checkpoint)

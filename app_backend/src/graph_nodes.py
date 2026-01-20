@@ -123,18 +123,21 @@ def retrieve_documents(state: State):
     documents = retriever.invoke(question)
 
     for doc in documents:
-        print(doc, flush=True)
+        print(f'Document: {doc.metadata["document_name"]} ; Pages: {doc.metadata["page_indices"]}', flush=True)
 
     prompt = grade_prompt.format(
         question=question,
         documents=format_documents(documents)
     )
 
-    response = (
+    response: GradeResults = (
         check_model
         .with_structured_output(schema=GradeResults
         ).invoke([{'role': 'user', 'content': prompt}])
     )
+
+    for result in response:
+        print(f'Document: {result.document_name} ; Pages: {result.pages} ; Score: {result.score}', flush=True)
 
     pdf_data = create_pdfs_from_embeddings(response)
 

@@ -1,10 +1,3 @@
-
-import io
-from contextlib import redirect_stdout, redirect_stderr
-
-f = io.StringIO()
-
-# with redirect_stdout(f), redirect_stderr(f):
 import sqlite3
 import json
 from fastapi import FastAPI, Response, Depends, status, HTTPException
@@ -18,8 +11,7 @@ import logging
 import pymupdf
 from typing import Annotated
 
-from vectorDB import generate_response_from_prompt
-from pdf import dbx_handler, pdf, get_pdf_path
+from pdf import get_pdf_path
 from logger.logger import Logger
 from config.config import load_config, Config
 from database import new_response, new_citation
@@ -64,7 +56,7 @@ def setup_logger(user_id: str) -> None:
     user_loggers[user_id] = user_logger
 
 
-os.environ['PYTHONUNBUFFERED'] = '1'
+# os.environ['PYTHONUNBUFFERED'] = '1'
 
 app = FastAPI()
 
@@ -87,7 +79,6 @@ CONNECTION.row_factory = dict_factory
 CURSOR = CONNECTION.cursor()
 
 CONFIG: Config = load_config(DATA_PATH + 'config.yaml')
-# RETRIEVER, LLM_MODELS, RERANK_CHAIN = setup_RAG(CONFIG.rag_config)
 
 
 @app.post("/token")
@@ -97,11 +88,11 @@ async def login(
     return login_for_access_token(form_data)
 
 
-@app.get("/users/me/", response_model=UserInDB)
-async def read_users_me(
-    current_user: Annotated[UserInDB, Depends(get_current_user)],
-) -> UserInDB:
-    return current_user
+# @app.get("/users/me/", response_model=UserInDB)
+# async def read_users_me(
+#     current_user: Annotated[UserInDB, Depends(get_current_user)],
+# ) -> UserInDB:
+#     return current_user
 
 
 @app.get('/prompt')
@@ -117,66 +108,6 @@ def prompt(
         session_id
     )
     return StreamingResponse(response, media_type='text/event-stream')
-
-
-@app.get("/query")
-async def query(
-    user: Annotated[UserInDB, Depends(get_current_user)],
-    prompt: str, 
-    embed_depth: int = 0,
-    cache: bool = False,
-    model: str = 'o4-mini',
-    user_id: str = 'test_user',
-    session_id: str = 'test_session',
-    session_name: str = '',
-    entry_id: str = 'test_entry'
-):
-    if user_id not in user_loggers:
-        os.makedirs(f'logs/users/{user_id}', exist_ok=True)
-        setup_logger(user_id)
-
-    logger = Logger(
-        logger=user_loggers[user_id],
-        user_id=user_id, 
-        session_id=session_id, 
-        entry_id=entry_id
-    )
-    logger.log_info(f'Initiating query - Prompt: {prompt} - Model: {model} - Embed Depth: {embed_depth}')
-
-    if cache:
-        cached_result = query_cache(prompt, CONFIG.rag_config)
-        if cached_result is not None:
-            content, score = cached_result
-            return {
-                'event': 'cached_response',
-                'content': content,
-                'score': score
-            }
-
-    response = generate_response_from_prompt(
-        prompt,
-        model,
-        embed_depth,
-    )
-
-    new_response(
-        user_id=user_id,
-        session_id=session_id,
-        response_id=response.response_metadata.run_id,
-        session_name=session_name if session_name.strip() != '' else response.summary_title,
-        prompt=prompt,
-        response=response.content
-    )
-
-    for citation in response.citations:
-        new_citation(
-            response_id=response.response_metadata.run_id,
-            document_name=citation.document_name,
-            page_labels=';'.join(citation.page_labels),
-            pdf_pages=','.join(map(str, citation.pdf_page_numbers))
-        )
-
-    return response
 
 
 @app.get("/pdf")
@@ -274,13 +205,6 @@ def remove_session(
     except sqlite3.Error as e:
         return {"status": "error", "message": str(e)}
     
-
-@app.get("/")
-def root(
-    user: Annotated[UserInDB, Depends(get_current_user)]
-):
-    return {"status": "ok"}
-
 
 async def main():
     config = uvicorn.Config("main:app", port=8015, log_level="info", reload=True)

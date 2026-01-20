@@ -6,6 +6,7 @@ import json
 import yaml
 from typing import List
 from class_objects import DocumentPartition, PartitionConfig
+import time
 
 
 def load_config(config_path: Path|str) -> PartitionConfig:
@@ -44,6 +45,37 @@ def load_partitions(json_path: Path) -> list[DocumentPartition]:
     return partitions
 
 
+def write_to_file(data: list|dict, file_path: Path) -> None:
+    with open(file_path, 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii=False, indent=4)
+
+
+def read_from_file(file_path: Path) -> list|dict:
+    with open(file_path, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+    
+    return data
+
+
+class Timer:
+    def __init__(self, enter_msg: str = '', exit_msg: str = '') -> None:
+        self.enter_msg = enter_msg
+        self.exit_msg = exit_msg
+
+    def __enter__(self):
+        self.time = time.time()
+        print(self.enter_msg)
+
+        return self
+
+    def __exit__(self, exec_type, exec_val, exec_tb):
+        if self.exit_msg:
+            print(self.exit_msg, f'- Time elapsed: {(time.time() - self.time):.2f}s')
+        else:
+            print(f'Time elapsed {(time.time() - self.time):.2f}s')
+
+
+
 if __name__ == "__main__":
-    config = load_config(Path('../volumes/configs/partitionConfig.yaml'))
-    print(config)
+    with Timer('test', 'end'):
+        time.sleep(0.5)

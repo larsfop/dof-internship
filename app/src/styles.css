@@ -664,10 +664,7 @@ input[type="number"] {
   margin-inline: 12px;
   display: flex;
   flex-direction: column;
-
-  hr {
-    width: 100%;
-  }
+  gap: 24px;
 }
 
 .table-wrapper {

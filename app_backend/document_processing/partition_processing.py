@@ -6,6 +6,7 @@ import pymupdf
 import matplotlib.pyplot as plt
 from pathlib import Path
 import pymupdf
+from unidecode import unidecode
 
 from class_objects import DocumentPartition
 
@@ -163,9 +164,9 @@ def get_overlap_sentences(
     overlap_pages = []
     overlap_text = ''
     for chunk, page in zip(reversed(chunks), reversed(chunk_pages)):
-        for sentence in reversed(chunk.split('.')[:-1]):
+        for sentence in reversed(chunk.split('. ')):
             sentence_tokens += len(tokenizer.encode(sentence))
-            overlap_text = sentence + '.' + overlap_text
+            overlap_text = sentence + '. ' + overlap_text
             overlap_pages.append(page)
             if sentence_tokens > overlap_tokens:
                 return overlap_text, overlap_pages
@@ -241,7 +242,7 @@ def process_section(
         for chunk, page_indices in zip(chunks, list_page_indices):
             data.append({
                 'document_name': elements[0].metadata.filename,
-                'page_indices': page_indices,
+                'page_indices': list(map(lambda x: x - 1, page_indices)),
                 'page_labels': [extract_page_label(document[page - 1]) for page in page_indices],
                 'type': 'text',
                 'sections': sections,
@@ -275,7 +276,7 @@ def process_image(
     element = elements[index]
     data.append({
         'document_name': elements[0].metadata.filename,
-        'page_indices': [element.metadata.page_number],
+        'page_indices': [element.metadata.page_number - 1],
         'page_labels': [extract_page_label(document[element.metadata.page_number - 1])],
         'type': 'image',
         'sections': sections,
@@ -283,6 +284,8 @@ def process_image(
             coords[0].tolist(),
             element.get_rect()[1].tolist()
         ],
+        'height': element.metadata.coordinates.layout_height,
+        'width': element.metadata.coordinates.layout_width,
         'content': element.text.strip()
     })
     
@@ -292,6 +295,7 @@ def process_image(
 def process_formula(
     data: list[dict],
     index: int,
+    content_buffer: list[tuple[str, int]],
     elements: list[DocumentPartition],
     sections: list[str],
     document: pymupdf.Document
@@ -300,22 +304,34 @@ def process_formula(
     coords = element.get_rect()
     coords[0,1] -= 50
     coords[1,1] += 50
-    data.append({
-        'document_name': elements[0].metadata.filename,
-        'page_indices': [element.metadata.page_number],
-        'page_labels': [extract_page_label(document[element.metadata.page_number - 1])],
-        'type': 'formula',
-        'sections': sections,
-        'coordinates': coords.tolist(),
-        'content': element.text.strip()
-    })
+    
+    content = element.text.strip()
+    content = unidecode(content)
 
-    return data, index
+    if re.search(r'\(\d(\.\d+)*[a-z]?\)', content):
+        content = '$$' + content + '$$'
+    else:
+        content = '$' + content + '$'
+
+    content_buffer.append((content, element.metadata.page_number - 1))
+    
+    # data.append({
+    #     'document_name': elements[0].metadata.filename,
+    #     'page_indices': [element.metadata.page_number - 1],
+    #     'page_labels': [extract_page_label(document[element.metadata.page_number - 1])],
+    #     'type': 'formula',
+    #     'sections': sections,
+    #     'coordinates': coords.tolist(),
+    #     'content': element.text.strip()
+    # })
+
+    return data, index, content_buffer
 
 
 def process_figure(
     data: list[dict],
     index: int,
+    content_buffer: list[tuple[str, int]],
     elements: list[DocumentPartition],
     sections: list[str],
     document: pymupdf.Document,
@@ -338,9 +354,10 @@ def process_figure(
             )
             break
         elif formula_label is not None:
-            data, index = process_formula(
+            data, index, content_buffer = process_formula(
                 data,
                 index,
+                content_buffer,
                 elements,
                 sections,
                 document
@@ -349,7 +366,7 @@ def process_figure(
 
         index += 1
 
-    return data, index
+    return data, index, content_buffer
 
 
 def process_table(
@@ -372,7 +389,7 @@ def process_table(
     new_coords = element.get_rect()
     data.append({
         'document_name': elements[0].metadata.filename,
-        'page_indices': [element.metadata.page_number],
+        'page_indices': [element.metadata.page_number - 1],
         'page_labels': [extract_page_label(document[element.metadata.page_number - 1])],
         'type': 'table',
         'sections': sections,
@@ -380,6 +397,8 @@ def process_table(
             coords[0].tolist(),
             new_coords[1].tolist()
         ],
+        'height': element.metadata.coordinates.layout_height,
+        'width': element.metadata.coordinates.layout_width,
         'content': content
     })
 
@@ -412,9 +431,10 @@ def process_partitions(
 
             match chunk_type:
                 case 'Image' | 'Formula':
-                    data, index = process_figure(
+                    data, index, content_buffer = process_figure(
                         data,
                         index,
+                        content_buffer,
                         elements,
                         sections,
                         document
@@ -436,9 +456,10 @@ def process_partitions(
                         document
                     )
                 case 'formula':
-                    data, index = process_formula(
+                    data, index, content_buffer = process_formula(
                         data,
                         index,
+                        content_buffer,
                         elements,
                         sections,
                         document
@@ -462,7 +483,7 @@ def process_partitions(
     # Save remaining text buffer
     data.append({
         'document_name': partitions[0].metadata.filename,
-        'page_indices': list(range(page_start, page + 1)),
+        'page_indices': list(range(page_start - 1, page)),
         'page_labels': [extract_page_label(document[page - 1]) for page in range(page_start, page + 1)],
         'type': 'text',
         'sections': sections,

@@ -203,7 +203,7 @@ class GradeResults(BaseModel):
     
 
     def filter_by_score(self, threshold: float) -> Self:
-        filtered_docs = [doc for doc in self.documents if doc.score > threshold]
+        filtered_docs = [doc for doc in self.documents if doc.score >= threshold]
         return GradeResults(documents=filtered_docs)
     
 
