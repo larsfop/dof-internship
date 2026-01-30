@@ -12,7 +12,7 @@ export async function loadHistory() {
     const data = await response.json();
     console.log(data);
     for (const session of data) {
-        addHistoryEntry(session.sessionID, session.name);
+        addHistoryEntry(session.sessionid, session.name);
     }
 }
 
@@ -70,15 +70,16 @@ async function onClickHandler(sessionID, sessionName) {
 
 async function removeHistoryEntry(sessionID) {
     const entryDiv = document.getElementById(`history:${sessionID}`);
+    console.log('Removing session:', sessionID);
     if (entryDiv) {
         entryDiv.remove();
 
         await fetch(`http://192.168.0.71:8015/remove_session?session_id=${sessionID}`, {
-            method: 'DELETE',
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`
-            }
+            },
         });
     }
 }

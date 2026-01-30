@@ -342,9 +342,19 @@ async function chatResponse(content, contentBlock, message) {
             modelCreated = true;
             console.log('Received data chunk:', data);
             msgDiv.innerHTML = data.response.answer;
+
+            handleCitations(data, msgDiv);
+            handleSessionNaming(data, content);
         }
     }
 
+    console.log('Final data received:', data);
+
+    // Update chat history UI
+    addHistoryEntry(sessionID, sessionName);
+}
+
+function handleCitations(data, msgDiv) {
     // Handle citations
     for (const citations of data.response.citations) {
         const cite = newHTMLElement('cite', msgDiv, {
@@ -356,7 +366,10 @@ async function chatResponse(content, contentBlock, message) {
             }
         });
     }
+}
 
+
+function handleSessionNaming(data, content) {
     // Handle session naming
     if (!content.dataset.name) {
         sessionName = data.response.summary_title;
@@ -365,9 +378,6 @@ async function chatResponse(content, contentBlock, message) {
         tab.dataset.name = sessionName;
         tab.firstChild.textContent = sessionName;
     }
-
-    // Update chat history UI
-    addHistoryEntry(sessionID, sessionName);
 }
 
 

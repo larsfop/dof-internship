@@ -6,6 +6,7 @@ from langchain_postgres import PGVector
 from langchain_core.runnables.config import RunnableConfig
 from langchain_core.messages import HumanMessage, AIMessage, trim_messages
 from langgraph.store.memory import BaseStore
+from langgraph.types import Command
 from langmem import create_search_memory_tool, create_manage_memory_tool
 from langmem.short_term import SummarizationNode
 
@@ -16,15 +17,17 @@ from pydantic_classes import CheckResponse, State, GradeResults, DocumentPDF, Re
 from pdf import create_pdfs_from_embeddings
 from config.config import load_config, Config, RAGConfig
 
-DATA_PATH = os.environ['DATA_PATH']
+# DATA_PATH = os.environ['DATA_PATH']
+DATA_PATH = '../volumes/data/'
 CONFIG: Config = load_config(DATA_PATH + 'config.yaml')
 CONFIG_RAG: RAGConfig = CONFIG.rag_config
 
 # Setup RAG vector database
-db_uri = 'postgresql+psycopg://{user}:{password}@postgres:5432/postgres?sslmode=disable'.format(
-    user=os.environ['POSTGRES_USER'],
-    password=os.environ['POSTGRES_PASSWORD'],
-)
+# db_uri = 'postgresql+psycopg://{user}:{password}@postgres:5432/postgres?sslmode=disable'.format(
+#     user=os.environ['POSTGRES_USER'],
+#     password=os.environ['POSTGRES_PASSWORD'],
+# )
+db_uri = 'postgresql://postgres:admin125@localhost:5435/postgres?sslmode=disable'
 embeddings = OpenAIEmbeddings(model='text-embedding-3-large')
 vector_store = PGVector(
     embeddings=embeddings,
@@ -54,13 +57,6 @@ check_model = ChatOpenAI(
 )
 
 # Setup memory tools and nodes
-search_tool = create_search_memory_tool(
-    namespace=('memories', '(user_id)')
-)
-
-memory_tool = create_manage_memory_tool(
-    namespace=('memories', '(user_id)')
-)
 
 summary_node = SummarizationNode(
     token_counter=model.get_num_tokens_from_messages,
@@ -79,7 +75,7 @@ check_prompt = (
 )
 
 
-def generate_response_or_retrieve_documents(state: State) -> Literal['summary', 'retrieve_documents']:
+def generate_response_or_retrieve_documents(state: State) -> Command[Literal['generate_answer', 'retrieve_documents']]:
     """Determine whether to generate an answer or retrieve documents based on the prompt."""
 
     question = state['messages'][-1].content
@@ -91,10 +87,10 @@ def generate_response_or_retrieve_documents(state: State) -> Literal['summary', 
     
     if response.retrieve_documents == 'yes':
         print("Retrieving documents for the user query.", flush=True)
-        return 'retrieve_documents'
+        return Command(goto='retrieve_documents')
     else:
         print("Generating answer without document retrieval.", flush=True)
-        return 'summary'
+        return Command(goto='generate_answer')
     
 
 def format_documents(documents: List[Document]) -> List[Dict[str, str]]:

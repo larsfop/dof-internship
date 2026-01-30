@@ -4,29 +4,27 @@ services:
     ports:
       - "5435:5432"
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: admin125
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: app_backend
     volumes:
       - pg-data:/var/lib/postgresql
     restart: always
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
       interval: 30s
       timeout: 20s
       retries: 3
 
   backend:
     build: .
-    container_name: app-backend
+    container_name: backend
     volumes:
-      - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/data:/app/data
+      - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/data:/data
     ports:
       - "8015:8015"
     environment:
-      - DATA_PATH=../app/data/
-      - DROPBOX_API_KEY=${DROPBOX_API_KEY}
-      - DROPBOX_REFRESH_TOKEN=${DROPBOX_REFRESH_TOKEN}
+      - DATA_PATH=../data/
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
@@ -58,7 +56,5 @@ networks:
     driver: bridge
 
 volumes:
-  caddy_data:
-  caddy_config:
   pg-data:
   pgadmin-data:

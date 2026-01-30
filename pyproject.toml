@@ -39,6 +39,7 @@ dependencies = [
     "pypdf",
     "jsonb",
     "tqdm",
+    "gptcache",
 ]
 
 [project.optional-dependencies]

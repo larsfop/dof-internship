@@ -1,21 +1,17 @@
 from langgraph.graph import StateGraph, START, END
 from langgraph.graph.state import CompiledStateGraph
 from langgraph.checkpoint.postgres import PostgresSaver  
-from langgraph.store.postgres import PostgresStore
 import os
 import orjson
-from dataclasses import asdict
 
 from pydantic_classes import State, ResponseMetadata, ResponseOutput
 from graph_nodes import generate_response_or_retrieve_documents, retrieve_documents, generate_answer, summary_node
 from database import new_response, new_citation
 
 def setup_graph(
-    checkpointer: PostgresSaver,
-    store: PostgresStore
+    checkpointer: PostgresSaver
 ) -> CompiledStateGraph:
     checkpointer.setup()
-    store.setup()
 
     builder = StateGraph(State)
     builder.add_node(retrieve_documents)
@@ -26,13 +22,12 @@ def setup_graph(
         START,
         generate_response_or_retrieve_documents
     )
-    builder.add_edge('retrieve_documents', 'summary')
-    builder.add_edge('summary', 'generate_answer')
-    builder.add_edge('generate_answer', END)
+    builder.add_edge('retrieve_documents', 'generate_answer')
+    builder.add_edge('generate_answer', 'summary')
+    builder.add_edge('summary', END)
 
     graph = builder.compile(
         checkpointer=checkpointer,
-        store=store
     )
 
     return graph
@@ -47,27 +42,18 @@ def generate_response(
         user=os.environ['POSTGRES_USER'],
         password=os.environ['POSTGRES_PASSWORD'],
     )
+    # db_uri = 'postgresql://postgres:admin125@localhost:5435/postgres?sslmode=disable'
     callback = ResponseMetadata()
-    with (
-        PostgresSaver.from_conn_string(db_uri) as checkpointer,
-        PostgresStore.from_conn_string(
-            db_uri,
-            index={
-                'dims': 1536,
-                'embed': 'openai:text-embedding-3-small'
-            }
-        ) as store
-    ):
+    print("Starting graph execution...", flush=True)
+    with PostgresSaver.from_conn_string(db_uri) as checkpointer:
         config = {
             'configurable': {
-                'user_id': user_id,
                 'thread_id': session_id
             }
         }
 
         graph = setup_graph(
-            checkpointer,
-            store
+            checkpointer
         )
         graph = graph.with_config(
             {'callbacks': [callback]}
@@ -82,7 +68,7 @@ def generate_response(
             },
             config
         ):
-            # print('\n\n', chunk, '\n\n', flush=True)
+            print('\n\n', chunk, '\n\n', flush=True)
             for node, content in chunk.items():
                 if node == 'summary':
                     yield orjson.dumps({

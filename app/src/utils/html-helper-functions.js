@@ -80,7 +80,6 @@ export function getOtherElementByID(element) {
 export function documentBodyClickHandler(e) {
     const target = e.target;
     const chatMenus = document.querySelectorAll('.chat-menu-container');
-    console.log(target);
     if (target.classList.contains('chat-settings')) return;
 
     for (const menu of chatMenus) {
