@@ -14,7 +14,6 @@ from pathlib import Path
 
 from pdf import get_pdf_path
 from logger.logger import setup_logger
-from config.config import load_config, Config
 from database import delete_session, get_sessions, get_chat, setup_databases
 from user_authentication import login_for_access_token, get_current_user, create_new_user
 from pydantic_classes import Token, UserInDB
@@ -47,7 +46,7 @@ async def prompt(
     user_id: str = 'test_user',
     session_id: str = 'test_session',
 ):
-    response = await generate_response(
+    response = generate_response(
         prompt,
         user_id,
         session_id

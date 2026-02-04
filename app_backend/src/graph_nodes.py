@@ -16,18 +16,19 @@ import psycopg
 from pydantic_classes import CheckResponse, State, GradeResults, DocumentPDF, ResponseMetadata, ResponseOutput
 from pdf import create_pdfs_from_embeddings
 from config.config import load_config, Config, RAGConfig
+from database import fetch_from_semantic_cache
 
-# DATA_PATH = os.environ['DATA_PATH']
-DATA_PATH = '../volumes/data/'
+DATA_PATH = os.environ['DATA_PATH']
+# DATA_PATH = '../volumes/data/'
 CONFIG: Config = load_config(DATA_PATH + 'config.yaml')
 CONFIG_RAG: RAGConfig = CONFIG.rag_config
 
 # Setup RAG vector database
-# db_uri = 'postgresql+psycopg://{user}:{password}@postgres:5432/postgres?sslmode=disable'.format(
-#     user=os.environ['POSTGRES_USER'],
-#     password=os.environ['POSTGRES_PASSWORD'],
-# )
-db_uri = 'postgresql://postgres:admin125@localhost:5435/postgres?sslmode=disable'
+db_uri = 'postgresql+psycopg://{user}:{password}@postgres:5432/postgres?sslmode=disable'.format(
+    user=os.environ['POSTGRES_USER'],
+    password=os.environ['POSTGRES_PASSWORD'],
+)
+# db_uri = 'postgresql+psycopg://postgres:admin125@localhost:5435/postgres?sslmode=disable'
 embeddings = OpenAIEmbeddings(model='text-embedding-3-large')
 vector_store = PGVector(
     embeddings=embeddings,
@@ -65,6 +66,26 @@ summary_node = SummarizationNode(
     max_tokens_before_summary=128,
     max_summary_tokens=512,
 )
+
+def cache_node(state: State) -> Command[Literal['summary', 'use_rag']]:
+    state['cache'] = None
+    prompt = state['messages'][-1].content
+
+    # Check semantic cache for similar prompt
+    data = fetch_from_semantic_cache(prompt)
+    print(data, flush=True)
+
+    if data is None or data['similarity_score'] < 0.8:
+        return Command(goto='use_rag')
+    
+    return Command(
+        update={
+            'messages': data['response'],
+            'cache': data
+        },
+        goto='summary'
+    )
+
 
 check_prompt = (
     'You are an expert at determining whether a user query requires retrieving documents.\n'
@@ -215,5 +236,5 @@ def generate_answer(
             document_name=pdf.name
         )
 
-    return {'messages': [response.answer], 'parsed': response, 'documents': []}
+    return {'messages': [response.response], 'parsed': response, 'documents': []}
 

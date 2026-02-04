@@ -5,8 +5,8 @@ import os
 import orjson
 
 from pydantic_classes import State, ResponseMetadata, ResponseOutput
-from graph_nodes import generate_response_or_retrieve_documents, retrieve_documents, generate_answer, summary_node
-from database import new_response, new_citation
+from graph_nodes import cache_node, generate_response_or_retrieve_documents, retrieve_documents, generate_answer, summary_node
+from database import new_response, new_citation, new_semantic_cache_embedding
 
 def setup_graph(
     checkpointer: PostgresSaver
@@ -14,14 +14,13 @@ def setup_graph(
     checkpointer.setup()
 
     builder = StateGraph(State)
+    builder.add_node('semantic_cache', cache_node)
+    builder.add_node('use_rag', generate_response_or_retrieve_documents)
     builder.add_node(retrieve_documents)
     builder.add_node(generate_answer)
     builder.add_node('summary', summary_node)
 
-    builder.add_conditional_edges(
-        START,
-        generate_response_or_retrieve_documents
-    )
+    builder.add_edge(START, 'semantic_cache')
     builder.add_edge('retrieve_documents', 'generate_answer')
     builder.add_edge('generate_answer', 'summary')
     builder.add_edge('summary', END)
@@ -68,37 +67,70 @@ def generate_response(
             },
             config
         ):
-            print('\n\n', chunk, '\n\n', flush=True)
             for node, content in chunk.items():
-                if node == 'summary':
+                if node == 'semantic_cache':
+                    if content is None:
+                        print("No cache hit.", flush=True)
+                        continue
+
+                    data = content['cache']
+                    print("Cache hit found. Score: ", data['similarity_score'], flush=True)
+                    yield orjson.dumps({
+                        'node': node,
+                        'content': data
+                    })
+
+                elif node == 'summary':
                     yield orjson.dumps({
                         'node': node,
                     })
+
                 elif node == 'generate_answer':
                     response: ResponseOutput = content['parsed']
                     yield orjson.dumps({
                         'node': node,
-                        'response': response.model_dump(),
+                        'content': response.model_dump(),
                         'metadata': callback.as_dict()
                     })
+
+                    insert_into_database(
+                        prompt,
+                        user_id,
+                        session_id,
+                        response,
+                        callback
+                    )
 
         print("Graph execution completed.", flush=True)
         print("Token usage:", callback.token_usage, flush=True)
 
-        # Store response and citations in the database
-        new_response(
-            user_id=user_id,
-            session_id=session_id,
+
+def insert_into_database(
+    prompt: str,
+    user_id: str,
+    session_id: str,
+    response: ResponseOutput,
+    callback: ResponseMetadata
+):
+    # Store response and citations in the database
+    new_response(
+        user_id=user_id,
+        session_id=session_id,
+        response_id=str(callback.run_id),
+        session_name=response.summary_title,
+        prompt=prompt,
+        response=response.response
+    )
+
+    for citation in response.citations:
+        new_citation(
             response_id=str(callback.run_id),
-            session_name=response.summary_title,
-            prompt=prompt,
-            response=response.answer
+            document_name=citation.document_name,
+            page_labels=';'.join(map(str, citation.page_labels)),
+            pdf_pages=';'.join(map(str, citation.pdf_page_indices))
         )
 
-        for citation in response.citations:
-            new_citation(
-                response_id=str(callback.run_id),
-                document_name=citation.document_name,
-                page_labels=';'.join(map(str, citation.page_labels)),
-                pdf_pages=','.join(map(str, citation.pdf_page_indices))
-            )
+    new_semantic_cache_embedding(
+        prompt, 
+        response
+    )

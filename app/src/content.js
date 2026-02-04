@@ -338,10 +338,17 @@ async function chatResponse(content, contentBlock, message) {
         const event = decoder.decode(value, { stream: true });
 
         data = JSON.parse(event);
-        if (data.node === 'generate_answer') {
+        if (data.node === 'semantic_cache') {
             modelCreated = true;
             console.log('Received data chunk:', data);
-            msgDiv.innerHTML = data.response.answer;
+            msgDiv.innerHTML = data.content.response;
+
+            handleCitations(data, msgDiv);
+            handleSessionNaming(data, content);
+        } else if (data.node === 'generate_answer') {
+            modelCreated = true;
+            console.log('Received data chunk:', data);
+            msgDiv.innerHTML = data.content.response;
 
             handleCitations(data, msgDiv);
             handleSessionNaming(data, content);
@@ -356,7 +363,7 @@ async function chatResponse(content, contentBlock, message) {
 
 function handleCitations(data, msgDiv) {
     // Handle citations
-    for (const citations of data.response.citations) {
+    for (const citations of data.content.citations) {
         const cite = newHTMLElement('cite', msgDiv, {
             innerText: `${citations.document_name} - Page(s): ${citations.page_labels.join(', ')}`,
             onclick: function(e) {
@@ -372,7 +379,7 @@ function handleCitations(data, msgDiv) {
 function handleSessionNaming(data, content) {
     // Handle session naming
     if (!content.dataset.name) {
-        sessionName = data.response.summary_title;
+        const sessionName = data.content.summary_title;
         content.dataset.name = sessionName;
         const tab = getOtherElementByID(content);
         tab.dataset.name = sessionName;

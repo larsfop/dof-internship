@@ -4,25 +4,12 @@ from psycopg.rows import dict_row, RowMaker
 import json
 import os
 from datetime import datetime
-from uuid import UUID
+from uuid import uuid4, UUID
 from typing import Any, Sequence
 import logging
+from langchain_openai.embeddings import OpenAIEmbeddings
 
-from pydantic_classes import UserInDB
-
-def dict_factory(cursor: Cursor, row):
-    fields = [column[0] for column in cursor.description]
-    return {key: value for key, value in zip(fields, row)}
-
-
-def dict_factory(cursor: Cursor[Any]) -> RowMaker[dict[str, Any]]:
-    fields = [c.name for c in cursor.description]
-
-    def make_row(values: Sequence[Any]) -> dict[str, Any]:
-        return dict(zip(fields, values))
-
-    return make_row
-
+from pydantic_classes import UserInDB, ResponseOutput
 
 # db_uri = 'postgresql://postgres:admin125@localhost:5435/postgres?sslmode=disable'
 db_uri = 'postgresql://{user}:{password}@postgres:5432/postgres?sslmode=disable'.format(
@@ -31,11 +18,13 @@ db_uri = 'postgresql://{user}:{password}@postgres:5432/postgres?sslmode=disable'
 )
 CONNECTION = psycopg.connect(db_uri, row_factory=dict_row)
 CURSOR = CONNECTION.cursor()
+embed_model = OpenAIEmbeddings(model='text-embedding-3-small')
 
 logger = logging.getLogger('main')
 
 def setup_databases() -> None:
     try:
+        # Prepare chat history tables and indexes
         CURSOR.execute("""
             CREATE TABLE IF NOT EXISTS users (
                 userID UUID PRIMARY KEY,
@@ -48,8 +37,8 @@ def setup_databases() -> None:
                 sessionID UUID PRIMARY KEY,
                 userID UUID REFERENCES users(userID),
                 name TEXT NOT NULL,
-                createdAt TIMESTAMP NOT NULL,
-                updatedAt TIMESTAMP NOT NULL
+                createdAt TIMESTAMP DEFAULT now(),
+                updatedAt TIMESTAMP DEFAULT now()
             );
         """)
         CURSOR.execute("""
@@ -58,16 +47,50 @@ def setup_databases() -> None:
                 sessionID UUID REFERENCES sessions(sessionID),
                 prompt TEXT NOT NULL,
                 response TEXT NOT NULL,
-                timestamp TIMESTAMP NOT NULL
+                timestamp TIMESTAMP DEFAULT now()
             );
         """)
         CURSOR.execute("""
             CREATE TABLE IF NOT EXISTS citations (
+                id BIGSERIAL PRIMARY KEY,
                 responseID UUID REFERENCES responses(responseID),
                 documentName TEXT NOT NULL,
                 pageLabels TEXT NOT NULL,
                 pdfPages TEXT NOT NULL
             );
+        """)
+        CURSOR.execute("""
+            CREATE INDEX IF NOT EXISTS idx_sessions_userID ON sessions(userID);
+            CREATE INDEX IF NOT EXISTS idx_responses_sessionID ON responses(sessionID);
+            CREATE INDEX IF NOT EXISTS idx_citations_responseID ON citations(responseID);
+            """)
+        
+        # Prepare semantic cache table and index
+        CURSOR.execute("""
+            CREATE TABLE IF NOT EXISTS semantic_cache (
+                id UUID PRIMARY KEY,
+                prompt TEXT NOT NULL,
+                response TEXT NOT NULL,
+                summary_title TEXT NOT NULL,
+                embedding VECTOR(1536) NOT NULL,
+                timestamp TIMESTAMP DEFAULT now()
+            );
+        """)
+        CURSOR.execute("""
+            CREATE TABLE IF NOT EXISTS cache_citations (
+                id BIGSERIAL PRIMARY KEY,
+                cacheID UUID REFERENCES semantic_cache(id) NOT NULL,
+                documentName TEXT NOT NULL,
+                pageLabels TEXT NOT NULL,
+                pdfPages TEXT NOT NULL
+            );
+        """)
+        CURSOR.execute("""
+            CREATE INDEX IF NOT EXISTS idx_semantic_cache_embedding 
+            ON semantic_cache 
+            USING ivfflat (embedding vector_cosine_ops) 
+            WITH (lists = 100);
+            CREATE INDEX IF NOT EXISTS idx_cache_citations_cacheID ON cache_citations(cacheID);
         """)
         CONNECTION.commit()
     except psycopg.Error:
@@ -112,7 +135,7 @@ def delete_session(session_id: str) -> None:
                 DELETE FROM citations c USING responses r
                 WHERE c.responseID = r.responseID AND r.sessionID = %s
             """, 
-            (session_id,)
+            (session_id, )
         )
         CURSOR.execute("DELETE FROM responses WHERE sessionID = %s", (session_id,))
         CURSOR.execute("DELETE FROM sessions WHERE sessionID = %s", (session_id,))
@@ -210,3 +233,75 @@ def get_chat(session_id: str) -> list[dict]:
         return responses
     except psycopg.Error:
         logger.exception("Error fetching chat")
+
+
+def new_semantic_cache_embedding(prompt: str, response: ResponseOutput) -> None:
+    uuid_str = str(uuid4())
+    prompt = prompt.lower()
+    embeddings = embed_model.embed_query(prompt)
+    try:
+        CURSOR.execute(
+            (
+                "INSERT INTO semantic_cache "
+                "(id, prompt, response, summary_title, embedding) "
+                "VALUES (%s, %s, %s, %s, %s)"
+            ),
+            (uuid_str, prompt, response.response, response.summary_title, embeddings)
+        )
+        
+        for citation in response.citations:
+            CURSOR.execute(
+                (
+                    "INSERT INTO cache_citations "
+                    "(cacheID, documentName, pageLabels, pdfPages) "
+                    "VALUES (%s, %s, %s, %s)"
+                ),
+                (
+                    uuid_str,
+                    citation.document_name,
+                    ';'.join(map(str, citation.page_labels)),
+                    ';'.join(map(str, citation.pdf_page_indices))
+                )
+            )
+
+        CONNECTION.commit()
+        logger.info(f"Semantic cache entry added successfully.")
+    except psycopg.Error:
+        CONNECTION.rollback()
+        logger.exception(f"Error adding semantic cache entry")
+
+
+def fetch_from_semantic_cache(prompt: str) -> dict|None:
+    embeddings = embed_model.embed_query(prompt.lower())
+    try:
+        data = CURSOR.execute(
+            """
+                SELECT s.response, s.summary_title,
+                1 - (s.embedding <-> %s::vector) AS similarity_score,
+                COALESCE(
+                    json_agg(
+                        json_build_object(
+                            'document_name', c.documentName,
+                            'page_labels', c.pageLabels,
+                            'pdf_page_indices', c.pdfPages
+                        )
+                    ) FILTER (WHERE c.cacheID IS NOT NULL), '[]'
+                ) as citations
+                FROM semantic_cache s
+                LEFT JOIN cache_citations c
+                    ON c.cacheID = s.id
+                GROUP BY s.id
+                ORDER BY similarity_score DESC
+                LIMIT 1
+            """,
+            (embeddings, )
+        ).fetchone()
+
+        for citation in data['citations']:
+            citation['page_labels'] = citation['page_labels'].split(';')
+            citation['pdf_page_indices'] = list(map(int, citation['pdf_page_indices'].split(';')))
+
+        return data
+    except psycopg.Error:
+        CONNECTION.rollback()
+        logger.exception("Error fetching from semantic cache")
