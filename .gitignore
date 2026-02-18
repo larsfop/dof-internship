@@ -15,4 +15,4 @@ __pycache__
 volumes
 
 !app_backend/src/partition/*json
-!app_backend/requirement.txt
+!app_backend/requirements.txt

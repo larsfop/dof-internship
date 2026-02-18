@@ -1,0 +1,25 @@
+numpy
+pymupdf == 1.26.5
+openai
+langchain[openai,milvus]
+langchain-core
+langchain-openai
+langchain-milvus
+langchain-postgres
+langgraph
+langgraph-checkpoint-postgres
+langmem
+pymilvus
+psycopg[binary]
+tiktoken
+fastapi
+uvicorn[standard]
+gunicorn
+unstructured[pdf]
+dropbox
+dotenv
+pillow
+pwdlib[argon2]
+pyjwt
+uuid
+pydantic
