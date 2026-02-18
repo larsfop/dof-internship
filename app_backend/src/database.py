@@ -126,6 +126,20 @@ def new_session(session_id: str, user_id: str, name: str, date_time: str|None = 
         logger.info(f"Session \'{name}\' with ID \'{session_id}\' added successfully.")
     except psycopg.Error:
         logger.exception(f"Error adding session \'{name}\' with ID \'{session_id}\'")
+        CONNECTION.rollback()
+
+
+def update_session_name(session_id: str, new_name: str) -> None:
+    try:
+        CURSOR.execute(
+            "UPDATE sessions SET name = %s WHERE sessionID = %s",
+            (new_name, session_id)
+        )
+        CONNECTION.commit()
+        logger.info(f"Session with ID \'{session_id}\' renamed to \'{new_name}\' successfully.")
+    except psycopg.Error:
+        logger.exception(f"Error renaming session with ID \'{session_id}\' to \'{new_name}\'")
+        CONNECTION.rollback()
 
 
 def delete_session(session_id: str) -> None:
@@ -173,6 +187,7 @@ def new_response(user_id: str, session_id: str, response_id: str, session_name: 
         logger.info(f"Response with ID \'{response_id}\' added successfully.")
     except psycopg.Error:
         logger.exception(f"Error adding response with ID \'{response_id}\'")
+        CONNECTION.rollback()
 
 
 def new_citation(response_id: str, document_name: str, page_labels: str, pdf_pages: str) -> None:
@@ -185,6 +200,7 @@ def new_citation(response_id: str, document_name: str, page_labels: str, pdf_pag
         logger.info(f"Citation for response ID \'{response_id}\' added successfully.")
     except psycopg.Error:
         logger.exception(f"Citation for response ID \'{response_id}\' already exists.")
+        CONNECTION.rollback()
 
 
 def fetch_user(username: str) -> UserInDB|None:
@@ -201,6 +217,7 @@ def fetch_user(username: str) -> UserInDB|None:
             )
     except psycopg.Error:
         logger.exception("Error fetching user")
+        CONNECTION.rollback()
         return None
 
 
@@ -233,7 +250,7 @@ def get_chat(session_id: str) -> list[dict]:
         return responses
     except psycopg.Error:
         logger.exception("Error fetching chat")
-
+        CONNECTION.rollback()
 
 def new_semantic_cache_embedding(prompt: str, response: ResponseOutput) -> None:
     uuid_str = str(uuid4())

@@ -2,12 +2,6 @@ import { displayPDF } from "./event-handlers.js";
 import { newHTMLElement, toggleHidden, scrollInputHandler, getOtherElementByID } from "./utils/html-helper-functions.js";
 import { addHistoryEntry } from "./history/history.js";
 
-const documentReferences = {
-    'EN1992': 'ns-en-1992-1-1_2004+a1_2014+na_2024_en_002.pdf',
-    'EN1995': 'ns-en-1995-1-1_2004+a2_2014+na_2024_en_001.pdf'
-}
-
-
 /**
  * Sets up the content area based on the specified type.
  * @param {HTMLElement} parentDiv - The parent div to contain the content.
@@ -416,20 +410,5 @@ function chatHistoryNavigation(e, content) {
         setTimeout(() => chatInput.setSelectionRange(chatInput.value.length, chatInput.value.length), 0);
     } else {
         content.dataset.historyIndex = -1;
-    }
-}
-
-
-function onReferenceClick(ref, pageCorrections) {
-    const str = ref.textContent;
-    const name = str.match(/EN.\d+/g)[0].replace(' ', '');
-    const pageLabel = str.match(/page*.\d+/g)[0].match(/\d+/g)[0];
-
-    const document = documentReferences[name];
-    const page = pageCorrections[document][pageLabel];
-
-    ref.onclick = async (e) => {
-        e.stopPropagation();
-        await displayPDF(document, page, ref);
     }
 }

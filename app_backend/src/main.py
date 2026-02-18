@@ -14,7 +14,7 @@ from pathlib import Path
 
 from pdf import get_pdf_path
 from logger.logger import setup_logger
-from database import delete_session, get_sessions, get_chat, setup_databases
+from database import delete_session, get_sessions, get_chat, setup_databases, update_session_name
 from user_authentication import login_for_access_token, get_current_user, create_new_user
 from pydantic_classes import Token, UserInDB
 from response_generation import generate_response
@@ -100,7 +100,17 @@ async def app_remove_session(
     session_id: str,
 ):
     return delete_session(session_id)
-    
+
+
+@app.post('/update_session_name')
+def app_update_session_name(
+    user: Annotated[UserInDB, Depends(get_current_user)],
+    session_id: str,
+    new_name: str
+):
+    update_session_name(session_id, new_name)
+    return {"message": f"Session with ID '{session_id}' renamed to '{new_name}' successfully."}
+
 
 async def main():
     config = uvicorn.Config("main:app", port=8015, log_level="info", reload=True)

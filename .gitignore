@@ -1,6 +1,7 @@
 app/node_modules
 app/*.yml
 app/out
+test
 
 mysql_connection.json
 *.txt

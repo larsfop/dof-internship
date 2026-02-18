@@ -1,12 +1,4 @@
-import { app, BrowserWindow, ipcMain, nativeTheme, Menu, session} from 'electron';
-import { fileURLToPath } from 'node:url';
-import path from 'node:path';
-import fs from 'node:fs';
-import { Client } from 'ssh2';
-import net from 'net';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import { app, BrowserWindow, ipcMain, nativeTheme, Menu } from 'electron';
 
 let mainWindow;
 const createWindow = () => {
@@ -14,7 +6,6 @@ const createWindow = () => {
         width: 1920,
         height: 1080,
         webPreferences: {
-            preload: path.join(__dirname, 'preload.js'),
             nodeIntegration: false, // Security: do not enable Node.js integration
             contextIsolation: true, // Security: enable context isolation
             enableRemoteModule: false // Security: do not enable remote module
@@ -36,8 +27,6 @@ const createWindow = () => {
         nativeTheme.themeSource = 'system';
     });
 };
-
-
 
 app.disableHardwareAcceleration();
 app.whenReady().then(() => {
@@ -102,51 +91,4 @@ app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         app.quit();
     }
-});
-
-ipcMain.handle('app:quit', () => {
-    app.quit();
-});
-
-// SSH connection
-const LOCALPORT = 8015;
-const REMOTE_PORT = 8015;
-const REMOTE_HOST = '192.168.0.71';
-
-async function setupSSH(username, password) {
-    const sshConfig = {
-        host: REMOTE_HOST,
-        port: 22,
-        username: username,
-        password: password
-    }
-
-    const conn = new Client();
-    conn.on('ready', () => {
-        console.log('SSH Connection established.');
-        net.createServer((socket) => {
-            conn.forwardOut(
-                socket.remoteAddress || '192.168.0.71',
-                socket.remotePort || 0,
-                REMOTE_HOST,
-                REMOTE_PORT,
-                (err, stream) => {
-                    if (err) {
-                        console.error('ForwardOut error:', err);
-                        socket.end();
-                        return;
-                    }
-                 
-                    socket.pipe(stream).pipe(socket);
-                }
-            );
-        }).listen(LOCALPORT, () => {
-            console.log(`Local server listening on port ${LOCALPORT}`);
-        });
-    }).connect(sshConfig);
-
-}
-
-ipcMain.handle('ssh:connect', (event, username, password) => {
-    setupSSH(username, password);
 });

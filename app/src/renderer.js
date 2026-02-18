@@ -1,10 +1,8 @@
-import { setupStatusBarMenu } from './status-bar.js';
 import { loadHistory } from './history/history.js';
 import { createPanel } from './panel.js';
 import { newTab, loadLastTab } from './tab.js';
-import { newHTMLElement, toggleHidden, documentBodyClickHandler } from './utils/html-helper-functions.js';
+import { toggleHidden, documentBodyClickHandler } from './utils/html-helper-functions.js';
 import { dragEndHandler, dragEnterHandler } from './event-handlers.js';
-// import * as Split from '../node_modules/split-grid/dist/split-grid.js';
 
 
 // Chatbox and tabs logic for renderer process

@@ -45,6 +45,7 @@ export function toggleHidden(element, force = null, className = 'hidden') {
     } else {
         element.removeAttribute('inert');
     }
+    console.log(element, force);
 }
 
 /** Set the last active panel element. 
@@ -96,6 +97,20 @@ export function documentBodyClickHandler(e) {
         }
     }
 
+    const historyMenus = document.querySelectorAll('.history-entry-container-menu');
+    for (const menu of historyMenus) {
+        if (menu.contains(target)) continue;
+        const children = Array.from(menu.children);
+        for (const child of children) {
+            const rect = child.getBoundingClientRect();
+            if (e.clientX >= rect.left && e.clientX <= rect.right &&
+                e.clientY >= rect.top && e.clientY <= rect.bottom) {
+                return; // Click inside the menu, do nothing
+            }
+        }
+        toggleHidden(menu, true);
+    }
+
     const activePanel = target.closest('.panel-container');
     if (activePanel) {
         setLastActive(activePanel);
@@ -121,92 +136,3 @@ export function scrollInputHandler(e, scrollElement) {
     return value;
 }
 
-
-export function splitPanel(panelDiv, direction) {
-    const panel1 = createPanel(panelDiv, false); // Create new empty panel
-    const panel2 = createPanel(panelDiv, true); // Create new filled panel
-
-    const split = window.Split({
-        minSize: 240,
-        snapOffset: 0,
-        onDragStart: function(direction, track) {
-            console.log(this)
-            this.element.classList.add('dragging');
-        },
-        onDragEnd: function(direction, track) {
-            this.element.classList.remove('dragging');
-        }
-    })
-    if (direction === 'right' || direction === 'left') {
-        panelDiv.classList.add('split-row'); // Add a class for styling
-        // Split the panel horizontally
-        if (direction === 'right') {
-            panelDiv.appendChild(panel1); // Move the current panel to the new panel
-            panelDiv.appendChild(panel2); // Append the new panel UI
-        } else if (direction === 'left') {
-            panelDiv.appendChild(panel2); // Move the current panel to the new panel
-            panelDiv.appendChild(panel1); // Append the new panel UI
-        }
-
-        const gutter = newHTMLElement('div', null, 
-            { className: 'gutter gutter-col' },
-            { 'grid-column': '2' }
-        )
-        panelDiv.insertBefore(gutter, panelDiv.lastChild);
-        split.addColumnGutter(gutter, 1);
-
-    } else if (direction === 'bottom' || direction === 'top') {
-        // Split the panel vertically
-        panelDiv.classList.add('split-column'); // Add a class for styling
-        if (direction === 'bottom') {
-            panelDiv.appendChild(panel1); // Move the current panel to the new panel
-            panelDiv.appendChild(panel2); // Append the new panel UI
-        } else if (direction === 'top') {
-            panelDiv.appendChild(panel2); // Move the current panel to the new panel
-            panelDiv.appendChild(panel1); // Append the new panel UI
-        }
-
-        const gutter = newHTMLElement('div', null, 
-            { className: 'gutter gutter-row' },
-            { 'grid-row': '2' }
-        )
-        panelDiv.insertBefore(gutter, panelDiv.lastChild);
-        split.addRowGutter(gutter, 1);
-
-    } else {
-        throw new Error('Invalid direction for splitting panel');
-    }
-
-    return { panel1, panel2 };
-}
-
-
-export function removePanel(panelDiv) {
-    const parentDiv = panelDiv.parentElement;
-    if (!parentDiv) return;
-
-    if (parentDiv.classList.contains('layout-container')) {
-        // If the panel is the only one in the layout, remove it
-        parentDiv.removeChild(panelDiv);
-    }
-    else if (parentDiv.classList.contains('split-row') || parentDiv.classList.contains('split-column')) {
-        // Remove splitter
-        if (parentDiv.firstChild === panelDiv) {
-            parentDiv.removeChild(panelDiv.nextSibling);
-        } else {
-            parentDiv.removeChild(panelDiv.previousSibling);
-        }
-
-        panelDiv.remove(); // Remove the panel
-    }
-
-    if (parentDiv.children.length === 1) {
-        // If one panel remains, move the panel up one level
-        const child = parentDiv.firstChild; // Get the first child of the parent
-        const parentParent = parentDiv.parentNode; // Get the parent of the parent
-
-        parentParent.insertBefore(child, parentDiv); // Move the child up one level
-
-        parentDiv.remove(); // Remove the empty parent container
-    }
-}

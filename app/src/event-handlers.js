@@ -1,5 +1,6 @@
 import { newTab, changeTab } from "./tab.js";
-import { splitPanel, getOtherElementByID } from "./utils/html-helper-functions.js";
+import { getOtherElementByID } from "./utils/html-helper-functions.js";
+import { splitPanel } from "./panel.js";
 
 // --------------------------------------------------------------------------------------
 //                      Content event handler functions

@@ -1,6 +1,7 @@
 import { setupContent } from "./content.js";
 import { cleanPanels } from "./panel.js";
-import { newHTMLElement, splitPanel, toggleHidden, getOtherElementByID } from "./utils/html-helper-functions.js";
+import { newHTMLElement, toggleHidden, getOtherElementByID } from "./utils/html-helper-functions.js";
+import { splitPanel } from "./panel.js";
 
 export function newTab(
     panelDiv, 
@@ -65,7 +66,7 @@ export function changeTab(tabDiv) {
         toggleHidden(activeTab.lastChild, true); // Hide close button of inactive tab
     }
     toggleActive(tabDiv, true); // Activate the clicked tab
-    toggleHidden(tabDiv.lastChild, false); // Show close button of active tab
+    toggleHidden(tabDiv.lastElementChild, false); // Show close button of active tab
 }
 
 
