@@ -4,7 +4,6 @@ openai
 langchain[openai,milvus]
 langchain-core
 langchain-openai
-langchain-milvus
 langchain-postgres
 langgraph
 langgraph-checkpoint-postgres
@@ -16,7 +15,6 @@ fastapi
 uvicorn[standard]
 gunicorn
 unstructured[pdf]
-dropbox
 dotenv
 pillow
 pwdlib[argon2]
