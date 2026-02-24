@@ -1,0 +1,245 @@
+#sidebar {
+  background: var(--bg-dark);
+  border-right: 1px solid var(--border);
+  width: 46px;
+  transition: 200ms ease;
+  overflow: hidden;
+  padding-top: 8px;
+  padding-inline: 6px;
+  grid-area: nav;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  row-gap: 12px;
+  text-wrap: nowrap;
+  white-space: nowrap;
+  
+  &.expanded {
+    width: 260px;
+    
+    #account {
+      opacity: 1;
+    }
+  }
+
+  > div:first-child {
+    display: grid;
+    grid-template-columns: 0 auto;
+    height: 34px;
+  }
+}
+
+
+#account {
+  transition: 200ms ease;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: red;
+  opacity: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 0.1em;
+  font-size: 18pt;
+  text-transform: uppercase;
+}
+
+#expand-sidebar-button {
+  background: var(--bg-light);
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  cursor: pointer;
+  justify-self: end;
+  transition: 400ms ease;
+
+  &:hover {
+    background: var(--highlight);
+  }
+
+  & > span {
+    display: inline-block;
+    vertical-align: middle;
+    padding-bottom: 0.1em;
+    font-size: 16pt;
+  }
+}
+
+#sidebar.expanded > div:first-child > #expand-sidebar-button {
+  transform: rotate(180deg);
+}
+
+@property --scrollbar-transition {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: rgba(0, 0, 0, 0);
+}
+
+#chat-history {
+  height: 38px;
+  transition: 0.2s ease;
+  overflow: hidden;
+  opacity: 1;
+  white-space: nowrap;
+  list-style: none;
+  transition: 
+    --scrollbar-transition 800ms ease,
+    opacity 200ms ease;
+
+  &.hidden {
+    opacity: 0;
+  }
+
+  &.open {
+    overflow-y: auto;
+    height: auto;
+  }
+
+  > li {
+    height: 38px;
+  }
+
+  &:hover {
+    --scrollbar-transition: #ccc;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-transition);
+  }
+}
+
+#chat-history-summary {
+  display: block;
+  height: 38px;
+  width: -webkit-fill-available;
+  border: 0px solid;
+  border-radius: 12px;
+  padding: 6px 10px;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--highlight);
+  }
+
+  &:before {
+    content: '▲';
+    margin-right: 0.5em;
+    display: inline-block;
+    transition: 300ms ease;
+  }
+
+  &.rotate:before {
+    transform: rotate(180deg);
+  }
+}
+
+.history-entry-container {
+  anchor-name: --history-entry-container-menu;
+  height: 38px;
+  display: grid;
+  grid-template-areas: "stack";
+  align-items: center;
+}
+
+.history-entry-container:hover > * {
+  opacity: 1;
+}
+
+.history-entry {
+  grid-area: stack;
+  padding-block: 8px;
+  padding-inline: 6px;
+  border-width: 0px;
+  border-style: solid;
+  border-radius: 12px;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 1em;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.history-entry:hover {
+  background: var(--highlight);
+}
+
+.history-entry-container-menu-button {
+  grid-area: stack;
+  justify-self: end;
+  
+  height: 30px;
+  width: 30px;
+  border: 0px solid var(--border);
+  border-radius: 12px;
+
+  background: radial-gradient(var(--highlight), 80%, transparent);
+  opacity: 0;
+
+  font-size: 1.25em;
+  cursor: pointer;
+  text-align: center;
+}
+
+.history-entry-container-menu-button:hover {
+  background: var(--highlight);
+}
+
+.history-entry-container-menu {
+  background: var(--bg-light);
+  position: absolute;
+  left: 16em;
+  width: fit-content;
+  height: fit-content;
+  border: none;
+  border-radius: 12px;
+  padding: 6px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  box-shadow: 0px 0px 8px #151515;
+  z-index: 10;
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+
+.history-entry-container-menu.hidden {
+  opacity: 0;
+}
+
+.history-entry-delete-button {
+  grid-area: stack;
+  justify-self: end;
+  width: 30px;
+  height: 30px;
+  background: radial-gradient(var(--highlight), 80%, transparent);
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 12px;
+  opacity: 0;
+}
+
+.history-entry-delete-button:hover {
+  background: var(--highlight);
+}
+
+.history-entry-container-menu-option {
+  width: -webkit-fill-available;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  cursor: pointer;
+  background: transparent;
+}
+
+.history-entry-container-menu-option:hover {
+  background: var(--highlight);
+}

@@ -1,0 +1,144 @@
+:root {
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-dark: oklch(0.12 0 20);
+    --bg: oklch(0.18 0 20);
+    --bg-light: oklch(0.26 0 20);
+    --text: oklch(0.96 0 20);
+    --text-muted: oklch(0.76 0 20);
+    --highlight: oklch(0.5 0 20);
+    --border: oklch(0.4 0 20);
+    --border-muted: oklch(0.3 0 20);
+    --danger: oklch(0.7 0.05 30);
+    --warning: oklch(0.7 0.05 100);
+    --success: oklch(0.7 0.05 160);
+    --info: oklch(0.7 0.05 260);
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg-dark: oklch(0.92 0 20);
+    --bg: oklch(0.96 0 20);
+    --bg-light: oklch(1 0 20);
+    --text: oklch(0.15 0 20);
+    --text-muted: oklch(0.4 0 20);
+    --highlight: oklch(1 0 20);
+    --border: oklch(0.6 0 20);
+    --border-muted: oklch(0.7 0 20);
+    --danger: oklch(0.5 0.05 30);
+    --warning: oklch(0.5 0.05 100);
+    --success: oklch(0.5 0.05 160);
+    --info: oklch(0.5 0.05 260);
+  }
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+p::first-letter {
+  text-transform: capitalize;
+}
+
+pre {
+  white-space: pre-wrap;
+}
+
+::-webkit-scrollbar {
+  height: 0px;
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 8px;
+}
+
+html {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 12pt;
+  color: var(--text);
+  background: var(--bg);
+}
+
+body {
+  overflow: hidden;
+  min-height: 100vh;
+}
+
+
+/* ------------------------------------------------------------------------------
+                                  Signup/Login styles
+   ------------------------------------------------------------------------------ */
+
+.create-user {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  position: absolute;
+  width: 100vw;
+
+  &.hidden {
+    display: none;
+  }
+}
+
+#signup-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg-light);
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0px 0px 8px #151515;
+  z-index: 20;
+}
+
+.background-blur {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: var(--bg-dark);
+  opacity: 0.6;
+  backdrop-filter: blur(8px);
+  z-index: 15;
+}
+
+/* ------------------------------------------------------------------------------
+                                  Tooltip styles
+   ------------------------------------------------------------------------------ */
+   
+[data-tooltip] {
+  position: relative;
+}
+
+[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: 110%;
+  left: 4%;
+  background: var(--bg-light);
+  color: var(--text);
+  padding: 4px 8px;
+  border-radius: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 11;
+}
+
+[data-tooltip]:hover::after {
+  opacity: 1;
+}

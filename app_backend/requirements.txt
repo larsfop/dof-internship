@@ -14,8 +14,9 @@ tiktoken
 fastapi
 uvicorn[standard]
 gunicorn
+python-multipart
 unstructured[pdf]
-dotenv
+python-dotenv
 pillow
 pwdlib[argon2]
 pyjwt

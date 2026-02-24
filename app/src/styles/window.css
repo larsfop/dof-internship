@@ -1,0 +1,135 @@
+#main {
+  overflow: hidden;
+}
+
+#splitter {
+  position: relative;
+  opacity: 0;
+  background: var(--highlight);
+  transition: opacity 1.2s ease;
+  z-index: 10;
+}
+
+#splitter:hover, #splitter.dragging {
+  opacity: 1;
+}
+
+.splitter-vertical {
+  width: 8px;
+  cursor: ew-resize;
+  flex-shrink: 0;
+}
+
+.gutter {
+  background: var(--highlight);
+  transition: opacity 1.2s ease;
+  opacity: 0;
+}
+
+.gutter-col {
+  grid-row: 1 / -1;
+  cursor: col-resize;
+}
+
+.gutter-row {
+  grid-column: 1 / -1;
+  cursor: row-resize;
+}
+
+.gutter:hover, .gutter.dragging {
+  opacity: 1;
+}
+
+.splitter-horizontal {
+  height: 8px;
+  cursor: ns-resize;
+  flex-shrink: 0;
+}
+
+#layout {
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas: 
+    "nav main"
+}
+
+.panel-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  min-width: 20%;  
+  min-height: 20%; 
+  box-sizing: border-box;
+}
+
+.panel-container.split-row {
+  display: grid;
+  grid-template-columns: 1fr 8px 1fr;
+  grid-template-rows: 1fr;
+}
+
+.panel-container.split-column {
+  display: grid;
+  grid-template-rows: 1fr 8px 1fr;
+  grid-template-columns: 1fr;
+}
+
+.window-container {
+  overflow: hidden;
+  background: var(--bg);
+  overflow: hidden;
+  width: 100%;
+  flex: 1;
+  display: grid;
+  grid-template-areas: "stack";
+}
+
+
+.window-highlight {
+  grid-area: stack;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: 1fr 2fr 1fr;
+}
+
+.window-highlight.highlight-display {
+  border: 2px dashed rgb(193, 193, 193);
+}
+
+.window-highlight.highlight-top {
+  grid-column: 1 / -1;
+  grid-row: 1 / 2;
+  pointer-events: none;
+}
+
+.window-highlight.highlight-bottom {
+  grid-column: 1 / -1;
+  grid-row: -1 / -2;
+  pointer-events: none;
+}
+
+
+.window-highlight.highlight-left {
+  grid-column: 1 / 2;
+  grid-row: 1 / -1;
+  pointer-events: none;
+}
+
+.window-highlight.highlight-right {
+  grid-column: -1 / -2;
+  grid-row: 1 / -1;
+  pointer-events: none;
+}
+
+.window-highlight.highlight-center {
+  grid-column: 2 / -2;
+  grid-row: 2 / -2;
+  pointer-events: none;
+}
