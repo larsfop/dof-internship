@@ -747,6 +747,15 @@ input[type="number"] {
   gap: 24px;
 }
 
+.output-message > pre {
+  background: var(--bg-light);
+  padding: 12px;
+  border-radius: 12px;
+  overflow-x: auto;
+  white-space: pre;
+  margin-block: 0.75em;
+}
+
 .table-wrapper {
   overflow-x: auto;
   overflow-y: hidden; /* Prevents vertical scrollbar */
@@ -886,74 +895,4 @@ caption {
 .tab.dragging {
   opacity: 0.5;
   cursor: grabbing;
-}
-
-
-/* ------------------------------------------------------------------------------
-                                  Status bar styles
-   ------------------------------------------------------------------------------ */
-
-.status-bar {
-  background: var(--bg-dark);
-  width: 100%;
-  min-height: 24px;
-  box-sizing: border-box;
-  border-top: 1px solid var(--border);
-  grid-area: status-bar;
-}
-
-.ssh-status {
-  width: fit-content;
-  padding: 2px 4px;
-  cursor: pointer;
-}
-
-.ssh-status.connected {
-  background: var(--success);
-}
-.ssh-status.disconnected {
-  background: var(--danger);
-}
-.ssh-status.connecting {
-  background: var(--warning);
-}
-
-.ssh-menu {
-  --width: 140px;
-  --height: 145px;
-  background: var(--bg-light);
-  width: var(--width);
-  height: var(--height);
-  position: absolute;
-  bottom: calc(90vh - var(--height)/2);
-  left: calc(50vw - var(--width)/2);
-  border: none;
-  border-radius: 12px;
-  padding-inline: 12px;
-  box-shadow: 0px 0px 8px #151515;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  z-index: 10;
-  opacity: 1;
-  transition: opacity 0.2s ease;
-}
-.ssh-menu.hidden {
-  opacity: 0;
-}
-
-.ssh-connect {
-  text-align: center;
-}
-
-.ssh-username-input {
-  width: -webkit-fill-available;
-}
-.ssh-password-input {
-  width: -webkit-fill-available;
-}
-
-.ssh-submit {
-  align-self: center;
 }

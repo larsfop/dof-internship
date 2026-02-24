@@ -20,7 +20,7 @@ services:
     build: .
     container_name: backend
     volumes:
-      - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/data:/data
+      - backend-data:/data
     ports:
       - "8015:8015"
     environment:
@@ -50,11 +50,25 @@ services:
       - pgadmin-data:/var/lib/pgadmin
 
 networks:
-  default:
-    name: milvus
   postgres:
     driver: bridge
 
 volumes:
   pg-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${VOLUME_PATH}/pg-data
+      o: bind
   pgadmin-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${VOLUME_PATH}/pgadmin-data
+      o: bind
+  backend-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${VOLUME_PATH}/backend-data
+      o: bind

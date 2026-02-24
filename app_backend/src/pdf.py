@@ -1,5 +1,3 @@
-from dropbox import Dropbox
-from dropbox.files import FileMetadata
 import base64
 import os
 import pymupdf
