@@ -89,11 +89,21 @@ cite {
 .chat-send {
   border: none;
   height: 32px;
+  width: 32px;
   padding-inline: 8px;
   border-radius: 8px;
   font-size: 16px;
   cursor: pointer;
   background-color: transparent;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  > img {
+    height: 24px;
+    filter: invert(100%);
+  }
 }
 
 .chat-send:hover {
@@ -212,6 +222,34 @@ input[type="number"] {
   overflow-x: auto;
   white-space: pre;
   margin-block: 0.75em;
+  position: relative;
+}
+
+.copy-code-button {
+    width: 2em;
+    height: 2em;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+        background: var(--highlight); 
+    }
+
+    > img {
+        width: 75%;
+        height: 75%;
+        filter: var(--filter);
+    }
 }
 
 .table-wrapper {

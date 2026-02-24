@@ -16,14 +16,15 @@
     --warning: oklch(0.7 0.05 100);
     --success: oklch(0.7 0.05 160);
     --info: oklch(0.7 0.05 260);
+    --filter : invert(100%);
   }
 }
 
 @media (prefers-color-scheme: light) {
   :root {
-    --bg-dark: oklch(0.92 0 20);
-    --bg: oklch(0.96 0 20);
-    --bg-light: oklch(1 0 20);
+    --bg-dark: oklch(0.96 0 20);
+    --bg: oklch(0.92 0 20);
+    --bg-light: oklch(0.88 0 20);
     --text: oklch(0.15 0 20);
     --text-muted: oklch(0.4 0 20);
     --highlight: oklch(1 0 20);
@@ -33,6 +34,7 @@
     --warning: oklch(0.5 0.05 100);
     --success: oklch(0.5 0.05 160);
     --info: oklch(0.5 0.05 260);
+    --filter : invert(0%);
   }
 }
 

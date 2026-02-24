@@ -102,6 +102,8 @@ function loadHistory(chatMessages, history) {
             });
             i++;
         }
+
+        handleCodeBlocks(outputDiv);
     }
 }
 
@@ -118,7 +120,7 @@ function setupChatbot(content, history) {
         className: 'chat'
     });
     
-    const chatMenuContainer = newHTMLElement('div', content, {
+    const chatMenuContainer = newHTMLElement('div', null, {
         className: 'chat-menu-container',
     });
 
@@ -129,7 +131,7 @@ function setupChatbot(content, history) {
         transform: 'translate(24px, -146px)'
     });
 
-    const settingsButton = newHTMLElement('button', chat, {
+    const settingsButton = newHTMLElement('button', null, {
         className: 'chat-settings',
         innerText: '+',
         onclick: function() {
@@ -154,7 +156,6 @@ function setupChatbot(content, history) {
 
     const chatSend = newHTMLElement('button', chat, {
         className: 'chat-send',
-        innerText: 'Send',
         onclick: function() {
             const msg = chatInput.value.trim();
             chatInput.value = '';
@@ -162,6 +163,10 @@ function setupChatbot(content, history) {
                 userInput(content, msg);
             }
         }
+    });
+    newHTMLElement('img', chatSend, {
+        src: 'assets/send-message.svg',
+        alt: 'Send'
     });
 
     const embedDepthInput = newHTMLElement('input', null, {
@@ -346,6 +351,7 @@ async function chatResponse(content, contentBlock, message) {
 
             handleCitations(data, msgDiv);
             handleSessionNaming(data, content);
+            handleCodeBlocks(msgDiv);
         }
     }
 
@@ -356,7 +362,6 @@ async function chatResponse(content, contentBlock, message) {
 }
 
 function handleCitations(data, msgDiv) {
-    // Handle citations
     for (const citations of data.content.citations) {
         const cite = newHTMLElement('cite', msgDiv, {
             innerText: `${citations.document_name} - Page(s): ${citations.page_labels.join(', ')}`,
@@ -369,6 +374,27 @@ function handleCitations(data, msgDiv) {
     }
 }
 
+
+function handleCodeBlocks(msgDiv) {
+    const codeBlocks = msgDiv.querySelectorAll('pre');
+    for (const block of codeBlocks) {
+        const copy = newHTMLElement('button', block, {
+            className: 'copy-code-button',
+            onclick: function() {
+                navigator.clipboard.writeText(block.innerText);
+                const img = copy.querySelector('img');
+                img.src = 'assets/checkmark.svg';
+                setTimeout(() => {
+                    img.src = 'assets/copy.svg';
+                }, 2000);
+            }
+        });
+        newHTMLElement('img', copy, {
+            src: 'assets/copy.svg',
+            alt: 'Copy'
+        });
+    }
+}
 
 function handleSessionNaming(data, content) {
     // Handle session naming

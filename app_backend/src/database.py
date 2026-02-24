@@ -24,6 +24,9 @@ logger = logging.getLogger('main')
 
 def setup_databases() -> None:
     try:
+        # Prepare vector extension
+        CURSOR.execute("CREATE EXTENSION IF NOT EXISTS vector;")
+
         # Prepare chat history tables and indexes
         CURSOR.execute("""
             CREATE TABLE IF NOT EXISTS users (

@@ -10,7 +10,7 @@ export async function loadHistory() {
         }
     });
     const data = await response.json();
-    console.log(data);
+
     for (const session of data) {
         addHistoryEntry(session.sessionid, session.name);
     }
@@ -114,7 +114,7 @@ export function addHistoryEntry(sessionID, sessionName) {
     }
 
     const historyDiv = document.getElementById('chat-history');
-    historyDiv.insertBefore(entryContainer, historyDiv.children[1]);
+    historyDiv.appendChild(entryContainer);
 }
 
 
