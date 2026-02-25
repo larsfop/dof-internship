@@ -14,13 +14,12 @@ from pathlib import Path
 
 from pdf import get_pdf_path
 from logger.logger import setup_logger
-from database import delete_session, get_sessions, get_chat, setup_databases, update_session_name
+from database import delete_session, get_sessions, get_chat, update_session_name
 from user_authentication import login_for_access_token, get_current_user, create_new_user
 from pydantic_classes import Token, UserInDB
 from response_generation import generate_response
 
 setup_logger(Path(os.environ['DATA_PATH']) / 'configs/logger_config.toml')
-setup_databases()
 
 app = FastAPI()
 

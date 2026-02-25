@@ -1,4 +1,5 @@
 import logging
+import logging.config
 import tomllib
 import atexit
 from pathlib import Path

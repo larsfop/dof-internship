@@ -22,85 +22,6 @@ embed_model = OpenAIEmbeddings(model='text-embedding-3-small')
 
 logger = logging.getLogger('main')
 
-def setup_databases() -> None:
-    try:
-        # Prepare vector extension
-        CURSOR.execute("CREATE EXTENSION IF NOT EXISTS vector;")
-
-        # Prepare chat history tables and indexes
-        CURSOR.execute("""
-            CREATE TABLE IF NOT EXISTS users (
-                userID UUID PRIMARY KEY,
-                username TEXT NOT NULL,
-                hashedPassword TEXT NOT NULL
-            );
-        """)
-        CURSOR.execute("""
-            CREATE TABLE IF NOT EXISTS sessions (
-                sessionID UUID PRIMARY KEY,
-                userID UUID REFERENCES users(userID),
-                name TEXT NOT NULL,
-                createdAt TIMESTAMP DEFAULT now(),
-                updatedAt TIMESTAMP DEFAULT now()
-            );
-        """)
-        CURSOR.execute("""
-            CREATE TABLE IF NOT EXISTS responses (
-                responseID UUID PRIMARY KEY,
-                sessionID UUID REFERENCES sessions(sessionID),
-                prompt TEXT NOT NULL,
-                response TEXT NOT NULL,
-                timestamp TIMESTAMP DEFAULT now()
-            );
-        """)
-        CURSOR.execute("""
-            CREATE TABLE IF NOT EXISTS citations (
-                id BIGSERIAL PRIMARY KEY,
-                responseID UUID REFERENCES responses(responseID),
-                documentName TEXT NOT NULL,
-                pageLabels TEXT NOT NULL,
-                pdfPages TEXT NOT NULL
-            );
-        """)
-        CURSOR.execute("""
-            CREATE INDEX IF NOT EXISTS idx_sessions_userID ON sessions(userID);
-            CREATE INDEX IF NOT EXISTS idx_responses_sessionID ON responses(sessionID);
-            CREATE INDEX IF NOT EXISTS idx_citations_responseID ON citations(responseID);
-            """)
-        
-        # Prepare semantic cache table and index
-        CURSOR.execute("""
-            CREATE TABLE IF NOT EXISTS semantic_cache (
-                id UUID PRIMARY KEY,
-                prompt TEXT NOT NULL,
-                response TEXT NOT NULL,
-                summary_title TEXT NOT NULL,
-                embedding VECTOR(1536) NOT NULL,
-                timestamp TIMESTAMP DEFAULT now()
-            );
-        """)
-        CURSOR.execute("""
-            CREATE TABLE IF NOT EXISTS cache_citations (
-                id BIGSERIAL PRIMARY KEY,
-                cacheID UUID REFERENCES semantic_cache(id) NOT NULL,
-                documentName TEXT NOT NULL,
-                pageLabels TEXT NOT NULL,
-                pdfPages TEXT NOT NULL
-            );
-        """)
-        CURSOR.execute("""
-            CREATE INDEX IF NOT EXISTS idx_semantic_cache_embedding 
-            ON semantic_cache 
-            USING ivfflat (embedding vector_cosine_ops) 
-            WITH (lists = 100);
-            CREATE INDEX IF NOT EXISTS idx_cache_citations_cacheID ON cache_citations(cacheID);
-        """)
-        CONNECTION.commit()
-    except psycopg.Error:
-        logger.exception(f"Error setting up databases")
-        CONNECTION.rollback()
-
-
 def create_user(userID: str|UUID, username: str, hashed_password: str):
     try:
         CURSOR.execute(
@@ -234,9 +155,9 @@ def get_chat(session_id: str) -> list[dict]:
                 COALESCE(
                     json_agg(
                         json_build_object(
-                            'documentName', c.documentName,
-                            'pageLabels', c.pageLabels,
-                            'pdfPages', c.pdfPages
+                            'document_name', c.documentName,
+                            'page_labels', c.pageLabels,
+                            'pdf_page_indices', c.pdfPages
                         )
                     ) FILTER (WHERE c.responseID IS NOT NULL), '[]'
                 ) as citations
@@ -249,6 +170,12 @@ def get_chat(session_id: str) -> list[dict]:
             """,
             (session_id,)
         ).fetchall()
+
+        for response in responses:
+            for citation in response['citations']:
+                if (citation):
+                    citation['page_labels'] = list(map(str, citation['page_labels'].split(';')))
+                    citation['pdf_page_indices'] = list(map(int, citation['pdf_page_indices'].split(';')))
 
         return responses
     except psycopg.Error:

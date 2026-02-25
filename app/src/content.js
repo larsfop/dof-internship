@@ -72,11 +72,7 @@ function loadHistory(chatMessages, history) {
             className: 'content-block'
         });
 
-        // Display input message
-        newHTMLElement('p', contentBlock, {
-            className: 'input-message',
-            innerHTML: prompt
-        });
+        displayInput(contentBlock, prompt);
 
         // Display output message
         const outputDiv = newHTMLElement('div', contentBlock, {
@@ -84,24 +80,24 @@ function loadHistory(chatMessages, history) {
             innerHTML: response
         });
 
-        // Handle citations
-        let i = 0;
-        console.log('Citations:', citations);
-        for (const citation of citations) {
-            if (i > 0) {
-                newHTMLElement('br', outputDiv);
-            }
-            const pdf_pages = citation.pdfPages.split(';').map(num => parseInt(num));
-            const cite = newHTMLElement('cite', outputDiv, {
-                innerText: `${citation.documentName} - Page(s): ${citation.pageLabels}`,
-                onclick: function(e) {
-                    e.stopPropagation();
-                    console.log('Citation', citation)
-                    displayPDF(citation.documentName, pdf_pages[0], cite);
-                }
-            });
-            i++;
-        }
+        handleCitations(citations, outputDiv);
+        // let i = 0;
+        // console.log('Citations:', citations);
+        // for (const citation of citations) {
+        //     if (i > 0) {
+        //         newHTMLElement('br', outputDiv);
+        //     }
+        //     const pdf_pages = citation.pdfPages.split(';').map(num => parseInt(num));
+        //     const cite = newHTMLElement('cite', outputDiv, {
+        //         innerText: `${citation.documentName} - Page(s): ${citation.pageLabels}`,
+        //         onclick: function(e) {
+        //             e.stopPropagation();
+        //             console.log('Citation', citation)
+        //             displayPDF(citation.documentName, pdf_pages[0], cite);
+        //         }
+        //     });
+        //     i++;
+        // }
 
         handleCodeBlocks(outputDiv);
     }
@@ -120,33 +116,33 @@ function setupChatbot(content, history) {
         className: 'chat'
     });
     
-    const chatMenuContainer = newHTMLElement('div', null, {
-        className: 'chat-menu-container',
-    });
+    // const chatMenuContainer = newHTMLElement('div', chat, {
+    //     className: 'chat-menu-container',
+    // });
 
-    const chatSettings = newHTMLElement('div', chatMenuContainer, {
-        className: 'chat-menu hidden',
-        inert: true
-    }, {
-        transform: 'translate(24px, -146px)'
-    });
+    // const chatSettings = newHTMLElement('div', chatMenuContainer, {
+    //     className: 'chat-menu hidden',
+    //     inert: true
+    // }, {
+    //     transform: 'translate(24px, -146px)'
+    // });
 
-    const settingsButton = newHTMLElement('button', null, {
-        className: 'chat-settings',
-        innerText: '+',
-        onclick: function() {
-            const chatMenus = Array.from(document.getElementsByClassName('chat-menu-container'));
-            console.log(chatMenus);
-            for (const menu of chatMenus) {
-                const children = menu.children;
-                for (const child of children) {
-                    console.log(child);
-                    toggleHidden(child, true);
-                }
-            }
-            toggleHidden(chatSettings, false);
-        }
-    });
+    // const settingsButton = newHTMLElement('button', chat, {
+    //     className: 'chat-settings',
+    //     innerText: '+',
+    //     onclick: function() {
+    //         const chatMenus = Array.from(document.getElementsByClassName('chat-menu-container'));
+    //         console.log(chatMenus);
+    //         for (const menu of chatMenus) {
+    //             const children = menu.children;
+    //             for (const child of children) {
+    //                 console.log(child);
+    //                 toggleHidden(child, true);
+    //             }
+    //         }
+    //         toggleHidden(chatSettings, false);
+    //     }
+    // });
 
     const chatInput = newHTMLElement('input', chat, {
         className: 'chat-input',
@@ -169,25 +165,25 @@ function setupChatbot(content, history) {
         alt: 'Send'
     });
 
-    const embedDepthInput = newHTMLElement('input', null, {
-        type: 'number',
-        min: '0',
-        value: parseInt(content.dataset.embedDepth),
-        onchange: function(e) {
-            content.dataset.embedDepth = parseInt(e.target.value);
-        }
-    });
-    embedDepthInput.addEventListener('wheel', function(e) {
-        const newValue = scrollInputHandler(e, this);
-        content.dataset.embedDepth = newValue;
-    });
-    embedDepthInput.addEventListener('input', function(e) {
-        content.dataset.embedDepth = Number(this.value);
-    });
-    addChatMenuItem(chatSettings, chatMenuContainer, 'Embed Depth:', 166, -146, [embedDepthInput]);
+    // const embedDepthInput = newHTMLElement('input', null, {
+    //     type: 'number',
+    //     min: '0',
+    //     value: parseInt(content.dataset.embedDepth),
+    //     onchange: function(e) {
+    //         content.dataset.embedDepth = parseInt(e.target.value);
+    //     }
+    // });
+    // embedDepthInput.addEventListener('wheel', function(e) {
+    //     const newValue = scrollInputHandler(e, this);
+    //     content.dataset.embedDepth = newValue;
+    // });
+    // embedDepthInput.addEventListener('input', function(e) {
+    //     content.dataset.embedDepth = Number(this.value);
+    // });
+    // addChatMenuItem(chatSettings, chatMenuContainer, 'Embed Depth:', 166, -146, [embedDepthInput]);
 
-    const aiModelItems = createAIModelItems(content);
-    addChatMenuItem(chatSettings, chatMenuContainer, 'AI Model:', 166, -214, aiModelItems);
+    // const aiModelItems = createAIModelItems(content);
+    // addChatMenuItem(chatSettings, chatMenuContainer, 'AI Model:', 166, -214, aiModelItems);
 
     chatInput.addEventListener('keydown', function(e) {
         if (e.key === 'Enter') {
@@ -202,69 +198,69 @@ function setupChatbot(content, history) {
 }
 
 
-function createAIModelItems(content) {
-    const models = ['o4-mini', 'gpt-4.1', 'gpt-5', 'gpt-5-mini']
-    const items = [];
-    for (const model of models) {
-        const div = newHTMLElement('div', null, {
-            className: 'ai-model-item'
-        });
-        const modelItem = newHTMLElement('input', div, {
-            type: 'radio',
-            name: 'ai-model',
-            className: 'ai-model-radio',
-            id: model,
-            checked: content.dataset.model === model
-        });
-        newHTMLElement('label', div, {
-            for: model,
-            innerText: model,
-            className: 'ai-model-label'
-        });
+// function createAIModelItems(content) {
+//     const models = ['o4-mini', 'gpt-4.1', 'gpt-5', 'gpt-5-mini']
+//     const items = [];
+//     for (const model of models) {
+//         const div = newHTMLElement('div', null, {
+//             className: 'ai-model-item'
+//         });
+//         const modelItem = newHTMLElement('input', div, {
+//             type: 'radio',
+//             name: 'ai-model',
+//             className: 'ai-model-radio',
+//             id: model,
+//             checked: content.dataset.model === model
+//         });
+//         newHTMLElement('label', div, {
+//             for: model,
+//             innerText: model,
+//             className: 'ai-model-label'
+//         });
 
-        div.onclick = function() {
-            content.dataset.model = model;
-            console.log(`AI model set to ${model}`);
-            modelItem.checked = true;
-        };
+//         div.onclick = function() {
+//             content.dataset.model = model;
+//             console.log(`AI model set to ${model}`);
+//             modelItem.checked = true;
+//         };
 
-        items.push(div);
-    }
-    return items;
-}
-
-
-function addChatMenuItem(chatSettings, chatMenuContainer, labelText, x, y, menuItems) {
-    const label = newHTMLElement('label', chatSettings, {
-        innerText: labelText,
-        className: 'chat-menu-item'
-    });
-
-    const subMenu = newHTMLElement('div', chatMenuContainer, {
-        className: 'chat-submenu hidden',
-        inert: true
-    }, {
-        transform: `translate(${x}px, ${y}px)`
-    });
-
-    for (const item of menuItems) {
-        subMenu.appendChild(item);
-    }
-
-    label.addEventListener('mouseenter', function() {
-        menuItemMouseEnterHandler(subMenu);
-    });
-}
+//         items.push(div);
+//     }
+//     return items;
+// }
 
 
-function menuItemMouseEnterHandler(subMenu) {
-    const subMenus = document.getElementsByClassName('chat-submenu');
-    for (const menu of subMenus) {
-        toggleHidden(menu, true);
-    }
+// function addChatMenuItem(chatSettings, chatMenuContainer, labelText, x, y, menuItems) {
+//     const label = newHTMLElement('label', chatSettings, {
+//         innerText: labelText,
+//         className: 'chat-menu-item'
+//     });
 
-    toggleHidden(subMenu, false);
-}
+//     const subMenu = newHTMLElement('div', chatMenuContainer, {
+//         className: 'chat-submenu hidden',
+//         inert: true
+//     }, {
+//         transform: `translate(${x}px, ${y}px)`
+//     });
+
+//     for (const item of menuItems) {
+//         subMenu.appendChild(item);
+//     }
+
+//     label.addEventListener('mouseenter', function() {
+//         menuItemMouseEnterHandler(subMenu);
+//     });
+// }
+
+
+// function menuItemMouseEnterHandler(subMenu) {
+//     const subMenus = document.getElementsByClassName('chat-submenu');
+//     for (const menu of subMenus) {
+//         toggleHidden(menu, true);
+//     }
+
+//     toggleHidden(subMenu, false);
+// }
 
 
 async function userInput(content, message) {
@@ -281,11 +277,7 @@ async function userInput(content, message) {
     });
 
 
-    // Display input message
-    newHTMLElement('p', contentBlock, {
-        innerText: message,
-        className: 'input-message'
-    });
+    displayInput(contentBlock, message);
 
     await chatResponse(content, contentBlock, message);
 
@@ -342,14 +334,14 @@ async function chatResponse(content, contentBlock, message) {
             console.log('Received data chunk:', data);
             msgDiv.innerHTML = data.content.response;
 
-            handleCitations(data, msgDiv);
+            handleCitations(data.content.citations, msgDiv);
             handleSessionNaming(data, content);
         } else if (data.node === 'generate_answer') {
             modelCreated = true;
             console.log('Received data chunk:', data);
             msgDiv.innerHTML = data.content.response;
 
-            handleCitations(data, msgDiv);
+            handleCitations(data.content.citations, msgDiv);
             handleSessionNaming(data, content);
             handleCodeBlocks(msgDiv);
         }
@@ -361,14 +353,16 @@ async function chatResponse(content, contentBlock, message) {
     addHistoryEntry(sessionID, sessionName);
 }
 
-function handleCitations(data, msgDiv) {
-    for (const citations of data.content.citations) {
+function handleCitations(citations, msgDiv) {
+    for (const citation of citations) {
+        console.log(citation)
+        const documentName = citation.document_name;
         const cite = newHTMLElement('cite', msgDiv, {
-            innerText: `${citations.document_name} - Page(s): ${citations.page_labels.join(', ')}`,
+            innerText: `${documentName} - Page(s): ${citation.page_labels.join(', ')}`,
             onclick: function(e) {
                 e.stopPropagation();
-                console.log('Citation', citations)
-                displayPDF(citations.document_name, citations.pdf_page_indices[0], cite);
+                console.log('Citation', citation)
+                displayPDF(documentName, citation.pdf_page_indices[0], cite);
             }
         });
     }
@@ -379,15 +373,8 @@ function handleCodeBlocks(msgDiv) {
     const codeBlocks = msgDiv.querySelectorAll('pre');
     for (const block of codeBlocks) {
         const copy = newHTMLElement('button', block, {
-            className: 'copy-code-button',
-            onclick: function() {
-                navigator.clipboard.writeText(block.innerText);
-                const img = copy.querySelector('img');
-                img.src = 'assets/checkmark.svg';
-                setTimeout(() => {
-                    img.src = 'assets/copy.svg';
-                }, 2000);
-            }
+            className: 'content-button',
+            onclick: () => handleCopyToClipboard(copy, block)
         });
         newHTMLElement('img', copy, {
             src: 'assets/copy.svg',
@@ -438,3 +425,37 @@ function chatHistoryNavigation(e, content) {
         content.dataset.historyIndex = -1;
     }
 }
+
+function displayInput(contentBlock, message) {
+    const input = newHTMLElement('p', contentBlock, {
+        className: 'input-message',
+        innerHTML: message
+    });
+    const inputOptions = newHTMLElement('div', input, {
+        className: 'input-options'
+    });
+    const rewriteButton = newHTMLElement('button', inputOptions, {
+        className: 'content-button',
+    });
+    newHTMLElement('img', rewriteButton, {
+        src: 'assets/write.svg',
+        alt: ''
+    });
+    const copyButton = newHTMLElement('button', inputOptions, {
+        className: 'content-button',
+        onclick: () => handleCopyToClipboard(copyButton, input)
+    });
+    newHTMLElement('img', copyButton, {
+        src: 'assets/copy.svg',
+        alt: ''
+    });
+}
+
+function handleCopyToClipboard(button, content) {
+        navigator.clipboard.writeText(content.innerText);
+        const img = button.firstChild;
+        img.src = 'assets/checkmark.svg';
+        setTimeout(() => {
+            img.src = 'assets/copy.svg';
+        }, 2000);
+    }

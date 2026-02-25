@@ -45,7 +45,6 @@ export function toggleHidden(element, force = null, className = 'hidden') {
     } else {
         element.removeAttribute('inert');
     }
-    console.log(element, force);
 }
 
 /** Set the last active panel element. 

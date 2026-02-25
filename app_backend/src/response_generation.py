@@ -75,6 +75,12 @@ def generate_response(
 
                     data = content['cache']
                     print("Cache hit found. Score: ", data['similarity_score'], flush=True)
+
+                    new_semantic_cache_embedding(
+                        prompt, 
+                        response
+                    )
+
                     yield orjson.dumps({
                         'node': node,
                         'content': data
@@ -93,13 +99,13 @@ def generate_response(
                         'metadata': callback.as_dict()
                     })
 
-                    insert_into_database(
-                        prompt,
-                        user_id,
-                        session_id,
-                        response,
-                        callback
-                    )
+        insert_into_database(
+            prompt,
+            user_id,
+            session_id,
+            response,
+            callback
+        )
 
         print("Graph execution completed.", flush=True)
         print("Token usage:", callback.token_usage, flush=True)
@@ -112,7 +118,6 @@ def insert_into_database(
     response: ResponseOutput,
     callback: ResponseMetadata
 ):
-    # Store response and citations in the database
     new_response(
         user_id=user_id,
         session_id=session_id,
@@ -129,8 +134,3 @@ def insert_into_database(
             page_labels=';'.join(map(str, citation.page_labels)),
             pdf_pages=';'.join(map(str, citation.pdf_page_indices))
         )
-
-    new_semantic_cache_embedding(
-        prompt, 
-        response
-    )
