@@ -63,6 +63,7 @@
   background-color: transparent;
   border-radius: 6px;
   flex: none;
+  color: var(--text-muted);
 }
 
 .tab-new:hover{
@@ -83,6 +84,7 @@
   pointer-events: auto;
   grid-area: stack;
   justify-self: end;
+  color: var(--text-muted);
 }
 
 .tab-close.hidden {

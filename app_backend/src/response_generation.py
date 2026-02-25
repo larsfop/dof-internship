@@ -76,10 +76,7 @@ def generate_response(
                     data = content['cache']
                     print("Cache hit found. Score: ", data['similarity_score'], flush=True)
 
-                    new_semantic_cache_embedding(
-                        prompt, 
-                        response
-                    )
+                    response = ResponseOutput(**data)
 
                     yield orjson.dumps({
                         'node': node,
@@ -98,6 +95,11 @@ def generate_response(
                         'content': response.model_dump(),
                         'metadata': callback.as_dict()
                     })
+
+                    new_semantic_cache_embedding(
+                        prompt, 
+                        response
+                    )
 
         insert_into_database(
             prompt,

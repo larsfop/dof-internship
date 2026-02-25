@@ -4,12 +4,12 @@
   width: 46px;
   transition: 200ms ease;
   overflow: hidden;
-  padding-top: 8px;
+  padding-block: 8px;
   padding-inline: 6px;
   grid-area: nav;
   box-sizing: border-box;
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto 1fr auto;
   row-gap: 12px;
   text-wrap: nowrap;
   white-space: nowrap;
@@ -56,6 +56,7 @@
   cursor: pointer;
   justify-self: end;
   transition: 400ms ease;
+  color: var(--text-muted);
 
   &:hover {
     background: var(--highlight);
@@ -71,6 +72,30 @@
 
 #sidebar.expanded > div:first-child > #expand-sidebar-button {
   transform: rotate(180deg);
+}
+
+#light-dark-mode {
+  background: var(--bg-light);
+  width: 2.5em;
+  height: 2.5em;
+  border-radius: 12px;
+  background: transparent;
+  border: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 400ms ease;
+
+  &:hover {
+    background: var(--highlight);
+  }
+
+  & > img {
+    width: 75%;
+    height: 75%;
+  }
 }
 
 @property --scrollbar-transition {

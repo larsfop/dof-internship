@@ -135,3 +135,14 @@ export function scrollInputHandler(e, scrollElement) {
     return value;
 }
 
+export function handleColorThemeChange(e) {
+    const isDarkMode = e.matches;
+    const themeButtonImg = document.getElementById('light-dark-mode').querySelector('img');
+    if (isDarkMode) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        themeButtonImg.src = 'assets/light-mode.svg';
+    } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+        themeButtonImg.src = 'assets/dark-mode.svg';
+    }
+}

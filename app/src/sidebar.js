@@ -69,3 +69,16 @@ function expandChatHistory(e) {
         animation = null;
     };
 }
+
+function toggleTheme(e) {
+    e.stopPropagation();
+    const isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
+    const themeButtonImg = document.getElementById('light-dark-mode').querySelector('img');
+    if (isDarkMode) {
+        document.documentElement.setAttribute('data-theme', 'light');
+        themeButtonImg.src = 'assets/dark-mode.svg';
+    } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        themeButtonImg.src = 'assets/light-mode.svg';
+    }
+}

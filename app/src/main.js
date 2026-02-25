@@ -92,3 +92,8 @@ app.on('window-all-closed', () => {
         app.quit();
     }
 });
+
+ipcMain.handle('main:set-theme', (event, theme) => {
+    nativeTheme.themeSource = theme;
+    return nativeTheme.shouldUseDarkColors;
+});

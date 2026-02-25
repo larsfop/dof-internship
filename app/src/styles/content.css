@@ -8,11 +8,11 @@
 }
 
 .chat-container {
-  overflow: hidden;
+  overflow: auto;
   grid-area: stack;
-  display: grid;
-  grid-template-areas: "stack";
   opacity: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .chat-container.hidden {
@@ -26,24 +26,26 @@
   justify-self: center;
   display: flex;
   gap: 8px;
-  padding-inline: 12px;
+  padding: 8px 12px;
   align-items: center;
-  margin: 24px 24px;
   border: none;
   border-radius: 18px;
-  grid-area: stack;
-  align-self: end;
   z-index: 2;
+
+  position: sticky;
+  bottom: 2em;
+  align-self: center;
 }
 
 .chat-messages {
-  overflow-y: auto;
-  grid-area: stack;
   padding-bottom: 100px;
-  width: min(100%, 800px);
-  justify-self: center;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   > hr {
+    width: min(80%, 800px);
     margin-block: 12px;
   }
 }
@@ -63,6 +65,11 @@ cite {
   outline: none;
   font-size: 16px;
   height: 32px;
+  color: var(--text);
+
+  &::placeholder {
+    color: var(--text-muted);
+  }
 }
 
 .chat-settings {
@@ -82,6 +89,7 @@ cite {
 
 .chat-send {
   border: none;
+  border-radius: 8px;
   height: 32px;
   width: 32px;
   font-size: 16px;
@@ -201,10 +209,10 @@ input[type="number"] {
 }
 
 .content-block {
-  margin-inline: 12px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 2.5em;
+  width: min(80%, 800px);
 }
 
 .input-message {
@@ -229,8 +237,8 @@ input[type="number"] {
   height: 2em;
 
   position: absolute;
-  right: 6px;
-  bottom: -80%;
+  right: 0.5em;
+  bottom: -2.2em;
 
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -243,14 +251,24 @@ input[type="number"] {
   }
 }
 
-.output-message > pre {
+.code-block-container {
   background: var(--bg-light);
   padding: 12px;
   border-radius: 12px;
-  overflow-x: auto;
-  white-space: pre;
   margin-block: 0.75em;
   position: relative;
+
+  display: flex;
+  flex-direction: row;
+  
+  > pre {
+    overflow-x: auto;
+    white-space: pre;
+  }
+
+  > .content-button {
+    background: var(--bg-light);
+  }
 
   &:hover .content-button {
     opacity: 1;
@@ -265,11 +283,12 @@ input[type="number"] {
   background: transparent;
 
   position: absolute;
-  top: 6px;
-  right: 6px;
+  right: 0.5em;
+  top: 0.5em;
+
   cursor: pointer;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.2s ease;
 
   display: flex;
   justify-content: center;

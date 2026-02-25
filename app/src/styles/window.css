@@ -63,6 +63,7 @@
   min-width: 20%;  
   min-height: 20%; 
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .panel-container.split-row {
@@ -78,13 +79,12 @@
 }
 
 .window-container {
-  overflow: hidden;
   background: var(--bg);
-  overflow: hidden;
   width: 100%;
   flex: 1;
   display: grid;
   grid-template-areas: "stack";
+  overflow: hidden;
 }
 
 

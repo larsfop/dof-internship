@@ -245,8 +245,9 @@ def fetch_from_semantic_cache(prompt: str) -> dict|None:
         ).fetchone()
 
         for citation in data['citations']:
-            citation['page_labels'] = citation['page_labels'].split(';')
-            citation['pdf_page_indices'] = list(map(int, citation['pdf_page_indices'].split(';')))
+            if (citation):
+                citation['page_labels'] = list(map(str, citation['page_labels'].split(';')))
+                citation['pdf_page_indices'] = list(map(int, citation['pdf_page_indices'].split(';')))
 
         return data
     except psycopg.Error:

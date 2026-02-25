@@ -372,7 +372,12 @@ function handleCitations(citations, msgDiv) {
 function handleCodeBlocks(msgDiv) {
     const codeBlocks = msgDiv.querySelectorAll('pre');
     for (const block of codeBlocks) {
-        const copy = newHTMLElement('button', block, {
+        const div = newHTMLElement('div', null, {
+            className: 'code-block-container'
+        })
+        block.parentElement.insertBefore(div, block);
+        div.appendChild(block);
+        const copy = newHTMLElement('button', div, {
             className: 'content-button',
             onclick: () => handleCopyToClipboard(copy, block)
         });

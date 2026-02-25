@@ -1,7 +1,7 @@
 import { loadHistory } from './history/history.js';
 import { createPanel } from './panel.js';
 import { newTab, loadLastTab } from './tab.js';
-import { toggleHidden, documentBodyClickHandler } from './utils/html-helper-functions.js';
+import { toggleHidden, documentBodyClickHandler, handleColorThemeChange } from './utils/html-helper-functions.js';
 import { dragEndHandler, dragEnterHandler } from './event-handlers.js';
 
 
@@ -15,6 +15,10 @@ if (typeof window !== 'undefined') {
         window.addEventListener('drop', (e) => {
             e.preventDefault();
         });
+
+        const themePreference = window.matchMedia('(prefers-color-scheme: dark)')
+        handleColorThemeChange(themePreference);
+        themePreference.addEventListener('change', handleColorThemeChange);
 
 
         // Show intital login form
