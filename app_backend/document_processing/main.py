@@ -9,6 +9,7 @@ import pymupdf
 import numpy as np
 import json
 from langchain_core.documents import Document
+import shutil
 
 from utility import load_config, load_partitions, crop_partitions, Timer, write_to_file, read_from_file
 from unstructured_read_pdf import chunk_pdf
@@ -28,7 +29,7 @@ def main(
         f"Processing file: {filename}",
         f'Processing file {filename} successfully completed'
     ):
-        config_path = Path(os.environ.get('CONFIG_PATH', '../volumes/configs/'))
+        config_path = Path(os.environ.get('CONFIG_PATH', '../volumes/data/configs/'))
 
         # Load configuration
         config = load_config(config_path / 'partitionConfig.yaml')
@@ -47,6 +48,11 @@ def main(
                         break
                     except FileNotFoundError:
                         print(f"No existing partitions found for {filename}, proceeding with partitioning.")
+
+                try:
+                    shutil.copy2(output_path / f'unstructured_partitions_{config.strategy}.json', output_path / f'unstructured_partitions_{config.strategy}_backup.json')
+                except FileNotFoundError:
+                    pass
 
                 with Timer(exit_msg='Finished partitioning PDF'):
                     chunk_pdf(
@@ -75,6 +81,11 @@ def main(
                     end_page = config.get('end_page', doc.page_count)
 
                     data = process_partitions(partitions, doc, start_page, end_page)
+
+                    try:
+                        shutil.copy2(output_path / 'document_chunks.json', output_path / 'document_chunks_backup.json')
+                    except FileNotFoundError:
+                        pass
 
                     # Save or process `data` as needed
                     write_to_file(data, output_path / 'document_chunks.json')
@@ -121,12 +132,17 @@ def main(
                         {'content': d.page_content, 'metadata': d.metadata}
                         for d in documents
                     ]
+
+                    try:
+                        shutil.copy2(output_path / 'document_vectors.json', output_path / 'document_vectors_backup.json')
+                    except FileNotFoundError:
+                        pass
+
                     write_to_file(output, output_path / 'document_vectors.json')
 
 
 if __name__ == "__main__":
-    script_dir = Path(__file__).parent
-    config = load_config(Path(os.environ.get('CONFIG_PATH', '../volumes/configs/')) / 'partitionConfig.yaml')
+    config = load_config(Path(os.environ.get('CONFIG_PATH', '../volumes/data/configs/')) / 'partitionConfig.yaml')
     pdf_dir = Path(config.pdf_dir_path)
 
     parser = argparse.ArgumentParser(description="Process document partitions based on configuration.")
@@ -146,15 +162,19 @@ if __name__ == "__main__":
         '--input_dir', type=Path, default=None, help="Directory containing PDF files to process. If empty, uses the directory from the config file."
     )
     parser.add_argument(
-        '-cp', '--load_checkpoint', action='store_true', help="Load existing vector store checkpoint if available."
+        '-cp', '--load_checkpoint', action='store_true', help="Load existing vector store checkpoint if available. Default: False"
     )
 
     argcomplete.autocomplete(parser)
     args = parser.parse_args()
 
     input_dir = Path(args.input_dir) if args.input_dir else pdf_dir
+    print(f"Using input directory: {input_dir}")
 
     files = set()
+    print(args.filenames)
+    if not args.filenames:
+        files.update(input_dir.rglob('*.pdf'))
     for filename in args.filenames:
         files.update(input_dir.glob(f'*{filename}*.pdf'))
 

@@ -114,7 +114,7 @@ export function addHistoryEntry(sessionID, sessionName) {
     }
 
     const historyDiv = document.getElementById('chat-history');
-    historyDiv.appendChild(entryContainer);
+    historyDiv.insertBefore(entryContainer, historyDiv.firstChild);
 }
 
 

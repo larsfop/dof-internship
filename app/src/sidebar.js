@@ -17,8 +17,10 @@ window.addEventListener('resize', function() {
 function expandSidebar() {
     sidebar.classList.toggle('expanded');
     chatHistory.classList.toggle('hidden');
+    chatHistorySummary.classList.toggle('hidden');
     chatHistory.inert = !chatHistory.inert;
     account.inert = !account.inert;
+    chatHistorySummary.inert = !chatHistorySummary.inert;
 }
 
 function animateHeight(height, duration, reverse) {

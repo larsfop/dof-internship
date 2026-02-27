@@ -96,10 +96,10 @@ def generate_response(
                         'metadata': callback.as_dict()
                     })
 
-                    new_semantic_cache_embedding(
-                        prompt, 
-                        response
-                    )
+                    # new_semantic_cache_embedding(
+                    #     prompt, 
+                    #     response
+                    # )
 
         insert_into_database(
             prompt,

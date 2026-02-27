@@ -287,7 +287,6 @@ async function userInput(content, message) {
 
 async function chatResponse(content, contentBlock, message) {
     const sessionID = content.id.replace('content:', '');
-    var sessionName = content.dataset.name;
 
     const queryParams = new URLSearchParams({
             prompt: message,
@@ -350,7 +349,7 @@ async function chatResponse(content, contentBlock, message) {
     console.log('Final data received:', data);
 
     // Update chat history UI
-    addHistoryEntry(sessionID, sessionName);
+    addHistoryEntry(sessionID, content.dataset.name);
 }
 
 function handleCitations(citations, msgDiv) {

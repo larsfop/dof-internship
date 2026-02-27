@@ -20,11 +20,11 @@ services:
     build: .
     container_name: backend
     volumes:
-      - backend-data:/data
+      - data:/app/data
     ports:
       - "8015:8015"
     environment:
-      - DATA_PATH=../data/
+      - DATA_PATH=../data
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
@@ -66,9 +66,9 @@ volumes:
       type: none
       device: ${VOLUME_PATH}/pgadmin-data
       o: bind
-  backend-data:
+  data:
     driver: local
     driver_opts:
       type: none
-      device: ${VOLUME_PATH}/backend-data
+      device: ${VOLUME_PATH}/data
       o: bind

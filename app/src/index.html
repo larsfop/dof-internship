@@ -36,9 +36,8 @@
                         <span>⨠</span>
                     </button>
                 </div>
-                <ul id="chat-history" class="hidden open" inert="true">
-                    <li id="chat-history-summary" class="rotate" onclick="expandChatHistory(event)">History</li>
-                </ul>
+                <button id="chat-history-summary" class="rotate hidden" inert="true" onclick="expandChatHistory(event)">Chat History</button>
+                <ul id="chat-history" class="hidden open" inert="true"></ul>
                 <button id="light-dark-mode" onclick="toggleTheme(event)">
                     <img src="assets/light-mode.svg" alt="">
                 </button>

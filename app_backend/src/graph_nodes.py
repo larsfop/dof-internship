@@ -12,15 +12,16 @@ from langmem.short_term import SummarizationNode
 
 import os
 import psycopg
+from pathlib import Path
 
 from pydantic_classes import CheckResponse, State, GradeResults, DocumentPDF, ResponseMetadata, ResponseOutput
 from pdf import create_pdfs_from_embeddings
 from config.config import load_config, Config, RAGConfig
 from database import fetch_from_semantic_cache
 
-DATA_PATH = os.environ['DATA_PATH']
-# DATA_PATH = '../volumes/data/'
-CONFIG: Config = load_config(DATA_PATH + 'config.yaml')
+DATA_PATH = Path(os.environ['DATA_PATH'])
+# DATA_PATH = Path('../volumes/data/')
+CONFIG: Config = load_config(DATA_PATH / 'config.yaml')
 CONFIG_RAG: RAGConfig = CONFIG.rag_config
 
 # Setup RAG vector database

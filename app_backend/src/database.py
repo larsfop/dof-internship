@@ -87,7 +87,7 @@ def delete_session(session_id: str) -> None:
 def get_sessions(user_id: str) -> list[dict]:
     try:
         CURSOR.execute(
-            "SELECT sessionID, name, createdAt, updatedAt FROM sessions WHERE userID = %s ORDER BY updatedAt DESC",
+            "SELECT sessionID, name, createdAt, updatedAt FROM sessions WHERE userID = %s ORDER BY updatedAt ASC",
             (user_id,)
         )
         sessions = CURSOR.fetchall()
@@ -244,6 +244,9 @@ def fetch_from_semantic_cache(prompt: str) -> dict|None:
             (embeddings, )
         ).fetchone()
 
+        if not data:
+            return None
+        
         for citation in data['citations']:
             if (citation):
                 citation['page_labels'] = list(map(str, citation['page_labels'].split(';')))
