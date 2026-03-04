@@ -51,13 +51,16 @@ def generate_response(
             }
         }
 
+        print("Setting up graph...", flush=True)
         graph = setup_graph(
             checkpointer
         )
+        print("Graph setup completed. Starting execution...", flush=True)
         graph = graph.with_config(
             {'callbacks': [callback]}
         )
 
+        print("Graph execution started.", flush=True)
         for chunk in graph.stream(
             {
                 'messages': {
