@@ -11,36 +11,23 @@ from database import new_response, new_citation, new_semantic_cache_embedding
 def setup_graph(
     checkpointer: PostgresSaver
 ) -> CompiledStateGraph:
-    print(1, flush=True)
     checkpointer.setup()
 
-    print(2, flush=True)
     builder = StateGraph(State)
-    print(3, flush=True)
     builder.add_node('semantic_cache', cache_node)
-    print(4, flush=True)
     builder.add_node('use_rag', generate_response_or_retrieve_documents)
-    print(5, flush=True)
     builder.add_node(retrieve_documents)
-    print(6, flush=True)
     builder.add_node(generate_answer)
-    print(7, flush=True)
     builder.add_node('summary', summary_node)
-    print(8, flush=True)
 
     builder.add_edge(START, 'semantic_cache')
-    print(9, flush=True)
     builder.add_edge('retrieve_documents', 'generate_answer')
-    print(10, flush=True)
     builder.add_edge('generate_answer', 'summary')
-    print(11, flush=True)
     builder.add_edge('summary', END)
-    print(12, flush=True)
 
     graph = builder.compile(
         checkpointer=checkpointer,
     )
-    print(13, flush=True)
 
     return graph
 
@@ -64,16 +51,13 @@ def generate_response(
             }
         }
 
-        print("Setting up graph...", flush=True)
         graph = setup_graph(
             checkpointer
         )
-        print("Graph setup completed. Starting execution...", flush=True)
         graph = graph.with_config(
             {'callbacks': [callback]}
         )
 
-        print("Graph execution started.", flush=True)
         for chunk in graph.stream(
             {
                 'messages': {

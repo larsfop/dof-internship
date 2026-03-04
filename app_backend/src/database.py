@@ -220,7 +220,6 @@ def new_semantic_cache_embedding(prompt: str, response: ResponseOutput) -> None:
 
 def fetch_from_semantic_cache(prompt: str) -> dict|None:
     embeddings = embed_model.embed_query(prompt.lower())
-    print(f"Fetching from semantic cache with prompt: {prompt}", flush=True)
     try:
         data = CURSOR.execute(
             """

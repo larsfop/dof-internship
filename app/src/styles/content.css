@@ -112,6 +112,10 @@
   }
 }
 
+#chat-messages > :not(:first-child) {
+  display: none;
+}
+
 #scroll-top {
   align-self: start;
   top: 30px;

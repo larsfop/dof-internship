@@ -128,16 +128,10 @@ async function onClickHandler(sessionID, sessionName) {
     const child = chatMessages.firstElementChild;
     if (child.id === 'new-chat') child.remove();
 
+
     const chatDiv = document.getElementById(`chat:${sessionID}`);
     if (chatDiv) {
         const parent = chatDiv.parentElement;
-        // for (const child of parent.children) {
-        //     if (child === chatDiv) {
-        //         toggleHidden(child, false);
-        //     } else {
-        //         toggleHidden(child, true);
-        //     }
-        // }
         parent.prepend(chatDiv);
     } else {
         const response = await fetch(`http://192.168.0.71:8015/get_chat?session_id=${sessionID}`, {
@@ -149,6 +143,16 @@ async function onClickHandler(sessionID, sessionName) {
         });
         const data = await response.json();
         loadChatSession(sessionID, data, sessionName);
+    }
+    
+    const chatMessagesContainer = document.getElementById('chat-messages-container');
+    const scrollTopButton = document.getElementById('scroll-top');
+    const scrollBottomButton = document.getElementById('scroll-bottom');
+
+    toggleHidden(scrollTopButton, true);
+    toggleHidden(scrollBottomButton, true);
+    if (chatMessagesContainer.scrollHeight > chatMessagesContainer.clientHeight) {
+        toggleHidden(scrollBottomButton, false);
     }
 }
 
