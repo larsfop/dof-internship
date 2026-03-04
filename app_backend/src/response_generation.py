@@ -37,7 +37,7 @@ def generate_response(
     user_id: str,
     session_id: str
 ):
-    db_uri = 'postgresql://{user}:{password}@postgres:5432/postgres?sslmode=disable'.format(
+    db_uri = 'postgresql+psycopg://{user}:{password}@postgres:5432/postgres?sslmode=disable'.format(
         user=os.environ['POSTGRES_USER'],
         password=os.environ['POSTGRES_PASSWORD'],
     )

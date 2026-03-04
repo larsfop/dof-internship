@@ -3,6 +3,7 @@ from langchain_postgres import PGVector
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from openai import RateLimitError
 import psycopg
+import os
 from collections import defaultdict
 from typing import Iterator
 from psycopg import Connection, Cursor
@@ -216,7 +217,10 @@ def add_documents_to_vector_store(
         document_name: str, 
         config: PartitionConfig, 
     ) -> list[Document]:
-    connection_url = 'postgresql://postgres:admin125@localhost:5435/postgres?sslmode=disable'
+    connection_url = 'postgresql+psycopg://{user}:{password}@localhost:5432/postgres?sslmode=disable'.format(
+        user=os.environ['POSTGRES_USER'],
+        password=os.environ['POSTGRES_PASSWORD'],
+    )
     collection_name = config.collection_name
 
     embeddings = OpenAIEmbeddings(model=config.embedding_model)

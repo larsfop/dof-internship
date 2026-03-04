@@ -10,7 +10,6 @@ langgraph-checkpoint-postgres
 langmem
 pymilvus
 psycopg[binary]
-psycopg2-binary
 tiktoken
 fastapi
 uvicorn[standard]

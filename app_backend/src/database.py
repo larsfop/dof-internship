@@ -12,7 +12,7 @@ from langchain_openai.embeddings import OpenAIEmbeddings
 from pydantic_classes import UserInDB, ResponseOutput
 
 # db_uri = 'postgresql://postgres:admin125@localhost:5435/postgres?sslmode=disable'
-db_uri = 'postgresql://{user}:{password}@postgres:5432/postgres?sslmode=disable'.format(
+db_uri = 'postgresql+psycopg://{user}:{password}@postgres:5432/postgres?sslmode=disable'.format(
     user=os.environ['POSTGRES_USER'],
     password=os.environ['POSTGRES_PASSWORD'],
 )
