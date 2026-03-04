@@ -217,10 +217,11 @@ def add_documents_to_vector_store(
         document_name: str, 
         config: PartitionConfig, 
     ) -> list[Document]:
-    connection_url = 'postgresql+psycopg://{user}:{password}@postgres:5432/postgres?sslmode=disable'.format(
-        user=os.environ['POSTGRES_USER'],
-        password=os.environ['POSTGRES_PASSWORD'],
-    )
+    # connection_url = 'postgresql+psycopg://{user}:{password}@postgres:5432/postgres?sslmode=disable'.format(
+    #     user=os.environ['POSTGRES_USER'],
+    #     password=os.environ['POSTGRES_PASSWORD'],
+    # )
+    connection_url = 'postgresql://postgres:admin125@192.168.50.20:5435/postgres?sslmode=disable'
     collection_name = config.collection_name
 
     embeddings = OpenAIEmbeddings(model=config.embedding_model)

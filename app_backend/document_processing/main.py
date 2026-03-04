@@ -12,7 +12,7 @@ from langchain_core.documents import Document
 import shutil
 
 from utility import load_config, load_partitions, crop_partitions, Timer, write_to_file, read_from_file
-from unstructured_read_pdf import chunk_pdf
+# from unstructured_read_pdf import chunk_pdf
 from partition_processing import process_partitions
 from vector_store import add_documents_to_vector_store, prepare_documents
 
@@ -37,31 +37,31 @@ def main(
         output_path.mkdir(parents=True, exist_ok=True)
 
         # Process partitions using the Unstructured library
-        if is_partitioning:
-            while True:
-                if load_checkpoint:
-                    try:
-                        with open(output_path / f'unstructured_partitions_{config.strategy}.json', 'r') as f:
-                            _ = json.load(f)
-                        print(f"Loaded existing partitions for {filename}, skipping partitioning step.")
+        # if is_partitioning:
+        #     while True:
+        #         if load_checkpoint:
+        #             try:
+        #                 with open(output_path / f'unstructured_partitions_{config.strategy}.json', 'r') as f:
+        #                     _ = json.load(f)
+        #                 print(f"Loaded existing partitions for {filename}, skipping partitioning step.")
 
-                        break
-                    except FileNotFoundError:
-                        print(f"No existing partitions found for {filename}, proceeding with partitioning.")
+        #                 break
+        #             except FileNotFoundError:
+        #                 print(f"No existing partitions found for {filename}, proceeding with partitioning.")
 
-                try:
-                    shutil.copy2(output_path / f'unstructured_partitions_{config.strategy}.json', output_path / f'unstructured_partitions_{config.strategy}_backup.json')
-                except FileNotFoundError:
-                    pass
+        #         try:
+        #             shutil.copy2(output_path / f'unstructured_partitions_{config.strategy}.json', output_path / f'unstructured_partitions_{config.strategy}_backup.json')
+        #         except FileNotFoundError:
+        #             pass
 
-                with Timer(exit_msg='Finished partitioning PDF'):
-                    chunk_pdf(
-                        file_path=file_path,
-                        output_dir=output_path,
-                        strategy=config.strategy
-                    )
+        #         with Timer(exit_msg='Finished partitioning PDF'):
+        #             chunk_pdf(
+        #                 file_path=file_path,
+        #                 output_dir=output_path,
+        #                 strategy=config.strategy
+        #             )
 
-                break
+        #         break
 
         data = None
         with pymupdf.open(file_path) as doc:
