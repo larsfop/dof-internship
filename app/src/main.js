@@ -8,7 +8,7 @@ const createWindow = () => {
         webPreferences: {
             nodeIntegration: false, // Security: do not enable Node.js integration
             contextIsolation: true, // Security: enable context isolation
-            enableRemoteModule: false // Security: do not enable remote module
+            enableRemoteModule: false, // Security: do not enable remote module
         }
     });
 
@@ -91,9 +91,4 @@ app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         app.quit();
     }
-});
-
-ipcMain.handle('main:set-theme', (event, theme) => {
-    nativeTheme.themeSource = theme;
-    return nativeTheme.shouldUseDarkColors;
 });

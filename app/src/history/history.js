@@ -1,5 +1,5 @@
-import { newTab } from "../tab.js";
-import { newHTMLElement, toggleHidden, getOtherElementByID } from "../utils/html-helper-functions.js";
+import { newHTMLElement, toggleHidden } from "../utils/html-helper-functions.js";
+import { loadChatSession } from "../chatbot.js";
 
 export async function loadHistory() {
     const response = await fetch('http://192.168.0.71:8015/get_sessions', {
@@ -23,21 +23,20 @@ export function addHistoryEntry(sessionID, sessionName) {
         entryContainer = newHTMLElement('div', null, {
             className: 'history-entry-container',
             id: `history:${sessionID}`,
-            // dataset: {
-            //     tooltip: sessionName
-            // }
         });
 
         const historyEntry = newHTMLElement('span', entryContainer, {
             className: 'history-entry',
             textContent: sessionName,
+            title: sessionName,
             onclick: function() {
                 onClickHandler(sessionID, sessionName);
             }
         });
 
-        const menuContainerButton = newHTMLElement('div', entryContainer, {
+        const menuContainerButton = newHTMLElement('button', entryContainer, {
             className: 'history-entry-container-menu-button',
+            title: 'Chat session options',
             'textContent': '⋯',
         });
 
@@ -50,7 +49,8 @@ export function addHistoryEntry(sessionID, sessionName) {
             e.stopPropagation();
             const historyMenus = Array.from(document.querySelectorAll('.history-entry-container-menu'));
             for (const menu of historyMenus) {
-                console.log(menu);
+                if (menu === menuContainer) continue;
+                toggleHidden(menu, true);
             }
             toggleHidden(menuContainer, false);
         }
@@ -58,6 +58,7 @@ export function addHistoryEntry(sessionID, sessionName) {
         newHTMLElement('span', menuContainer, {
             className: 'history-entry-container-menu-option',
             textContent: 'Rename',
+            title: 'Rename chat session',
             onclick: function(e) {
                 e.stopPropagation();
                 toggleHidden(menuContainer, true);
@@ -101,15 +102,19 @@ export function addHistoryEntry(sessionID, sessionName) {
             }
         })
 
-        newHTMLElement('br', menuContainer);
+        newHTMLElement('hr', menuContainer);
 
         newHTMLElement('span', menuContainer, {
             className: 'history-entry-container-menu-option',
             textContent: 'Delete',
+            title: 'Delete chat session',
             onclick: function(e) {
                 e.stopPropagation();
                 removeHistoryEntry(sessionID);
             }
+        }, 
+        {
+            color: 'red',
         });
     }
 
@@ -119,10 +124,21 @@ export function addHistoryEntry(sessionID, sessionName) {
 
 
 async function onClickHandler(sessionID, sessionName) {
-    const chatDiv = document.getElementById(`content:${sessionID}`);
+    const chatMessages = document.getElementById('chat-messages');
+    const child = chatMessages.firstElementChild;
+    if (child.id === 'new-chat') child.remove();
+
+    const chatDiv = document.getElementById(`chat:${sessionID}`);
     if (chatDiv) {
-        const tabDiv = document.getElementById(`tab:${sessionID}`);
-        tabDiv.click();
+        const parent = chatDiv.parentElement;
+        // for (const child of parent.children) {
+        //     if (child === chatDiv) {
+        //         toggleHidden(child, false);
+        //     } else {
+        //         toggleHidden(child, true);
+        //     }
+        // }
+        parent.prepend(chatDiv);
     } else {
         const response = await fetch(`http://192.168.0.71:8015/get_chat?session_id=${sessionID}`, {
             method: 'GET',
@@ -132,8 +148,7 @@ async function onClickHandler(sessionID, sessionName) {
             }
         });
         const data = await response.json();
-        const panel = document.querySelector('.panel-container.last-active');
-        newTab(panel, 'chatbot', data, sessionID, sessionName);
+        loadChatSession(sessionID, data, sessionName);
     }
 }
 
@@ -152,9 +167,4 @@ async function removeHistoryEntry(sessionID) {
             },
         });
     }
-}
-
-
-async function updateName(sessionID, newName) {
-
 }

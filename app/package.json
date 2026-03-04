@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.1",
+    "pdfjs": "^2.5.4",
     "pdfjs-dist": "^5.4.149",
     "split-grid": "^1.0.11"
   }

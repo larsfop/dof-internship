@@ -1,14 +1,54 @@
-import { newTab, changeTab } from "./tab.js";
-import { getOtherElementByID } from "./utils/html-helper-functions.js";
-import { splitPanel } from "./panel.js";
+import { newHTMLElement, toggleHidden } from "./utils/html-helper-functions.js";
+// import { newPDFViewer } from "./pdf_viewer/viewer.js";
 
 // --------------------------------------------------------------------------------------
 //                      Content event handler functions
 // --------------------------------------------------------------------------------------
 
-export async function displayPDF(name, page, div) {
-    console.log(`Displaying PDF: ${name} at page ${page}`);
-    var pdf = document.querySelector(`[data-name="${name}"]`);
+const pdfArray = {};
+var currentViewer;
+
+// export async function displayPDF(name, page) {
+//     const viewerContainer = document.getElementById('viewer-container');
+//     var pdf = document.getElementById(name);
+//     if (!pdf) {
+//         const pdfResponse = await fetch(`http://192.168.0.71:8015/pdf?name=${encodeURIComponent(name)}`, {
+//             method: 'GET',
+//             headers: {
+//                 'method': 'GET',
+//                 'authorization': `Bearer ${sessionStorage.getItem('access_token')}`
+//             }
+//         });
+//         const pdfBlob = await pdfResponse.blob();
+//         const pdfUrl = URL.createObjectURL(pdfBlob);
+
+//         const viewer = await newPDFViewer(pdfUrl, viewerContainer, name);
+//         pdfArray[name] = viewer;
+//         currentViewer = viewer;
+//     } else {
+//         currentViewer = pdfArray[name];
+//     }
+
+
+//     if (viewerContainer.children.length > 1) {
+//         [...viewerContainer.children].forEach((child) => {
+//             if (child.id === name) {
+//                 toggleHidden(child, false);
+//                 viewerContainer.prepend(child);
+//             } else {
+//                 toggleHidden(child, true);
+//             }
+//         });
+//     } else {
+//         const main = document.getElementById('main');
+//         main.style.gridTemplateColumns = '1fr 8px 1fr';
+//     }
+//     await currentViewer.scrollToPage(page);
+// }
+
+export async function displayPDF(name, page) {
+    const pdfContainer = document.getElementById('pdf-container');
+    var pdf = document.getElementById(name);
     if (!pdf) {
         // Get the PDF blob
         const pdfResponse = await fetch(`http://192.168.0.71:8015/pdf?name=${encodeURIComponent(name)}`, {
@@ -21,79 +61,31 @@ export async function displayPDF(name, page, div) {
         const pdfBlob = await pdfResponse.blob();
         const pdfUrl = URL.createObjectURL(pdfBlob);
 
-        const panel = document.querySelector('.panel-container')
-        var sessionID;
-        // If the top panel is split, place the PDF in the right/bottom most panel
-        if ( panel.classList.contains('split-row') || panel.classList.contains('split-column') )
-        {
-            sessionID = newTab(panel.lastChild, 'pdf', pdfUrl, null, name);
-        // Else split the panel to the right and place the PDF there
-        } else {
-            const { panel1, panel2 } = splitPanel(panel, 'right');
-            sessionID = newTab(panel2, 'pdf', pdfUrl, null, name);
-
-            const tabsList = panel.querySelector('.tab-container');
-            const contents = panel.querySelector('.window-container');
-
-            panel1.appendChild(tabsList);
-            panel1.appendChild(contents);
-        }
-
-        pdf = document.getElementById(`content:${sessionID}`);
+        const viewer = `./pdfjs/web/viewer.html?file=${encodeURIComponent(pdfUrl)}`;
+        pdf = newHTMLElement('iframe', null, {
+            className: 'pdf-viewer',
+            id: name,
+            src: viewer,
+            width: '100%',
+            height: '100%',
+        });
     }
-    console.log(pdf);
-    const pdfParent = pdf.parentElement;
-    const tab = getOtherElementByID(pdf, 'tab');
-
-    // Attach the pdf to the DOM temporarily to change page
-    div.appendChild(pdf);
     pdf.src = pdf.src.split('#')[0] + `#page=${page}`;
+    pdfContainer.prepend(pdf);
 
-    // Move the pdf back to its original position
-    pdfParent.insertBefore(pdf, pdfParent.firstChild);
-    changeTab(tab);
-}
-
-// --------------------------------------------------------------------------------------
-//                      Window highlight handler functions
-// --------------------------------------------------------------------------------------
-
-function handleDragenter(e) {
-    e.preventDefault(); // Prevent default dragover behavior
-
-    e.target.classList.add('highlight-display'); // Add a class to indicate the dragenter event
-}
-
-function handleDragleave(e) {
-    e.preventDefault(); // Prevent default dragleave behavior
-
-    e.target.classList.remove('highlight-display'); // Remove the class indicating the dragenter event
-}
-
-export function dragEnterHandler(e) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    const windowsHighlights = document.getElementsByClassName('window-highlight');
-    [...windowsHighlights].forEach((windowsHighlight) => {
-        windowsHighlight.style.pointerEvents = 'auto'; // Enable pointer events on window highlights
-        [...windowsHighlight.children].forEach((div) => {
-            div.addEventListener('dragenter', handleDragenter);
-            div.addEventListener('dragleave', handleDragleave); // Handle drag leave on window containers
-        })
-    })
-}
-
-export function dragEndHandler(e) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    const windowsHighlights = document.getElementsByClassName('window-highlight');
-    [...windowsHighlights].forEach((windowsHighlight) => {
-        windowsHighlight.style.pointerEvents = 'none'; // Disable pointer events on window highlights
-        [...windowsHighlight.children].forEach((div) => {
-            div.removeEventListener('dragenter', handleDragenter);
-            div.removeEventListener('dragleave', handleDragleave); // Remove drag leave event listener
-        })
-    });
+    const main = document.getElementById('main');
+    main.style.gridTemplateColumns = '1fr 12px 1fr';
+    
+    // if (pdfContainer.children.length > 1) {
+    //     [...pdfContainer.children].forEach((child) => {
+    //         if (child.id === name) {
+    //             toggleHidden(child, false);
+    //         } else {
+    //             toggleHidden(child, true);
+    //         }
+    //     });
+    // } else {
+    //     const main = document.getElementById('main');
+    //     main.style.gridTemplateColumns = '1fr 8px 1fr';
+    // }
 }

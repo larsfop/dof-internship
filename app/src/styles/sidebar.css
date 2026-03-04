@@ -5,16 +5,18 @@
   transition: 200ms ease;
   overflow: hidden;
   padding-block: 8px;
-  padding-inline: 6px;
+  padding-inline: var(--sidebar-padding);
   grid-area: nav;
   box-sizing: border-box;
   display: grid;
-  grid-template-rows: auto auto 1fr auto;
+  grid-template-rows: auto auto auto 1fr auto;
   text-wrap: nowrap;
   white-space: nowrap;
+  --expanded-width: 260px;
+  --sidebar-padding: 6px;
   
   &.expanded {
-    width: 260px;
+    width: var(--expanded-width);
     
     #account {
       opacity: 1;
@@ -26,7 +28,7 @@
     grid-template-columns: 0 auto;
     height: 34px;
     width: inherit;
-    padding-right: 12px;
+    padding-right: calc(2 * var(--sidebar-padding));
     margin-bottom: 12px;
   }
 }
@@ -107,8 +109,40 @@
   initial-value: rgba(0, 0, 0, 0);
 }
 
+#new-chat-button {
+  width: calc(var(--expanded-width) - 2 * var(--sidebar-padding));
+  height: 38px;
+  padding-inline: 8px;
+  border-radius: 12px;
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-size: 1em;
+  cursor: pointer;
+  transition: 400ms ease;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.35em;
+
+  &:hover {
+    background: var(--highlight);
+  }
+
+  &.hidden {
+    opacity: 0;
+  }
+
+  > img {
+    width: 20px;
+    filter: var(--filter);
+  }
+}
+
 #chat-history {
   height: 0;
+  width: calc(var(--expanded-width) - 2 * var(--sidebar-padding));
   transition: 0.2s ease;
   overflow: hidden;
   opacity: 1;
@@ -142,7 +176,7 @@
 
 #chat-history-summary {
   height: 38px;
-  width: 100%;
+  width: calc(var(--expanded-width) - 2 * var(--sidebar-padding));
   border: none;
   background: transparent;
   border-radius: 12px;
@@ -246,27 +280,17 @@
   z-index: 10;
   opacity: 1;
   transition: opacity 0.4s ease;
+
+  > hr {
+    width: 100%;
+    margin-block: 3px;
+    border: none;
+    border-top: 1px solid var(--border);
+  }
 }
 
 .history-entry-container-menu.hidden {
   opacity: 0;
-}
-
-.history-entry-delete-button {
-  grid-area: stack;
-  justify-self: end;
-  width: 30px;
-  height: 30px;
-  background: radial-gradient(var(--highlight), 80%, transparent);
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-  border-radius: 12px;
-  opacity: 0;
-}
-
-.history-entry-delete-button:hover {
-  background: var(--highlight);
 }
 
 .history-entry-container-menu-option {
@@ -277,6 +301,7 @@
   background: transparent;
   cursor: pointer;
   background: transparent;
+  color: var(--text);
 }
 
 .history-entry-container-menu-option:hover {

@@ -9,9 +9,8 @@
         />
         <link rel="stylesheet" href="styles/main.css" />
         <link rel="stylesheet" href="styles/sidebar.css" />
-        <link rel="stylesheet" href="styles/window.css" />
-        <link rel="stylesheet" href="styles/tab.css" />
         <link rel="stylesheet" href="styles/content.css" />
+        <link rel="stylesheet" href="styles/viewer.css" />
         <title>app</title>
     </head>
     <body>
@@ -32,20 +31,65 @@
             <nav id="sidebar">
                 <div>
                     <span id="account" inert="true"></span>
-                    <button id="expand-sidebar-button" onclick="expandSidebar()">
+                    <button id="expand-sidebar-button" onclick="expandSidebar()" title="Expand sidebar">
                         <span>⨠</span>
                     </button>
                 </div>
-                <button id="chat-history-summary" class="rotate hidden" inert="true" onclick="expandChatHistory(event)">Chat History</button>
+                <button id="new-chat-button" class="hidden" inert="true" title="Create new chat" onclick="newChat(event)">
+                    <img src="assets/new-chat.svg" alt="">
+                    <span>New Chat</span>
+                </button>
+                <button id="chat-history-summary" class="rotate hidden" inert="true" onclick="expandChatHistory(event)" title="Expand chat history">Chat History</button>
                 <ul id="chat-history" class="hidden open" inert="true"></ul>
-                <button id="light-dark-mode" onclick="toggleTheme(event)">
+                <button id="light-dark-mode" onclick="toggleTheme(event)" title="Day/Night mode">
                     <img src="assets/light-mode.svg" alt="">
                 </button>
             </nav>
-            <main id="main"></main>
+            <main 
+                id="main">
+                <div id="chatbot-container">
+                    <div id="chat-messages-container">
+                        <div id="chat-messages">
+                            <div id="new-chat"></div>
+                        </div>
+                        <button id="scroll-top" class="hidden" inert="true" title="Scroll to start" onclick="scrollToTop()">
+                            <img src="assets/arrow-up.svg" alt="">
+                        </button>
+                        <button id="scroll-bottom" class="hidden" inert="true" title="Scroll to end" onclick="scrollToBottom()">
+                            <img src="assets/arrow-down.svg" alt="">
+                        </button>
+                    </div>
+                    <div id="chat-input-container">
+                        <input id="chat-input" type="text" placeholder="Type your message here...">
+                        <button id="chat-input-button" title="Send">
+                            <img src="assets/send-message.svg" alt="Send">
+                        </button>
+                    </div>
+                </div>
+                <div id="gutter">
+                    <img src="assets/gutter-drag.svg" alt="">
+                </div>
+                <div id="pdf-container">
+                    <!-- <div id="toolbar">
+                        <div id="toolbar-left-group">
+                            <button id="prev-page" title="Previous Page" tabindex="0">
+                                <img src="./assets/page-up.svg" alt="">
+                            </button>
+                            <button id="next-page" title="Next Page" tabindex="0">
+                                <img src="./assets/page-down.svg" alt="">
+                            </button>
+                            <input type="text" name="" id="page-number" value="1" autocomplete="off" title="page" tabindex="0">
+                            <span id="num-pages"></span>
+                        </div>
+                    </div>
+                    <div id="viewer-container"></div> -->
+                </div>
+            </main>
         </div>
     </body>
-    <script type="text/javascript" src="./sidebar.js"></script>
-    <script type="module" src="./renderer.js"></script>
     <script src="../node_modules/split-grid/dist/split-grid.js" type="module"></script>
+    <script type="text/javascript" src="./sidebar.js"></script>
+    <script type="module" src="./chatbot.js"></script>
+    <script type="module" src="./layout.js"></script>
+    <script type="module" src="./renderer.js"></script>
 </html>

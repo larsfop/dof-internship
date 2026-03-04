@@ -1,11 +1,14 @@
 const sidebar = document.getElementById('sidebar');
 const chatHistory = document.getElementById('chat-history');
 const account = document.getElementById('account');
+const newChatButton = document.getElementById('new-chat-button');
 const chatHistorySummary = document.getElementById('chat-history-summary');
 const minHeight = chatHistorySummary.clientHeight;
 const rect = chatHistory.getBoundingClientRect();
 let isExpanded = true;
 let animation = null;
+
+const chatMessages = document.getElementById('chat-messages');
 
 // Set max height of chat history based on sidebar height
 chatHistory.style.maxHeight = (sidebar.clientHeight - rect.top) + 'px';
@@ -18,9 +21,11 @@ function expandSidebar() {
     sidebar.classList.toggle('expanded');
     chatHistory.classList.toggle('hidden');
     chatHistorySummary.classList.toggle('hidden');
+    newChatButton.classList.toggle('hidden');
     chatHistory.inert = !chatHistory.inert;
     account.inert = !account.inert;
     chatHistorySummary.inert = !chatHistorySummary.inert;
+    newChatButton.inert = !newChatButton.inert;
 }
 
 function animateHeight(height, duration, reverse) {
@@ -36,8 +41,6 @@ function animateHeight(height, duration, reverse) {
 }
 
 function expandChatHistory(e) {
-    e.stopPropagation();
-
     // Rotate arrow
     chatHistorySummary.classList.toggle('rotate');
 
@@ -73,7 +76,6 @@ function expandChatHistory(e) {
 }
 
 function toggleTheme(e) {
-    e.stopPropagation();
     const isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
     const themeButtonImg = document.getElementById('light-dark-mode').querySelector('img');
     if (isDarkMode) {
@@ -82,5 +84,14 @@ function toggleTheme(e) {
     } else {
         document.documentElement.setAttribute('data-theme', 'dark');
         themeButtonImg.src = 'assets/light-mode.svg';
+    }
+}
+
+function newChat(e) {
+    var newChat = document.getElementById('new-chat');
+    if (!newChat) {
+        newChat = document.createElement('div');
+        newChat.id = 'new-chat';
+        chatMessages.prepend(newChat);
     }
 }

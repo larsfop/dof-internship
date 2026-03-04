@@ -1,0 +1,145 @@
+#pdf-container {
+    overflow: hidden;
+    background: rgb(32, 32, 32);
+
+    display: flex;
+    flex-direction: column;
+
+    > iframe {
+        border: none;
+        width: 100%;
+        height: 100%;
+    }
+
+    > iframe:not(:first-child) {
+        display: none;
+    }
+}
+
+#toolbar {
+    background : rgb(24, 24, 24);
+    box-shadow: 0px 1px 0px #151515;
+    padding: 2px 1px;
+    z-index: 2;
+
+    button {
+        width: 25px;
+        height: 25px;
+        background: transparent;
+        border: none;
+        border-radius: 8px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: 400ms ease;
+
+        > img {
+            width: 75%;
+            height: 75%;
+            filter: invert(100%);
+        }
+
+        &:hover {
+            background: rgb(48, 48, 48);
+        }
+    }
+
+}
+
+#toolbar-left-group {
+    display: flex;
+    gap: 0.5em;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#page-number {
+    width: 40px;
+    background: transparent;
+    border: 1px solid #4c4c4c;
+    border-radius: 4px;
+    color: white;
+    padding: 0.25em;
+    text-align: end;
+    background-size: 0 0;
+    outline: none;
+
+    &:focus {
+        border-color: #0a84ff;
+    }
+}
+
+
+
+#viewer-container {
+    justify-content: center;
+    align-items: center;
+    justify-self: center;
+    gap: 0.75em;
+    padding-block: 0.75em;
+    margin-inline: 1em;
+
+    overflow: auto;
+
+    > div {
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+        align-items: center;
+    }
+
+    > div.hidden {
+        display: none;
+    }
+}
+
+.page {
+    position: relative;
+    box-shadow: 0px 0px 8px #151515;
+    background: #ffffff;
+}
+
+.canvas-wrapper {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    transform-origin: top left;
+    will-change: transform;
+
+    > canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+}
+
+.textLayer {
+    line-height: 1;
+    inset: 0;
+    text-align: initial;
+    overflow: clip;
+    text-size-adjust: none;
+    forced-color-adjust: none;
+    transform-origin: 0 0;
+    caret-color: CanvasText;
+    z-index: 0;
+}
+
+.text-item {
+    position: absolute;
+    display: inline-block;
+    white-space: pre;
+    transform-origin: 0% 0%;
+    cursor: text;
+    color: transparent;
+    z-index: 0;
+    opacity: 0.2;
+
+    transform: translateY(4px); /* scaleX(1.1); */
+
+    &::selection {
+        background: blue;
+    }
+}

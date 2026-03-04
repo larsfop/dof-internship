@@ -119,6 +119,48 @@ body {
   z-index: 15;
 }
 
+/* -------------------------------------------------------------------------------
+                                  Main layout styles
+   ------------------------------------------------------------------------------ */
+
+#layout {
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas: 
+    "nav main"
+}
+
+#main {
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 0 0;
+  grid-template-rows: 1fr;
+}
+
+#gutter {
+  grid-column: 2;
+  background: var(--highlight);
+  transition: opacity 1.2s ease;
+  cursor: col-resize;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  > img {
+    width: 100%;
+    filter: var(--filter);
+  }
+
+  /* &:hover, &.dragging {
+    opacity: 1;
+  } */
+}
+
+
 /* ------------------------------------------------------------------------------
                                   Tooltip styles
    ------------------------------------------------------------------------------ */
