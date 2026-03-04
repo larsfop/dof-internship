@@ -217,7 +217,7 @@ def add_documents_to_vector_store(
         document_name: str, 
         config: PartitionConfig, 
     ) -> list[Document]:
-    connection_url = 'postgresql+psycopg://{user}:{password}@localhost:5432/postgres?sslmode=disable'.format(
+    connection_url = 'postgresql+psycopg://{user}:{password}@postgres:5432/postgres?sslmode=disable'.format(
         user=os.environ['POSTGRES_USER'],
         password=os.environ['POSTGRES_PASSWORD'],
     )
