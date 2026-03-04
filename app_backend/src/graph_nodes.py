@@ -25,7 +25,7 @@ CONFIG: Config = load_config(DATA_PATH / 'config.yaml')
 CONFIG_RAG: RAGConfig = CONFIG.rag_config
 
 # Setup RAG vector database
-db_uri = 'postgresql+psycopg://{user}:{password}@postgres:5432/postgres?sslmode=disable'.format(
+db_uri = 'postgresql://{user}:{password}@postgres:5432/postgres?sslmode=disable'.format(
     user=os.environ['POSTGRES_USER'],
     password=os.environ['POSTGRES_PASSWORD'],
 )
