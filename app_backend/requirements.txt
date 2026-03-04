@@ -22,3 +22,5 @@ pwdlib[argon2]
 pyjwt
 uuid
 pydantic
+argcomplete
+unidecode

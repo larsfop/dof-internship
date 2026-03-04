@@ -30,6 +30,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - API_SECRET_KEY=${API_SECRET_KEY}
       - API_ALGORITHM=${API_ALGORITHM}
+      - CONFIG_PATH=${CONFIG_PATH}
     depends_on:
       postgres:
         condition: service_healthy
