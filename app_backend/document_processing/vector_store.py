@@ -216,7 +216,7 @@ def add_documents_to_vector_store(
         document_name: str, 
         config: PartitionConfig, 
     ) -> list[Document]:
-    connection_url = 'postgresql://postgres:admin125@localhost:5435/postgres?sslmode=disable'
+    connection_url = 'postgresql+psycopg://postgres:admin125@localhost:5435/postgres?sslmode=disable'
     collection_name = config.collection_name
 
     embeddings = OpenAIEmbeddings(model=config.embedding_model)
