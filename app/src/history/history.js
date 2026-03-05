@@ -37,7 +37,11 @@ export function addHistoryEntry(sessionID, sessionName) {
         const menuContainerButton = newHTMLElement('button', entryContainer, {
             className: 'history-entry-container-menu-button',
             title: 'Chat session options',
-            'textContent': '⋯',
+        });
+
+        newHTMLElement('img', menuContainerButton, {
+            src: 'assets/hdots.svg',
+            alt: 'Menu',
         });
 
         const menuContainer = newHTMLElement('div', entryContainer, {
@@ -144,7 +148,7 @@ async function onClickHandler(sessionID, sessionName) {
         const data = await response.json();
         loadChatSession(sessionID, data, sessionName);
     }
-    
+
     const chatMessagesContainer = document.getElementById('chat-messages-container');
     const scrollTopButton = document.getElementById('scroll-top');
     const scrollBottomButton = document.getElementById('scroll-bottom');

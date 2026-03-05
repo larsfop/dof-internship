@@ -32,14 +32,17 @@
                 <div>
                     <span id="account" inert="true"></span>
                     <button id="expand-sidebar-button" onclick="expandSidebar()" title="Expand sidebar">
-                        <span>⨠</span>
+                        <img src="assets/expand-right.svg" alt="">
                     </button>
                 </div>
                 <button id="new-chat-button" class="hidden" inert="true" title="Create new chat" onclick="newChat(event)">
                     <img src="assets/new-chat.svg" alt="">
                     <span>New Chat</span>
                 </button>
-                <button id="chat-history-summary" class="rotate hidden" inert="true" onclick="expandChatHistory(event)" title="Expand chat history">Chat History</button>
+                <button id="chat-history-summary" class="rotate hidden" inert="true" onclick="expandChatHistory(event)" title="Expand chat history">
+                    <img src="assets/triangle-right.svg" alt="">
+                    <span>Chat History</span>
+                </button>
                 <ul id="chat-history" class="hidden open" inert="true"></ul>
                 <button id="light-dark-mode" onclick="toggleTheme(event)" title="Day/Night mode">
                     <img src="assets/light-mode.svg" alt="">
