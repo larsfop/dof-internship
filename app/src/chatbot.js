@@ -1,6 +1,6 @@
 import { newHTMLElement, toggleHidden } from './utils/html-helper-functions.js';
 import { addHistoryEntry } from './history/history.js';
-import { displayPDF } from './event-handlers.js';
+import { displayPDF } from './pdf.js';
 
 const chatInput = document.getElementById('chat-input');
 const button = document.getElementById('chat-input-button');
@@ -152,7 +152,7 @@ async function chatResponse(contentBlock, message, messageContainer) {
     const sessionID = messageContainer.id.replace('chat:', '');
     const queryParams = new URLSearchParams({
         prompt: message,
-        user_id: sessionStorage.getItem('userID'),
+        user_id: localStorage.getItem('userID'),
         session_id: sessionID
     })
 
@@ -174,7 +174,6 @@ async function chatResponse(contentBlock, message, messageContainer) {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`
         }
     });
 

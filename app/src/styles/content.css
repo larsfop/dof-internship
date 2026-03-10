@@ -3,16 +3,40 @@
   display: grid;
 
   min-width: 300px;
-}
 
-/* #pdf-container {
-  display: grid;
+  > button {
+    height: 32px;
+    width: 32px;
+    justify-self: center;
+    transition: opacity 0.3s ease;
+    position: absolute;
+    opacity: 1;
+    z-index: 10;
 
-  > iframe {
-    grid-area: 1/1;
     border: none;
+    border-radius: 50%;
+    background: var(--bg-light);
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+      background: var(--highlight);
+    }
+
+    &.hidden {
+      opacity: 0;
+    }
+
+    > img {
+      width: 75%;
+      height: 75%;
+      filter: var(--filter);
+    }
   }
-} */
+}
 
 #chat-input-container {
   background: var(--bg-light);
@@ -26,6 +50,7 @@
   border: none;
   border-radius: 18px;
   z-index: 2;
+  box-shadow: 0px 0px 8px #151515;
 
   grid-area: 1/1;
   position: relative;
@@ -72,44 +97,7 @@
 
 #chat-messages-container {
   grid-area: 1/1;
-  display: grid;
   overflow: auto;
-
-  > * {
-    grid-area: 1/1;
-  }
-
-  > button {
-    height: 32px;
-    width: 32px;
-    justify-self: center;
-    transition: opacity 0.3s ease;
-    position: absolute;
-    opacity: 1;
-
-    border: none;
-    border-radius: 50%;
-    background: var(--bg-light);
-    cursor: pointer;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    &:hover {
-      background: var(--highlight);
-    }
-
-    &.hidden {
-      opacity: 0;
-    }
-
-    > img {
-      width: 75%;
-      height: 75%;
-      filter: var(--filter);
-    }
-  }
 }
 
 #chat-messages > :not(:first-child) {
@@ -125,14 +113,6 @@
   align-self: end;
   bottom: 100px;
 }
-
-/* #chat-messages {
-  display: grid;
-
-  > div:not(:first-child) {
-    display: none;
-  }
-} */
 
 .chat-threads {
   display: flex;
@@ -261,7 +241,9 @@ cite {
 
 table {
   width: 100%;
-  word-break: break-all;
+  display: block;
+  border: none;
+  overflow-x: auto;
 }
 
 table, th, td {

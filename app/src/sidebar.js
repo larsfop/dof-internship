@@ -23,7 +23,6 @@ function expandSidebar() {
     chatHistorySummary.classList.toggle('hidden');
     newChatButton.classList.toggle('hidden');
     chatHistory.inert = !chatHistory.inert;
-    account.inert = !account.inert;
     chatHistorySummary.inert = !chatHistorySummary.inert;
     newChatButton.inert = !newChatButton.inert;
 }

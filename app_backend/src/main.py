@@ -31,16 +31,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.post("/token")
-async def login(
-    form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
-) -> Token:
-    return login_for_access_token(form_data)
-
-
 @app.get('/prompt')
 async def prompt(
-    user: Annotated[UserInDB, Depends(get_current_user)],
     prompt: str, 
     user_id: str = 'test_user',
     session_id: str = 'test_session',
@@ -55,7 +47,6 @@ async def prompt(
 
 @app.get("/pdf")
 async def get_pdf(
-    user: Annotated[UserInDB, Depends(get_current_user)],
     name: str
 ):
     pdf_path = get_pdf_path(name)
@@ -70,7 +61,6 @@ async def get_pdf(
 
 @app.get('/create_user')
 async def create_user(
-    user: Annotated[UserInDB, Depends(get_current_user)],
     username: str, 
     password: str, 
     user_id: str|None = None
@@ -80,14 +70,13 @@ async def create_user(
 
 @app.get('/get_sessions')
 async def app_get_sessions(
-    user: Annotated[UserInDB, Depends(get_current_user)]
+    user_id: str|None = None,
 ):
-    return get_sessions(user.userID)
+    return get_sessions(user_id)
     
 
 @app.get('/get_chat')
 async def app_get_chat(
-    user: Annotated[UserInDB, Depends(get_current_user)],
     session_id: str
 ):
     return get_chat(session_id)
@@ -95,7 +84,6 @@ async def app_get_chat(
 
 @app.get('/remove_session')
 async def app_remove_session(
-    user: Annotated[UserInDB, Depends(get_current_user)],
     session_id: str,
 ):
     return delete_session(session_id)
@@ -103,7 +91,6 @@ async def app_remove_session(
 
 @app.post('/update_session_name')
 def app_update_session_name(
-    user: Annotated[UserInDB, Depends(get_current_user)],
     session_id: str,
     new_name: str
 ):

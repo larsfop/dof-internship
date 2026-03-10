@@ -2,11 +2,11 @@ import { newHTMLElement, toggleHidden } from "../utils/html-helper-functions.js"
 import { loadChatSession } from "../chatbot.js";
 
 export async function loadHistory() {
-    const response = await fetch('http://192.168.0.71:8015/get_sessions', {
+    const userID = localStorage.getItem('userID');
+    const response = await fetch(`http://192.168.0.71:8015/get_sessions?user_id=${userID}`, {
         method: 'GET',
         headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`
+            'Content-Type': 'application/json'
         }
     });
     const data = await response.json();
@@ -142,7 +142,6 @@ async function onClickHandler(sessionID, sessionName) {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`
             }
         });
         const data = await response.json();
@@ -171,7 +170,6 @@ async function removeHistoryEntry(sessionID) {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`
             },
         });
     }

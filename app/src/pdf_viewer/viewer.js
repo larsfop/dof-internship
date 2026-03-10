@@ -70,6 +70,20 @@ async function loadPDF(url) {
     return pdf;
 }
 
+pageContainer.onclick = function(e) {
+    const startTime = performance.now();
+    const pageDiv = e.target.closest('.page');
+    console.log(pageDiv)
+    for (const span of pageDiv.querySelectorAll('.text-item')) {
+        const rect = span.getBoundingClientRect();
+        if (e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom) {
+            // console.log(span.innerText);
+            return;
+        }
+    }
+    window.getSelection().removeAllRanges();
+    console.log('Execution time: ' + (performance.now() - startTime) + 'ms');
+}
 
 class PDFViewer {
     constructor(pdf, container, pdfName, scale=1.0, pageBuffer=2, scaleMethod=null) {
@@ -110,31 +124,13 @@ class PDFViewer {
             pageDiv.dataset.rendered = false;
 
             this.pdf.getPage(pageNumber).then(page => {
-                const viewport = page.getViewport({ scale: this.scale });
-                pageDiv.style.width = `${Math.floor(viewport.width)}px`;
-                pageDiv.style.height = `${Math.floor(viewport.height)}px`;
+                const viewport = page.getViewport({ scale: 1 });
+                pageDiv.style.width = `round(down, var(--scale-factor) * ${viewport.width}px, 1px)`;
+                pageDiv.style.height = `round(down, var(--scale-factor) * ${viewport.height}px, 1px)`;
             });
 
             this.container.appendChild(pageDiv);
         }
-
-        // this.container.addEventListener('pageEnter', function(e) {
-        //     const pageNumber = e.detail.pageNumber;
-        //     this.renderPage(pageNumber);
-        // }.bind(this));
-
-        // this.container.addEventListener('pageLeave', function(e) {
-        //     const pageDiv = e.detail.pageDiv;
-        //     if (pageDiv.dataset.rendered === 'false') return;
-        //     pageDiv.innerHTML = '';
-        //     pageDiv.dataset.rendered = 'false';
-
-        // }.bind(this));
-
-        this.container.addEventListener('scale', function(e) {
-            const newScale = e.detail.newScale;
-            this.scaleViewer(newScale);
-        }.bind(this));
 
         function debounce(func) {
             var timer;
@@ -142,7 +138,12 @@ class PDFViewer {
                 if (timer) clearTimeout(timer);
                 timer = setTimeout(func, 400, event);
             }
-        }
+        };
+
+        this.container.addEventListener('scale', function(e) {
+            const newScale = e.detail.newScale;
+            this.scaleViewer(newScale);
+        }.bind(this));
 
         window.addEventListener('resize', debounce(async function(e) {
             console.log('Window resized');
@@ -161,39 +162,22 @@ class PDFViewer {
 
     renderVisiblePages() {
         const viewportObserver = new IntersectionObserver(entries => {
-            let mostVisible = null;
-            let maxRatio = 0;
-
+            // const startTime = performance.now();
             for (const entry of entries) {
-                if (entry.intersectionRatio > maxRatio) {
-                    maxRatio = entry.intersectionRatio;
-                    mostVisible = entry.target;
+                if (entry.isIntersecting) {
+                    if (entry.intersectionRect.y < entry.intersectionRect.height) {
+                        if (entry.intersectionRatio > 0.5 || entry.intersectionRect.height + entry.intersectionRect.y >= entry.target.clientHeight) {
+                            this.currentPage = parseInt(entry.target.dataset.pageNumber, 10);
+                            pageNumberInput.value = this.currentPage;
+                        } else {
+                            this.currentPage = parseInt(entry.target.dataset.pageNumber, 10) + 1;
+                            pageNumberInput.value = this.currentPage;
+                        }
+                    }
+                    this.updateRenderedPages();
                 }
             }
-
-            if (mostVisible) {
-                const pageNumber = parseInt(mostVisible.dataset.pageNumber, 10);
-                this.currentPage = pageNumber;
-                pageNumberInput.value = pageNumber;
-                numPagesSpan.innerText = `${pageNumber} / ${this.numPages}`;
-                this.updateRenderedPages();
-            }
-
-
-
-
-            // for (const entry of entries) {
-            //     const pageNumber = parseInt(entry.target.dataset.pageNumber, 10);
-            //     if (entry.isIntersecting) {
-            //         this.container.dispatchEvent(
-            //             new CustomEvent('pageEnter', { detail: { pageNumber: pageNumber, pageDiv: entry.target } })
-            //         );
-            //     } else {
-            //         this.container.dispatchEvent(
-            //             new CustomEvent('pageLeave', { detail: { pageNumber: pageNumber, pageDiv: entry.target } })
-            //         );
-            //     }
-            // }
+            // console.log('Render pass in ms:', performance.now() - startTime);
         }, { 
             threshold: [0, 0.25, 0.5, 0.75, 1]
         });
@@ -204,10 +188,6 @@ class PDFViewer {
 
         const resizeObserver = new ResizeObserver(async entries => {
             if (this.scaleMethod !== "auto") return;
-            for (const entry of entries) {
-
-            }
-
             for (const entry of entries) {
                 if (entry.target === this.container) {
                     const containerWidth = entry.contentRect.width;
@@ -247,12 +227,15 @@ class PDFViewer {
     async scaleViewer(newScale) {
         this.scale = newScale;
         this.transform = [newScale, 0, 0, newScale, 0, 0];
-        for (const pageDiv of this.container.children) {
-            const width = Math.floor(this.width * this.scale);
-            const height = Math.floor(this.height * this.scale);
-            pageDiv.style.width = `${width}px`;
-            pageDiv.style.height = `${height}px`;
-        }
+        this.container.style.setProperty('--scale-factor', newScale);
+
+
+        // for (const pageDiv of this.container.children) {
+        //     const width = Math.floor(this.width * this.scale);
+        //     const height = Math.floor(this.height * this.scale);
+        //     pageDiv.style.width = `${width}px`;
+        //     pageDiv.style.height = `${height}px`;
+        // }
     }
 
     async renderPages(pageNumbers) {
@@ -267,13 +250,12 @@ class PDFViewer {
         }
         const pageDiv = this.container.children[pageNumber - 1];
         if (pageDiv.dataset.rendered === 'true') return;
+        pageDiv.dataset.rendered = 'true';
 
         const page = await this.pdf.getPage(pageNumber);
 
         this.render(page, pageDiv);
         this.renderTextLayer(page, pageDiv);
-
-        pageDiv.dataset.rendered = 'true';
     }
 
     async render(page, pageDiv) {
@@ -281,10 +263,8 @@ class PDFViewer {
 
         const canvasWrapper = document.createElement('div');
         canvasWrapper.className = 'canvas-wrapper';
-        pageDiv.appendChild(canvasWrapper);
         const canvas = document.createElement('canvas');
         const context = canvas.getContext('2d');
-        canvasWrapper.appendChild(canvas);
 
         canvas.width = Math.floor(viewport.width * this.scale * window.devicePixelRatio);
         canvas.height = Math.floor(viewport.height * this.scale * window.devicePixelRatio);
@@ -295,7 +275,11 @@ class PDFViewer {
             transform: this.transform,
             viewport: viewport
         };
-        page.render(renderContext);
+        if (pageDiv.children.length < 1) {
+            page.render(renderContext);
+        }
+        pageDiv.appendChild(canvasWrapper);
+        canvasWrapper.appendChild(canvas);
     }
 
     async renderTextLayer(page, pageDiv) {
@@ -356,7 +340,6 @@ export async function newPDFViewer(pdfUrl, pageContainer, id='viewer') {
     const pdf = await loadPDF(pdfUrl);
     const viewer = new PDFViewer(pdf, viewerContainer, pdfUrl, 1.5, 2, "auto");
     await viewer.init();
-    await viewer.renderPage(1);
     viewer.renderVisiblePages();
     pageContainer.appendChild(viewerContainer);
 

@@ -37,6 +37,7 @@ def create_user(userID: str|UUID, username: str, hashed_password: str):
 
 def new_session(session_id: str, user_id: str, name: str, date_time: str|None = None) -> None:
     date_time = datetime.now().isoformat() if date_time is None else date_time
+    print(user_id, flush=True)
     try:
         CURSOR.execute(
             """

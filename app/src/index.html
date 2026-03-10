@@ -14,23 +14,9 @@
         <title>app</title>
     </head>
     <body>
-        <div class="create-user hidden" inert="true">
-            <form id="signup-form" novalidate>
-                <h1>Sign in</h1>
-                <div>
-                    <input type="text" id="username" name="username" placeholder="Enter username" required />
-                </div>
-                <div>
-                    <input type="password" id="password" name="password" placeholder="Enter password" required />
-                </div>
-                <button type="submit">Sign in</button>
-            </form>
-            <div class="background-blur"></div>
-        </div>
         <div id="layout">
             <nav id="sidebar">
                 <div>
-                    <span id="account" inert="true"></span>
                     <button id="expand-sidebar-button" onclick="expandSidebar()" title="Expand sidebar">
                         <img src="assets/expand-right.svg" alt="">
                     </button>
@@ -55,13 +41,13 @@
                         <div id="chat-messages">
                             <div id="new-chat"></div>
                         </div>
-                        <button id="scroll-top" class="hidden" inert="true" title="Scroll to start" onclick="scrollToTop()">
-                            <img src="assets/arrow-up.svg" alt="">
-                        </button>
-                        <button id="scroll-bottom" class="hidden" inert="true" title="Scroll to end" onclick="scrollToBottom()">
-                            <img src="assets/arrow-down.svg" alt="">
-                        </button>
                     </div>
+                    <button id="scroll-top" class="hidden" inert="true" title="Scroll to start" onclick="scrollToTop()">
+                        <img src="assets/arrow-up.svg" alt="">
+                    </button>
+                    <button id="scroll-bottom" class="hidden" inert="true" title="Scroll to end" onclick="scrollToBottom()">
+                        <img src="assets/arrow-down.svg" alt="">
+                    </button>
                     <div id="chat-input-container">
                         <input id="chat-input" type="text" placeholder="Type your message here...">
                         <button id="chat-input-button" title="Send">
@@ -73,7 +59,7 @@
                     <img src="assets/gutter-drag.svg" alt="">
                 </div>
                 <div id="pdf-container">
-                    <!-- <div id="toolbar">
+                    <div id="toolbar">
                         <div id="toolbar-left-group">
                             <button id="prev-page" title="Previous Page" tabindex="0">
                                 <img src="./assets/page-up.svg" alt="">
@@ -85,7 +71,7 @@
                             <span id="num-pages"></span>
                         </div>
                     </div>
-                    <div id="viewer-container"></div> -->
+                    <div id="viewer-container"></div>
                 </div>
             </main>
         </div>

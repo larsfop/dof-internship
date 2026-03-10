@@ -32,7 +32,7 @@ try:
     CURSOR.execute("""
         CREATE TABLE IF NOT EXISTS sessions (
             sessionID UUID PRIMARY KEY,
-            userID UUID REFERENCES users(userID),
+            userID UUID,
             name TEXT NOT NULL,
             createdAt TIMESTAMP DEFAULT now(),
             updatedAt TIMESTAMP DEFAULT now()
