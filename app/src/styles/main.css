@@ -8,7 +8,7 @@
 @media (prefers-color-scheme: light) {
 }
 
-:root[data-theme="dark"] {
+:root {
   --bg-dark: oklch(0.12 0 20);
   --bg: oklch(0.18 0 20);
   --bg-light: oklch(0.26 0 20);
@@ -44,6 +44,7 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  color: var(--text);
 }
 
 p::first-letter {
@@ -72,51 +73,7 @@ html {
 }
 
 body {
-  overflow: hidden;
   min-height: 100vh;
-}
-
-
-/* ------------------------------------------------------------------------------
-                                  Signup/Login styles
-   ------------------------------------------------------------------------------ */
-
-.create-user {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  position: absolute;
-  width: 100vw;
-
-  &.hidden {
-    display: none;
-  }
-}
-
-#signup-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  background: var(--bg-light);
-  padding: 24px;
-  border-radius: 12px;
-  box-shadow: 0px 0px 8px #151515;
-  z-index: 20;
-}
-
-.background-blur {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: var(--bg-dark);
-  opacity: 0.6;
-  backdrop-filter: blur(8px);
-  z-index: 15;
 }
 
 /* -------------------------------------------------------------------------------
@@ -154,37 +111,4 @@ body {
     width: 100%;
     filter: var(--filter);
   }
-
-  /* &:hover, &.dragging {
-    opacity: 1;
-  } */
-}
-
-
-/* ------------------------------------------------------------------------------
-                                  Tooltip styles
-   ------------------------------------------------------------------------------ */
-   
-[data-tooltip] {
-  position: relative;
-}
-
-[data-tooltip]::after {
-  content: attr(data-tooltip);
-  position: absolute;
-  top: 110%;
-  left: 4%;
-  background: var(--bg-light);
-  color: var(--text);
-  padding: 4px 8px;
-  border-radius: 12px;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s ease;
-  z-index: 11;
-}
-
-[data-tooltip]:hover::after {
-  opacity: 1;
 }

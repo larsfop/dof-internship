@@ -44,6 +44,7 @@ dependencies = [
     "jsonb",
     "tqdm",
     "gptcache",
+    "watchdog",
 ]
 
 [project.optional-dependencies]

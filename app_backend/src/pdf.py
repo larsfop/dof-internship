@@ -80,7 +80,7 @@ def create_pdfs_from_embeddings(documents: list):
                 DocumentPDF(
                     name=name,
                     pages=pages,
-                    page_labels=page_labels,
+                    pageLabels=page_labels,
                     data=newdoc.as_base64()
                 )
             )

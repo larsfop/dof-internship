@@ -3,8 +3,6 @@
 import os
 from pathlib import Path
 import argparse
-import argcomplete
-from argcomplete.completers import BaseCompleter, FilesCompleter, DirectoriesCompleter, ChoicesCompleter, EnvironCompleter
 import pymupdf
 import numpy as np
 import json
@@ -12,7 +10,7 @@ from langchain_core.documents import Document
 import shutil
 
 from utility import load_config, load_partitions, crop_partitions, Timer, write_to_file, read_from_file
-# from unstructured_read_pdf import chunk_pdf
+from unstructured_read_pdf import chunk_pdf
 from partition_processing import process_partitions
 from vector_store import add_documents_to_vector_store, prepare_documents
 
@@ -37,31 +35,31 @@ def main(
         output_path.mkdir(parents=True, exist_ok=True)
 
         # Process partitions using the Unstructured library
-        # if is_partitioning:
-        #     while True:
-        #         if load_checkpoint:
-        #             try:
-        #                 with open(output_path / f'unstructured_partitions_{config.strategy}.json', 'r') as f:
-        #                     _ = json.load(f)
-        #                 print(f"Loaded existing partitions for {filename}, skipping partitioning step.")
+        if is_partitioning:
+            while True:
+                if load_checkpoint:
+                    try:
+                        with open(output_path / f'unstructured_partitions_{config.strategy}.json', 'r') as f:
+                            _ = json.load(f)
+                        print(f"Loaded existing partitions for {filename}, skipping partitioning step.")
 
-        #                 break
-        #             except FileNotFoundError:
-        #                 print(f"No existing partitions found for {filename}, proceeding with partitioning.")
+                        break
+                    except FileNotFoundError:
+                        print(f"No existing partitions found for {filename}, proceeding with partitioning.")
 
-        #         try:
-        #             shutil.copy2(output_path / f'unstructured_partitions_{config.strategy}.json', output_path / f'unstructured_partitions_{config.strategy}_backup.json')
-        #         except FileNotFoundError:
-        #             pass
+                try:
+                    shutil.copy2(output_path / f'unstructured_partitions_{config.strategy}.json', output_path / f'unstructured_partitions_{config.strategy}_backup.json')
+                except FileNotFoundError:
+                    pass
 
-        #         with Timer(exit_msg='Finished partitioning PDF'):
-        #             chunk_pdf(
-        #                 file_path=file_path,
-        #                 output_dir=output_path,
-        #                 strategy=config.strategy
-        #             )
+                with Timer(exit_msg='Finished partitioning PDF'):
+                    chunk_pdf(
+                        file_path=file_path,
+                        output_dir=output_path,
+                        strategy=config.strategy
+                    )
 
-        #         break
+                break
 
         data = None
         with pymupdf.open(file_path) as doc:
@@ -123,6 +121,7 @@ def main(
                     add_documents_to_vector_store(
                         documents,
                         filename,
+                        file_path,
                         config,
                     )
                     print(f"Added {len(documents)} documents to the vector store.")
@@ -146,9 +145,9 @@ if __name__ == "__main__":
     pdf_dir = Path(config.pdf_dir_path)
 
     parser = argparse.ArgumentParser(description="Process document partitions based on configuration.")
-    args = parser.add_argument(
+    parser.add_argument(
         'filenames', type=str, nargs='*', help="List of filenames to process. Can be partial names. Default: all PDFs in the specified directory."
-    ).completer = FilesCompleter(allowednames=('.pdf',))
+    )
     parser.add_argument(
         '-p', action='store_true', help="Process all PDFs in the specified directory."
     )
@@ -165,7 +164,6 @@ if __name__ == "__main__":
         '-cp', '--load_checkpoint', action='store_true', help="Load existing vector store checkpoint if available. Default: False"
     )
 
-    argcomplete.autocomplete(parser)
     args = parser.parse_args()
 
     input_dir = Path(args.input_dir) if args.input_dir else pdf_dir
@@ -176,7 +174,7 @@ if __name__ == "__main__":
     if not args.filenames:
         files.update(input_dir.rglob('*.pdf'))
     for filename in args.filenames:
-        files.update(input_dir.glob(f'*{filename}*.pdf'))
+        files.update(input_dir.rglob(f'*{filename}*.pdf'))
 
     print(files)
 

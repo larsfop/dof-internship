@@ -13,13 +13,11 @@ from typing import Annotated
 from pathlib import Path
 
 from pdf import get_pdf_path
-from logger.logger import setup_logger
-from database import delete_session, get_sessions, get_chat, update_session_name
-from user_authentication import login_for_access_token, get_current_user, create_new_user
-from pydantic_classes import Token, UserInDB
-from response_generation import generate_response
+from database import delete_session, fetch_all_pdfs, get_sessions, get_chat, update_session_name, get_pdf
+from RAG import generate_response
+from document_processing import chunk_and_store_document
 
-setup_logger(Path(os.environ['DATA_PATH']) / 'configs/logger_config.toml')
+logger = logging.getLogger('main')
 
 app = FastAPI()
 
@@ -46,7 +44,7 @@ async def prompt(
 
 
 @app.get("/pdf")
-async def get_pdf(
+async def app_get_pdf(
     name: str
 ):
     pdf_path = get_pdf_path(name)
@@ -57,15 +55,6 @@ async def get_pdf(
         content=pdf_bytes,
         media_type='application/pdf',
     )
-
-
-@app.get('/create_user')
-async def create_user(
-    username: str, 
-    password: str, 
-    user_id: str|None = None
-):
-    create_new_user(username, password, user_id)
     
 
 @app.get('/get_sessions')
@@ -96,6 +85,28 @@ def app_update_session_name(
 ):
     update_session_name(session_id, new_name)
     return {"message": f"Session with ID '{session_id}' renamed to '{new_name}' successfully."}
+
+
+@app.get('/get_pdf')
+async def app_get_pdf(
+    filename: str
+):
+    return get_pdf(filename)
+
+
+@app.get('/fetch_all_pdfs')
+async def app_fetch_all_pdfs():
+    return fetch_all_pdfs()
+
+
+file_path = Path(os.environ["MOUNT_PATH"])
+@app.post('/process_pdf')
+async def app_process_pdf(
+    filename: str,
+) -> None:
+    files = file_path.rglob(filename)
+    for file in files:
+        chunk_and_store_document(file)
 
 
 async def main():

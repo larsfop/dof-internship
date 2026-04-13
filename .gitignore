@@ -1,8 +1,3 @@
-app/node_modules
-app/*.yml
-app/out
-test
-
 mysql_connection.json
 *.txt
 *.pdf
@@ -17,3 +12,5 @@ uv*
 
 !app_backend/src/partition/*json
 !app_backend/requirements.txt
+
+tauri-test

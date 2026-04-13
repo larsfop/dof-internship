@@ -3,7 +3,8 @@ import psycopg
 from psycopg.rows import dict_row
 import logging
 from pathlib import Path
-from logger.logger import setup_logger
+
+logger = logging.getLogger("main")
 
 # db_uri = 'postgresql://postgres:admin125@localhost:5435/postgres?sslmode=disable'
 db_uri = 'postgresql://{user}:{password}@postgres:5432/postgres?sslmode=disable'.format(
@@ -13,8 +14,6 @@ db_uri = 'postgresql://{user}:{password}@postgres:5432/postgres?sslmode=disable'
 CONNECTION = psycopg.connect(db_uri, row_factory=dict_row)
 CURSOR = CONNECTION.cursor()
 
-setup_logger(Path(os.environ['DATA_PATH']) / 'configs/logger_config.toml')
-logger = logging.getLogger('main')
 
 logger.info("Setting up databases...")
 try:
@@ -88,6 +87,16 @@ try:
         USING ivfflat (embedding vector_cosine_ops) 
         WITH (lists = 100);
         CREATE INDEX IF NOT EXISTS idx_cache_citations_cacheID ON cache_citations(cacheID);
+    """)
+
+    # Prepare pdf tables
+    CURSOR.execute("""
+        CREATE TABLE IF NOT EXISTS pdfs (
+            id UUID PRIMARY KEY,
+            documentName TEXT NOT NULL UNIQUE,
+            documentPath TEXT NOT NULL,
+            category TEXT
+        );
     """)
     CONNECTION.commit()
     logger.info("Databases setup complete")

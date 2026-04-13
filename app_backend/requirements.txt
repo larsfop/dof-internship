@@ -25,3 +25,4 @@ uuid
 pydantic
 argcomplete
 unidecode
+watchdog

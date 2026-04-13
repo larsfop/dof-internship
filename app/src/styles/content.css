@@ -40,12 +40,11 @@
 
 #chat-input-container {
   background: var(--bg-light);
-  height: 40px;
   width: min(80%, 600px);
   justify-self: center;
   display: flex;
   gap: 8px;
-  padding: 8px 12px;
+  padding: 0.5rem 0.75rem;
   align-items: center;
   border: none;
   border-radius: 18px;
@@ -57,17 +56,26 @@
   bottom: 2em;
   align-self: end;
 
-  > input {
+  anchor-name: --chat-input-container;
+
+  > #chat-input {
     width: 100%;
     background-color: transparent;
     border: none;
     outline: none;
     font-size: 16px;
-    height: 32px;
     color: var(--text);
 
     &::placeholder {
       color: var(--text-muted);
+    }
+
+    &:focus {
+      outline: blue auto 1px;
+    }
+
+    &:not(:empty) + #chat-input-placeholder {
+      display: none;
     }
   }
 
@@ -95,6 +103,16 @@
   }
 }
 
+#chat-input:not(:empty) + #chat-input-placeholder {
+  display: none;
+}
+
+#chat-input:empty + #chat-send-button {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 #chat-messages-container {
   grid-area: 1/1;
   overflow: auto;
@@ -104,16 +122,6 @@
   display: none;
 }
 
-#scroll-top {
-  align-self: start;
-  top: 30px;
-}
-
-#scroll-bottom {
-  align-self: end;
-  bottom: 100px;
-}
-
 .chat-threads {
   display: flex;
   flex-direction: column;
@@ -121,16 +129,10 @@
   opacity: 1;
   grid-area: 1/1;
   scrollbar-gutter: stable;
-  padding-top: 12px;
   padding-bottom: 100px;
 
-  > hr {
-    width: min(80%, 800px);
-    margin-block: 12px;
-  }
-
-  &.hidden {
-    opacity: 0;
+  > div:not(:first-child) {
+    border-top: .15rem solid var(--text-muted);
   }
 }
 
@@ -147,17 +149,19 @@ cite {
   flex-direction: column;
   gap: 2.5em;
   width: min(80%, 800px);
+  padding-block: 1.5rem;
 }
 
-.input-message {
+.input-block {
+  align-self: flex-end;
+  position: relative;
   background: var(--bg-light);
-  padding: 10px 16px;
+  min-height: 2.5rem;
+  padding: 0.75rem 0.75rem;
   border: 0px solid;
   border-radius: 12px;
   max-width: 69%;
-  align-self: flex-end;
-
-  position: relative;
+  word-break: break-word;
 
   &:hover .input-options {
     opacity: 1;
@@ -166,13 +170,11 @@ cite {
 
 .input-options {
   display: flex;
-  gap: 6px;
-
-  height: 2em;
+  gap: 0.1rem;
 
   position: absolute;
-  right: 0.5em;
-  bottom: -2.2em;
+  right: 0.5rem;
+  bottom: -2.2rem;
 
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -210,32 +212,19 @@ cite {
 }
 
 .content-button {
-  width: 2em;
-  height: 2em;
-  border: none;
-  border-radius: 6px;
-  background: transparent;
+  width: 1.75rem;
+  height: 1.75rem;
 
   position: absolute;
-  right: 0.5em;
-  top: 0.5em;
+  right: 0.5rem;
+  top: 0.5rem;
 
   cursor: pointer;
   opacity: 0;
   transition: opacity 0.2s ease;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
   &:hover {
     background: var(--highlight); 
-  }
-
-  > img {
-    width: 75%;
-    height: 75%;
-    filter: var(--filter);
   }
 }
 
@@ -250,6 +239,7 @@ table, th, td {
   border-width: 1px;
   border-style: solid;
   border-collapse: collapse;
+  margin-block: 1rem;
 }
 
 th, td {

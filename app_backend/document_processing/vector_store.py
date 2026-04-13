@@ -12,8 +12,12 @@ import numpy as np
 import pymupdf
 import time
 from tqdm import tqdm
+import logging
+from pathlib import Path
 
 from class_objects import PartitionConfig
+
+logger = logging.getLogger('main')
 
 IMAGE_MODEL = ChatOpenAI(model_name='o4-mini', service_tier='flex')
 TABLE_MODEL = ChatOpenAI(model_name='o4-mini', service_tier='flex')
@@ -90,7 +94,7 @@ def image_document(image_data: dict, texts: list[dict], pdf: pymupdf.Document) -
             )
             time.sleep(0.1)  # Placeholder for actual API call
         except RateLimitError:
-            print('Token quota reached!')
+            logger.warning('Token quota reached!')
             user_input = input('Continue creating vectors? (y/n): ').strip().lower()
             if user_input == 'y':
                 continue
@@ -143,7 +147,7 @@ def table_document(table_data: dict, texts: list[dict], pdf: pymupdf.Document) -
             )
             time.sleep(0.1)  # Placeholder for actual API call
         except RateLimitError:
-            print('Token quota reached!')
+            logger.warning('Token quota reached!')
             user_input = input('Continue creating vectors? (y/n): ').strip().lower()
             if user_input == 'y':
                 continue
@@ -207,7 +211,7 @@ def prepare_documents(data: list[dict], pdf: pymupdf.Document, start_index: int 
                     )
 
     except KeyboardInterrupt:
-        print('Process interrupted by user. Returning documents created so far.')
+        logger.warning('Process interrupted by user. Returning documents created so far.')
     finally:
         return documents
 
@@ -215,13 +219,17 @@ def prepare_documents(data: list[dict], pdf: pymupdf.Document, start_index: int 
 def add_documents_to_vector_store(
         documents: list[Document],
         document_name: str, 
+        file_path: Path,
         config: PartitionConfig, 
     ) -> list[Document]:
-    # connection_url = 'postgresql+psycopg://{user}:{password}@postgres:5432/postgres?sslmode=disable'.format(
-    #     user=os.environ['POSTGRES_USER'],
-    #     password=os.environ['POSTGRES_PASSWORD'],
-    # )
-    connection_url = 'postgresql://postgres:admin125@192.168.50.20:5435/postgres?sslmode=disable'
+    pg_url = 'postgresql://{user}:{password}@postgres:5432/postgres?sslmode=disable'.format(
+        user=os.environ['POSTGRES_USER'],
+        password=os.environ['POSTGRES_PASSWORD'],
+    )
+    sqlalchemy_url = 'postgresql+psycopg://{user}:{password}@postgres:5432/postgres?sslmode=disable'.format(
+        user=os.environ['POSTGRES_USER'],
+        password=os.environ['POSTGRES_PASSWORD'],
+    )
     collection_name = config.collection_name
 
     embeddings = OpenAIEmbeddings(model=config.embedding_model)
@@ -230,10 +238,10 @@ def add_documents_to_vector_store(
         embedding_length=config.embedding_dimension,
         distance_strategy=config.distance_metric,
         collection_name=collection_name,
-        connection=connection_url,
+        connection=sqlalchemy_url,
     )
     
-    con = psycopg.connect(connection_url)
+    con = psycopg.connect(pg_url)
     cur = con.cursor()
 
     # Delete existing entries for the document
@@ -244,4 +252,24 @@ def add_documents_to_vector_store(
         ids=[f'{document_name}:{i}' for i in range(len(documents))]
     )
 
+    category = file_path.parent.stem if file_path.parent.stem != 'pdfs' else None
+
+    store_pdf(con, cur, document_name, str(file_path) + document_name, category=category)
+
     return documents
+
+
+def store_pdf(connection: Connection, cursor: Cursor, document_name: str, document_path: str, category: str | None = None) -> None:
+    try:
+        cursor.execute(
+            """
+                INSERT INTO pdfs (id, documentName, documentPath, category)
+                VALUES (gen_random_uuid(), %s, %s, %s)
+                ON CONFLICT (documentName) DO UPDATE SET documentPath = EXCLUDED.documentPath, category = EXCLUDED.category;
+            """,
+            (document_name, document_path, category)
+        )
+        connection.commit()
+    except psycopg.Error:
+        logger.exception(f"Error storing PDF '{document_name}' in database.")
+        connection.rollback()
