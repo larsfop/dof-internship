@@ -1,5 +1,7 @@
-import { useAppDispatch } from "../../context/stateContext.tsx";
+import { useAppRefs } from "../../context/refContext.tsx";
+import { useAppDispatch, useAppState } from "../../context/stateContext.tsx";
 import { getPDF } from "../../layout/content.ts";
+import { scrollToPage } from "../../layout/pdf.tsx";
 
 export interface PDF {
     id: string;
@@ -8,20 +10,36 @@ export interface PDF {
     category: string;
 }
 
+export interface PDFViewer {
+    src: string;
+    name: string;
+    page: number;
+}
+
 export default function PDFEntry({ pdf } : { pdf: PDF }) {
     const dispatch = useAppDispatch();
+    const { pdfViewerRef } = useAppRefs();
+    const { pdfViewer } = useAppState();
 
     return (
-        <li title={pdf.name} style={{
+        <li title={pdf.name} className={pdfViewer?.name === pdf.name ? "active" : ""} style={{
             marginLeft: "0.75rem"
         }}>
-            <span className="chat-entry-name" onClick={async (e) => {
+            <span id={pdf.name} onClick={async (e) => {
                 e.preventDefault();
-                const pdfURL = await getPDF(pdf.name + ".pdf");
-                dispatch({ type: "SET_FILE_SRC", payload: pdfURL });
+                const { url, page } = await getPDF(pdf.name);
+
+                const name = pdfViewerRef.current?.dataset.name;
+                if (pdfViewerRef.current && name === pdf.name) {
+                    console.log("Scrolling to page", page);
+                    scrollToPage(pdfViewerRef.current!, page);
+                } else {
+                    dispatch({ type: "SET_PDF_VIEWER", payload: { src: url, name: pdf.name, page: page } });
+                }
             }} style={{
                 overflow: "hidden",
                 textOverflow: "ellipsis",
+                // background: pdfViewer?.name === pdf.name ? "var(--highlight)" : "",
             }}>{pdf.name}</span>
         </li>
     )

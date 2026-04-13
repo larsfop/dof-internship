@@ -10,7 +10,7 @@ import GutterDrag from "../assets/gutter-drag.svg";
 
 
 export default function Main() {
-    const { file, main } = useAppRefs();
+    const { main } = useAppRefs();
     const gutterRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -31,7 +31,7 @@ export default function Main() {
             <div id="gutter" ref={gutterRef}>
                 <img src={GutterDrag} alt="" />
             </div>
-            <div id="pdf-container" ref={file}>
+            <div id="pdf-container" >
                 <RenderPDF />
             </div>
         </main>

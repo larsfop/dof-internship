@@ -11,7 +11,6 @@ import base64
 import numpy as np
 import pymupdf
 import time
-from tqdm import tqdm
 import logging
 from pathlib import Path
 
@@ -241,7 +240,7 @@ def add_documents_to_vector_store(
 
     category = file_path.parent.stem if file_path.parent.stem != 'pdfs' else None
 
-    store_pdf(con, cur, document_name, str(file_path) + document_name, category=category)
+    store_pdf(con, cur, document_name + ".pdf", str(file_path) + document_name, category=category)
 
     return documents
 

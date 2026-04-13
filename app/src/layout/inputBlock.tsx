@@ -136,12 +136,12 @@ export default function InputBlock() {
                 const node = chatInput.current;
                 if (!node) return;
 
-                if (!node.textContent.trim()) {
+                if (!node.textContent!.trim()) {
                     node.textContent = "";
                     return;
                 }
 
-                handleUserInput(node.textContent);
+                handleUserInput(node.textContent!);
                 node.textContent = "";
                 currentInputIndex.current = inputArray.length + 1;
             } }>

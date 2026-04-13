@@ -30,13 +30,21 @@ export function handleCodeBlocks(container: HTMLElement) {
 }
 
 let documentsArray: Map<string, string> = new Map();
-export async function getPDF(name: string, page: number = 1) {
+export async function getPDF(name: string, page: number | null = null) {
     if (documentsArray.has(name)) {
         let pdfURL = documentsArray.get(name);
-        pdfURL = pdfURL?.split("#")[0] + `#page=${page}`;
-        documentsArray.set(name, pdfURL);
-        return pdfURL;
+        let newPage: number;
+        if (page) {
+            pdfURL = pdfURL!.split("#page=")[0] + `#page=${page}`;
+            newPage = page;
+        } else {
+            newPage = Number(pdfURL!.split("#page=")[1]);
+        }
+
+        documentsArray.set(name, pdfURL!);
+        return { url: pdfURL!, page: newPage };
     }
+
     const pdfResponse = await fetch(`http://192.168.0.71:8015/pdf?name=${encodeURIComponent(name)}`, {
         method: 'GET',
         headers: {
@@ -45,7 +53,8 @@ export async function getPDF(name: string, page: number = 1) {
     });
     const pdfBlob = await pdfResponse.blob();
     const pdfURL = URL.createObjectURL(pdfBlob);
-    const viewerURL = `./pdfjs/web/viewer.html?file=${encodeURIComponent(pdfURL)}#page=${page}`;
+    const viewerURL = `./pdfjs/web/viewer.html?file=${encodeURIComponent(pdfURL)}#page=${page || 1}`;
+
     documentsArray.set(name, viewerURL);
-    return viewerURL;
+    return { url: viewerURL, page: page || 1 };
 }

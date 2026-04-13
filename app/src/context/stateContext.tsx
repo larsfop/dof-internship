@@ -1,12 +1,14 @@
 import { createContext, useContext, useReducer, Dispatch } from "react";
 
 import { ChatSession, ChatHistory } from "../history/history.ts";
+import { PDFViewer } from "../sidebar/documents/pdfEntry.tsx";
+
 
 interface AppState {
     currentSessionID: string | null;
     currentSessionData: ChatSession[];
     newHistoryEntry: ChatHistory | null;
-    fileSrc: string | null | undefined;
+    pdfViewer: PDFViewer | null;
     inputArray: string[];
     scrollUp: boolean;
     scrollDown: boolean;
@@ -17,7 +19,7 @@ type AppAction =
     | { type: "NEW_SESSION" }
     | { type: "SET_SESSION_DATA"; payload: ChatSession[] }
     | { type: "NEW_HISTORY_ENTRY"; payload: ChatHistory | null }
-    | { type: "SET_FILE_SRC"; payload: string | null | undefined }
+    | { type: "SET_PDF_VIEWER"; payload: PDFViewer | null }
     | { type: "ADD_INPUT"; payload: string }
     | { type: "SET_INPUT"; payload: string[] }
     | { type: "SET_SCROLL_UP"; payload: boolean }
@@ -33,8 +35,6 @@ const reducer = (state: AppState, action: AppAction): AppState => {
             return { ...state, currentSessionData: action.payload };
         case "NEW_HISTORY_ENTRY":
             return { ...state, newHistoryEntry: action.payload };
-        case "SET_FILE_SRC":
-            return { ...state, fileSrc: action.payload };
         case "ADD_INPUT":
             if (action.payload === state.inputArray[state.inputArray.length - 1]) {
                 return state;
@@ -48,6 +48,8 @@ const reducer = (state: AppState, action: AppAction): AppState => {
             return { ...state, scrollUp: action.payload };
         case "SET_SCROLL_DOWN":
             return { ...state, scrollDown: action.payload };
+        case "SET_PDF_VIEWER":
+            return { ...state, pdfViewer: action.payload };
     }
 };
 
@@ -55,7 +57,7 @@ const initialState: AppState = {
     currentSessionID: null,
     currentSessionData: [],
     newHistoryEntry: null,
-    fileSrc: null,
+    pdfViewer: null,
     inputArray: [],
     scrollUp: false,
     scrollDown: false,
