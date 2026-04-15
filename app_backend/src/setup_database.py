@@ -2,11 +2,9 @@ import os
 import psycopg
 from psycopg.rows import dict_row
 import logging
-from pathlib import Path
 
 logger = logging.getLogger("main")
 
-# db_uri = 'postgresql://postgres:admin125@localhost:5435/postgres?sslmode=disable'
 db_uri = 'postgresql://{user}:{password}@postgres:5432/postgres?sslmode=disable'.format(
     user=os.environ['POSTGRES_USER'],
     password=os.environ['POSTGRES_PASSWORD'],

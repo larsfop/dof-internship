@@ -2,8 +2,7 @@ from langchain_core.prompts import ChatPromptTemplate
 import logging
 
 from config import CONFIG
-from pdf import create_pdfs_from_embeddings
-from ..utils import GradeResults, State
+from ..utils import GradeResults, State, create_pdfs_from_embeddings
 from ai_models import get_check_model
 from database import get_vector_retriever
 
@@ -31,7 +30,7 @@ def retrieve_documents(state: State):
 
     logger.info(
         f"Grading results for retrieved documents:\n"\
-        f"{'\n'.join([f'{doc.document_name} ; Score: {doc.score}' for doc in response.documents])}"
+        f"{'\n'.join([f'{doc.document_name} ; Score: {doc.score} ; pages: {doc.page_indices}' for doc in response.documents])}"
     )
 
     pdf_data = create_pdfs_from_embeddings(response)

@@ -10,8 +10,8 @@ class GradeDocument(BaseModel):
     document_name: str = Field(
         description="The name or identifier of the document"
     )
-    pages: List[int] = Field(
-        description="The pages of the document"
+    page_indices: List[int] = Field(
+        description="The page indices of the document"
     )
     page_labels: List[int] = Field(
         description="The page labels of the document"
@@ -19,9 +19,6 @@ class GradeDocument(BaseModel):
     score: float = Field(
         description="Relevance score between 0 and 1"
     )
-
-    def values(self) -> Tuple[str, List[int], List[int], float]:
-        return (self.document_name, self.pages, self.page_labels, self.score)
 
 
 class GradeResults(BaseModel):
@@ -56,7 +53,7 @@ class GradeResults(BaseModel):
                 if self.documents[i].document_name == self.documents[j].document_name:
                     # Merge page labels and pages
                     self.documents[i].page_labels = list(set(self.documents[i].page_labels + self.documents[j].page_labels))
-                    self.documents[i].pages = list(set(self.documents[i].pages + self.documents[j].pages))
+                    self.documents[i].page_indices = list(set(self.documents[i].page_indices + self.documents[j].page_indices))
                     # Remove the duplicate document
                     del self.documents[j]
 

@@ -1,22 +1,17 @@
-import sqlite3
-import json
 from fastapi import FastAPI, Response, Depends, status, HTTPException
 from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.security import OAuth2PasswordRequestForm
 import uvicorn
 import asyncio
 import os
 import logging
 import pymupdf
-from typing import Annotated
 from pathlib import Path
 
-from pdf import get_pdf_path
 from database import delete_session, fetch_all_pdfs, get_sessions, get_chat, update_session_name, fetch_pdfs, clear_pdf_from_store
 from RAG import generate_response
 from document_processing import chunk_and_store_document
-from config import add_filename_to_config, CONFIG
+from config import CONFIG, add_filename_to_config, remove_filename_from_config 
 
 logger = logging.getLogger('main')
 
@@ -48,7 +43,9 @@ async def prompt(
 async def app_get_pdf(
     name: str
 ):
-    pdf_path = get_pdf_path(name)
+    pdfs = fetch_pdfs(name)
+
+    pdf_path = pdfs[0]['documentpath']
     with pymupdf.open(pdf_path) as doc:
         pdf_bytes = doc.tobytes()
 
@@ -110,7 +107,6 @@ async def app_process_pdf(
         chunk_and_store_document(file)
     return {"message": f"PDF '{filename}' processed and stored successfully."}
 
-
 @app.post('/remove_pdf')
 async def app_remove_pdf(
     name: str,
@@ -118,27 +114,27 @@ async def app_remove_pdf(
     pdfs = fetch_pdfs(name)
     if not pdfs:
         return {"message": f"No PDF found with name '{name}'."}
+    logger.info(f"Removing {len(pdfs)} PDFs with name '{name}' from store.")
 
-    # for pdf in pdfs:
-    #     clear_pdf_from_store(pdf['documentname'][:-4])
+    for pdf in pdfs:
+        clear_pdf_from_store(pdf['documentname'][:-4])
 
     documents = CONFIG.partition.documents
-    old_files = set()
+    pdf_names = [pdf['documentname'] for pdf in pdfs]
     for i, doc in enumerate(documents):
-        files = file_path.rglob(doc)
+        files = list(file_path.rglob(doc))
 
-        relevant_files = [
-            file for file in files if not file.name in old_files
-        ]
-        if not relevant_files:
+        if not files:
             logger.warning(f"No files found matching '{doc}' on mount '{file_path}'.")
             continue
 
-        for pdf in pdfs:
-            if not pdf['documentname'] in relevant_files:
+        for file in files:
+            if not file.name in pdf_names:
+                logger.info(f"'{doc}' not contributing to removed PDFs, skipping.")
                 break
         else:
             logger.info(f"documents in config '{doc}' removed from store.")
+            remove_filename_from_config(doc)
     
     return {"message": f"PDF '{name}' removed successfully."}
 
@@ -164,11 +160,14 @@ async def app_store_pdfs(
         if file.name in old_files:
             logger.info(f"PDF '{file.name}' already exists in the database. Skipping.")
             continue
-        chunk_and_store_document(file.name)
+        chunk_and_store_document(file)
         n_new_files += 1
 
     if n_new_files > 0:
         add_filename_to_config(filename)
+    else:
+        logger.warning(f"All PDFs with name '{filename}' already exist in the database. No new files processed.")
+        return {"message": f"All PDFs with name '{filename}' already exist. No new files processed."}
 
     logger.info(f"Processed {n_new_files} new files.")
     return {"message": f"PDF '{filename}' processed and stored successfully."}
@@ -177,14 +176,25 @@ async def app_store_pdfs(
 @app.post("/process_all_pdfs")
 def app_process_all_pdfs():
     documents = CONFIG.partition.documents
+    existing_pdfs = fetch_all_pdfs()
+    existing_pdfs = [pdf["name"] for pdf in existing_pdfs]
 
     processed_files = []
     for doc in documents:
-        files = file_path.rglob(doc)
+        files = list(file_path.rglob(doc))
+
+        if not files:
+            logger.warning(f"No files found matching '{doc}' on mount '{file_path}'.")
+            # remove_filename_from_config(doc)
+            continue
 
         for file in files:
+            # Skip already processed files
             if file.name in processed_files:
-                logger.info(f"PDF '{file.name}' already processed. Skipping.")
+                continue
+
+            # Skip files that exist in the database
+            if file.name in existing_pdfs:
                 continue
 
             chunk_and_store_document(file)

@@ -6,11 +6,11 @@ mysql_connection.json
 *.png
 .vscode
 .env
+*.pid
 __pycache__
-volumes
 uv*
 
-!app_backend/src/partition/*json
-!app_backend/requirements.txt
+volumes
+!volumes/data
 
-tauri-test
+!app_backend/requirements.txt

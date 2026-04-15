@@ -36,7 +36,7 @@ services:
     ports:
       - "8015:8015"
     environment:
-      - DATA_PATH=/app/data
+      - DATA_PATH=/app/data/
       - MOUNT_PATH=${MOUNT_PATH}
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - POSTGRES_USER=${POSTGRES_USER}

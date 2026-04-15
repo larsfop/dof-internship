@@ -24,6 +24,7 @@ class RAGConfig(BaseModel):
     index_type: str
     metric_type: str
     search_type: str
+    score_threshold: float
     search_kwargs: Optional[dict] = Field(default_factory=dict)
 
 
@@ -56,7 +57,19 @@ def add_filename_to_config(filename: str):
                 break
 
         f.seek(0)
-        f.write(''.join(lines))
+        f.writelines(lines)
+        f.truncate()
+
+
+def remove_filename_from_config(filename: str):
+    with open(config_path / 'config.toml', 'r+') as f:
+        lines = f.readlines()
+        for line in lines:
+            if filename in line and not line.strip().startswith("#"):
+                lines.remove(line)
+
+        f.seek(0)
+        f.writelines(lines)
         f.truncate()
 
 

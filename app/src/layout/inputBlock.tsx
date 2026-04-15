@@ -85,6 +85,7 @@ export default function InputBlock() {
             <div style={{
                 display: "grid",
                 flex: "1",
+                paddingBottom: "0.35rem",
             }}>
                 <span 
                     id="chat-input" 

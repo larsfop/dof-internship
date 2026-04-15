@@ -3,7 +3,7 @@ from langgraph.graph.state import CompiledStateGraph
 from langgraph.checkpoint.postgres import PostgresSaver  
 import orjson
 import logging
-from functools import cache
+from time import time
 
 logger = logging.getLogger("main")
 
@@ -41,6 +41,7 @@ def generate_response(
     user_id: str,
     session_id: str
 ):
+    start_time = time()
     logger.info(f"Generating response for session_id: {session_id}, user_id: {user_id}, prompt: {prompt}")
 
     callback = ResponseMetadata()
@@ -106,6 +107,8 @@ def generate_response(
             response,
             callback
         )
+        
+    logger.info(f"Finished generating response for session_id: {session_id}, user_id: {user_id} in {time() - start_time:.2f} seconds")
 
 
 def insert_into_database(
