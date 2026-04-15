@@ -163,9 +163,7 @@ def store_chunks(
         # Load documents into vector store
         add_documents_to_vector_store(
             documents,
-            filename,
             file_path,
-            CONFIG.rag,
         )
         logger.info(f"Added {len(documents)} documents to the vector store.")
 

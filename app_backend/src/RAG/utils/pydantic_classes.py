@@ -20,7 +20,6 @@ class GradeDocument(BaseModel):
         description="Relevance score between 0 and 1"
     )
 
-
     def values(self) -> Tuple[str, List[int], List[int], float]:
         return (self.document_name, self.pages, self.page_labels, self.score)
 

@@ -22,9 +22,7 @@ export default function PDFEntry({ pdf } : { pdf: PDF }) {
     const { pdfViewer } = useAppState();
 
     return (
-        <li title={pdf.name} className={pdfViewer?.name === pdf.name ? "active" : ""} style={{
-            marginLeft: "0.75rem"
-        }}>
+        <li title={pdf.name} className={pdfViewer?.name === pdf.name ? "active" : ""} style={{marginLeft: "0.75rem"}} >
             <span id={pdf.name} onClick={async (e) => {
                 e.preventDefault();
                 const { url, page } = await getPDF(pdf.name);
@@ -36,11 +34,7 @@ export default function PDFEntry({ pdf } : { pdf: PDF }) {
                 } else {
                     dispatch({ type: "SET_PDF_VIEWER", payload: { src: url, name: pdf.name, page: page } });
                 }
-            }} style={{
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                // background: pdfViewer?.name === pdf.name ? "var(--highlight)" : "",
-            }}>{pdf.name}</span>
+            }} style={{ overflow: "hidden", textOverflow: "ellipsis", }} >{pdf.name}</span>
         </li>
     )
 }

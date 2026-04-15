@@ -110,7 +110,7 @@ export default function Sidebar() {
                             display: isChatList ? "none" : "block",
                         }}>
                             {[...pdfCategories].map((category) => (
-                                <details key={category} >
+                                <details key={category} open={true} >
                                     <summary >{category}</summary>
                                     {pdfList.filter(pdf => pdf.category === category).map((pdf) => (
                                         <PDFEntry key={pdf.id} pdf={pdf} />

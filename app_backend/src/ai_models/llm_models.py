@@ -1,6 +1,5 @@
-from langchain_openai import ChatOpenAI
-from config import CONFIG
-
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+from config import CONFIG, cache_with_config_key
 
 def get_model() -> ChatOpenAI:
     rag_config = CONFIG.rag
@@ -28,3 +27,22 @@ def get_check_model() -> ChatOpenAI:
         model=rag_config.llm_models['retriever_model'].model,
         **rag_config.llm_models['retriever_model'].kwargs,
     )
+
+
+def get_embedding_model() -> OpenAIEmbeddings:
+    rag_config = CONFIG.rag
+    return OpenAIEmbeddings(model=rag_config.embedding_model)
+
+
+def get_partition_model() -> ChatOpenAI:
+    partition_model = CONFIG.partition.llm_model
+    return ChatOpenAI(
+        model=partition_model.model,
+        **partition_model.kwargs,
+    )
+
+
+if __name__ == "__main__":
+    model = get_check_model()
+    response = model.invoke("What is 2+2?")
+    print(response)

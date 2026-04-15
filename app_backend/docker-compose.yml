@@ -20,7 +20,14 @@ services:
     build: .
     container_name: backend
     volumes:
-      # Bind mounts for local document storage
+      # Bind mounts for source code, DEV ONLY
+      - type: bind
+        source: ./src
+        target: /app/src
+      # Bind mounts for local document storage, example:
+      # - type: bind
+      #     source: /path/to/local/documents (relative or absolute path)
+      #     target: ${MOUNT_PATH}/path/inside/container (MOUNT_PATH is defined as mount path inside container and is required)
       - type: bind
         source: ../pdfs
         target: ${MOUNT_PATH}/test_documents

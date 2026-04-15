@@ -3,7 +3,8 @@ from typing import Literal
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
 
-from ..utils import get_check_model, State
+from ..utils import State
+from ai_models import get_check_model
 from config import CONFIG
 
 class CheckResponse(BaseModel):
@@ -17,7 +18,6 @@ def generate_response_or_retrieve_documents(state: State) -> Command[Literal['ge
     """Determine whether to generate an answer or retrieve documents based on the prompt."""
 
     question = state['messages'][-1].content
-
 
     prompt = ChatPromptTemplate.from_messages([
         (key, value) for item in CONFIG.prompts['check_prompt'] for key, value in item.items()

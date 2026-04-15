@@ -4,12 +4,12 @@ from ..cursor import CURSOR, CONNECTION
 
 logger = logging.getLogger("main")
 
-def get_pdf(filename: str) -> dict[str, str]|None:
+def fetch_pdfs(filename: str) -> list[dict[str, str]]|None:
     try:
         data = CURSOR.execute(
-            "SELECT * FROM pdfs WHERE documentName = %s",
-            (filename,)
-        ).fetchone()
+            "SELECT * FROM pdfs WHERE documentName LIKE %s",
+            (f'{filename}%',)
+        ).fetchall()
         if data:
             return data
         else:

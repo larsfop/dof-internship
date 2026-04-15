@@ -1,5 +1,5 @@
-from ..utils import get_model, get_summary_model
 from langmem.short_term import SummarizationNode
+from ai_models import get_summary_model, get_model
 
 
 def get_summary_node() -> SummarizationNode:

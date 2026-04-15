@@ -32,17 +32,32 @@ class PartitionConfig(BaseModel):
     output_dir_path: str
     strategy: str
     crop: list[int] = Field(default_factory=list)
+    llm_model: LLMConfig
+    documents: list[str] = Field(default_factory=list)
 
 
 data_path = Path(os.environ['DATA_PATH'])
 config_path = data_path / 'configs'
 
 
-class _Config:
-    rag: RAGConfig
-    logger: dict[str, Any]
-    partition: PartitionConfig
-    prompts: dict
+class _Config(BaseModel):
+    rag: Optional[RAGConfig] = None
+    logger: Optional[dict[str, Any]] = None
+    partition: Optional[PartitionConfig] = None
+    prompts: Optional[dict] = None
+
+
+def add_filename_to_config(filename: str):
+    with open(config_path / 'config.toml', 'r+') as f:
+        lines = f.readlines()
+        for i, line in enumerate(lines):
+            if "documents = [" == line.strip():
+                lines.insert(i + 1, f'    "{filename}",\n')
+                break
+
+        f.seek(0)
+        f.write(''.join(lines))
+        f.truncate()
 
 
 def _load_logger(config: dict[str, Any]) -> None:
@@ -84,7 +99,7 @@ _load_logger(CONFIG.logger)
 logger = logging.getLogger("main")
 logger.info("Configuration and logger loaded successfully.")
 
-_observer = PollingObserver(timeout=5)
+_observer = PollingObserver(timeout=1)
 _observer.schedule(_ConfigReloadHandler(), str(config_path), recursive=False)
 _observer.daemon = True
 _observer.start()

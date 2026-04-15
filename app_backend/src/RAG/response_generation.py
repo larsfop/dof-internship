@@ -1,16 +1,17 @@
 from langgraph.graph import StateGraph, START, END
 from langgraph.graph.state import CompiledStateGraph
 from langgraph.checkpoint.postgres import PostgresSaver  
-import os
 import orjson
 import logging
+from functools import cache
 
 logger = logging.getLogger("main")
 
 from pydantic_classes import State, ResponseMetadata, ResponseOutput
-from database import new_response, new_citation, new_semantic_cache
+from database import new_response, new_citation, new_semantic_cache, POSTGRES_URL
 from .graph_nodes import cache_node, generate_response_or_retrieve_documents, retrieve_documents, generate_answer, get_summary_node
 
+# @cache
 def setup_graph(
     checkpointer: PostgresSaver
 ) -> CompiledStateGraph:
@@ -42,13 +43,8 @@ def generate_response(
 ):
     logger.info(f"Generating response for session_id: {session_id}, user_id: {user_id}, prompt: {prompt}")
 
-    db_uri = 'postgresql://{user}:{password}@postgres:5432/postgres?sslmode=disable'.format(
-        user=os.environ['POSTGRES_USER'],
-        password=os.environ['POSTGRES_PASSWORD'],
-    )
-    # db_uri = 'postgresql://postgres:admin125@localhost:5435/postgres?sslmode=disable'
     callback = ResponseMetadata()
-    with PostgresSaver.from_conn_string(db_uri) as checkpointer:
+    with PostgresSaver.from_conn_string(POSTGRES_URL) as checkpointer:
         config = {
             'configurable': {
                 'thread_id': session_id

@@ -1,12 +1,8 @@
 from langchain_core.documents import Document
-from langchain_postgres import PGVector
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from openai import RateLimitError
-import psycopg
-import os
 from collections import defaultdict
 from typing import Iterator
-from psycopg import Connection, Cursor
 import base64
 import numpy as np
 import pymupdf
@@ -14,30 +10,10 @@ import time
 import logging
 from pathlib import Path
 
-from config import RAGConfig
+from database import get_vector_store, store_pdf, clear_pdf_from_store
+from ai_models import get_partition_model
 
 logger = logging.getLogger('main')
-
-IMAGE_MODEL = ChatOpenAI(model_name='o4-mini', service_tier='flex')
-TABLE_MODEL = ChatOpenAI(model_name='o4-mini', service_tier='flex')
-
-def clear_vector_store(connection: Connection, cursor: Cursor, document_name: str, collection_name: str) -> None:
-    try:
-        cursor.execute(
-            """
-                DELETE FROM langchain_pg_embedding
-                WHERE collection_id = (
-                    SELECT uuid FROM langchain_pg_collection WHERE name = %s
-                ) 
-                AND id LIKE %s;
-            """,
-            (collection_name, f'{document_name}%')
-        )
-        connection.commit()
-    except psycopg.Error:
-        logger.exception(f"Error clearing vector store for document '{document_name}' in collection '{collection_name}'.")
-        connection.rollback()
-
 
 def iter_by_sections(data: list[dict], start_index: int = 0) -> Iterator[tuple[str, list[dict]]]:
     sections = defaultdict(list)
@@ -68,11 +44,13 @@ def image_to_base64(image: dict, pdf: pymupdf) -> str:
 def image_document(image_data: dict, texts: list[dict], pdf: pymupdf.Document) -> Document:
     document_name = image_data['document_name']
     sections = image_data['sections']
-    img_b64 = image_to_base64(image_data, pdf)        
+    img_b64 = image_to_base64(image_data, pdf)
+
+    model = get_partition_model()
 
     while True:
         try:
-            response = IMAGE_MODEL.invoke(
+            response = model.invoke(
                 [
                     {
                         'role': 'user',
@@ -123,9 +101,11 @@ def table_document(table_data: dict, texts: list[dict], pdf: pymupdf.Document) -
     sections = table_data['sections']
     img_b64 = image_to_base64(table_data, pdf)
 
+    model = get_partition_model()
+
     while True:
         try:
-            response = TABLE_MODEL.invoke(
+            response = model.invoke(
                 [
                     {
                         'role': 'user',
@@ -204,34 +184,13 @@ def prepare_documents(data: list[dict], pdf: pymupdf.Document, start_index: int 
 
 def add_documents_to_vector_store(
         documents: list[Document],
-        document_name: str, 
         file_path: Path,
-        config: RAGConfig, 
     ) -> list[Document]:
-    pg_url = 'postgresql://{user}:{password}@postgres:5432/postgres?sslmode=disable'.format(
-        user=os.environ['POSTGRES_USER'],
-        password=os.environ['POSTGRES_PASSWORD'],
-    )
-    sqlalchemy_url = 'postgresql+psycopg://{user}:{password}@postgres:5432/postgres?sslmode=disable'.format(
-        user=os.environ['POSTGRES_USER'],
-        password=os.environ['POSTGRES_PASSWORD'],
-    )
-    collection_name = config.collection_name
-
-    embeddings = OpenAIEmbeddings(model=config.embedding_model)
-    vector_store = PGVector(
-        embeddings=embeddings,
-        embedding_length=config.embedding_dimensions,
-        distance_strategy=config.metric_type,
-        collection_name=collection_name,
-        connection=sqlalchemy_url,
-    )
-    
-    con = psycopg.connect(pg_url)
-    cur = con.cursor()
+    document_name = file_path.stem
+    vector_store = get_vector_store()
 
     # Delete existing entries for the document
-    clear_vector_store(con, cur, document_name, collection_name)
+    clear_pdf_from_store(document_name)
 
     vector_store.add_documents(
         documents,
@@ -240,22 +199,6 @@ def add_documents_to_vector_store(
 
     category = file_path.parent.stem if file_path.parent.stem != 'pdfs' else None
 
-    store_pdf(con, cur, document_name + ".pdf", str(file_path) + document_name, category=category)
+    store_pdf(file_path.name, str(file_path), category=category)
 
     return documents
-
-
-def store_pdf(connection: Connection, cursor: Cursor, document_name: str, document_path: str, category: str | None = None) -> None:
-    try:
-        cursor.execute(
-            """
-                INSERT INTO pdfs (id, documentName, documentPath, category)
-                VALUES (gen_random_uuid(), %s, %s, %s)
-                ON CONFLICT (documentName) DO UPDATE SET documentPath = EXCLUDED.documentPath, category = EXCLUDED.category;
-            """,
-            (document_name, document_path, category)
-        )
-        connection.commit()
-    except psycopg.Error:
-        logger.exception(f"Error storing PDF '{document_name}' in database.")
-        connection.rollback()

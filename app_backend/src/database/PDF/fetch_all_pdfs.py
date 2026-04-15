@@ -11,7 +11,7 @@ def fetch_all_pdfs() -> list[dict[str, str]]:
                 SELECT
                     id,
                     documentName as name,
-                    documentPath as  path,
+                    documentPath as path,
                     category
                 FROM pdfs
         """

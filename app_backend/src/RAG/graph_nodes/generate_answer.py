@@ -3,7 +3,8 @@ from langchain_core.messages import HumanMessage, trim_messages
 from langchain_core.runnables.config import RunnableConfig
 from langgraph.store.memory import BaseStore
 
-from ..utils import get_model, get_response_model, State, ResponseOutput
+from ..utils import State, ResponseOutput
+from ai_models import get_model, get_response_model
 from config import CONFIG
 
 def generate_answer(

@@ -11,8 +11,8 @@ import "./styles/viewer.css";
 
 export default function App() {
 
-    // if (!localStorage["userID"]) localStorage["userID"] = crypto.randomUUID();
-    localStorage["userID"] = "61a1df2c-e2f9-4fa4-9222-d28e31b43573";
+    if (!localStorage["userID"]) localStorage["userID"] = crypto.randomUUID();
+    // localStorage["userID"] = "61a1df2c-e2f9-4fa4-9222-d28e31b43573";
 
 
     return (
