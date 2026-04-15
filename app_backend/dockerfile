@@ -21,5 +21,4 @@ RUN --mount=type=cache,target=/root/.cache/pip pip install -r requirements.txt
 
 COPY /src /app/src
 
-RUN apt-get update && apt-get install -y systemctl
 CMD ["sh", "-c", "cd /app/src && python3 setup_database.py && gunicorn main:app"]
