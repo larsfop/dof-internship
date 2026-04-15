@@ -1,0 +1,1280 @@
+[
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            2
+        ],
+        "page_labels": [
+            null
+        ],
+        "type": "table",
+        "sections": [
+            "Foreword"
+        ],
+        "coordinates": [
+            [
+                432.9190979003906,
+                1127.0487060546875
+            ],
+            [
+                2923.640625,
+                3339.54150390625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Task Description 1-1 Theoretical Principles 2-1 2.1 Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-1 2.2 Geodetic Lines . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-1 2.3 Cutting Pattern Areas . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-2 2.4 Development of Surface . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-3 2.5 Compensation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-4 2.6 Decompensation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-5 2.7 Warp Direction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-5 2.8 Import Export . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-6 Input Description 3-1 3.1 Input Language . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-1 3.2 Input Records . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-1 3.3 CTRL – Control of the Analysis Method . . . . . . . . . . . . . . . . . . . . . 3-2 3.4 PREP – Prepare Sofiplus/Autocad Cutting Lines . . . . . . . . . . . . . . . 3-3 3.5 CUTT – Cutting Pattern . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-4 3.6 GRP – Group Control . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-7 3.7 QUAD – QUAD Elements . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-8 3.8 COMP – Compensation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-9 3.9 LINE – Cutting Lines . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-11 3.10 ECHO – Output Extent . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-12 Examples 4-1 4.1 Tenniscourt with Inner Air Pressure . . . . . . . . . . . . . . . . . . . . . . . . 4-1 4.2 Development of Surface of a Cube . . . . . . . . . . . . . . . . . . . . . . . . 4-5"
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            1,
+            2,
+            4
+        ],
+        "page_labels": [
+            null,
+            null,
+            "1-1"
+        ],
+        "type": "text",
+        "sections": [
+            "Foreword"
+        ],
+        "content": "TEXTILE Cutting Pattern Membrane Structures\n TEXTILE Manual, Service Pack 2025-4 Build 146\n Copyright © 2025 by SOFiSTiK AG, Nuremberg, Germany.\n SOFiSTiK AG\n HQ Nuremberg Office Garching Flataustraße 14 Parkring 2 90411 Nürnberg 85748 Garching bei München Germany Germany T +49 (0)911 39901-0 T +49 (0)89 315878-0 F +49(0)911 397904 F +49 (0)89 315878-23 info@sofistik.com\n www.sofistik.com\n This manual is protected by copyright laws. No part of it may be translated, copied or reproduced, in any form or by any means, without written permission from SOFiSTiK AG. SOFiSTiK reserves the right to modify or to release new editions of this manual.\n The manual and the program have been thoroughly checked for errors. However, SOFiSTiK does not claim that either one is completely error free. Errors and omissions are corrected as soon as they are detected.\n The user of the program is solely responsible for the applications. We strongly encourage the user to test the correctness of all calculations at least by random sampling.\n Contents\n Contents\n 1\n 2\n 3\n 4\n i\n Bibliography\n 4-9\n Task Description\n 1\n TEXTILE calculates the development of a 3D-curved surface. It includes the compentation of the stressed membrane to obtain the cutting pattern areas.",
+        "token_count": 336
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            6
+        ],
+        "page_labels": [
+            "2-1"
+        ],
+        "type": "image",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.1 Introduction"
+        ],
+        "coordinates": [
+            [
+                409.1185302734375,
+                1064.9947509765625
+            ],
+            [
+                2739.1988633333335,
+                2255.6715788888887
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 2.1: Formfinding: on the left folded input system, on the rigth stressed membrane"
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            6
+        ],
+        "page_labels": [
+            "2-1"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.1 Introduction"
+        ],
+        "content": "Necessary precondition for a cutting pattern is the formfinding. The formfinding has to create a stressed system in equilibrium. In this step, different prestress definitions will produce different membrane forms.",
+        "token_count": 38
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            7
+        ],
+        "page_labels": [
+            "2-2"
+        ],
+        "type": "image",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.2 Geodetic Lines"
+        ],
+        "coordinates": [
+            [
+                1168.1767578125,
+                2461.98193359375
+            ],
+            [
+                2182.644148888889,
+                3595.155029296875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 2.2: Geodetic cutting lines: 3D view"
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            7,
+            6
+        ],
+        "page_labels": [
+            "2-2",
+            "2-1"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.2 Geodetic Lines"
+        ],
+        "content": "The membrane shall be cut at so called geodetic lines. Geodetic lines are the shortest connec- tion of two points on a curved surface. Definition and analysis of these geodetic lines is done in the program WINGRAF.\n The definition of the cutting lines in the groundview can be done in 3 ways:\n 1. With an ASCII definition in PROG TEXTILE see example textile1_tennishall.dat\n 2. With WINGRAF\n - Start WINGRAF\n - Menue Edit - Cutting pattern - Create cutting pattern line\n - - - first select a loadcase to cut - stress relaxation\n - Menue Edit - Cutting pattern - Cutting pattern areas\n - - - klick : using group limits also - if necessary\n - Menue Edit - Cutting pattern - Execute Textile cutting analysis\n - in case of problems please open the created .tex file, then do:\n - - - right mouse klick -> Type of file -> SOFiSTiK input file\n - - - right mouse klick -> start program -> execute\n - Then view WINGRAF -> Systemvalues - Quad-elements - cutting pattern\n 3. Via SOFIPLUS-Autocad:\n - draw simple lines in SOFIPLUS, best in Layer ’cuttinglines’ and activate only this\n - then activate in SOFIPLUS : SOF_G_exportcuttinglines (commandline SOF... )\n - then start an SSD Task \"Prepare Autocad Lines for WING\"\n - with the following content: see textile1_tennishall.dat\n . . . PROG TEXTILE\n . . . HEAD Prepare Autocad Lines for WING\n . . . PREP\n . . . END\n - to check open WINGRAF -> cuttinglines must be visible\n - then run an SSD Task ’cutting analysis’\n - - - there just define the cutting loadcase in WING\n - - - and start TEXTILE CUTT see textile1_tennishall.dat\n - Then view WINGRAF -> Systemvalues - Quad-elements - cutting pattern",
+        "token_count": 434
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            7
+        ],
+        "page_labels": [
+            "2-2"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.2 Geodetic Lines"
+        ],
+        "content": "- to check open WINGRAF -> cuttinglines must be visible. - then run an SSD Task ’cutting analysis’. - - - there just define the cutting loadcase in WING. - - - and start TEXTILE CUTT see textile1_tennishall.dat. - Then view WINGRAF -> Systemvalues - Quad-elements - cutting pattern.\n - bring cutting pattern to SOFIPLUS-Autocad : SOF_G_importcuttingareas\n - - - they are placed into a Layer TEXTILE... please use ZOOM boundaries\n - export mesh and Seamlines to Autocad : ASE-STOR-SPEI-CUTT or ACAD\n - example textile1_tennishall.dat creates such a .dxf file\n Please ask for example membrane_template.sofistik if necessary.\n On problems in creating cutting areas please notice:\n 1. Best define cuttinglines in the ground view\n 2. In case cuttinglines have a kink or attach other cuttinglines inside the membranne best use a polygon (the cuttinglines should be defined in a sequence one after the other and should not come unsorted)\n cuttinglines shall go a little bit over the boundary (define them a longer)",
+        "token_count": 249
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            8
+        ],
+        "page_labels": [
+            "2-3"
+        ],
+        "type": "image",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.3 Cutting Pattern Areas"
+        ],
+        "coordinates": [
+            [
+                915.5557861328125,
+                422.2994079589844
+            ],
+            [
+                2311.1625622222223,
+                1711.202880859375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 2.3: 3D-cutting areas: shown in a ground view"
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            7
+        ],
+        "page_labels": [
+            "2-2"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.3 Cutting Pattern Areas"
+        ],
+        "content": "The geodetic lines define the cutting areas in the 3D space. The cutting areas are determined and numbered in the program WINGRAF:",
+        "token_count": 31
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            8
+        ],
+        "page_labels": [
+            "2-3"
+        ],
+        "type": "image",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.4 Development of Surface"
+        ],
+        "coordinates": [
+            [
+                829.75390625,
+                2629.22509765625
+            ],
+            [
+                2728.986644444444,
+                3943.9215788888882
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 2.4: Plane 2D cutting areas, dashed = stressed form, filled region = relaxed form"
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            9
+        ],
+        "page_labels": [
+            "2-4"
+        ],
+        "type": "image",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.4 Development of Surface"
+        ],
+        "coordinates": [
+            [
+                771.6555555555555,
+                2109.673074375957
+            ],
+            [
+                2531.6681000000003,
+                2645.754912222222
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 2.5: Pressing down the 3D area into plane (first left cutting area)"
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            8,
+            9
+        ],
+        "page_labels": [
+            "2-3",
+            "2-4"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.4 Development of Surface"
+        ],
+        "content": "Now the 3D cutting areas have to be developed into a 2D plane. This is the main task of TEXTILE. This ironing or polishing will cause additional strains and stresses in the material. These stresses depend on the shear stiffness of the textile material. Without shear stiffness nearly every 3D surface can be developed into plane by creating rhombus meshes. Now the sense of the geodetic lines appears: an area defined with geodetic lines can be developed as a rather straight area, although it appears like a curved banana in 3D (areas in the left lower region of the previous picture).\n In this picture the cutting areas are moved in plane as in an explosion plot to avoid overlapping. The explosion factor can be adjusted in WINGRAF.\n Zur Kontrolle der Abwicklung druckt TEXTILE in einer Textausgabe die Fläche der ur- sprünglichen 3-D- Zuschnittsflächen sowie die Flächen der glattgebügelten 2-D-Gebiete sowie der entspannten Membranfläche aus. Man erkennt, dass die 2D-Fläche genauso groß ist wie die ursprüngliche räumliche 3D-Fläche, die entspannte Fläche aber kleiner ist: TEXTILE prints the areas of the original 3D surface as well as the ironed 2D area and the relaxed cutting area. The ironed 2D must have the same area as the original 3D surface, the relaxed cutting area is smaller:\n ERGEBNISSE DER ZUSCHNITTSFLÄCHEN\n Nummer Mnr Fläche_3D Fläche_2D entspannt Kettrichtung ermittelt aus:\n [m2] [m2] [m2] Grad 1 1 21.438 21.438 19.423 -64.6 den Hauptachsen der Fläche 2 1 22.308 22.308 20.210 -46.9 den Hauptachsen der Fläche 3 1 21.887 21.887 19.737 -53.4 den Hauptachsen der Fläche 4 1 19.648 19.648 17.701 -51.3 den Hauptachsen der Fläche 29 1 16.662 16.662 14.971 59.77 den Hauptachsen der Fläche - 545.073 545.073 491.874",
+        "token_count": 525
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            9
+        ],
+        "page_labels": [
+            "2-4"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.4 Development of Surface"
+        ],
+        "content": "[m2] [m2] [m2] Grad 1 1 21.438 21.438 19.423 -64.6 den Hauptachsen der Fläche 2 1 22.308 22.308 20.210 -46.9 den Hauptachsen der Fläche 3 1 21.887 21.887 19.737 -53.4 den Hauptachsen der Fläche 4 1 19.648 19.648 17.701 -51.3 den Hauptachsen der Fläche 29 1 16.662 16.662 14.971 59.77 den Hauptachsen der Fläche - 545.073 545.073 491.874.\n ...\n ----------------------------------------\n total\n With a test storage the pressing down of the 3D area into plane can be well animated, see example textile_animation.dat -> Animator loadcase 1001:",
+        "token_count": 194
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            9
+        ],
+        "page_labels": [
+            "2-4"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.5 Compensation"
+        ],
+        "content": "In the relaxation step, the material shrinks to a stressfree area. As a textile has a huge nonlin- ear material behaviour, different compensation methods are available in program TEXTILE:\n 1. Without further input the material shrinks according to the prestress and the linear material parameters.\n 2. Independant of the prestress a constant compensation strain can be defined in warp and fill direction.\n 3. 1+2: In addition to the linear material prestress strain an additive compensation strain can be defined.\n For the elastic prestress strain, separate material parameters can be set.\n 5. For stress relations N-warp/N-fill the compenstion matrix can be defined. According to the actual stress in the current finite element a warp/fill compenstion strain eps- warp/eps-fill can be computed. With these matrix input the nonlinear behaviour of the compensation can be solved exactly.",
+        "token_count": 185
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            10
+        ],
+        "page_labels": [
+            "2-5"
+        ],
+        "type": "image",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.6 Decompensation"
+        ],
+        "coordinates": [
+            [
+                393.70001598252463,
+                1586.5655899916665
+            ],
+            [
+                2677.31591796875,
+                2440.955810546875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 2.6: Magenta=stressed, green=relaxed. left without DECO, right with DECO"
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            10
+        ],
+        "page_labels": [
+            "2-5"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.6 Decompensation"
+        ],
+        "content": "Near the boundary cables and at the seam lines not the full compensation of the undistorted textile can be taken into account. One reason is, that in practice it is often not possible to stress the membrane tangetial to the stressed stiff boundary cable. Another reason is the higher stiffness at the seam lines.\n This effect called decompensation must be equalized by adding material at the end of the cloth width. This is the reason why always both the stressed and the stressfree 2D areas are plotted!\n With CUTT DECO... DECL... a linear decreasing relaxation in fill direction can be defined on the last DECL meters of the cutting areas. The region can be plotted in WINGRAF via ”structure of 2D-cutting areas”. Example: compare created areas with/without DECO in tex- tile4_cutting_via_elements.dat).\n But DECO has only little effect if EDGE>=0 is used. EDGE can control the edge length much more effective. Then DECO has only an effect on the inner membrane area (beside the edge).\n Default is EDGE 0.50. Then the flattened edge has just the same length as in the 3D system. After the compensation it gets a bit shorter due to the reduced compensation (factor 0.5).",
+        "token_count": 260
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            11
+        ],
+        "page_labels": [
+            "2-6"
+        ],
+        "type": "image",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.7 Warp Direction"
+        ],
+        "coordinates": [
+            [
+                586.4387817382812,
+                446.7594909667969
+            ],
+            [
+                2394.872923333334,
+                2182.4892578125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 2.7: Warp direction in the 2D stressfree cutting areas"
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            10
+        ],
+        "page_labels": [
+            "2-5"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.7 Warp Direction"
+        ],
+        "content": "For the development of surface and the compensation the definition of the warp direction is very important. For this reason different methods to describe warp direction are available in TEXTILE:\n 1. By default the program calculates the principal axis for the 2D cutting area and sets the warp direction into the longer axis.\n 2. If the 2D-area is ”compact” and no clear principal axis can be extracted, the program takes the average of the original finite element coordination systems. This averaged local x axis will then be taken as warp direction for all elements of this cutting area.\n For special purpose a fixed angle in X-Y space can be defined for each cutting area.\n In the current sample the default had been used. The warp direction can be plotted with a red line in WINGRAF:",
+        "token_count": 160
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            11
+        ],
+        "page_labels": [
+            "2-6"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.8 Import Export"
+        ],
+        "content": "With the ASE command SYST STOR CUTT the following .dxf files are created:\n - $(name)_cutting_areas_mm.dxf (and as _m.dxf in [m])\n - $(name)_3D_geodetic_lines_mm.dxf\n Then best move the file $(name)_cutting_areas_mm.dxf from the explorer into the Autocad Window\n With SYST STOR ACAD also a .dxf file of the complete 3D mesh lines can be created, e.g. also with columns and walls.\n - see example textile1_tennishall.dat",
+        "token_count": 122
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            12
+        ],
+        "page_labels": [
+            "3-1"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.1 Input Language"
+        ],
+        "content": "The input is made in the CADINP language (see general manual SOFiSTiK: ’FEA / STRUC- TURAL Installation and Basics’). Three categories of units are distinguished:\n mm Fixed unit. Input is always required in the specified unit.\n [mm] Explicit unit. Input defaults to the specified unit. Alternatively, an explicit as- signment of a related unit is possible (eg. 2.5[m] ).\n [mm]1011 Implicit unit. Implicit units are categorised semantically and denoted by a cor- responding identity number (shown in green). Valid categories referring to the unit ”length” are, for example, geodetic elevation, section length and thickness. The default unit for each category is defined by the currently active (design code specific) unit set. This input default can be overridden as described above. The specified unit in square brackets corresponds to the default for unit set 5 (Eu- rocodes, NORM UNIT 5).",
+        "token_count": 202
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            12
+        ],
+        "page_labels": [
+            "3-1"
+        ],
+        "type": "table",
+        "sections": [
+            "3 Input Description",
+            "3.2 Input Records"
+        ],
+        "coordinates": [
+            [
+                400.02337646484375,
+                2263.357666015625
+            ],
+            [
+                2891.07763671875,
+                3225.24658203125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Record Items CUTT NO LC MNO LOCX PROJ EXPO GRP NO VAL QUAD FROM TO INC COMP TYP N W1 W2 W3 W4 W5 W6 W7 W8 W9 W10 LINE XA YA ZA XE YE ZE NX NY NZ GRP ECHO OPT VAL"
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            12
+        ],
+        "page_labels": [
+            "3-1"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.2 Input Records"
+        ],
+        "content": "The following records are defined:\n The records HEAD, END and PAGE are described in the general manual SOFiSTiK: ’FEA / STRUCTURAL Installation and Basics’.",
+        "token_count": 35
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            13
+        ],
+        "page_labels": [
+            "3-2"
+        ],
+        "type": "table",
+        "sections": [
+            "3 Input Description",
+            "3.3 CTRL – Control of the Analysis Method"
+        ],
+        "coordinates": [
+            [
+                380.2980651855469,
+                815.3409423828125
+            ],
+            [
+                2946.5498046875,
+                1609.217041015625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default OPT Control option LT - GRP group selection option ADJU edge adjustment STOR +8 = storage of animation loadcases for the flattening see example textile_animation.dat VAL Value of the option − -"
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            13
+        ],
+        "page_labels": [
+            "3-2"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.3 CTRL – Control of the Analysis Method"
+        ],
+        "content": "CTRL\n GRP New control CTRL GRP 2+3:\n With CTRL GRP 2 only the elements activated in the groupselection GRP are used for the cutting analysis, using the cutting areas from WING. With CTRL GRP 3 all elemente are used but only the groups definded in the groupselection GRP are stored (window openings in the roof). Example: CTRL GRP 3 GRP (200 225 1) cutt Adjust edges of neighbor areas\n ADJU Adjust edges of neighbor areas ADJU=0: do not adjust. Default ADJU=1",
+        "token_count": 125
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            14
+        ],
+        "page_labels": [
+            "3-3"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.4 PREP – Prepare Sofiplus/Autocad Cutting Lines"
+        ],
+        "content": "See also: TheoreticalPrinciples\n PREP\n Item Description No Action: 1=default, 0=delete old lines Unit Default − -\n Usage see example textile1_tennishall.dat\n Remarks see also ’theoretical background’",
+        "token_count": 50
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            15
+        ],
+        "page_labels": [
+            "3-4"
+        ],
+        "type": "table",
+        "sections": [
+            "3 Input Description",
+            "3.5 CUTT – Cutting Pattern"
+        ],
+        "coordinates": [
+            [
+                346.5682067871094,
+                703.7830200195312
+            ],
+            [
+                2982.104736328125,
+                3979.55859375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description NO Number of cutting area Using the cutting areas from WINGRARF an input of NO is not necessary. You can input multiple CUTT lines with different NO area numbers to give individual parameter for every NO. LC Load case for the compensation Only necessary for a manual cutting area definition via groups. Otherwise the compensation load case must be input in WINGRARF MNO Material for the compensation Only necessary if a separate material shall be taken for the linear compensation LOCX Local warp direction in the plan view of the 2D cutting plane PROJ Projection für die development of surface XX YY ZZ XYZ XNYZ XYNZ NXYZ DECO Decompensation factor (reduced material relaxation in fill direction at end of area) - but has only little ef- fect if EDGE>=0 is used! EDGE can control the edge length much more effective! DECL Length of the region at the end of the cutting areas (-> textile1_tennishall.dat) EDGE boundary edge control factor -1 = edge length control switched off effect of EDGE see example textile7_edge.dat EDGI same but for inner edges EXPO Explosionsfactor für graphical plots (Can be changed also in WINGRAF with an additional explosion factor) Unit Default − - − - − - LT - − - [m]1001 - − 0.5 − 0.5 − 1.30"
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            15,
+            16
+        ],
+        "page_labels": [
+            "3-4",
+            "3-5"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.5 CUTT – Cutting Pattern"
+        ],
+        "content": "See also: TheoreticalPrinciples, GRP\n CUTT\n SEAM Seam addition at inner edges\n [m]1001\n -\n BOUN\n Addition at boundary edges\n [m]1001\n -\n Standard input using cutting area definition of WINGRAF:\n prog textile\n HEAD Cutting analysis - development of surface + compensation cutting $ Cutting analysis with cutting area definition of WINGRAF $ Realistic compensation added to elastic material strain in percent: COMP DE1 - 0.5 $ Percent additional strain in warp direction COMP DE2 - 1.5 $ Percent additional strain in fill direction END\n Two applications are possible:\n 1. Definition of the cutting areas in WINGRAF:\n Then in TEXTILE usually only the input CUTT is sufficient. The cutting areas as well as the load case for the compensation is taken from WINGRAF.\n Only if additional input for MNO, LOCX or PROJ shall be made, these parameters may be input using the number of the cutting area NO. The first CUTT input line is taken as default for all other areas.\n 2. Manual definition of the cutting areas via groups:\n If one ore more groups are activated via GRP, the cutting areas are not taken from WINGRAF. The compensation load case has to be defined.\n Sample:\n CUTT 3 LC 2\n GRP 3,4,5\n defines cutting area 3 consisting of membrane elements of groups 3,4 and 5.\n If no input is done for NO, the cutting area gets the number of the first activated group.\n The input CUTT NO -1 deletes all existing cutting areas in the database if the area numbering shall be changed.\n LOCX: By default the program calculates the principal axis for each 2D cutting area and sets the warp direction into the longer axis.\n If the 2D-area is \"compact\" and no clear principal axis can be extracted, the program takes the average of the original finite element coordination systems. This averaged local x axis will then be taken as warp direction for all elements of this cutting area.",
+        "token_count": 429
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            16,
+            17
+        ],
+        "page_labels": [
+            "3-5",
+            "3-6"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.5 CUTT – Cutting Pattern"
+        ],
+        "content": "LOCX: By default the program calculates the principal axis for each 2D cutting area and sets the warp direction into the longer axis.. If the 2D-area is \"compact\" and no clear principal axis can be extracted, the program takes the average of the original finite element coordination systems. This averaged local x axis will then be taken as warp direction for all elements of this cutting area..\n For speccial purpose a fixed angle in X-Y space can be defined for each cutting area.\n PROJ: In extreme special cases the program cannot find a projection direction to flash all elements on the surface. Then a projection direction can be defined manually - please refer to sample m_eck3.dat.\n EDGE: If you take an orange slice and press it onto the table, the outer edges will expand and will get longer. The same happens in TEXTILE with EDGE=-1 on a double curved cutting area. But usually you want to attach the membrane to a boundary with a fixed length - so the edges shall not get longer. This you get with EDGE>=0. Then the edges keep their length but as\n an effect the flattened area gets a bit smaller as the edges must be compressed a bit (orange slice).\n With a factor between 0 and 1 you can control the compensation at the edge (from the stress). In most cases you have double material at the edge and/or a boundary cable that prohibits a strain in edge direction. With EDGE you can control this compensation at the edge. With EDGE=0.0 the relaxed length will be as long as the stressed length - it will be the length that you measure in the 3D system. With EDGE=1.0 the edge gets the full compensation and the relaxed length will be shorter. But then during the erection you must stress and elongate the edge what usually causes problems.\n Effect of EDGE see example textile7_edge.dat : EDGE=-1.0 cannot be installed - edge cannot be compressed EDGE=0.00 edge must not be stressed during montage EDGE=0.30 edge must be stressed a bit during montage = possible EDGE=1.00 edge must be stressed very high in the montage = problematic\n EXPO: To avoid an overlapping of the cutting areas in the graphical plots, the areas are moved horizontally in the 2D plane as in an explosion plot. The explosion factor can also be adjusted in WINGRAF.",
+        "token_count": 485
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            18
+        ],
+        "page_labels": [
+            "3-7"
+        ],
+        "type": "table",
+        "sections": [
+            "3 Input Description",
+            "3.6 GRP – Group Control"
+        ],
+        "coordinates": [
+            [
+                384.7065124511719,
+                813.5115966796875
+            ],
+            [
+                2928.031005859375,
+                1325.467529296875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default NO Group number − - VAL YES uses the group number − FULL NO does not use the group number FULL uses the group number and result output"
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            18
+        ],
+        "page_labels": [
+            "3-7"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.6 GRP – Group Control"
+        ],
+        "content": "See also: CUTT, QUAD\n GRP\n Typical usage see example TEXTILE3.dat.\n If the cutting areas are not defined via WINGRAF they can also be defined directly via GRP and QUAD.",
+        "token_count": 46
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            19
+        ],
+        "page_labels": [
+            "3-8"
+        ],
+        "type": "table",
+        "sections": [
+            "3 Input Description",
+            "3.7 QUAD – QUAD Elements"
+        ],
+        "coordinates": [
+            [
+                390.78515625,
+                818.056396484375
+            ],
+            [
+                2923.000732421875,
+                1264.7772216796875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default FROM Start element number − 1 TO End element number − FROM INC Increment − 1"
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            19
+        ],
+        "page_labels": [
+            "3-8"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.7 QUAD – QUAD Elements"
+        ],
+        "content": "See also: GRP\n QUAD\n Typical usage see example TEXTILE4.dat.\n In addition to the group definition GRP, elements for a cutting area can also be selected from FROM to TO in increments of INC. An element selection is also supported with the ANIMATOR:\n Animator - menu \"reduce\" - \"select elements\"\n - add elements with pressed CTRL key\n then rigth mouse click - copy selektion to clipboard\n then in TEDDY \"include from aus clipboard\" or CTRL-V\n - add a heading line \"QUAD FROM\" in front of the imported table.\n - ready",
+        "token_count": 121
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            20
+        ],
+        "page_labels": [
+            "3-9"
+        ],
+        "type": "table",
+        "sections": [
+            "3 Input Description",
+            "3.8 COMP – Compensation"
+        ],
+        "coordinates": [
+            [
+                384.19610595703125,
+                817.0515747070312
+            ],
+            [
+                2923.64892578125,
+                2120.333984375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default TYPE Type of compensation method LT ! CE1, CE2: constant strain DE1, DE2: additional strain S1, S2, E1, E2 : compensation matrix N For S1, S2: number of columns or rows of a compen- − - sation matrix For E1, E2: row of the matrix W1 For DE1, DE2: additional strain in % ∗ - W2 For S1, S2: column stress in kN/m ... For E1, E2: strain in % W10"
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            21
+        ],
+        "page_labels": [
+            "3-10"
+        ],
+        "type": "table",
+        "sections": [
+            "3 Input Description",
+            "3.8 COMP – Compensation"
+        ],
+        "coordinates": [
+            [
+                396.9537353515625,
+                1149.7459716796875
+            ],
+            [
+                2885.63037109375,
+                2947.8212890625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Column 1 Column 2 Column 3 Column 4 warp force= warp force= warp force= warp force= 0.0 kN/m 1.0 kN/m 4.0 kN/m 10.0 kN/m Line 1 fill force eps- eps- eps- eps- warp=3.0% warp=4.0% warp=4.5% warp=5.0% 0.0 kN/m eps-fill=3.0% eps-fill=2.0% eps-fill=1.0% eps-fill=0.0% Line 2 fill force eps- eps- eps- eps- warp=2.0% warp=3.2% warp=3.6% warp=4.3% 1.0 kN/m eps-fill=4.0% eps-fill=3.2% eps-fill=2.0% eps-fill=1.0% Line 3 fill force eps- eps- eps- eps- warp=1.0% warp=2.0% warp=2.8% warp=3.6% 4.0 kN/m eps-fill=4.5% eps-fill=3.5% eps-fill=2.8% eps-fill=2.0% Line 4 fill force eps- eps- eps- eps- warp=0.0% warp=1.0% warp=2.0% warp=3.0%"
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            20,
+            21
+        ],
+        "page_labels": [
+            "3-9",
+            "3-10"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.8 COMP – Compensation"
+        ],
+        "content": "See also: TheoreticalPrinciples\n COMP\n There are different possibilities to describe the compensation:\n 1. Without an input COMP the material shrinks according to the prestress and the linear material parameters, perhaps with a material property which is input separately via CUTT-MNO.\n 2. Independant of the prestress a constant compensation strain can be defined in warp and fill direction.\n COMP CE1 - 2.0 $ 2 % constant strain in warp direction COMP CE2 - 5.0 $ 5 % constant strain in fill direction\n 3. 1+2: In addition to the linear material prestress strain an additive compensation strain can be defined.\n COMP DE1 - 2.0 $ 2 % additional strain in warp direction\n COMP DE2 - 5.0 $ 5 % additional strain in fill direction\n 4. For stress relations N-warp/N-fill the compenstion matrix can be defined. According to the actual stress in the current finite element a warp/fill compenstion strain eps- warp/eps-fill can be computed. With these matrix input the nonlinear behaviour of the compensation can be solved exactly:\n COMP S1 4 0.00 1.00 4.00 10.00 $ warp (warp direction) COMP S2 4 0.00 1.00 4.00 10.00 $ fill (fill direction)\n COMP E1 1 3.0 4.0 4.5 5.0 $ warp (warp direction) COMP E1 2 2.0 3.2 3.6 4.3\n COMP E1 3 1.0 2.0 2.8 3.6 COMP E1 4 0.0 1.0 2.0 3.0\n COMP E2 1 3.0 2.0 1.0 0.0 $ fill (fill direction)",
+        "token_count": 415
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            21
+        ],
+        "page_labels": [
+            "3-10"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.8 COMP – Compensation"
+        ],
+        "content": "COMP E1 3 1.0 2.0 2.8 3.6 COMP E1 4 0.0 1.0 2.0 3.0. COMP E2 1 3.0 2.0 1.0 0.0 $ fill (fill direction).\n COMP E2 2 4.0 3.2 2.0 1.0\n COMP E2 3 4.5 3.5 2.8 2.0\n COMP E2 4 5.0 4.3 3.6 3.0\n This defines the following table:\n 10.0 kN/m\n eps-fill=5.0%\n eps-fill=4.3%\n eps-fill=3.6%\n eps-fill=3.0%\n If a point has a membrane force of 10 kN/m in warp direction and of 4 kN/m in fill direction, the compensation strain results as follows:\n Column=4 follows due to 10 kN/m warp force\n (because COMP S1...W4=10)\n Line=3 follows due to 4 kN/m fill force (because COMP S2...W3=4)\n Thus the compensation can be read off in line 3, column 4\n Compensation in warp direction= eps1= E1(3,4) = 3.6 %\n Compensation in fill direction= eps2= E2(3,4) = 2.0 %\n Intermediate values are interpolated linearly.",
+        "token_count": 326
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            22
+        ],
+        "page_labels": [
+            "3-11"
+        ],
+        "type": "table",
+        "sections": [
+            "3 Input Description",
+            "3.9 LINE – Cutting Lines"
+        ],
+        "coordinates": [
+            [
+                378.1180114746094,
+                812.1148071289062
+            ],
+            [
+                2933.510009765625,
+                2439.121826171875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default XA Starting point of a cutting line m - YA m - ZA m - XE End point of a cutting line m - YE m - ZE m - NX Direction of projektion − 0 NY − 0 NZ − 1 GRP Acting on this element group − - default: acting on all groups TYPE GEOD - geodetic line − - FIX - fixed line"
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            22
+        ],
+        "page_labels": [
+            "3-11"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.9 LINE – Cutting Lines"
+        ],
+        "content": "See also: TheoreticalPrinciples\n LINE\n Typical usage see example TEXTILE1.dat.\n Usually the cutting lines are defined interactively in WINGRAF or SOFIPLUS. But they can also be defined in a batch run with this record LINE. A following WINGRAF run takes these cutting lines, calculates the geodetic lines and computes the 3D-cutting areas. Please also refer to example 1+2.\n TYPE GEOD lines create a geodetic line with the shortest connnection on the surface, TYPE FIX linies are restraint lines and remain straight in the ground view.\n Remarks see also ’theoretical background’",
+        "token_count": 133
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            23
+        ],
+        "page_labels": [
+            "3-12"
+        ],
+        "type": "table",
+        "sections": [
+            "3 Input Description",
+            "3.10 ECHO – Output Extent"
+        ],
+        "coordinates": [
+            [
+                367.995361328125,
+                820.9424438476562
+            ],
+            [
+                2930.39501953125,
+                1773.125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default OPT A literal from the following list: LT - LIST Coordinate liste of alls cutting areas VAL Value of option LT FULL OFF Option complete deactivate NO No output YES Regular output FULL Extensive output EXTR Extreme output"
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            23
+        ],
+        "page_labels": [
+            "3-12"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.10 ECHO – Output Extent"
+        ],
+        "content": "ECHO\n ECHO LIST YES writes a coordinate liste of alls cutting areas into the output file. This can also be requested with a post run:\n HEAD\n ECHO LIST YES\n END",
+        "token_count": 39
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            24
+        ],
+        "page_labels": [
+            "4-1"
+        ],
+        "type": "text",
+        "sections": [
+            "4 Examples"
+        ],
+        "content": "The input files which are explained here are to be found in the installation directory SOFiSTiK in the subdirectory textile.dat\n english. Alternatively you will find these examples via the TEDDY menu HELP > EXAMPLES sorted by program name and language.\n For additional help like tutorials, tutorial movies and practical examples please refer to the SOFiSTiK Infoportal (www.sofistik.com/Infoportal).",
+        "token_count": 83
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            24
+        ],
+        "page_labels": [
+            "4-1"
+        ],
+        "type": "image",
+        "sections": [
+            "4 Examples",
+            "4.1 Tenniscourt with Inner Air Pressure"
+        ],
+        "coordinates": [
+            [
+                595.3226318359375,
+                1992.9232177734375
+            ],
+            [
+                2038.790771484375,
+                2957.0341796875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 4.1: Plane input system"
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            24
+        ],
+        "page_labels": [
+            "4-1"
+        ],
+        "type": "image",
+        "sections": [
+            "4 Examples",
+            "4.1 Tenniscourt with Inner Air Pressure"
+        ],
+        "coordinates": [
+            [
+                614.28515625,
+                3096.628662109375
+            ],
+            [
+                2391.939392222223,
+                4060.507568359375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 4.2: Formfinding load case 1 (load direction global z)"
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            25
+        ],
+        "page_labels": [
+            "4-2"
+        ],
+        "type": "image",
+        "sections": [
+            "4 Examples",
+            "4.1 Tenniscourt with Inner Air Pressure"
+        ],
+        "coordinates": [
+            [
+                593.2552490234375,
+                391.5675354003906
+            ],
+            [
+                2584.697509765625,
+                1351.6493566666668
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 4.3: Formfinding load case 2 (air pressure on deformed shape LC 1)"
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            25
+        ],
+        "page_labels": [
+            "4-2"
+        ],
+        "type": "image",
+        "sections": [
+            "4 Examples",
+            "4.1 Tenniscourt with Inner Air Pressure"
+        ],
+        "coordinates": [
+            [
+                593.1144409179688,
+                2385.84716796875
+            ],
+            [
+                2475.690673828125,
+                3375.98269
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 4.4: After the system update: new local coordiante systems"
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            26
+        ],
+        "page_labels": [
+            "4-3"
+        ],
+        "type": "image",
+        "sections": [
+            "4 Examples",
+            "4.1 Tenniscourt with Inner Air Pressure"
+        ],
+        "coordinates": [
+            [
+                639.55517578125,
+                390.3601989746094
+            ],
+            [
+                2199.71595,
+                933.9049122222225
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 4.5: Deformation due to wind loading"
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            26
+        ],
+        "page_labels": [
+            "4-3"
+        ],
+        "type": "image",
+        "sections": [
+            "4 Examples",
+            "4.1 Tenniscourt with Inner Air Pressure"
+        ],
+        "coordinates": [
+            [
+                0,
+                0
+            ],
+            [
+                2164.505859375,
+                3386.905029296875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 4.6: geodetic lines in ground view"
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            27
+        ],
+        "page_labels": [
+            "4-4"
+        ],
+        "type": "image",
+        "sections": [
+            "4 Examples",
+            "4.1 Tenniscourt with Inner Air Pressure"
+        ],
+        "coordinates": [
+            [
+                583.8156127929688,
+                392.3068542480469
+            ],
+            [
+                2127.182861328125,
+                1365.4874267578125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 4.7: Geodetic lines in a 3D plot"
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            27
+        ],
+        "page_labels": [
+            "4-4"
+        ],
+        "type": "image",
+        "sections": [
+            "4 Examples",
+            "4.1 Tenniscourt with Inner Air Pressure"
+        ],
+        "coordinates": [
+            [
+                1107.8369140625,
+                1498.989501953125
+            ],
+            [
+                2191.825439453125,
+                2982.521578888889
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 4.8: 3D-cutting areas in ground view"
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            27
+        ],
+        "page_labels": [
+            "4-4"
+        ],
+        "type": "image",
+        "sections": [
+            "4 Examples",
+            "4.1 Tenniscourt with Inner Air Pressure"
+        ],
+        "coordinates": [
+            [
+                608.4979858398438,
+                3097.547607421875
+            ],
+            [
+                2109.05908203125,
+                4275.549356666667
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 4.9: 3D-cutting areas 3D plot"
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            28
+        ],
+        "page_labels": [
+            "4-5"
+        ],
+        "type": "image",
+        "sections": [
+            "4 Examples",
+            "4.1 Tenniscourt with Inner Air Pressure"
+        ],
+        "coordinates": [
+            [
+                822.5537719726562,
+                1984.212646484375
+            ],
+            [
+                2173.782470703125,
+                3490.9771344444443
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 4.10: Example textile2_mexiko.dat"
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            24,
+            25,
+            26
+        ],
+        "page_labels": [
+            "4-1",
+            "4-2",
+            "4-3"
+        ],
+        "type": "text",
+        "sections": [
+            "4 Examples",
+            "4.1 Tenniscourt with Inner Air Pressure"
+        ],
+        "content": "In file textile1.dat a plane input system is blown up with a constant inner air pressure. The second formfinding step is very important for this example because the inner air pressure has to get the right load direction vertical to the deformed shape! The program computes the load on the system defined with the primary load case! So in load case 2 the loadvector is computed with the deformed mesh of primary load case 1! In the first step of load case 1 the load is applied only in vertical z direction of the original plane mesh! Thus the deformed mesh of load case 2 slightly varies from the deformed mesh of load case 1:\n For further analysis it is very comfortable to show new deformations starting at the formfinding position. Therefore it is necessary to make a system update:\n prog ase head Coordinate-Update syst PLC 2 STOR yes end\n prog ase\n With this run, the nodal coordinates are moved to the deformed position of load case 2. Staring the animator now, at once the formfinding geometry is shown as new undeformed system. A plot in WINGRAF shows the system with the new element coordinate systems:\n Now all real static load cases can be computed. It is important to define load case 2 as the primary load case because this load case includes the formfinding prestress of all elements. Furthermore all active elements must be taken into account with a group stiffness factor of 1.0. The following input shows a simplified input of a windloading:\n prog ase\n HEAD Wind with 1.0 stiffness syst prob th3 nmat yes PLC 2 lc 11 titl ’Wind in x’ LC 901,902 end\n Now the cutting pattern analysis can be done. Usually the cutting lines are defined interactively in WINGRAF or SOFIPLUS. In this example they are defined in an extra TEXTILE batch run. A following WINGRAF run takes these cutting lines, calculates the geodetic lines and computes, stores and plots the 3D-cutting areas.",
+        "token_count": 423
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            26,
+            28
+        ],
+        "page_labels": [
+            "4-3",
+            "4-5"
+        ],
+        "type": "text",
+        "sections": [
+            "4 Examples",
+            "4.1 Tenniscourt with Inner Air Pressure"
+        ],
+        "content": "Usually the cutting lines are defined interactively in WINGRAF or SOFIPLUS. In this example they are defined in an extra TEXTILE batch run. A following WINGRAF run takes these cutting lines, calculates the geodetic lines and computes, stores and plots the 3D-cutting areas..\n Now all necessary data is available for the cutting pattern in TEXTILE. At first the development of surface produces the stressed 2D-area in the XY-plane (plotted in dashed lines). The strips shrink due to the compensation method and lead to the final stressfree cutting pattern area - area after compensation (plotted in unbroken lines or filled area)\n prog textile\n head Cutting pattern analysis - Development of surface and compensation cutting $ takes 3D-cutting areas from WING $ Realistic Compensation added to load case-stress strain in Percent: COMP DE1 - 1.0 $ Percent additional strain in warp direction COMP DE2 - 2.0 $ Percent additional strain in fill direction end\n The output listing shows the 7 areas. The following warning appears because in the input system the local element x coordinates point to global X while the strips are oriented in global Y. You could avoid this by rotating the local x axis of the elements to global Y.\n +++++ warning no. 123 in program MAT\n In some areas a significant discrepance between the local element material direction and computed warp direction was detected. Please check the printed statistic and the warp directions.\n Further information about this sample can also be found in chapter 2: Theoretical principles.",
+        "token_count": 319
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            29
+        ],
+        "page_labels": [
+            "4-6"
+        ],
+        "type": "image",
+        "sections": [
+            "4 Examples",
+            "4.2 Development of Surface of a Cube"
+        ],
+        "coordinates": [
+            [
+                722.8592529296875,
+                381.93145751953125
+            ],
+            [
+                2224.696533203125,
+                2233.5271344444445
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 4.11: Area consisting of three quadrats"
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            29
+        ],
+        "page_labels": [
+            "4-6"
+        ],
+        "type": "image",
+        "sections": [
+            "4 Examples",
+            "4.2 Development of Surface of a Cube"
+        ],
+        "coordinates": [
+            [
+                585.3185424804688,
+                2694.117919921875
+            ],
+            [
+                2450.83154296875,
+                4230.116023333333
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 4.12: Development of surface in six virtual steps, 3D view"
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            30
+        ],
+        "page_labels": [
+            "4-7"
+        ],
+        "type": "image",
+        "sections": [
+            "4 Examples",
+            "4.2 Development of Surface of a Cube"
+        ],
+        "coordinates": [
+            [
+                611.6383666992188,
+                401.7340087890625
+            ],
+            [
+                2376.2229344444445,
+                2585.5660233333333
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 4.13: Result of development of surface, groundview"
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            28,
+            29,
+            30
+        ],
+        "page_labels": [
+            "4-5",
+            "4-6",
+            "4-7"
+        ],
+        "type": "text",
+        "sections": [
+            "4 Examples",
+            "4.2 Development of Surface of a Cube"
+        ],
+        "content": "For testing also an area consisting of three quadrats has been developed:\n The following sequence of six pictures show the process. As the displacements of the final area in relation to the original area are stored in the database as load case 1001 this can also be presented in the animator:\n The listing of TEXTILE shows that the area of the developed area is really the same as the original 3D area of 300 m2 (3 areas of 10m*10m)\n CUTTING PATTERN RESULTS\n Mno area_3D area_2D relaxed [m2] [m2] [m2] 1 1 300.000 300.027 300.027\n Number",
+        "token_count": 145
+    },
+    {
+        "document_name": "textile_1.pdf",
+        "page_indices": [
+            32
+        ],
+        "page_labels": [
+            "4-9"
+        ],
+        "type": "text",
+        "sections": [
+            "Bibliography"
+        ],
+        "content": "[1] J. Bellmann. Membrantragwerke und Seifenhaut - Unterschiede in der Formfindung. Bauingenieur 73, 118-123, 1998.\n [2] J. Bellmann. SOFiSTiK Seminarbeitrag 1996 - Membrantragwerke, Formfindung und statische Analyse. Balkema 10998 - ISBN 90 5410 9548, 1996.\n [3] K.-U. Bletzinger and R. Ziegler. Theoretische Grundlagen der numerischen Formfindung von Membrantragwerken und Minimalflächen. Betonkalender BK2 441-456, 2000.\n [4] J. Bellmann and J. Köppl. Die Überdachung des Rundmischbettes für ein Zementwerk in Harburg bei Donauwörth. Stahlbau 71, Heft 7, 2002.\n [5] J. Bellmann. Membranes Ã¢â‚¬âCœ From Formfinding to Cutting Pattern. Structural Membranes conference on textile composites and inflatable structures, 2003.\n [6] J. Bellmann. Dynamic behaviour of inflatable membranes for impact and wind loading. Structural Membranes conference on textile composites and inflatable structures, 2005.\n [7] J. Bellmann. Air volume elements for distribution of pressure in air cushion membranes. Structural Membranes conference on textile composites and inflatable structures, 2011.\n [8] J. Bellmann. Experience on the implementation of a nonlinear material model for mem- brane fabrics in a finite element program. Structural Membranes conference on textile composites and inflatable structures, 2013.\n [9] J. Bellmann. Active bending starting on curved architectural shape. Structural Membranes conference on textile composites and inflatable structures, 2017.",
+        "token_count": 408
+    }
+]

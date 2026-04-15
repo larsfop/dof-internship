@@ -1,0 +1,1188 @@
+[
+    {
+        "content": "The table you’ve supplied is drawn from the STAR2 manual’s front‐matter and Chapter 3 / Chapter 4 outlines. It is arranged as a three-column, hierarchical “Contents / Index” with the following key features:\n\n1. Overall Structure  \n   • Three top‐level entries (1 through 4), each representing one major chapter of the manual:  \n     – 1 Task Description  \n     – 2 Theoretical Principles  \n     – 3 Input Description  \n     – 4 Output Description  \n   • A final “Bibliography” entry (unnumbered) at the end of Chapter 4.\n\n2. Section Numbering and Indentation  \n   • Main sections use integer labels (“1”, “2”, “3”, “4”).  \n   • Subsections are denoted by “x.y” (e.g. “2.1”, “2.2” under Theoretical Principles; “3.1” through “3.11” under Input Description; “4.1” through “4.7” under Output Description).  \n   • Deeper nesting is implied where sub‐subsections would be “x.y.z”, although not shown here.\n\n3. Column Layout  \n   • Left column: Section or subsection number.  \n   • Middle column: Title or heading of that section (e.g. “Input Description”, “ECHO – Control of the Output Extent”, “Load Assembly”, etc.).  \n   • Right column: Page reference, in “chapter–page” format (e.g. “3-31” means Chapter 3, page 31; “4-1” is Chapter 4, page 1).\n\n4. Page Numbering Convention  \n   • Chapter 1 uses Roman numerals (e.g. “i”).  \n   • Chapters 2 and 3 use “2-x” or “3-x” to indicate chapter and page. In your excerpt, “3-31” is the start of the Input Description chapter.  \n   • Chapter 4 pages run “4-1” to “4-7”.\n\n5. Content of Chapters  \n   – Chapter 1 (“Task Description”) briefly introduces the STAR2 family and its scope.  \n   – Chapter 2 (“Theoretical Principles”) is split into seven parts (2.1 … 2.7), covering the mathematical background of 2nd/3rd order beam theory, shear deformation, material nonlinearities, etc.  \n   – Chapter 3 (“Input Description”) enumerates eleven subsections (3.1 … 3.11) where each 3.x describes one input card or group of cards that the user must supply to define geometry, materials, loads, supports, prestress, eccentricities, creep, and so forth.  \n   – Chapter 4 (“Output Description”) contains seven parts, each documenting one type of output:  \n     • 4.1 Load Assembly  \n     • 4.2 Output of the Structure  \n     • 4.3 Results  \n     • 4.4 Output during Iterations  \n     • 4.5 Convergence Criteria  \n     • 4.6 Design Output  \n     • 4.7 Stiffness Computation  \n   – After Chapter 4, the “Bibliography” appears on page 4-7.\n\n6. Formatting Details  \n   • Dot‐leader lines connect titles to their page numbers for quick scanning.  \n   • Uniform indentation signals the hierarchy, making it easy to see which subsections belong to which chapter.  \n   • The consistent three-field layout (number / title / page) is repeated for both the input and output tables.\n\nHow this maps to a RAG‐style vector store  \n– Each numbered subsection (e.g. “3.5 Cross-Section Definitions” if that were the actual title) can be treated as a distinct document or vector embedding entry.  \n– The “chapter–page” notation provides a stable, human‐readable reference link back into the manual PDF.  \n– The parent–child relationships (chapters → subsections) allow you to build a hierarchical index, enable drill-down queries (“Show me all input cards related to prestressing”) or broad queries (“What inputs are needed to control material nonlinearities?”).",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                3
+            ],
+            "page_labels": [
+                null
+            ],
+            "type": "table",
+            "sections": [
+                "Foreword"
+            ]
+        }
+    },
+    {
+        "content": "STAR2 Statics of Beam Structures 2nd Order Theory\n STAR2 Manual, Service Pack 2025-4 Build 146\n Copyright © 2025 by SOFiSTiK AG, Nuremberg, Germany.\n SOFiSTiK AG\n HQ Nuremberg Office Garching Flataustraße 14 Parkring 2 90411 Nürnberg 85748 Garching bei München Germany Germany T +49 (0)911 39901-0 T +49 (0)89 315878-0 F +49(0)911 397904 F +49 (0)89 315878-23 info@sofistik.com\n www.sofistik.com\n This manual is protected by copyright laws. No part of it may be translated, copied or reproduced, in any form or by any means, without written permission from SOFiSTiK AG. SOFiSTiK reserves the right to modify or to release new editions of this manual.\n The manual and the program have been thoroughly checked for errors. However, SOFiSTiK does not claim that either one is completely error free. Errors and omissions are corrected as soon as they are detected.\n The user of the program is solely responsible for the applications. We strongly encourage the user to test the correctness of all calculations at least by random sampling.\n Contents\n Contents\n Contents\n 1\n 2\n 3\n __‘\n Task Description\n Theoretical Principles\n 2.1\n 2.2\n 2.3\n 2.4\n 2.5\n 2.6\n 2.7\n Input Description\n 3.1\n 3.2\n 3.3\n 3.4\n 3.5\n 3.6\n 3.7\n 3.8\n 3.9\n 3.10\n 3.11\n i\n 4\n 3-31\n 4-1\n 4-1\n 4-1\n 4-2\n 4-2\n 4-2\n 4-3\n 4-4\n Bibliography\n 4-7\n 1 Task Description\n The programs of the STAR-family enable the computation of the internal forces in any three- dimensional beam structure by 2nd or 3rd order theory taking into consideration shear defor- mations as well as various non-linear material effects.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                1,
+                2,
+                3,
+                4
+            ],
+            "page_labels": [
+                null,
+                null,
+                null,
+                "1-1"
+            ],
+            "type": "text",
+            "sections": "Foreword"
+        }
+    },
+    {
+        "content": "4-3. 4-4. Bibliography. 4-7. 1 Task Description. The programs of the STAR-family enable the computation of the internal forces in any three- dimensional beam structure by 2nd or 3rd order theory taking into consideration shear defor- mations as well as various non-linear material effects..\n STAR1 - 3D version without design\n STAR2 - 2D version with design\n STAR3 - 3D version with design\n Effects of 3rd order theory are available for truss and cable elements.\n The static system must be described by the user in terms of discrete elements, and the corre- sponding database must be defined by the generation program.\n Available elements are:\n • Beam element with straight axis and step-by-step constant arbitrary cross section. Analysis by 2nd order theory with consideration of the shear deformation. Consideration of non- linear material behaviour through iteration.\n • Spring element such as support spring or node-coupling spring; non-linear effects include slip, failure, yielding and friction.\n • Truss element with prestress\n • Cable element with prestress (only tensile force is possible)\n • Distributed support element for elastic support of beams\n • Couplings for special effects like eccentric beam links, rigid links between nodes etc.\n Disk or plate elements as well as solid elements, which can be defined by the generation program, can not be processed by STAR2. The foundation definitions for pile elements are not available in STAR2 either.\n Concentrated forces or moments may act on the nodes, while support translations or rotations can be defined at any support. The beam elements can be loaded with point loads at any po- sition in the form of eccentrically acting forces, moments, jumps in displacement or rotation, as well as with linearly varying loads in the form of forces, moments, strains, curvatures or temper- ature strains. Unintentional eccentricities of linear, quadratic or cubic variation can be defined for the analysis with 2nd order theory. In addition, creep deformations or unintentional eccen- tricities can be generated from already analysed load cases. Prestress can be considered by specifying an MV0 or NV0 distribution.\n The analysis of frames by 2nd order theory with consideration of material behaviour is a de- manding engineering task. The user of STAR2 should therefore accumulate experience from simple examples, before attempting to take on more complicated structures. A check of the results by off-hand engineering calculations is indispensable.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                3,
+                4
+            ],
+            "page_labels": [
+                null,
+                "1-1"
+            ],
+            "type": "text",
+            "sections": "Foreword"
+        }
+    },
+    {
+        "content": "The static problem is solved by the deformation method. In any iterative technique, non-linear properties must be decomposed into several individual linear steps by an iterative method. A closed form solution can be computed by 2nd order theory for such a linear step, if the stiffness and the axial force are assumed constant.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                6
+            ],
+            "page_labels": [
+                "2-1"
+            ],
+            "type": "text",
+            "sections": "2.1 Introduction"
+        }
+    },
+    {
+        "content": "The program uses exclusively right-handed coordinate systems in accordance to DIN 1080 for the description of force-, moment-, displacement- or rotation-vectors. The three-dimensional global system of coordinates serves in defining the nodal coordinates and displacements or rotations.\n Each beam gets a local coordinate system, which is defined by the generation program. Beam deformations and internal forces and moments are output in this coordinate system. When confusion is possible, the local xyz-system is also designated by S12.\n Thus, the essential magnitudes for primary bending are:\n Cross section values AZ, IY Forces, displacements, moments Z or 2 Rotations, curvatures Y or 1 Internal forces and moments\n VZ, MY\n and for secondary bending:\n Cross section values AY, IZ Forces, displacements, moments Y or 1 Rotations, curvatures Z or 2 Internal forces and moments\n VY, MZ\n Internal forces and moments are positive if they act in the positive directions of the axes at an end cross section (when moving in the longitudinal direction of the beam).",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                6
+            ],
+            "page_labels": [
+                "2-1"
+            ],
+            "type": "text",
+            "sections": "2.2 Definitions"
+        }
+    },
+    {
+        "content": "The illustration presents a single, straight beam segment in free-body view, annotated with both global and local coordinate systems and the principal internal forces and moments that act on an arbitrary cross section. Key features and annotations are as follows:\n\n1. Beam Geometry and Cross Section  \n   • A prismatic beam element is drawn in three-dimensional isometric projection. Its axis is a straight line running from the “near” face (where the cross section is hatched) back to the “far” end of the beam.  \n   • The right-most end face is hatched at a 45° angle, indicating the location of the cut section under consideration. A second, smaller rectangular cross section is shown just behind the hatched face, emphasizing the local coordinate origin at that section.\n\n2. Global Coordinate System (X, Y, Z)  \n   • In the lower-left corner, a triad of orthogonal arrows—labeled X (horizontal, pointing right), Y (horizontal, pointing away from the viewer), and Z (vertical, pointing upward)—defines the global, fixed reference frame in which all beam segments are embedded.  \n\n3. Local (Section) Coordinate System (X′, Y′, Z′)  \n   • At the hatched cross section, a second triad is drawn: X′ runs along the longitudinal axis of the beam pointing toward the right end; Y′ points into the page (or into the section) at an angle consistent with the beam’s orientation; Z′ is vertical, pointing downward in the view.  \n   • This local frame coincides with the beam’s neutral axis (X′) and its principal bending axes (Y′ and Z′), averaged over the segment according to the reduction method (transfer-matrix approach) under the assumption of constant axial force per segment.\n\n4. Internal Forces and Moments at the Cut Section  \n   • Axial Force (Nₓ): Illustrated by a downward arrow aligned with the local X′-axis, denoting tensile or compressive loading along the beam axis.  \n   • Shear Forces: Qᵧ is shown as an arrow approximately parallel to the local Y′-axis (into the page), and Q_z is depicted along the local Z′-axis (vertical).  \n   • Bending Moments: Mᵧ is drawn about the local Y′-axis (an arrow curving around the section in a plane normal to Y′), and M_z about the local Z′-axis (curving around Z′).\n\n5. Interpretation in Context of the Text  \n   • The beam is treated as a straight element whose stiffnesses and axial force are “averaged” over its ends, satisfying the assumptions of second-order theory (small rotations, unchanged orientation of axes).  \n   • No warping of the cross section or 3rd-order large‐deformation effects are shown, consistent with the implementation notes indicating only 2nd-order torsion and shear deformations are available.  \n   • The depiction underscores how any offset between the shear center and the centroid can be accommodated by a rotation of the principal axes with respect to the global frame.\n\nTogether, these details form a comprehensive free-body diagram of a beam element used in advanced structural analysis via the reduction (transfer-matrix) method, clarifying both geometry and internal loadings in global and local coordinates.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                7
+            ],
+            "page_labels": [
+                "2-2"
+            ],
+            "type": "image",
+            "sections": [
+                "2 Theoretical Principles",
+                "2.3 Beam Elements",
+                "2.3.1 Introduction"
+            ]
+        }
+    },
+    {
+        "content": "The individual beam elements are analysed by the reduction method (method of transfer ma- trices) under the assumption of step-by-step constant axial force. The following assumptions are made as well:\n The beam axis is a straight line. Broken or curved beams must be replaced by several straight beam segments. The beam axis coincides with the neutral axis. The stiffnesses and the axial force for each particular segment are averaged from their end values. Therefore, in case of highly varying values, one should be careful to define a sufficient number of segments (usually\n 5 to 10).\n The theory of 2nd order satisfies the equilibrium conditions for the deformed structure. The ori- entation of the beam axes (transverse force instead of shear force) and the forces (conservative loading) remain unaltered. By contrast, the theory of 3rd order considers large deformations, which alter the orientation of the local system of coordinates. The 3rd order theory is not yet implemented for beam elements. Thus, by 3rd order theory all beam elements are handled in the same ways as by 2nd order theory.\n For frame design without use of the effective length factor, the term advanced analysis refers to second-order inelastic analysis [10] .\n The stiffnesses can be modified due to the material by design only (input record NSTR). They remain constant within an iteration step, whereas without NSTR they remain constant during the entire analysis.\n Torsion according to St. Venant (no lateral warping of the cross section). Warping and torsion according to theory of 2nd order are not implemented in STAR2.\n The effect of shear deformations due to shear force can be taken into consideration.\n A deviation between the shear centres and the centre of gravity can be ultimately considered as a rotation of the principal axes with respect to the system of coordinates of the beam.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                7,
+                6
+            ],
+            "page_labels": [
+                "2-2",
+                "2-1"
+            ],
+            "type": "text",
+            "sections": "2.3.1 Introduction"
+        }
+    },
+    {
+        "content": "Each beam is partitioned into n segments defined by n+1 sections. The status magnitudes are\n collected into a vector z:\n $$1 --Cl CH-C2 CH-C3 H-Cl1 . U---p= 0 Co CH-Cl CH-C2 (2.5) 0 --C4/CH Co Cl 0 @) 0 1$$\n where\n 1\n 1\n 1\n AK =e€+-V1+e2-KV\n (2.10)\n C0 = COS AK\n (2.11)\n C1 = · SN AK/ε\n (2.12)\n C2 = 2 · (COS AK − 1) / ε2\n (2.13)\n C3 = 3 · (SN AK − AK) / ε3\n (2.14)\n C4 = ε · SN AK /\n (2.15)\n Secondary bending:\n $$1 Cl --CQ-C2 CQ-C3 \"Cl . U---s= 0 Co CQ:-C CQ-C2 (2.16) 0 --C4/CQ Co --Cl 0 0 0 1$$\n with similar constants.\n The components of the loading vector p are formed from\n With these loads the resulting loading vector components are:\n p1 = − CN · 2 · (p/2 + dp/6) + · (e + de/2)\n p2 = − · (p + dp/2)\n p3 = − CT · 2 · (m/2 + dm/6)\n p4 = − · (m + dm/2)\n p5 = CH · (C5 · py + C6 · dpy/ + C3 · mz − C5 · dmz/) − C2 · ky−\n C3 · dky/ + (C1/ − 1) · dz − (2C2/2 + 1) · d2z − (6C3/3 + 1) · d3z",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                7,
+                8,
+                9,
+                10
+            ],
+            "page_labels": [
+                "2-2",
+                "2-3",
+                "2-4",
+                "2-5"
+            ],
+            "type": "text",
+            "sections": "2.3.2 Transfer Matrices"
+        }
+    },
+    {
+        "content": "p5 = CH · (C5 · py + C6 · dpy/ + C3 · mz − C5 · dmz/) − C2 · ky−. C3 · dky/ + (C1/ − 1) · dz − (2C2/2 + 1) · d2z − (6C3/3 + 1) · d3z.\n p6 = CH · (−C3 · py + C5 · dpy/ + C2 · mz + C3 · dmz/)+\n + C1 · ky − C2 · dky/\n + (C0 − 1)/ · dz + 2(C1 − 1)/2 · d2z − (6C2/3 + 3) · d3z\n p7 = − C2 · py − C3 · dpy/ − C1 · mz + C2 · dmz/\n + (C0 − 1)/CN · ky − (C1/ − 1)/CN · dky/\n − C4/CN/ · dz + 2(C0 − 1)/2 · d2z + 6(C1 − )/3 · d3z\n p8 = − · py − · dpy/2\n with the additional constants\n C5 = (COS AK − 1 + AK2/2) · (/AK)4\n C6 = (SN AK − AK + AK3/6) · (/AK)5\n Similar expressions are obtained for the secondary bending (p9 - p12).\n For the axial force stressing (px) and the torsional loading (mx) STAR2 simplifies the load components by an average load value at each section.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                10
+            ],
+            "page_labels": [
+                "2-5"
+            ],
+            "type": "text",
+            "sections": "2.3.2 Transfer Matrices"
+        }
+    },
+    {
+        "content": "By continuous transfer of the status magnitudes and incorporation of the discontinuities (con- centrated load, moment etc.), one obtains a relationship between the state magnitudes at the beginning of the beam and those at its end.\n zn+1 = Us · z1 + rs\n (2.17)\n This relationship can be used as a linear system of equations for the computation of the stiffness matrix. The matrix obtained this way can now be subjected to any modifications caused by hinged-joints and to a transformation into the global system of coordinates.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                10
+            ],
+            "page_labels": [
+                "2-5"
+            ],
+            "type": "text",
+            "sections": "2.3.3 Stiffness Matrix of the Entire Beam"
+        }
+    },
+    {
+        "content": "The separate analysis in the primary and secondary direction is correct only when the axes y and z are the principal axes of the cross section. If this condition is not satisfied, the deforma- tions are not computed correctly in case of statically determinate structures, whereas in case of statically indeterminate structures the internal forces and moments are wrong too. STAR2 transforms all the loads and the internal forces of three- dimensional structures into the direc- tions of the principal axes. Variable rotation along the length of a beam can not be considered however. This transformation can be suppressed in special cases. The principal axes are\n always taken into consideration correctly during design, when biaxial bending is active.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                10,
+                11
+            ],
+            "page_labels": [
+                "2-5",
+                "2-6"
+            ],
+            "type": "text",
+            "sections": "2.3.4 Principle Axes"
+        }
+    },
+    {
+        "content": "The image consists of three side-by-side schematic force–displacement diagrams, each plotted with force P on the vertical axis (positive upward) and displacement V on the horizontal axis (positive to the right). A light dotted vertical line marks the zero‐displacement origin in all three plots; likewise, a light dotted horizontal line marks zero force. Each diagram illustrates one of the non-linear spring effects discussed in the adjoining text. Directly beneath the three plots is the caption “Figure 2.2: Force-displacement diagrams of springs.”\n\n1. Leftmost diagram (GAP behavior)  \n   • The horizontal axis is labeled “V”; the vertical axis is labeled “P.”  \n   • Near the origin, the spring exerts no force for small displacements: the force curve is flat (zero force) between two symmetric displacement thresholds. On the positive side, a bracket with arrows marks the distance from zero displacement to the point where force first becomes nonzero; this bracket is labeled “GAP.” An identical bracket appears below the axis on the negative-displacement side, also labeled “GAP.”  \n   • Once the displacement exceeds the positive gap threshold, the curve rises linearly with a constant positive slope (representing the spring’s stiffness). Likewise, once the displacement exceeds the negative gap threshold in the negative direction, the curve drops linearly with an equal but opposite negative slope.  \n   • This model captures a “dead” zone (free play) of width 2·GAP in which the spring carries no load, followed by linear elastic response.\n\n2. Center diagram (CRACK behavior)  \n   • Again, axes P (vertical) and V (horizontal) are shown, with the origin marked.  \n   • In the negative‐displacement region (to the left of the origin), the force–displacement relationship is linear with a relatively stiff slope. Along the left vertical projection of the origin, a short horizontal tic marks zero displacement, and just to its left a small bracket labeled “CRACK” indicates that upon unloading or compressive movement the spring no longer sustains tension beyond a certain small opening.  \n   • In the positive‐displacement region (to the right of zero), the line from the origin has a shallower slope than in compression. At some prescribed positive displacement, the slope abruptly increases again to the original stiffer value. In other words, the crack‐mode spring shows reduced stiffness in a certain opening range, then re-engages full stiffness beyond that opening.\n\n3. Rightmost diagram (+YIELD– behavior)  \n   • The axes are the same P–V pair, origin indicated.  \n   • In the compression (negative V) region, the spring exhibits linear elastic response with a single constant slope down to some negative yield displacement. No special labeling appears on the negative side, but the transition is implicitly analogous to the positive side.  \n   • On the positive side, the curve rises linearly from the origin with the initial stiffness until it reaches a displacement marked by a short horizontal bracket on the V axis labeled “+YIELD–”. At that yield threshold the force plateaus: the curve becomes horizontal, indicating that further displacement occurs at essentially constant force. Beyond some larger displacement not explicitly marked, the curve then resumes an upward incline (a second, stiffer elastic region), although the schematic only hints at this by a slight angled line beyond the plateau.  \n   • This plot models idealized yield behavior: elastic up to a limit, plastic slip at constant force, then strain hardening upon further displacement.\n\nOverall, the three sketches illustrate non-linear spring characteristics—free-play gaps, crack‐opening softening, and yield/plasticity—each plotted in the same P–V coordinate frame and serving as visual supplements to the text’s description of how prestress, failure, yield, friction, cohesion, and slip can be incorporated into spring elements during non-linear structural analysis.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                11
+            ],
+            "page_labels": [
+                "2-6"
+            ],
+            "type": "image",
+            "sections": [
+                "2 Theoretical Principles",
+                "2.4 Springs, Trusses, Cables",
+                "2.4.1 Springs"
+            ]
+        }
+    },
+    {
+        "content": "The input figure is composed of two adjacent P–v diagrams, labeled “Figure 2.3: Iteration methods a / b,” illustrating the two nonlinear‐analysis iteration schemes described in the accompanying text. In both diagrams, the vertical axis represents load P (force), and the horizontal axis represents deformation or displacement v. Each subfigure shows:\n\n1) A bilinear (or more generally nonlinear) “spring” response curve—drawn in a solid, relatively thick line—that departs from the origin with an initial stiffness E₀ (the slope of the first segment), transitions at a yield or softening point, and thereafter follows a lower tangent (a horizontal plateau in the left figure and a less steep segment in the right figure).\n\n2) A horizontal dashed line, at a P‐level above the initial elastic plateau, indicating either the target force (in stress control) or the previous‐iteration force level used to define a secant stiffness.\n\n3) A dashed line drawn from the origin to the intersection of the prescribed displacement or force with the nonlinear response curve. That line represents the secant stiffness Eₛ computed at the current iteration.\n\nDetailed walk-through of each subfigure:\n\nLeft: Method a – Strain Control  \n- The nonlinear P–v curve starts at the origin with straight slope E₀ (the initial elastic modulus).  \n- At a certain displacement (marked by a vertical dashed line dropped down to the v‐axis), the curve levels off into a flat plateau, indicating yield or softening (constant P).  \n- A vertical dashed line at that displacement shows the prescribed v for this iteration.  \n- Where that vertical line meets the nonlinear curve, a point is marked. From that point, a dashed line is drawn horizontally out to the P‐axis—identifying the computed force for the given v—and back to the origin, forming the secant line whose slope is Eₛ.  \n- The horizontal dashed line at the level of that computed P is shown extending across the plot, emphasizing the force value obtained.\n\nRight: Method b – Stress Control  \n- The same basic bilinear response is shown: initial slope E₀ up to yield, then a shallower, approximately horizontal segment.  \n- Here, a horizontal dashed line indicates the prescribed force P for the iteration.  \n- Where this horizontal line intersects the nonlinear curve, a point is marked. From that intersection, a dashed line is drawn down to the displacement axis to show the computed v corresponding to the applied P.  \n- A dashed line from the origin to this intersection point again defines the secant stiffness Eₛ for the current iteration.  \n\nBelow the two plots is the caption “Figure 2.3: Iteration methods a / b.” The left diagram is understood to use method a (strain control—prescribed displacement, solve for force, then update secant stiffness), while the right uses method b (stress control—prescribed force, solve for displacement, then update secant stiffness). Together, the pair visually contrasts how secant stiffnesses are derived in each control scheme during a nonlinear structural‐analysis iteration.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                12
+            ],
+            "page_labels": [
+                "2-7"
+            ],
+            "type": "image",
+            "sections": [
+                "2 Theoretical Principles",
+                "2.4 Springs, Trusses, Cables",
+                "2.4.1 Springs"
+            ]
+        }
+    },
+    {
+        "content": "Spring elements model structural parts by a simplified force- displacement relationship. This is usually expressed by means of a spring constant in the form of a linear equation:\n P = c ·\n (2.18)\n The spring is defined by its direction ( DX, DY, DZ ) and the spring constants. The direction can be determined as the difference of two nodes (N2 - NA), or it can be specified explicitly. Support springs must be provided with a direction (see generation program). The element implemented herein allows for the following non-linear effects:\n - Prestress (linear effect)\n - Failure\n - Yield\n - Friction with cohesion\n - Slip\n Geometrically non-linear effects are not possible for springs.\n A prestress shifts the corresponding effects and it always generates a loading upon the struc- ture. A prestressed spring is relaxed in the absence of external loading or compulsion. The non-linear effects apply to rotational springs as well as lateral springs too. Friction can be defined by a lateral spring. The force components normal to the spring’s direction of action are equal to the product of the displacement components in the lateral direction by the lateral spring constants. This force is at most equal to the product of the force in the normal direction by the friction coefficient plus the cohesion. If the normally oriented spring is eliminated, the lateral spring is automatically eliminated too.\n All spring non-linearities are activated only during a non-linear analysis. To this end, a value for the number of iterations must be specified by the analysis methods in CTRL.\n Upon such request (see input record CTRL) either the force corresponding to a prescribed displacement value will be determined within an iteration (strain control a) or the displacement for a prescribed force (stress control b). A secant stiffness results from the values computed in this way. Method a should be used by structures, which soften as they are loaded, whereas\n method b should be used for stiffening structural members.\n The user must take care so that the system does not become unstable in any step of the iteration through failure of springs or cables. This can happen, for instance,if one defines additional springs with small stiffness, resulting to a small remaining stiffness after the main spring’s failure. This stiffness should not be less than the stiffness of the main spring divided by 10000.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                11,
+                12
+            ],
+            "page_labels": [
+                "2-6",
+                "2-7"
+            ],
+            "type": "text",
+            "sections": "2.4.1 Springs"
+        }
+    },
+    {
+        "content": "Trusses can be analysed by 2nd or 3rd order theory. 2nd order theory is considered as de- scribed in /9/; nodal deformations are additionally taken into account in the construction of the element matrices by 3rd order theory.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                12
+            ],
+            "page_labels": [
+                "2-7"
+            ],
+            "type": "text",
+            "sections": "2.4.2 Trusses"
+        }
+    },
+    {
+        "content": "Cable elements are handled similarly to trusses. Cables can not sustain any compressive forces. 2nd and 3rd order theories are applicable as for trusses. A correct computation is generally possible through several iterations only.\n In order to analyse a cable structure, which is usually stable only under loading, by 1st order theory too, it is assumed that the elements are subjected to a small prestress.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                12
+            ],
+            "page_labels": [
+                "2-7"
+            ],
+            "type": "text",
+            "sections": "2.4.3 Cable Elements"
+        }
+    },
+    {
+        "content": "A global stiffness matrix is obtained by adding all the individual element stiffnesses; after in- corporating the geometric boundary conditions, the displacements and thus the internal forces get computed. If non-linear springs or a redistribution of the axial force are present, the input of a number of iterations within the defined limits will force the whole process to be repeated by updating the secant stiffnesses until a solution is obtained.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                12
+            ],
+            "page_labels": [
+                "2-7"
+            ],
+            "type": "text",
+            "sections": "2.5 Solution of the Complete System"
+        }
+    },
+    {
+        "content": "The number of load cases is limited to 999.\n The number of nodes, beams, sections or loads is only limited by the amount of the available disk space. 5 digits are usually reserved for the output of their numbers, thus values above\n 99999 should not be used.\n STAR2 works with double precision. Despite that the following points should be considered:\n 1. The stiffness EI/l3 of neighbouring beam elements may not differ by a factor larger\n than 10-5.\n 2. Beam theory is valid only for structural members, the length of which is at least twice their height. The length of each individual element should not be smaller than the height of the cross section used.\n 3. Artificially rigid elements can and must be defined as couplings.\n If these criteria are not met, reaction forces will arise on free nodes.\n STAR2 sets a constant stiffness for each segment. The buckling length coefficient β after Pe- tersen /6/ p.489 reaches a maximum of 1.22 for a conical beam under its own weight compared to 1.12 for a prismatic beam (8% error). If the dimensions are changed by just 10% (I-Value by 27.1%), β reaches 1.14, corresponding to an error of about 2%.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                12,
+                13
+            ],
+            "page_labels": [
+                "2-7",
+                "2-8"
+            ],
+            "type": "text",
+            "sections": "2.6 Limitations"
+        }
+    },
+    {
+        "content": "Initial deformations (unintentional eccentricities) are deviations of the actual beam axis from the ideal beam axis. These are independent of self-arising deformations. They have no effect on an analysis by 1st order theory.\n The following variations are possible:\n Linear inclination (e.g. DIN 1045 Sec. 15.8.2)\n Input in the form of a point load at the column head.\n Arbitrary step-by-step linear variation.\n Input in the form of distributed load.\n Arbitrary shape related to the buckling mode (e.g. DIN 1045 17.4). Defined either by several positions along the column, connected by a cubic spline, or by the bending line from an already analysed load case.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                13
+            ],
+            "page_labels": [
+                "2-8"
+            ],
+            "type": "text",
+            "sections": "2.7.1 Imperfections"
+        }
+    },
+    {
+        "content": "DIN 1045 requires an estimation of the effects of creep and shrinkage according to Section 17.4, when the slenderness of the compressed member is greater than 70 for immovable or 45 for movable structures and at the same time the eccentricity e/d is smaller than 2.\n Creep deformations are computed for the permanent loads acting in the service state as well as for any prescribed permanent beam deflections and eccentricities including the unintentional ones.\n An approximate method using an increased unintentional eccentricity is described in note 220 of DAfSt.\n STAR2, however, can perform a more accurate check. A load case is built for this purpose from the loads that cause creep. The resulting deformations, multiplied by a creep factor, can be\n used either as initial deformations or as curvature loads during a subsequent run. The same method allows the consideration of construction phases.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                13,
+                14
+            ],
+            "page_labels": [
+                "2-8",
+                "2-9"
+            ],
+            "type": "text",
+            "sections": "2.7.2 Creep and Shrinkage"
+        }
+    },
+    {
+        "content": "A fixed prestress can be specified in the generation program for springs and trusses. This acts by every load case and generates corresponding stresses. A prestress for each individual load case can be defined in STAR2 as well.\n A statically determinate component of the prestress (NV0,MV0) for each load case can be defined separately for bending beams. Then, depending on the number of parameters, any variation of these values from constant to cubic can be assumed along the beam axis. The effect of prestress is twofold. On one hand, the internal forces and moments are modified by the corresponding prestress values, and on the other hand, deformations result from prestress, which in turn lead to compulsory forces in cases of statically indeterminate structures.\n Prestress is considered differently for cables and for beam elements. A cable or a truss can be only prestressed through the external system. Therefore, the prestress is then analysed like a temperature stressing caused by a strain imposed on the element. Forces are generated within the elements of an undeformed structure, whereas in deformed structures the prestress deteriorates due to self-arising deformations. If one wants to receive a defined prestress, one must employ therefore an element with very small strain stiffness.\n For beams, by contrast, prestress is defined as an independent state of stress (prestressed concrete). Since the prestress is imposed on the element itself, the resulting forces on freely deformable beams are the input internal forces themselves. If the deformation is hindered, compulsory forces arise. In the limiting case, e.g. if a beam is prevented from deforming in the longitudinal direction, the resulting axial force is null, because the forces imposed by the prestressing steel are resisted by the support instead of the beam.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                14
+            ],
+            "page_labels": [
+                "2-9"
+            ],
+            "type": "text",
+            "sections": "2.7.3 Prestress"
+        }
+    },
+    {
+        "content": "The shear deformation can be also taken into account by the beam elements. The program AQUA defines the standard shear areas for some cross sections. The internal force variation in statically indeterminate structures may differ from the one obtained by pure bending theory, if shear deformation is taken into consideration.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                14
+            ],
+            "page_labels": [
+                "2-9"
+            ],
+            "type": "text",
+            "sections": "2.7.4 Shear Deformations"
+        }
+    },
+    {
+        "content": "Since the design or stiffness computation by AQB must be activated for an iteration with non- linear material behaviour after any static analysis, the most important records of AQB are also available in STAR2. These are:\n CTRL - General parameter\n REIN\n - Special parameter for DESI and NSTR\n DESI - Reinforcement computation\n NSTR\n - Strain state\n The complete theory for these records can be found in the AQB manual. Only the descriptions of the input records are given in this manual.\n If not all of the beams are to be dimensioned in the same way, this can be avoided by an external iteration via the record processor PS.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                14
+            ],
+            "page_labels": [
+                "2-9"
+            ],
+            "type": "text",
+            "sections": "2.7.5 Design"
+        }
+    },
+    {
+        "content": "The input is made in the CADINP language (see general manual SOFiSTiK: ’FEA / STRUC- TURAL Installation and Basics’). Three categories of units are distinguished:\n mm Fixed unit. Input is always required in the specified unit.\n [mm] Explicit unit. Input defaults to the specified unit. Alternatively, an explicit as- signment of a related unit is possible (eg. 2.5[m] ).\n [mm]1011 Implicit unit. Implicit units are categorised semantically and denoted by a cor- responding identity number (shown in green). Valid categories referring to the unit ”length” are, for example, geodetic elevation, section length and thickness. The default unit for each category is defined by the currently active (design code specific) unit set. This input default can be overridden as described above. The specified unit in square brackets corresponds to the default for unit set 5 (Eu- rocodes, NORM UNIT 5).",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                16
+            ],
+            "page_labels": [
+                "3-1"
+            ],
+            "type": "text",
+            "sections": "3.1 Input Language"
+        }
+    },
+    {
+        "content": "The table is a compact summary of all the “records” (input‐line identifiers) understood by the program and, for each record, the list of positional or keyword “items” that may follow.  In practice the user feeds one or more blocks—terminated by ENDE—and within each block uses these records to define loads, analysis parameters, groupings, design checks and so on.  Below is an annotated walk‐through of each record line in the table:\n\n1. ECHO  \n   • Items: OPT, VAL, SELE  \n   • Purpose: Controls echoing of input data to the listing.  OPT switches echo on/off, VAL can limit which records are echoed, and SELE further refines the selection.\n\n2. CTRL  \n   • Items: OPT, VAL  \n   • Purpose: Switches between generation‐only, analysis, or restart runs and selects analysis order (1st, 2nd, or 3rd order), iteration limits, axial‐fix strategies, cable behavior (CABL vs. TRUS), group divisors, and references to primary load cases for linearized second‐order stiffness.\n\n3. GRP  \n   • Items: NO, VAL, STIF, SECT, SC, PRES, FACS, FACG, CS, FACP  \n   • Purpose: Defines element or node groups for stiffness, section assignments, prestress values, factor sets and group‐specific control parameters.\n\n4. INFL  \n   • Items: NO, TITL  \n   • Purpose: Introduces an “influence line” definition.  NO is the identifier, TITL is an optional title.\n\n5. LC (Load Case)  \n   • Items: NO, FACT, DLX, DLY, DLZ, TITL, TYPE, GAMU, GAMF, PSI0, PSI1, PSI2, PS1S, GAMA, CRI1, CRI2, CRI3  \n   • Purpose: Defines a single load case.  NO is the load‐case number; FACT is a global scale factor; DLX/DLY/DLZ are offsets; TYPE selects load‐case type (e.g. dead, live, wind); GAMU/GAMF are partial factors for ultimate/serviceability; PSI0–PS2, PS1S, GAMA are combination factors per EN 1990; CRI1–3 reserve up to three user‐defined criteria flags.\n\n6. LCC (Load‐Case Combination)  \n   • Items: NO, FACT, FROM, TO, INC, NFRO, NTO, NINC, TFRO, TTO, TINC, CFRO, CTO, CINC  \n   • Purpose: Builds envelope or combination of several load cases.  You can specify ranges (FROM–TO, INC) for cases and for factors (NFRO–NINC), temperatures (TFRO–TINC), or combination factors (CFRO–CINC).\n\n7. LV (Load Variation)  \n   • Items: NO, PHI, EPS, FACV, FROM, TO, INC, STIF, CSMI, CSMA, KTYPr  \n   • Purpose: Parameterizes continuous variation of loads or actions (wind direction, moving loads, etc.).  PHI and EPS define the variation law; FACV is a scale; STIF or CSMI/CSMA allow stiffness updates along the path; KTYPr picks the variation type.\n\n8. *REIN (Reinforcement Control)  \n   • Items: MOD, RMOD, LCR, ZGRP, SFAC, P6–P12, TITL  \n   • Purpose: Switches on design checks for reinforcement or steel sections: selects modules (zone‐by‐zone or global), load‐case references, partial safety factors, up to seven user parameters P6–P12, and an optional title.\n\n9. *DESI (Design/Stiffness Computation)  \n   • Items: STAT, KSV, KSB, AM1–AM4, AMAX, SC1–SC2, SS1–SS2, C1–C2, S1–S2, Z1–Z2, SMOD, TVS, MSCD, KTAU, TTOL, TANA, TANB, SCL  \n   • Purpose: From AQB, controls detailed design and stiffness‐update options: selection of bending types, activation of nonlinear strain effects, iteration parameters, rounding rules, shear‐force conversion, cover requirements, envelope generation strategy, and tolerances.\n\n10. *NSTR (Nonlinear Stress/Strain)  \n   • Items: KMOD, KSV, KSB, KMIN, KMAX, ALPH, FMAX, SIGS, CRAC, CW, BB, HMIN, HMAX, CW‐, CHKC, CHKT, CHKS, FAT, SIGS, TANS, TANC  \n   • Purpose: Also from AQB, this record drives the nonlinear stress‐strain loop: choice of constitutive law, iteration limits (KMIN/KMAX), line‐search parameters (ALPH, FMAX), and which checks (CHKC/T/S, FAT, SIGS) get performed on elements or sections.\n\nRecords marked with an asterisk (*) are primarily design or stiffness‐update controllers and are automatically included when AQB design modules are active. Together, they give the user full control—from raw load definition through higher‐order nonlinear analysis to code‐checking and reinforcement design—within a single, block‐driven input structure.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                17
+            ],
+            "page_labels": [
+                "3-2"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.2 Input Records"
+            ]
+        }
+    },
+    {
+        "content": "The table shown is the generic “four-column” input specification that SOFiSTiK uses for any record requiring \n\n•  a  literal control option (OPT)  \n•  one or more associated values (VAL, VAL1, VAL2)  \n\nIt can be read as follows:\n\n1.  Column “Item”  \n    –  OPT  \n       •  The primary keyword or control option for the record.  This is always a literal (LIT).  \n    –  VAL  \n       •  The first (or only) value associated with the OPT keyword.  Depending on the record, it may be numeric, literal, or a mix (hence “–/LIT”).  \n    –  VAL1, VAL2  \n       •  Optional additional values.  Used whenever a record needs more than one parameter.  These follow the same input rules as VAL.\n\n2.  Column “Description”  \n    –  OPT:  “Control option”  \n       •  Here you enter one of the predefined sub-options for that record.  For example, in a CTRL record OPT might be I, II, CABL, TRUS, etc.  \n    –  VAL:  “Option value”  \n       •  The principal parameter that the chosen sub-option (OPT) acts upon.  In a CTRL record this could be the number of allowed iterations (ITER), group divisor (GDIV), PLF-reference load case (PLC), etc.  \n    –  VAL1, VAL2:  “Optional further values”  \n       •  When a single VAL is not sufficient—for instance specifying up to six primary load cases for stiffness (PLC VAL1–VAL6)—these fields collect the extra inputs.\n\n3.  Column “Unit”  \n    –  “LIT”  \n       •  Indicates that the field must be entered as a text token (e.g. KABA, TRUS, CABL).  \n    –  “–/LIT”  \n       •  Indicates that the field may be either a numeric value or a literal.  Numeric values follow the usual SOFiSTiK conventions (decimal point, no thousands separators).  \n\n4.  Column “Default”  \n    –  “–”  \n       •  No default: the user must supply OPT explicitly.  \n    –  “*”  \n       •  Mandatory: at least one of VAL, VAL1 or VAL2 must appear.  There is no system default.\n\nHow this table is used in context  \n•  Every record type defined in the manual (e.g. CTRL, CHKC, SIGS, TANS, FAT, etc.) will include its own version of this four-column layout, listing exactly which OPT-keywords are allowed and how many VAL-fields are needed.  \n•  If you supply an input block that contains loads but no CTRL record, the program interprets it as a “load generation” run (it only reads and stores loads).  \n•  If you supply an input block with a CTRL record and loads, it becomes a full “analysis run.”  \n•  If you supply a block with CTRL but without loads, it becomes a “restart run,” re-using the last block’s loads.  \n\nExample (CTRL record snippet)  \n  CTRL, OPT=TRUS, VAL=IIB, VAL1=3, VAL2=1000  \n\n–  OPT=TRUS tells the solver to allow cable elements in compression (user must later check results).  \n–  VAL=IIB selects third-order theory type IIB for beams/trusses.  \n–  VAL1=3 requests three iterations.  \n–  VAL2=1000 would—for instance—define a custom line-search maximum if that parameter were mapped to VAL2 in the CTRL definition.  \n\nIn your RAG-vector store you would index each table entry under its record name (CTRL, CHKS, etc.), then under each OPT, and finally under VAL/VAL1/VAL2 semantics, along with unit and default constraints.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                18
+            ],
+            "page_labels": [
+                "3-3"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.2 Input Records"
+            ]
+        }
+    },
+    {
+        "content": "The input is organised in blocks terminated by the record ENDE. A particular structure or particular load cases can be analysed within each block. The program stops, when an empty block is found:\n END\n END\n Only one load case per block must be analysed in case of nonlinear analysis.\n The program recognises three operation modes controlled by the extent of the input.\n a. Load generation\n During a load generation run the loads are solely read, checked and stored. The loads generated in such a run can be used as a whole during a subsequent run or block. A generation run results from an input block with loads but without any record CTRL.\n b. Analysis run\n An analysis run is the usual option by input of a record CTRL and loads.\n A Restart run can be used to analyse again load cases defined in the last block or run with stiffnesses modified after design. A Restart run results from an input block without any loads.\n The following records are defined:\n CHKC\n CHKT\n CHKS\n FAT\n SIGS\n TANS\n TANC\n The records marked by * control the design and the stiffness computation. They are also included in AQB.\n The records HEAD, END and PAGE are described in the general manual SOFiSTiK: ’Basics’. The description of the single records follows.\n CTRL – Parameters Controlling the Analysis Method\n CTRL\n CTRL prescribes control parameters of the analysis. The input of a CTRL record with the\n Value De-\n fault\n 1\n 1\n 1\n 1\n 1\n 1\n in % GEN\n 1\n LIT CABL\n CABL = Cables have tension only\n TRUS = Cables can sustain compression\n DRUC = Deactivation of effects from secondorder theory for beams with tensile stress\n GDIV Group divisor\n -\n *\n Temporary different value for group subdivision\n Definition of primary load cases for computation of element stiffness - (beam elements only!). Normal force and (nonlinear) sectional stiff- nesses of the referenced primary load case are taken for computation of the second order element stiffnesses used in the current computa- tion. Doing so, a simplified second order theory analysis with constant stiffness can be carried out (linearized second order theory, simplified stability calculations, e.g., according to OENORM). The superposition principle holds for the results of load cases computed according to lin- earized second order theory, as long as the same PLF is referenced.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                16,
+                17,
+                18,
+                19
+            ],
+            "page_labels": [
+                "3-1",
+                "3-2",
+                "3-3",
+                "3-4"
+            ],
+            "type": "text",
+            "sections": "3.2 Input Records"
+        }
+    },
+    {
+        "content": "Doing so, a simplified second order theory analysis with constant stiffness can be carried out (linearized second order theory, simplified stability calculations, e.g., according to OENORM). The superposition principle holds for the results of load cases computed according to lin- earized second order theory, as long as the same PLF is referenced..\n PLC\n 0\n = use of the normal force of load case VAL and\n = non-linear stiffness of load case VAL1 (default =VAL)\n The normal lforce of the primary load case does affect the results only by contributing to a geometric stiffness according to 2nd order theory. Up to six load cases refering to beam stiffnesses may be specified at PLC VAL1 to VAL 6. The actually applied stiffness is then the mini- mum of all cases, under the constraint of preserving the direction of the principal axes.\n VAL<0 = Taking over the eigenstresses of primary load case VAL (not compatible with previous option).\n When no CTRL record is input, only the loads are stored, or a restart of the previous analysis takes place in case there aren’t any loads.\n An analysis by 2nd or 3rd order theory requires an initial analysis by 1st order theory in order to compute the axial loads. Therefore, except for a restart upon a structure already analysed by 1st order theory, such an analysis must precede any higher order analysis.\n 3rd order theory is only considered for truss and cable elements; the difference between II and IIB as well as between III and IIIB is similarly of importance only for spring, truss and cable elements.\n The input of CTRL I or Ib and ITER greater than 1 results in an analysis with non-linear springs\n by 1st order theory.\n The entry for AFIX controls the program’s behaviour, when linearly dependent degrees of free- dom are encountered. Such examples are the continuous beam, which does not possess any constraints for torsional or axial force, and any internal forces eliminated by hinges or cou- plings. Degrees of freedom which do not possess any stiffness, e.g. rotations of a pure truss, are always suppressed and therefore, they can not be affected by AFIX.\n The input parameter STYP is currently used for cable structures in order to prevent the occur- rence of structural instability during iteration. If TRUS is input, the results must be manually checked at the end of the analysis, to make sure that all cables carry only tensional forces. A Restart with STYP CABL must follow otherwise.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                19,
+                20
+            ],
+            "page_labels": [
+                "3-4",
+                "3-5"
+            ],
+            "type": "text",
+            "sections": "3.2 Input Records"
+        }
+    },
+    {
+        "content": "The input parameter STYP is currently used for cable structures in order to prevent the occur- rence of structural instability during iteration. If TRUS is input, the results must be manually checked at the end of the analysis, to make sure that all cables carry only tensional forces. A Restart with STYP CABL must follow otherwise..\n In addition, the following options from AQB are available for the design/strain computation (for detailed description please refer to AQB manual):\n General control options:\n AXIA Type of bending\n ACT Groups of actions\n EIGE Options for internal stresses\n SVRF Factor for reinforcement with given cross section properties\n VRED Max. inclination of haunches for shear force conversion\n SMOO Rounding off of moments\n INTE nonlinear axial strain effects\n Shear/axial stress iteration\n PIIA Prestress in stage II\n VM Displacement of envelope line of tensile force\n USEP Usage level\n MSEL Selection of section with a specific material type\n CNOM Cover for all sections\n Column/Beam-Detection:\n VERT Vertical factor\n NLIM Relative normal force\n ED relative eccentricity\n Iteration parameters:\n ELIM threshold strain\n IMAX Max. number of iterations\n ETOL Tolerance in determination of internal forces and moments\n AMAX Maximum factor line-search\n AGEN Relative precision line-search",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                20
+            ],
+            "page_labels": [
+                "3-5"
+            ],
+            "type": "text",
+            "sections": "3.2 Input Records"
+        }
+    },
+    {
+        "content": "Below is a structured, field-by-field description of the GRP input table, which defines how element groups are handled in a static or dynamic analysis. This description also draws on the surrounding contextual notes (e.g. default behaviors, interaction with load cases, second-order theory requirements, etc.).\n\n1. Record Purpose  \n   • GRP activates one or more “groups” of elements (a group is a subset defined by element number ÷ group-divisor).  \n   • Only one GRP selection may appear in a block; if omitted, the previous GRP remains in force.  \n   • Within each group, you can override defaults—for prestress, section properties, stiffness, dead load factors, shear-centre treatment, etc.—to control modeling accuracy or drive special-case behavior.\n\n2. Table Fields\n\nItem: NO  \n– Description: Group number.  \n– Unit: —  \n– Default: (none)  \n– Notes: Must match the integer group index under which elements were pre-classified.\n\nItem: VAL  \n– Description: Activation flag for this group.  \n– Unit: Literal (LIT)  \n– Default: FULL  \n– Allowed Values:  \n   • OFF – group is deactivated (elements not used)  \n   • YES – group is used, but results are not printed  \n   • FULL – group is used and reaction/stress results printed  \n\nItem: STIF  \n– Description: Stiffness treatment parameter.  \n– Unit: —  \n– Default: 1  \n– Allowed Values:  \n   • 1 – consider rotation of principal axes along member  \n   • 0 – do not consider rotation  \n   • LIN1 – same as “1” but mark group as not designed (linear only)  \n   • LIN0 – same as “0” but linear only, not designed  \n– Notes: Some codes require stiffness reduction by material safety factor for second-order analysis; this is a group-level switch.\n\nItem: SECT  \n– Description: Choice of cross-section values.  \n– Unit: Literal (LIT)  \n– Default: * (inherited from previous block or run)  \n– Allowed Values:  \n   • BRUT – use effective gross cross-section (code-compliant reduced)  \n   • TOTA – use total (undegraded) cross-section  \n   • DESI – use design section (total ÷ γm material safety factor)  \n– Notes: In all cases, the area entry is replaced by the chosen cross-sectional area.\n\nItem: SC  \n– Description: Shear-centre effect in beam analysis.  \n– Unit: Literal (LIT)  \n– Default: FULL  \n– Allowed Values:  \n   • NONE – ignore shear-centre effects  \n   • YES – include shear-centre offset only in applied loads  \n   • FULL – fully account for shear-centre in stiffness & loading  \n\nItem: PRES  \n– Description: Prestress loading components to consider.  \n– Unit: Literal (LIT)  \n– Default: FULL  \n– Allowed Values:  \n   • FULL – include all prestress effects (axial + torsion)  \n   • NOTO – suppress torsional prestress components  \n   • REST – include only statically indeterminate (redundant) prestress  \n   • UNRE – include only statically determinate prestress  \n   • URNT – combination of UNRE + NOTO  \n\nItem: FACS  \n– Description: Multiplicative factor on linear stiffnesses of this group.  \n– Unit: —  \n– Default: 1.0  \n– Notes: If >1.0 for any load case with factor >1.0, design (reduced) stiffness is used.\n\nItem: FACG  \n– Description: Dead-weight scaling factor for this group.  \n– Unit: —  \n– Default: 1.0  \n– Notes: Applies as an additional multiplier to DLX, DLY, DLZ entries in LC records.\n\nItem: CS  \n– Description: Construction stage number.  \n– Unit: —  \n– Default: (none)  \n– Notes: Allows stage-wise activation/deactivation of elements.\n\nItem: FACP  \n– Description: Factor of prestress.  \n– Unit: —  \n– Default: 1.0  \n– Notes: Scales all prestress loads in the group.\n\n3. Contextual Remarks  \n– If FACT is used in an LC record, loads are copied to a new case with that factor; FACS and FACG from GRP apply afterward.  \n– For second-order or nonlinear runs (NSTR), stiffness and prestress factors influence convergence and result fidelity.  \n– Cross-section selection (SECT) interfaces with code-driven checking (e.g. DIN 18800, Eurocode 2nd order theory).  \n– Shear-centre choice (SC) may be critical in deep or unsymmetrical sections.  \n– Prestress controls (PRES, FACP) let you simulate partial -values or turn off unwanted components.  \n– Only one GRP block per set of load‐cases; if you need different group parameters per case, separate your LC/INFL inputs into distinct blocks.\n\nThis grouping mechanism gives fine control over how subsets of elements behave under loads, prestress, staged construction, and code-specific stiffness reductions.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                21
+            ],
+            "page_labels": [
+                "3-6"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.4 GRP – Selection of an Element Group"
+            ]
+        }
+    },
+    {
+        "content": "The excerpted input‐table defines the two parameters you must supply when you invoke an Influence-Line load case (INFL) in a STAR2 block. In SOFiSTiK’s terminology this table belongs to the “INFL” record and tells the program which load‐case number will hold the calculated influence line and—optionally—how you want to label it. Below is a guided walkthrough of each column and row, augmented by context from the adjacent documentation:\n\n1. Table Structure  \n   • Four columns:  \n     – Item: the keyword you type in your input deck (NO or TITL).  \n     – Description: a short human-readable summary of what that keyword controls.  \n     – Unit: the format or data type you must observe.  \n     – Default: the value assumed if you omit this line altogether.  \n\n2. Parameter “NO”  \n   – Purpose: designates the load‐case number under which the computed influence line will be stored.  Each INFL record must be associated with a unique, integer load‐case ID.  \n   – Valid Range: 1 to 999.  \n   – Unit Column: marked with “—” because it is a pure integer index rather than a physical quantity.  \n   – Default Behavior: if you do not explicitly specify NO, the program assumes NO = 1.  However, best practice is to assign a load‐case number that does not clash with any existing LC or INFL identifiers in your model.  \n   – Contextual Note: This “NO” value is the same kind of identifier you use elsewhere in STAR2’s LC records.  When you later request influence‐line results from the database or plot them, you will reference this number.\n\n3. Parameter “TITL”  \n   – Purpose: provides an optional title string (up to 24 characters) for your influence‐line load case.  This is purely for documentation and helps you track what each INFL case represents (e.g. “Moment MY @ Beam-1001 Pos2”).  \n   – Unit Column: “LIT24” indicates a literal text field, maximum length 24.  \n   – Default Behavior: if omitted, no title is stored (displayed as “–” in the table).  \n   – Contextual Note: while TITL has no effect on the numerical computation, it greatly aids post-processing, especially when you generate plots or tables of influence lines via DBVIEW or MAXIMA.  \n\n4. How This Fits Into the INFL Workflow  \n   • Before INFL: you must have defined one or more loading patterns via SOFILOAD (using LC, BEPL, STEL, etc.) and captured them under a load‐case number (say 191 or 192).  \n   • In the STAR2 input block: you insert  \n       INFL 91  \n       LCC 191   $ to copy the pre‐defined loads into case 91  \n     Here “91” is your NO; you could add a TITL line if you want:  \n       TITL “IL_Moment_MY_B1001_P2”  \n   • What STAR2 does: it computes only the displacements (i.e. the influence line) along the structure for the requested point of interest and stores results under load‐case 91.  \n\n5. Best Practices and Tips  \n   – Always choose a clear, unique NO for each INFL case to prevent overwriting previous results.  \n   – Use TITL to document the type of influence line (moment, shear, reaction) and its location—this greatly simplifies later plotting and report generation.  \n   – Remember that 2nd‐order effects are not available in an INFL case; if you need geometrically nonlinear influence lines, you must use a nonlinear analysis workaround.  \n\nBy strictly following this table’s definitions and integrating it with the SOFILOAD → INFL → LCC workflow, you ensure that your influence‐line cases are correctly numbered, readily identifiable, and seamlessly integrated into SOFiSTiK’s post‐processing environment.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                23
+            ],
+            "page_labels": [
+                "3-8"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.4 GRP – Selection of an Element Group"
+            ]
+        }
+    },
+    {
+        "content": "The table is a compact reference showing how to generate the five most common influence lines in a SOFiSTiK‐STAR2 analysis (INFL load case).  Each row links the desired response (“Influence line”) to the kind of unit excitation you must define in SOFiLOAD (“Required loading”) and gives a concrete load‐definition keyword (“e.g.”) you would write in your LC / SOFILOAD block.\n\n1.  Influence line: Moment My  \n    • Required loading: Unit rotation about the local y‐axis at the section of interest  \n    • SOFILOAD example:  \n      BEPL  <element_no>  TYPE DY 1.0  A=<position>  \n    Explanation: BEPL TYPE DY applies a unit angular displacement (1 rad) in the element’s local y‐direction.  STAR2 will compute the bending moment My influence line along that beam.\n\n2.  Influence line: Axial force Nx  \n    • Required loading: Unit longitudinal displacement  \n    • SOFILOAD example:  \n      BEPL  <element_no>  TYPE WX 1.0  A=<position>  \n    Explanation: BEPL TYPE WX prescribes a unit axial shift (1 mm or user units) so that STAR2 returns the axial‐force influence line.\n\n3.  Influence line: Shear force Vz  \n    • Required loading: Unit transverse (z‐direction) displacement  \n    • SOFILOAD example:  \n      BEPL  <element_no>  TYPE WZ 1.0  A=<position>  \n    Explanation: BEPL TYPE WZ enforces a unit lateral displacement at the section, producing the shear‐force influence diagram.\n\n4.  Influence line: Support reaction (forces or moments)  \n    • Required loading: Nodal displacement in the reaction’s degree of freedom  \n    • SOFILOAD example:  \n      NODE  <node_no>  WXX (rotation about X)  \n      NODE  <node_no>  WYY (rotation about Y)  \n      NODE  <node_no>  WZZ (rotation about Z)  \n    Explanation: By “pushing” the support node in the DOF you want the reaction for, STAR2 calculates the reaction influence line.\n\n5.  Influence line: Displacement (global or local)  \n    • Required loading: Unit point‐load in the direction of interest  \n    • SOFILOAD example:  \n      STEL  <grid_or_node> PX (force in global X)  \n      STEL  <grid_or_node> PY (force in global Y)  \n      STEL  <grid_or_node> PZ (force in global Z)  \n    Explanation: STEL applies a concentrated load; STAR2 then prints the displacement influence line at your chosen observation point.\n\nHow to use this table:  \n– In your SOFILOAD block, start with an LC record (e.g. LC 191).  \n– Define the unit‐load pattern following the table (BEPL, NODE or STEL).  \n– Close SOFILOAD, then in a STAR2 block issue:  \n    INFL <new_loadcase_no>  \n    LCC <sofiload_lc_no>   $ copy the pattern  \n– Run STAR2; it will compute and print only displacements for that INFL case (no 2nd‐order).\n\nThis mapping ensures you always pick the correct unit‐load type to extract bending moments, axial forces, shears, reactions or displacements via influence‐line analysis.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                23
+            ],
+            "page_labels": [
+                "3-8"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.4 GRP – Selection of an Element Group"
+            ]
+        }
+    },
+    {
+        "content": "The table under discussion defines the fields available in the “LC” (Load Case) input record of the STAR-analysis environment.  It is arranged in four columns—Item, Description, Unit and Default—and lists all parameters you can supply when creating or invoking a load case.  Below is a structured outline, suitable for a RAG-style vector store, capturing each row as an independent semantic entry.  \n  \n1. Record Overview  \n   • Purpose:  Specify or invoke a structural load case for analysis.  \n   • Four columns:  \n     – Item:  Parameter name (keyword) used on the LC line.  \n     – Description:  What the parameter controls.  \n     – Unit:  Measurement unit or literal type.  \n     – Default:  Value assumed if you omit the parameter.  \n  \n2. Item = NO  \n   • Description:  Load case number (integer from 1 to 999).  \n     – Special keyword “ALL” triggers processing of every load case stored in the database.  \n   • Unit:  none  \n   • Default: 1  \n  \n3. Item = FACT  \n   • Description:  Global multiplier for all loads of type P (forces) and M (moments) in this case.  \n     – If FACT > 1.0 then design (“DESI”) stiffnesses from the GRP record are used automatically (per second-order code rules such as DIN 18800).  \n     – FACT only affects P/M loads; dead-load factors DLX/DLY/DLZ are unaffected here.  \n   • Unit:  none  \n   • Default: 1  \n  \n4. Items = DLX, DLY, DLZ  \n   • Description:  Individual load‐factor for the dead weight components in the global x, y, z directions.  \n     – Overrides a global FACT factor only for self-weight loads imported from SOFiLOAD.  \n     – If omitted, DLX = DLY = DLZ = 0 → no dead loads unless explicitly re-activated by SOFiLOAD.  \n   • Unit: none  \n   • Default: 0  \n  \n5. Item = TITL  \n   • Description:  Alphanumeric title (up to 24 characters) for the load case.  \n   • Unit: LIT24 (24-character literal)  \n   • Default: “–” (blank)  \n  \n6. Item = TYPE  \n   • Description:  Action or load category designation.  \n     – Exposes the case to later superposition or combination in MAXIMA.  \n     – Matches TYPE literals defined in the SOFiLOAD ACT record (e.g. ‘PROP’, ‘TEMP’, ‘WIND’, etc.).  \n   • Unit: none  \n   • Default: “–” (blank)  \n  \n7. Items = GAMU, GAMF, GAMA  \n   • GAMU: Unfavourable safety factor (γ<sub>U</sub>)  \n   • GAMF: Favourable safety factor (γ<sub>F</sub>)  \n   • GAMA: Accidental safety factor (γ<sub>A</sub>)  \n   • Usage:  Overrides default partial factors for the given action type during later combination.  \n   • Unit: none  \n   • Default: “*” (inherit from TYPE or from SOFiLOAD if not explicitly set)  \n  \n8. Items = PSI0, PSI1, PSI2, PS1S  \n   • Description: Combination coefficients Ψ<sub>0</sub> (rare), Ψ<sub>1</sub> (frequent), Ψ<sub>2</sub> (quasi-permanent), Ψ<sub>1S</sub> (non-frequent).  \n   • Role:  Specify reduction factors for accompanying variable loads in ultimate and serviceability limit-state combinations.  \n   • Unit: none  \n   • Default: “*” (use code-defined defaults unless overridden)  \n  \n9. Items = CRI1, CRI2, CRI3  \n   • Description: User‐defined criteria fields I, II and III.  \n     – Free-field numeric tags for post-processing (e.g. store results thresholds, custom check flags).  \n     – TALPA uses CRI1 to carry a material safety factor in Fellenius slip‐circle stability analyses if needed.  \n   • Unit: none  \n   • Default: 0  \n  \n10. Interactions & Special Notes  \n    – If LC is followed by no load definitions, all previously defined loads (including DW) are simply scaled by FACT and re-imported.  \n    – If you specify any new loads after LC, old loads for that case number are purged first.  \n    – To compute influence lines instead of standard load‐case results, one uses INFL instead of LC (see “INFL – Definition of an Influence Line Load Case”).  \n    – Only one LC or INFL record per analysis block is allowed; omitting both retains the prior case selection.  \n  \nSummary  \nThe LC record table provides full control over which load case to run (NO/ALL), how to scale its loads (FACT, DLX/DLY/DLZ), how to identify it (TITL, TYPE) and how to set safety-factor and combination-coefficient metadata (GAMU, GAMF, GAMA, PSI*, CRI*). These parameters drive both the structural solver and any subsequent combination or postprocessing tools (MAXIMA, DBVIEW, TALPA).",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                25
+            ],
+            "page_labels": [
+                "3-10"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.4 GRP – Selection of an Element Group"
+            ]
+        }
+    },
+    {
+        "content": "GRP\n FACP\n Factor of prestress\n 1.0\n The group number of an element is obtained by dividing its element number by the group divisor (generation record SYST record, e.g.: 1000). The default is the group selection of the\n previous analysis run or input block. In the absence of input all the elements are used. In the case of explicit input only the specified groups get activated.\n Each particular group can contain different directions regarding the special effects. This is especially meant for controlling inaccuracies in the input or the modelling in special cases. The user himself must decide whether this is permissible.\n For the cross section values the user has a choice between the total cross section and the cooperating cross section (default). The area in both cases is substituted by the value of the total cross section.\n Some codes (e.g. DIN 18800) require by the analysis with 2nd order theory the reduction of the stiffnesses by the material safety factor. For all load cases with a load factor greater than 1.0 the default is DESI, for all other it is BRUT. For non-linear analysis with NSTR this input has only minor effects.\n In the analysis with rotation of the principal axes the rotation angle must be constant along the beam. Multiple beams should eventually be defined each time with prismatic cross section.\n The factors FACS and FACG act upon the stiffnesses and the dead weight of the elements of this group. FACG acts only as additional factor to the values DLX through DLZ of the LC record.\n Attention:\n Only one group selection can be used inside a block for several load cases. When no group selection is found, the old one remains in effect along with all its parameters!\n INFL – Definition of an Influence Line Load Case\n INFL\n An influence line load case is defined via INFL. Computation of influence lines is based on corresponding loading patterns. These have to be defined a priori (→ SOFILOAD) and are activated here by the ”load copy” LCC command. For each point of interest, a separate load case INFL must be defined. For an INFL-load case, only the displacements (=influence line) of the structure are computed and printed out. Calculation according to 2nd order theory is not possible.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                23,
+                21,
+                22
+            ],
+            "page_labels": [
+                "3-8",
+                "3-6",
+                "3-7"
+            ],
+            "type": "text",
+            "sections": "3.4 GRP – Selection of an Element Group"
+        }
+    },
+    {
+        "content": "These have to be defined a priori (→ SOFILOAD) and are activated here by the ”load copy” LCC command. For each point of interest, a separate load case INFL must be defined. For an INFL-load case, only the displacements (=influence line) of the structure are computed and printed out. Calculation according to 2nd order theory is not possible..\n Example for the influence line of the moment MY at beam 1001 at position 2, stored under load case number 91:\n SOFILOAD:\n LC 191 ; BEPL 1001 TYPE DY 1000.0 A 2.0 $ unit rotation 1[rad]= 1000[mrad]\n STAR2:\n INFL 91\n LCC 191 $ load copy\"\n This concept is also capable of computing very particular influence lines. If, e.g., the influence line for the upper marginal stress of a cross section σ = N/A - M/W is sought, it can be obtained by the following input (area A is #10, section modulus W is #11):\n SOFILOAD:\n LC 192\n BEPL 1001 TYPE WX 1.0/#10*1000 A 2.0 $ unit displacement 1[m]= 1000[mm] STEL 1001 TYPE DY -1.0/#11*1000 A 2.0 $ unit rotation 1[rad]= 1000[mrad]\n STAR2:\n INFL 92\n LCC 192 $ load copy\"\n LC – Definition of a Load Case\n LC\n The input of LC results in the analysis or the definition of the corresponding load case. If the LC-input contains only a global factor and if the LC-record is not followed by any loads, the old loads including the possibly defined dead weight are imported with this factor. If some loads do follow the LC-record or if a factor of the dead weight is entered, all other loads that were stored by the same load case number are first deleted.\n LC ALL calculates all linear and nonlinear load cases that are stored in the database.\n In case of restart of a non-linear calculation with NSTR no record LC must be indicated since\n otherwise the non-linear strains are extinguished.\n STAR2 analyses all load cases for which LC- or INFL-input was generated in some block. For non-linear calculations it is sensible to analyse each time one load case per block only.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                23,
+                24,
+                25,
+                26
+            ],
+            "page_labels": [
+                "3-8",
+                "3-9",
+                "3-10",
+                "3-11"
+            ],
+            "type": "text",
+            "sections": "3.4 GRP – Selection of an Element Group"
+        }
+    },
+    {
+        "content": "In case of restart of a non-linear calculation with NSTR no record LC must be indicated since. otherwise the non-linear strains are extinguished.. STAR2 analyses all load cases for which LC- or INFL-input was generated in some block. For non-linear calculations it is sensible to analyse each time one load case per block only..\n FACT affects the loads only temporarily, these are copied into another load case, so the factor of the new load case is valid. It does not perform in addition either onto the loads DLX, DLY or DLZ if these are entered in the same LC-input. Different factors for dead weight and other loads should be defined therefore with a FACT 1.0 and corresponding DL-factors as well as further records of the type LCC with a factor. If FACT is > 1.0, the design values of the stiffness will be used (see record GRP).\n The factor FACG of the record GRP acts as additional multiplier.\n If dead loads should be taken over by the program SOFiLOAD, then only the load case number NO has to be input for LC. No dead loads are used from the program SOFiLOAD, if factors for the dead load are defined for DLX, DLY and DLZ.\n The action type and the corresponding safety factors and combination coefficients may be defined already here for a later superposition with program MAXIMA. Several literals which are described in detail in the record ACT of the program SOFiLOAD are possible for TYPE. If safety factors and combination coefficients which are different from the default should be used, these can be input here. If the superposition factors are defined with the program SOFiLOAD or MAXIMA, nothing is to be input here for TYPE to PS1S.\n Disordered load data are arranged via the load type REST.\n Values CRI1 to CRI3 are very general parameters of the load case. They may be used freely for postprocessing via DBVIEW. You may specify them in advance or set them after the analysis by reading some results from the database. (e.g. a system dimension, a strength reduction etc.) TALPA uses CRI1 for the safety factor of the material needed by analysis according to Fellenius. The criterias are set subsequently without further inputs with:\n LC TYPE PROP CRI1 ... CRI2 ... CRI3 ...",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                25,
+                26
+            ],
+            "page_labels": [
+                "3-10",
+                "3-11"
+            ],
+            "type": "text",
+            "sections": "3.4 GRP – Selection of an Element Group"
+        }
+    },
+    {
+        "content": "The table defines the set of input‐data fields you must supply when you want to pick up previously computed element or nodal loads (for example, when using the LCC or LV command in STAAD‐type pre/post processors).  Its four columns are:\n\n  • Item  \n    – the keyword you type in your input file  \n  • Description  \n    – a short explanation of what that keyword controls  \n  • Unit  \n    – the physical unit (in this case “–” means “dimensionless” or “not applicable”)  \n  • Default  \n    – the value that will be assumed if you omit that keyword  \n\nBelow is a breakdown of each row:\n\n1. NO  \n   • Description: “Number of a load case up to max. 999.”  \n   • Unit: –  \n   • Default: – (mandatory field; no default)\n\n   You must supply the load‐case number whose loads you want to import or multiply (for LCC) or whose results you want to convert into loads (for LV).\n\n2. FACT  \n   • Description: “Factor for load values.”  \n   • Unit: –  \n   • Default: 1\n\n   A scalar multiplier applied to all imported loads.  For example, FACT = –1 will subtract previously applied loads; FACT > 1 amplifies them.\n\n3. FROM, TO, INC  \n   • Description: “Range data for beam numbers.”  \n   • Unit: –  \n   • Defaults:  \n     – TO defaults to the same value as FROM  \n     – INC defaults to 1  \n\n   Use this triplet to define a contiguous list of beam elements whose loads/results you wish to import.  If you specify only FROM = a, then TO = a and INC = 1 are assumed (i.e. a single beam).\n\n4. NFRO, NTO, NINC  \n   • Description: “Range data for node numbers.”  \n   • Unit: –  \n   • Defaults:  \n     – NTO → NFRO  \n     – NINC → 1  \n\n   Analogous to FROM/TO/INC but for nodal loads.  Defaults pick only the single node NFRO if you omit NTO and NINC.\n\n5. TFRO, TTO, TINC  \n   • Description: “Range data for truss‐bar numbers.”  \n   • Unit: –  \n   • Defaults:  \n     – TTO → TFRO  \n     – TINC → 1  \n\n   Same pattern, now applied to truss‐bar elements.\n\n6. CFRO, CTO, CINC  \n   • Description: “Range data for cable numbers.”  \n   • Unit: –  \n   • Defaults:  \n     – CTO → CFRO  \n     – CINC → 1  \n\n   Follows the same logic for cable‐element ranges.\n\nHow it all ties together:  \n\n• At the simplest, you must always supply NO (the load case you want to draw from) and optionally FACT if you need to scale those loads.  \n• If you do nothing else, all beams/trusses/cables/nodes defined in that load‐case will be picked up.  \n• If, however, you give FROM/TO/INC etc., you restrict the import to just those element or node ID ranges.  \n• Negative FACT allows you to subtract out previously applied initial deformations (e.g. to remove old “imperfections” before re‐applying them with a different factor).  \n• The fact that all “Unit” entries are blank tells you these fields are purely identifiers or scalars, not physical quantities like kN or m.  \n\nIn practice you might see input blocks such as:\n\n  NO  12  \n  FACT  –1.0  \n  FROM  100  TO 200  INC 5\n\n…which would take the results from load‐case 12 for beams 100, 105, 110, …, 200, multiply them by –1, and add them into your current analysis step.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                27
+            ],
+            "page_labels": [
+                "3-12"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.7 LCC – Importing Loads from another Loadcase"
+            ]
+        }
+    },
+    {
+        "content": "The table shown defines the keyword‐card inputs for STAR2’s “LV” (Load from Results) or “LCC” (Load Case Combination) records.  It tells the solver which previously computed load case to pull results from, how to manipulate them (creep, shrinkage, initial‐deformation factors), which elements to affect, and how to treat construction‐stage or prestress loads.  Below is a row‐by‐row breakdown of each field, its meaning, units and default.  \n\n1.  NO  \n   • Description: Identifier of an existing STAR2 load case to be re‐used (up to 999).  \n   • Unit: – (integer index)  \n   • Default: none (must be specified)  \n   • Notes: Under LCC this load case’s entire load set is scaled by FACT and added to the current one; under LV it is the source of beam/truss/cable result extraction.\n\n2.  PHI  \n   • Description: Creep‐adjustment factor for strains or curvatures.  PHI multiplies internal forces (normal N, bending MZ, MY) to generate additional “creep” curvature loads via  \n        K1 = PHI;  \n        K2 = PHI·MZ/EIZ or MY/EIY  \n   • Unit: – (dimensionless)  \n   • Default: 0.0  \n   • Notes: Typical creep of statically determinate cases uses PHI = ϕ; negative PHI (–1.0) can subtract previous deformations.\n\n3.  EPS  \n   • Description: Shrinkage (axial‐strain) coefficient.  Acts in tandem with PHI to produce total strain load ES = EPS + PHI·N/EF.  \n   • Unit: – (dimensionless strain)  \n   • Default: 0.0  \n\n4.  FACV  \n   • Description: Factor for importing stored elastic deflections as an affine initial deformation.  \n   • Unit: –  \n   • Default: 0.0  \n   • Notes:  FACV·(elastic line) defines initial imperfection/buckling modes.  To remove old imperfections one can issue LCC with FACT = –1.\n\n5.  FROM  \n   • Description: Start of element (beam/truss/cable) number range whose results will be imported.  \n   • Unit: – (integer index)  \n   • Default: 1 (when no FROM is given, all elements in the source case are included)  \n\n6.  TO  \n   • Description: End of the element‐number range.  \n   • Unit: –  \n   • Default: same as FROM  \n\n7.  INC  \n   • Description: Increment for stepping through element numbers between FROM and TO.  \n   • Unit: –  \n   • Default: 1  \n\n8.  STIF  \n   • Description: Load‐case index whose element stiffnesses are used to convert forces into deformations (if omitted, uses stiffnesses of NO).  \n   • Unit: – (integer index)  \n   • Default: NO  \n\n9.  CSMI  \n   • Description: Lowest construction‐stage index to include.  Used when extracting loads or deformations associated with intermediate erection phases.  \n   • Unit: – (integer index)  \n   • Default: none (all stages)  \n\n10. CSMA  \n   • Description: Highest construction‐stage index to include.  \n   • Unit: –  \n   • Default: CSMI  \n\n11. K TYP  \n   • Description: Type of prestress‐load variation function.  Defines shape functions along each element’s length.  \n   • Unit: LIT (literal keyword)  \n   • Default: SPL  \n   • Options:  \n     – SPL  : cubic variation  \n     – POL  : polygonal (piecewise‐linear)  \n     – SPL1 : cubic without generating secondary bending components  \n     – POL1 : polygonal without secondary bending components  \n\nAdditional Context from LV/LCC Functionality  \n• LCC (Load Case Combination) multiplies all existing loads from the specified NO by a FACTOR and adds them to the current case (dead weights excluded).  A single NO & FACT input suffices for all elements or nodes.  \n• LV (Load from Results) reads beam/truss/cable output from NO, applies creep (PHI), shrinkage (EPS), and initial‐deformation (FACV) factors, and reimposes them as loads in a new step.  It enables modeling of creep effects, construction‐stage constraints, system imperfections (buckling), and prestress‐sequence loading.  \n\nBy indexing which elements (FROM, TO, INC) and which construction stages (CSMI, CSMA) to include, plus selecting appropriate K TYP for prestress shape, the user gains fine‐grained control over regeneration and combination of structural loads.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                28
+            ],
+            "page_labels": [
+                "3-13"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.7 LCC – Importing Loads from another Loadcase"
+            ]
+        }
+    },
+    {
+        "content": "LCC\n By entering LCC, all previously generated loads of the given load case, provided they fall within the specified range, get multiplied by the factor and added to the current load case. This does not hold for dead weight loads (record LC).\n The input of NO and FACT suffices when loads are to imported for all elements or nodes.\n Creep load cases from AQB have also still residual stresses, these can not be incorporated with LCC.\n LV – Generating Loads from Results of a Load Case\n LV\n ponents generated\n Using LV, beam results of earlier STAR2 analyses can be processed as loads during a new analysis step. These can be used for the investigation of creep effects and support changes due to construction phases, as well as for the generation of initial deformations, e.g. system imperfections. Only results of beam elements, truss elements and cable elements within the specified range are imported. Appropriate separate input of more than one records can be used e.g. to assign a different creep factor to each beam. If nothing is input for FROM, all the beams that are defined in the analysed load case get loaded.\n LV generates three completely different types of loading.\n 1. The input to FACV generates an affine initial deformation out of the stored elastic line. Buckling modes can e.g. be modelled this way as undesired eccentricities when address- ing the difference of the displacement according to 2nd and 1st order theory. The increase of the undesired eccentricity due to creep can be taken into consideration as well. There are extremely different opinions for the value of FACV. Since Version 2.0-95 the initial deformations are taken into account by the displacements. Most different opin- ions exist for this matter too. If necessary, one can subtract the old initial deformations with LCC and factor -1.\n The values of PHI and EPS generate corresponding strains or curvature loads.\n ES = EPS + PHI · N/EF K1 = PHI K2 = PHI · MZ/EIZ",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                27,
+                28,
+                29
+            ],
+            "page_labels": [
+                "3-12",
+                "3-13",
+                "3-14"
+            ],
+            "type": "text",
+            "sections": "3.7 LCC – Importing Loads from another Loadcase"
+        }
+    },
+    {
+        "content": "Most different opin- ions exist for this matter too. If necessary, one can subtract the old initial deformations with LCC and factor -1.. The values of PHI and EPS generate corresponding strains or curvature loads.. ES = EPS + PHI · N/EF K1 = PHI K2 = PHI · MZ/EIZ.\n · MY/EIY\n The most important special cases are:\n (a) Creep deformations of a load case (statically determinate)\n PHI = ϕ\n (b) Constraints from a construction phase (primary state)\n PHI = -1.0\n (c) Creep of a constraint from construction phase",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                28,
+                29
+            ],
+            "page_labels": [
+                "3-13",
+                "3-14"
+            ],
+            "type": "text",
+            "sections": "3.7 LCC – Importing Loads from another Loadcase"
+        }
+    },
+    {
+        "content": "The drawing is a schematic of a three-span continuous beam together with four different “envelope” plots showing how the software can distribute reinforcement according to four control levels—SECT, BEAM, SPAN and GLOB. The single line at the very top represents the beam axis, supported by four simple supports: at the left end, two interior supports beneath span 1 and span 2, and the right-hand pin at the end of span 3. The three spans are numbered “①”, “②” and “③” above the beam line. In the third span the beam depth steps up in the middle (a thicker flange portion) before returning to the original depth at the far support.\n\nBeneath that schematic is a horizontal axis divided into three bracketed regions: “SECT1” covering spans 1+2, “Sect.2” under the deeper middle portion of span 3, and then “SEC” for the remaining part of span 3. The bracket lines indicate that different cross‐section definitions (section numbers) apply over those parts of the beam.\n\nBelow the axis are four rows of diagrams, each labeled on the left:\n\n1. SECT  \n   A solid “histogram” fill (vertical bar‐shaded outline) shows the minimum reinforcement per cross section. Within each section region the bars vary up and down as the code computes the minimum steel area required by code or by a database, stepping abruptly at section boundaries. This plot reflects purely local, section‐by‐section minima (AM1–AM4 in EN 1992).\n\n2. BEAM  \n   A dashed‐line curve illustrating the reinforcement that results when a BEAM record is used. The curve follows the general shape of the SECT minima but superposes the global minimum over each individual section, producing a smooth envelope that cannot go below the BEAM‐specified reinforcement level. Where the beam depth increases in span 3, the dashed curve jumps upward, then drops back.\n\n3. SPAN  \n   Another dashed curve similar in style but now flat within each span. In each of the three span regions the plot is essentially the interpolation of the peak required reinforcement for that entire span (multiplied by the safety factor). At each span boundary the curve steps to the next span’s level. This corresponds to the SPAN record: the same section number repeated across an entire span uses the maximum reinforcement from that repeated group.\n\n4. GLOB  \n   A final dashed curve that is constant or gently varying across the whole beam, reflecting the global minimum reinforcement for all connected ranges with the same section number. Here the envelope is the maximum of all sectional maxima times the global safety factor, so none of the local dips in SECT or BEAM can fall below this GLOB‐defined baseline. Again, jumps occur at section transitions.\n\nAt the bottom is the figure caption:  \nFigure 3.1: Distribution of reinforcements  \n\nTaken together, the four plots demonstrate how AQUA/AQB allow the user to control whether reinforcement is governed purely by each cross section’s minimum (SECT), by a beam‐wide minimum (BEAM), by the maximum required within each span (SPAN), or by a single global minimum (GLOB). They also illustrate the effect of superposition: local minima are never allowed to drop below the higher‐level minima imposed by BEAM, SPAN or GLOB records.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                31
+            ],
+            "page_labels": [
+                "3-16"
+            ],
+            "type": "image",
+            "sections": [
+                "3 Input Description",
+                "3.9 REIN – Specification for Determining Reinforcement"
+            ]
+        }
+    },
+    {
+        "content": "The little four-column table at the end of your excerpt is a concise summary of three post-processing “P‐parameters” (P9, P10 and P11) used by AQB/AQUA during reinforced‐concrete section design.  In a RAG/vector‐store context it can be broken down as follows:\n\n1. Column-by-column breakdown  \n   • Parameter Code (P#)  \n   • Description of what the parameter controls  \n   • The hard‐coded “Default” value used by the program when the user does not override it  \n   • The “Typical” range or recommended setting that a designer might choose for fine-tuning  \n\n2. Row-by-row interpretation  \n\n   a) P9 – Factor for reference point of strain  \n      • Description: P9 scales the zero‐ or reference‐strain location in the section.  In multidimensional (biaxial) bending this moves the assumed neutral axis so as to adjust the relative weight of compression versus tension.  \n      • Default: 1.0 (neutral axis at the geometric centroid, no shift)  \n      • Typical: 1.0 (almost always left at the default, unless an advanced user needs to offset the neutral axis to reflect unsymmetrical boundary conditions or pre-compression effects)  \n\n   b) P10 – Factor for reference point of moments  \n      • Description: P10 scales the zero‐moment reference location.  It effectively weights the bending‐moment residuals in the BFGS or least‐squares iteration (see the error function MN in the text).  A lower P10 shifts the solver’s emphasis toward reducing the moment error rather than the axial‐force or strain errors.  \n      • Default: 1.0 (equal weighting between tensile and bending moment errors)  \n      • Typical: 0.2 – 1.0 (users often reduce P10 below 1.0 in sections with extreme biaxial bending to improve convergence by de-emphasizing the moment terms)  \n\n   c) P11 – Factor for preference of outer reinforcement  \n      • Description: P11 caps how much of the total outer (extreme fiber) reinforcement may be occupied by a single layer or grouping.  By code (e.g. EN 1992, DIN 1045) you cannot place more than one‐third of the lever arm’s reinforcement in one thin layer, and P11 scales that fraction for uniaxial vs. biaxial cases.  \n      • Default: “*” (the program chooses P11 internally based on loading type: P11 = 1.0 for biaxial bending or when the detailed lever arm check is enforced; P11 = 0.0 for pure uniaxial bending, effectively disabling the one‐third rule)  \n      • Typical: 0.0 – 1.0 (explicitly set between 0 and 1 if the user wants to control how much outer reinforcement is driven to the extreme fiber; e.g., setting P11 = 0.5 limits any single layer to no more than 50 % of the allowable max in that position)  \n\n3. Contextual linkage to the broader AQUA/AQB design process  \n   • P9 and P10 enter the objective‐function weighting (alongside P7 and P8) when the program iterates inner‐loop strain planes using the BFGS method.  Poor convergence under biaxial loading is often cured by adjusting P7, P8, P9 or P10 so that the design problem remains convex.  \n   • P11 ties into the code checks on lever arm and ductility.  If the computed steel strain at the outer fiber does not exceed the prescribed S1 value (ductility requirement), P11 can be used to force a minimum compressive reinforcement and shear links per EN 1992 or DIN 1045.  \n   • These P-parameters are normally buried behind higher-level AQUA/INI settings (e.g. minimum reinforcement AM1–AM4, safety factors SC1–SS0, tendon groups ZGRP), but are available for expert users to fine-tune convergence and minimum‐lever‐arm rules without rewriting the section geometry or reinforcement layout records.  \n\n4. How to store/retrieve for RAG  \n   • Index by the parameter code (P9, P10, P11).  \n   • Store attributes: “description,” “default_value,” “typical_range,” “notes_on_usage.”  \n   • Link back to the broader “reinforcement design” document chunk that defines P7, P8, strain‐plane iteration, code-specific lever‐arm limits, and convergence strategies.  \n\nThis descriptive entry will allow a retrieval‐augmented generator to answer questions such as “What does P10 control in AQUA’s section design?”, “When should I reduce P10 below 1.0?”, or “How does P11 interact with EN 1992 ductility checks?” with immediate access to both the numeric defaults and design rationale.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                33
+            ],
+            "page_labels": [
+                "3-18"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.9 REIN – Specification for Determining Reinforcement"
+            ]
+        }
+    },
+    {
+        "content": "The table shown is part of the input‐record definitions for AQB/AQUA’s reinforced‐concrete bending and shear design.  It defines a small set of parameters governing shear‐force checks, strut inclinations, plasticity limits and ductile redistribution.  The four columns are “Item” (the keyword), “Description” (what the parameter controls), “Unit,” and “Default.”  Below is a structured description of each row and its sub-options:\n\n1.  SMOD  \n    ·  Description: Design mode for shear checks  \n    ·  Unit: LIT (a literal keyword)  \n    ·  Default: “*” (i.e. inherited or unspecified)  \n    ·  Notes:  \n       –  If SMOD = NO, no shear‐reinforcement design is performed; internal shear stresses are neither checked nor calculated.  \n\n2.  TVS  \n    ·  Description: Deductional shear stress (sometimes called shear‐stress limit)  \n    ·  Unit: N/mm²  \n    ·  Default: “*”  \n    ·  Notes:  \n       –  This value is subtracted from the factored shear stress before computing required shear reinforcement.  \n\n3.  MSCD  \n    ·  Description: Maximum permissible tensile longitudinal stress in bending members  \n    ·  Unit: N/mm²  \n    ·  Default: “*”  \n    ·  Notes:  \n       –  If the computed normal stress in the section exceeds MSCD, shear capacity is reduced accordingly.  \n\n4.  KTAU  \n    ·  Description: Plate‐shear design variant  \n    ·  Unit: –/LIT (literal choices or numeric coefficient)  \n    ·  Default: “*”  \n    ·  Sub-options:  \n       •  K1    : non-staggered punching shear for regular (one-way) slabs (per DIN 1045 17.5.5 eq. 14)  \n       •  K2    : non-staggered punching shear for slabs with uniform distributed loads (DIN 1045 17.5.5 eq. 15)  \n       •  K1S   : same as K1 but with staggered shear per table 13 1a of DIN 1045 17.5.5  \n       •  K2S   : same as K2 but with staggered shear arrangement  \n       •  num   : a user‐supplied coefficient k as in EC2 eq. 4.18 (e.g. 0.4, 0.6)  \n       •  0.0   : deactivates the plate shear check entirely  \n\n5.  TTOL  \n    ·  Description: Tolerance applied to limit‐state inequality checks (e.g. for shear, bending)  \n    ·  Unit: dimensionless  \n    ·  Default: 0.02  \n\n6.  TANA  \n    ·  Description: Lower/upper limits for the inclination (tangent of angle) of shear‐resisting struts in the truss model  \n    ·  Unit: –  \n    ·  Default: “*”  \n    ·  Notes:  \n       –  Should now be specified via the TVAR record rather than directly here.  \n\n7.  TANB  \n    ·  Description: Alternate notation for strut‐inclination limits (deprecated)  \n    ·  Unit: –  \n    ·  Default: “*”  \n    ·  Notes:  \n       –  Superseded by TVAR; maintained only for backward compatibility.  \n\n8.  SCL  \n    ·  Description: Plasticity control for steel and composite sections under bending  \n    ·  Unit: –  \n    ·  Default: 3  \n    ·  Options:  \n       1.  No limits on steel strain (fully elastic–plastic)  \n       2.  Limit only the outermost compressive‐steel yield strain  \n       3.  Limit compressive steel strain to the yield value (default)  \n       4.  Enforce yield‐strain limit in both tensile and compressive reinforcement  \n\n9.  DELR  \n    ·  Description: Redistribution limit for ductile sections, defined as x/D (neutral‐axis depth over effective depth)  \n    ·  Unit: –  \n    ·  Default: 1.0  \n    ·  Notes:  \n       –  Controls the maximum allowable moment redistribution in continuous or statically indeterminate members; negative values disable it.  \n\nSummary of table purpose:  \n•  Together, these parameters allow the user to tailor the shear‐design procedure (activate or skip it, set stress deductions, choose plate‐punching formulas or EC-2 coefficients), impose numerical tolerances, control allowable strut inclinations in the shear‐truss model, limit steel‐strain exploitation, and cap moment redistributions in ductile members.  \n•  Default values (wildcards “*” or common presets 0.02, 3, 1.0) usually pick up code‐default behavior; non-default settings are only required for special design codes, advanced punching checks or when troubleshooting convergence.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                35
+            ],
+            "page_labels": [
+                "3-20"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.9 REIN – Specification for Determining Reinforcement"
+            ]
+        }
+    },
+    {
+        "content": "See also: DESI\n reinforcement. But the minimum reinforcements defined in AQUA will always remain.\n superposes the global minimum reinforcement with the current reinforcement.\n With record BEAM it is possible to specify an existing layout of reinforcements which can be used for the analysis of existing structures. To use any reinforcement detailing for ideal sections in STRE or EIGE, the appropriate factors of the selected LCR have to be specified explicitly!\n There is also a control flag CTRL REIN, defining if the reinforcements should be increased or not. The latter to be used for the analysis of existing structures.\n SUPE cannot be used during an iteration, since then the maximum reinforcement for an itera- tion step will not be able to be reduced. ASE/STAR2 therefore ignore a specification of SUPE, as long as convergence has not been reached. AQB can update or superpose the reinforce- ments at a later time: with REIN RMOD SUPE but without any DESI input. A specification of BEAM, SPAN, GLOB or TOTL under MOD refers to interpolated sections or sections with the same section number. For all connected ranges with the same section, the maximum for the range multiplied with SFAC is incorporated as the minimum reinforcement. The design is done separately in each case for each load, however, so that the user can recognize the relevant load cases.\n As the existing reinforcement has a considerable impact on the shear design, AQB will perform an intermediate superposition after the design for normal force and bending moments. How- ever, use of minimum reinforcement in ultimate load design has also a detrimental effect on\n the shear reinforcement, since the lever of internal forces is reduced. The user can take the appropriate precautions by specifying a minimum lever arm in AQUA.\n Since this latter effect is especially strong with tendons, AQBS can give special effect to the latter in ultimate load design. This option is controlled with ZGRP:\n ZGRP = 0 Tendons are considered with both their area and their prestressing. Normal reinforcement is specified at the minimum percentage. The relative loading capacity is found.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                31,
+                32,
+                30
+            ],
+            "page_labels": [
+                "3-16",
+                "3-17",
+                "3-15"
+            ],
+            "type": "text",
+            "sections": "3.9 REIN – Specification for Determining Reinforcement"
+        }
+    },
+    {
+        "content": "Since this latter effect is especially strong with tendons, AQBS can give special effect to the latter in ultimate load design. This option is controlled with ZGRP:. ZGRP = 0 Tendons are considered with both their area and their prestressing. Normal reinforcement is specified at the minimum percentage. The relative loading capacity is found..\n ZGRP > 0 Tendons are specified with their full prestressing, but with their area (stress increase) only in so far as necessary. Normal reinforcement is installed only if the prestressing steel alone is not sufficient.\n A required area of prestressing steel is determined.\n ZGRP < 0 Tendons are applied with their prestressing, only in so far as necessary, oth- erwise the same like ZGRP > 0.\n If ZGRP < > 0 has been specified, the tendons are grouped into tendon groups. The group is calculated by the integer part from dividing the identification number of the tendon by ZGRP. For the printout the groups are identified by characters to distinguish them from the reinforcement layers. Group \"‘P\"’ contains the total area and the prestress forces only, group ’Z’ is the group 0 which is always applied with its full area, while groups \"‘A\"’ to \"‘D\"’ identify the optional groups. Any group number higher than 4 is assigned to group \"‘D\"’. The use of different steel materials in the same group may lead to slightly inconsistent results and will be flagged with a warning.\n Assume that tendons with the numbers 1,11,12,21,22 and 101 have been defined. With the appropriate inputs for ZGRP, the following division is obtained:\n ZGRP 0 All tendons are minimum reinforcement\n ZGRP 10 Tendon 1 is group Z and minimum reinforcement Tendons 11 and 12 are group A and optional Tendons 21 and 22 are group B and optional Tendon 101 is group D and optional\n ZGRP 100 Tendons 1,11,12,21 and 22 are group Z and minimum reinforcement Tendon 101 is group A and optional\n An example of the effect can be found in Section 5.1.6.3.\n The following parameters are not to be changed by the user in general:",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                32
+            ],
+            "page_labels": [
+                "3-17"
+            ],
+            "type": "text",
+            "sections": "3.9 REIN – Specification for Determining Reinforcement"
+        }
+    },
+    {
+        "content": "ZGRP 100 Tendons 1,11,12,21 and 22 are group Z and minimum reinforcement Tendon 101 is group A and optional. An example of the effect can be found in Section 5.1.6.3.. The following parameters are not to be changed by the user in general:.\n Default Typical P7 Weighting factor of moments 5 0.5 - 50 P8 Weighting factor dimensions -2 -2\n When designing, the strain plane is iterated by the BFGS method.\n Lack of convergence in the design with biaxial loading can generally be attributed to the factors no longer shaping the problem convexly, so that there are multiple solutions or none. In these cases the user may change the value of P7. In most cases, however,\n problems are caused by specifying the minimum reinforcement improperly.\n The required reinforcement is determined in the innermost loop according to the minimum of the squared errors.\n MN ( (N − N)2 + F1 · (MY − MY)2 + F2 · (MZ − MZ)2)\n F1 = P7 · (zm − zmn)P8\n F2 = P7 · (ym − ymn)P8\n The default value for P8 leads to the same dimensions for the errors and should not be changed. The value of P7 has been determined empirically and my be changed if needed. With symmetrical reinforcement and tension it is better to choose a smaller value, with mul- tiple layers and compression a larger one. For small maximum values of the reinforcement the value of P7 should be increased. If a warning about lacking convergence or precision is obtained, the value of P7 should increase the weight of the force deviating the greatest part.\n Reinforcement which is only one third of the lever arm, is allowed to be maximum one third of the area of the outer reinforcement. P11 is the factor to control this. For biaxial bending P11=1.0, for uniaxial bending P11=0.0\n DESI – Reinforced Concrete Design, Bending, Axial Force\n See also: REIN, NSTR\n DELR\n Redistribution for ductiles x/D-Limit\n −\n 1.0\n Design may be performed for various safety concepts and loading conditions specified with STAT. The definition of the loading condition selects the predefined safety factors and appro- priate stress strain laws defined via the INI file for the active design code.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                32,
+                33,
+                34,
+                35
+            ],
+            "page_labels": [
+                "3-17",
+                "3-18",
+                "3-19",
+                "3-20"
+            ],
+            "type": "text",
+            "sections": "3.9 REIN – Specification for Determining Reinforcement"
+        }
+    },
+    {
+        "content": "See also: REIN, NSTR. DELR. Redistribution for ductiles x/D-Limit. −. 1.0. Design may be performed for various safety concepts and loading conditions specified with STAT. The definition of the loading condition selects the predefined safety factors and appro- priate stress strain laws defined via the INI file for the active design code..\n When designing for ultimate load or combinations with splitted safety factors, the load factor must be already contained in the internal forces and moments. One way to accomplish this is with the COMB records.\n KSV and KSB may be used to overwrite the default taken from the INI-file and should be applied only in rare cases.\n EL linear elastic, but without tension if concrete\n ELD linear elastic with added material safety factor from AQUA\n SL serviceability without safety factors\n SLD serviceability with added material safety factor from AQUA\n UL ultimate design without safety factors from AQUA\n ULD ultimate design with safety factors from AQUA\n CAL Calculatoric mean values\n CALD Calculatoric mean values with safety factors from AQUA\n PL plastic nominal without safety factors\n PLD plastic design with material safety factors from AQUA\n PLB as PL, but concrete with limited plasticity (stress block)\n PLBD as PLBD, but concrete with limited plasticity (stress block)\n The safety factors will be preset dependent on the load condition from the INI-definition as well. The values might be overwritten with the items SC1 to SS0. Either with an explicit value or as factor (e.g. 0.9[−]) Safety factors <1.0 (American and Australian codes) will be used as factors on the resistance.\n Thus we have the following cases:\n • without the D safeties defined with the material will be ignored.\n • with a D and a safety factor of 1.0 the safety factors defined with the material will be used. This option is required for those cases where reinforcements have different safety factor for example.\n • with a D and positive safety factors these factors will be applied globaly. This option allows to account for strain dependant safet y factors as used in the ACI or the old DIN\n • with a negative safety factor this value will be used additionally for the resistance.\n PL resp. PLD will modify for some design codes (DIN, EC, ACI) the stress strain law to a constant equivalent stress block, i.e. the stress value and the strain range will be modified according to the provisions of those codes.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                34,
+                35,
+                36
+            ],
+            "page_labels": [
+                "3-19",
+                "3-20",
+                "3-21"
+            ],
+            "type": "text",
+            "sections": "3.9 REIN – Specification for Determining Reinforcement"
+        }
+    },
+    {
+        "content": "• with a negative safety factor this value will be used additionally for the resistance.. PL resp. PLD will modify for some design codes (DIN, EC, ACI) the stress strain law to a constant equivalent stress block, i.e. the stress value and the strain range will be modified according to the provisions of those codes..\n With the special definition of SS1 NRIL the safety factors of the reinforcements will be set to 1.05 and 1.10 according to the provisions of the German ”Nachrechnungsrichtlinie”, also the ordinates of those reinforcements will be reduced then by an offset of 20 resp. 10 m.\n The minimum reinforcements AM1 to AM3 are preset according to the design code (INI file) and apply to all cross sections; they are input either as absolute value in [cm2] or as a percentage of the section area.\n The value AM4 is a direct factor for the Formulas 9.5.2 resp. 9.6.2 of EN 1992-1-1. A positive value will be applied for columns and walls, while a negative value is used only for columns.\n The relevant value is the maximum of the minimum reinforcements:\n - Absolute minimum reinforcement (AM1/AM2)\n - Minimum reinforcement of statically required section\n - Minimum reinforcement defined in cross section program AQUA\n - Minimum reinforcement stored in the database\n The statically determined portion of the forces and moments of prestressing is always deducted when determining the external forces and moments. This contribution is found from the location of the tendons and their tensile force. AQB only: A specification of the bifurcation factor BETA in record BEAM is changed to additional moments according to DIN 1045 17.4.3 resp. Eurocode 4.3.5.6. resp. DIN 1045 neu 5.6.4. resp. OeNORM B 4700 2.4.3. or other design codes. The design will always generate both bending axis. The output of the extra moments is given with the forces of the combinations.\n Defaults for strain limits and safety coefficients depend on the selected design code and the type of load combination. They may be specified in the INI-file of the design code. If SC1 and SC2 are defined different (e.g. old DIN 1045, ACI), then the safety factors of the reinforcements will be also interpolated if SS1 is equal to SC1.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                36,
+                37
+            ],
+            "page_labels": [
+                "3-21",
+                "3-22"
+            ],
+            "type": "text",
+            "sections": "3.9 REIN – Specification for Determining Reinforcement"
+        }
+    },
+    {
+        "content": "Defaults for strain limits and safety coefficients depend on the selected design code and the type of load combination. They may be specified in the INI-file of the design code. If SC1 and SC2 are defined different (e.g. old DIN 1045, ACI), then the safety factors of the reinforcements will be also interpolated if SS1 is equal to SC1..\n The maximum strain depends on the stress-strain curve. The value of 2.2 is reduced for ex- ample at the old DIN or high strength concrete automatically. The EN (6.1.(5)) and the DIN suggest to limit the strain also for the midpoint of compressive flanges. This option may be selected by defining a value of C2 as positive (to select) or negative (to disable) the control. The strain is then limited that the value of C2 is not exceeded in any center of a shear cut with the property \"flange\".\n The values Z1 and Z2 do not limit the range of possible strains, but limit the stress to the value which is reached for the total strain Z1 or the strain increment Z2 from the stress-strain law for the tendons within the section. The incremental value Z2 is an implicit limit on the bond, and is necessary, when designing with partial prestressing under DIN 4227 Part 2. A specification of 0.0 will deactivate the limit. A stress-strain law without hardening will not be effected.\n According to EN 1992 5.5 (4) or DIN 1045-1 8.2/8.3 (3) the height of the compressive zone should be limited to achieve a certain ductility. (e.g. not larger than 0.45 d, or 0.35 d for high strength concrete). As the maximum compressive strain is fixed (3.5 o/oo), this is equivalent to the request that the steel strain has at least a value of S1 (4.278 for x/d=0.45). If this is not fulfilled a compressive reinforcement is needed and a minimum shear link according to DIN 1045-1 13.1.1. (5) has to be provided. A negative definition of S1 either explicitly or via the INI-file will define the value of S1 depending on the strength of the concrete, the ductility and the required degree of redistribution δ = DELR.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                37
+            ],
+            "page_labels": [
+                "3-22"
+            ],
+            "type": "text",
+            "sections": "3.9 REIN – Specification for Determining Reinforcement"
+        }
+    },
+    {
+        "content": "If this is not fulfilled a compressive reinforcement is needed and a minimum shear link according to DIN 1045-1 13.1.1. (5) has to be provided. A negative definition of S1 either explicitly or via the INI-file will define the value of S1 depending on the strength of the concrete, the ductility and the required degree of redistribution δ = DELR..\n An equivalent formulation is given in OENORM 4700, where it is requested that the steel should reach the yield strength. AQB fulfills also a more general rule, that the compressive reinforce- ment is not allowed with a larger value than the tensile reinforcement. Thus AQB provides symmetric reinforcements for all design codes when the steel strain does not exceed the value of S1, fulfilling the request for ductility in that way.\n This design operation is also suitable for non-reinforced sections. In that case the program produces internal forces and moments which are in the same proportion to each other as the external forces and moments. The safety factors SC1 and SC2 have to be defined dependent on the design code. The program then shows the relative load carrying capacity and prints a warning if this should fall below 1.0.\n The shear design finds the lever of internal forces for all load cases with compression and tension forces in the section, and finds the shear stress and shear reinforcement resulting from\n shearing force and torsion. The shear stress limits are set automatically depending on SMOD and the material. Deviating values for the shear stress limits can be defined within AQB with a record STRE (under 4227 only) or TVS. Since in case of excess of the shear stress limits no design more occurs, this can be exceeded onto own responsibility of the user with a tolerance.\n For the reduction of the shear capacity for tensile members the normal stress σpc is limited to the value MSCD. The default is selected with the mean tensile strength fctm.\n The inclination of the struts in the truss model is specified in the design codes. The limit values are specified in the INI-files of the design codes and may be increased by a TVAR definition. Available are upper an lower limits for the tangent of web (TANMIN,TANMAX), compressive flanges (TANMINC,TANMAXC) and tensile flanges (TANMINT,TANMAXT). The lower values may be also increased by an explicit value with every shear cut. The min and max values TANA and TANB in this record should not be used. Thus the applied minimum inclination is always the maximum from all definitions.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                37,
+                38
+            ],
+            "page_labels": [
+                "3-22",
+                "3-23"
+            ],
+            "type": "text",
+            "sections": "3.9 REIN – Specification for Determining Reinforcement"
+        }
+    },
+    {
+        "content": "Available are upper an lower limits for the tangent of web (TANMIN,TANMAX), compressive flanges (TANMINC,TANMAXC) and tensile flanges (TANMINT,TANMAXT). The lower values may be also increased by an explicit value with every shear cut. The min and max values TANA and TANB in this record should not be used. Thus the applied minimum inclination is always the maximum from all definitions..\n For the torsion the same angle is used in general, but for some design codes and for contrary shear there are deviations.\n The longitudinal forces or the consideration of the shift rule of the envelope of the tensile forces depend upon the CTRL option VM. It is possible to specify explicit values for the inclination for transverse shear and torsion. Then the longitudinal forces of the truss model will be evaluated beforehand and considered in the bending design directly. While the value for the transverse shear increases the minimum value only, the value for the torsion will be always applied.\n The ratio Ved/Vrd,max and the value of the shift will be saved to the database.\n If a section is to be considered as a plate has already been defined with the section itself. The definition of KTAU is thus only effective for those sections.\n For sections with tendons, the bond stress for every tendon will be evaluated according to DIN 4227 chapter 13 as the increment in tendon force divided by the periphery and the length given by BETA in record BEAM. (Use negative factors for bending members)",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                38
+            ],
+            "page_labels": [
+                "3-23"
+            ],
+            "type": "text",
+            "sections": "3.9 REIN – Specification for Determining Reinforcement"
+        }
+    },
+    {
+        "content": "The table defines a series of global control-and-check parameters used when performing stiffness‐and‐stress evaluation (for example in the NSTR crack/non-linear module, or in subsequent STAR2/ASE or DYNA runs) as well as crack‐width and decompression checks.  It is organized into four columns—“Item,” “Description,” “Unit,” and “Default”—and can be cross-referenced with the REIN and DESI definitions that establish load conditions and safety factors.\n\n1. KMOD (–, Default “ ! ”)  \n   • Selects the overall load condition and governs whether stiffness is updated:  \n     – SERV: stress evaluation without stiffness change  \n     – ULTI: ultimate‐state (no stiffness change)  \n     – ACCI: accidental load case (no stiffness change)  \n     – NONL: non-linear option (see notes for iterative stiffness strategies)  \n\n2. KSV, KSB (–, Default “ * ”)  \n   • Control material stiffness of the cross section (KSV) and of reinforcements/tension-stiffening (KSB). “*” means inherit defaults from the chosen load condition (see DESI/NSTR).\n\n3. KMIN, KMAX, ALPH, FMAX (–, Defaults 0.01, 4.00, 0.4, 5.0)  \n   • KMIN/KMAX: bounds on the computed element stiffness (secant or tangent)  \n   • ALPH: numerical damping factor for iteration stability  \n   • FMAX: numerical acceleration factor for convergence  \n\n4. CRAC (LIT, Default “NO”)  \n   • Crack/decompression design mode:  \n     – NO: no crack check  \n     – YES: compute crack widths  \n     – TAB: limit steel stress in cracked section  \n     – DECO: compute decompression zone around tendons  \n\n5. CW [mm]₁₀₂₆, BB (–, Default “ * ”)  \n   • CW: crack width or decompression‐height parameter (mm)  \n   • BB: duration/coefficient parameter (e.g. kₜ per EN 1992-1-1, βₜ per DIN 1045-1, tension-stiffening stress per BS, Snip φ₁, Spanish EHE k₂). Default “*” inherits from standards or load case.\n\n6. HMIN, HMAX [mm]₁₀₂₄/₁₀₁₁ (Defaults 0.0, 800)  \n   • Minimum and maximum height of the tension‐zone or crack‐control layer  \n\n7. CW-FFCT (–, Default “–”)  \n   • Factor applied on the mean tensile strength of concrete  \n\n8. CHKC, CHKT, CHKR (–/MPa, Default “–”)  \n   • Strain or stress limits to be checked in concrete (CHKC), tendons (CHKT), and reinforcement (CHKR). Violations are flagged but not automatically remedied due to nonlinear dependencies.\n\nNotes on non-linear stiffness iteration (for KMOD = NONL):  \n– S1, SN: secant stiffness from curvature or moment  \n– T0, T1, TN: tangent stiffness variants  \n– K0, K1, KN: plastic‐strain based stiffness updates  \n\nAll parameters may be overridden explicitly. Defaults for KSV/KSB and safety factors derive from the load-condition definitions in DESI (e.g. SL, SLD, UL, ULD, ACCI, CAL, etc.).",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                39
+            ],
+            "page_labels": [
+                "3-24"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.11 NSTR – Non-linear Stress and Strain"
+            ]
+        }
+    },
+    {
+        "content": "The fragment shown defines two complementary “check strategies” for reinforced‐concrete sections, along with the key parameters and defaults that govern their behavior.  In essence, it’s a lookup table that tells the analysis engine (and ultimately the user) which type of stress‐and‐strain evaluation to perform, what outputs will be generated, and how material safety factors and iteration schemes are selected.\n\n1. Table Overview  \n   • Columns  \n     – Option name (e.g. NSTR, CHKS)  \n     – Description of action performed  \n     – Quantity being checked (“Strain/stress to be checked for structural steel”)  \n     – Units (–/MPa)  \n     – Placeholder for additional flags or modifiers (“–”)  \n   • See also references: REIN (reinforcement description) and DESI (design definitions).\n\n2. Row 1: NSTR (“Nonlinear STRess/strain evaluation”)  \n   • Performs a full nonlinear analysis of cracked and uncracked behavior.  \n   • Carries out checks in the cracked state or other nonlinear regimes.  \n   • “Byproducts” generated:  \n     – Stress ranges in the steel  \n     – Crack widths in the concrete  \n     – Nonlinear (secant or tangent) stiffness parameters  \n   • These results feed forward into subsequent dynamic or advanced‐serviceability modules (STAR2, ASE, DYNA).\n\n3. Row 2: CHKS (“CHecK Stresses”)  \n   • Executes stress checks on concrete sections or on reinforcement only.  \n   • Violations of preset stress limits are flagged, but no corrective iterations or reinforcement updates are triggered.  \n   • Rationale: nonlinear couplings between steel and concrete make automatic “fixes” impractical within a simple check routine.\n\n4. Load-Condition Definitions & Defaults  \n   • The choice of material strengths and safety factors is controlled by a “load condition” code.  If DESI (design input) and NSTR uniquely specify a condition, default safety factors are implied for concrete (KSB) and steel (KSV).  They may be overridden manually.  \n   • Standard load conditions:  \n     – EL: linear elastic (no concrete tension)  \n     – ELD: as EL, but with material safety factors  \n     – SL: serviceability, nominal  \n     – SLD: serviceability, design  \n     – UL: ultimate limit state, nominal  \n     – ULD: ultimate limit state, design  \n     – CAL: calculatoric mean values  \n     – AQUA: CAL with AQUA‐defined safeties  \n   • Default pairings (unless overridden):  \n     – Serviceability → KSV=KSB=SL  \n     – Ultimate limit state → read from INI file (often KSV=SLD, KSB=SL)  \n     – Accidental (ACCI) → KSV=KSB=SL  \n     – Nonlinear (NONL) → KSV=KSB=CAL\n\n5. Iterative Stiffness Schemes  \n   • When NSTR (or NONL) is selected, you choose how to update stiffness at each iteration:  \n     – Secant based on curvature: S1  \n     – Secant based on bending moment: SN  \n     – Plastic strains without iteration: K0  \n     – Plastic strains from curvature: K1  \n     – Plastic strains from moment: KN  \n   • Alternatively, tangent‐stiffness approaches:  \n     – T0: no iteration  \n     – T1: from curvature  \n     – TN: from moment  \n   • The complete code for a nonlinear serviceability analysis using curvature‐based secant stiffness would be “NS1.”  \n\n6. Tension-Stiffening Adjustment  \n   • To capture post‐cracking tension capacity, the steel‐concrete stress–strain laws are modified:  \n     – Either by prescribing an effective reinforcement ratio in the steel material definition  \n     – Or by applying residual tensile stress in the cracked concrete  \n\nThis structured description ensures that anyone indexing this table for a RAG (Retrieval-Augmented Generation) vector store will know exactly which flags are set, what checks are performed under each option, and how the load‐condition codes and iteration strategies interplay in the nonlinear analysis framework.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                39
+            ],
+            "page_labels": [
+                "3-24"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.11 NSTR – Non-linear Stress and Strain"
+            ]
+        }
+    },
+    {
+        "content": "The table defines a set of specialized input parameters (items) that control post-processing checks and output options in a non-linear and fatigue analysis workflow (for example, within the NSTR and CHKS modules, and in conjunction with REIN or DESI definitions).  It is organized into four columns—Item, Description, Unit and Default—and covers both material‐behavior settings and output directives.\n\n1. Strain/stress representation (unnamed item)  \n   ­– Description: All values in this row refer to strain or stress definitions.  Strains can be specified as absolute values in per-mille (‰) or, alternatively, stresses may be given explicitly in MPa.  In addition, values may be expressed relative to ultimate material strengths: positive values relative to fy (steel yield) or fc (concrete compressive), or negative values relative to ft (concrete tensile) or fck (characteristic compressive).  \n   ­– Unit: none (contextual)  \n   ­– Default: none\n\n2. FAT (Fatigue design check)  \n   ­– Description: Selects the fatigue verification method.  Two standards are supported:  \n     • EN92 — per Eurocode 2 clause 6.6.4  \n     • DINF — per DIN or DIN-FB guidelines  \n   ­– Unit: LIT (literal code identifying the fatigue method)  \n   ­– Default: ‘–’ (no default; user must choose one of EN92 or DINF)\n\n3. SIGS (Allowable stress sway for reinforcements)  \n   ­– Description: Defines the maximum permissible cyclic stress amplitude or “stress sway” in reinforcing bars under fatigue or dynamic loading.  Used as a threshold in crack-width and stress-range calculations.  \n   ­– Unit: N/mm²  \n   ­– Default: ‘*’ (must be provided by the user or inherited from a parent load condition)\n\n4. TANS (Inclination of struts for reinforcements)  \n   ­– Description: Specifies the assumed inclination angle (as a numerical ratio) of concrete compression struts associated with steel reinforcement.  This influences the internal force paths in cracked sections and the calculation of secant or tangent stiffness.  \n   ­– Unit: — (dimensionless ratio)  \n   ­– Default: 0.756\n\n5. TANC (Inclination of struts for concrete stress)  \n   ­– Description: Similar to TANS but applied to the internal strut inclination when computing stresses in the concrete matrix (unreinforced).  Affects crack-width and non-linear curvature iterations.  \n   ­– Unit: — (dimensionless ratio)  \n   ­– Default: 0.571\n\n6. DUMP (File name for non-linear stress history)  \n   ­– Description: Specifies an output file (literal, up to 96 characters) in which the sequence of non-linear stresses—typically from a series of dynamic load cases under DYNA CTRL RLC control—will be recorded for post-processing or external review.  \n   ­– Unit: Lit96 (up to 96-character text string)  \n   ­– Default: ‘–’ (no dump file unless explicitly named)\n\nContextual notes:  \n• These items interact with the load‐condition framework (EL, ELD, SL, SLD, UL, ULD, CAL) to determine which default safety factors (KSV/KSB) apply.  \n• When non-linear checks (prefix ‘N’) are specified—for example NS1, NT1—they trigger iterative stiffness evaluation methods (secant S1/SN, tangent T0/T1/TN, or plastic K0/K1/KN).  \n• Tension-stiffening effects must be accounted for either via a modified stress–strain law in the concrete definition or by prescribing an equivalent tensile force in the steel, often controlled through the reinforcement module (REIN) or the section design module (DESI).",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                40
+            ],
+            "page_labels": [
+                "3-25"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.11 NSTR – Non-linear Stress and Strain"
+            ]
+        }
+    },
+    {
+        "content": "See also: REIN, DESI\n NSTR\n CHKS\n Strain/stress to be checked for structural steel\n −/MP\n -\n With NSTR a non linear stress and strain evaluation determination is performed. This contains checks in the cracked estate or nonlinear checks in general. ”Byproducts” are the determi- nation of stress ranges or crack widths and non linear stiffnesses, to be used in subsequent analysis with STAR2 / ASE or DYNA.\n Defining CHK options will check the stresses in the section or reinforcements. A violation of these limits will be marked, but no countermeasures will be taken like an increase of reinforce- ments, as the non linear dependencies doe not allow to solve this easily.\n The calculation can be carried out with different material values and safeties. This is controlled by the definition of the load condition. A default for this state is only provided if the definitions to DESI and NSTR give a unique selection. The load condition selects then the defaults for KSV and KSB, which may be overwritten explicitly. Meant in this case:\n EL linear elastic, but without tension if concrete\n ELD linear elastic with material safety factor\n SL nominal serviceability without material safety factor\n SLD serviceability design with material safety factor\n UL ultimate nominal without material safety factor\n ULD ultimate design with material safety factor\n CAL Calculatoric mean values\n Calculatoric mean values with safety factors from AQUA\n Then we have the following defaults (Please check always):\n Serviceability KSV=KSB=SL Ultimate limit state Is defined in the INI file (e.g. KSV=SLD, KSB=SL) Accidental (ACCI) KSV=KSB=SL\n Non linear (NONL)\n KSV=KSB=CAL\n Different iterative possibilities are provided to determine the stiffness (see Section ??).\n S1 Secant stiffness from given curvatures\n SN Secant stiffness from given moments\n K0 Plastic strains without iteration\n K1 Plastic strains from given curvatures\n KN Plastic strains from given moments",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                39,
+                40,
+                41
+            ],
+            "page_labels": [
+                "3-24",
+                "3-25",
+                "3-26"
+            ],
+            "type": "text",
+            "sections": "3.11 NSTR – Non-linear Stress and Strain"
+        }
+    },
+    {
+        "content": "Non linear (NONL). KSV=KSB=CAL. Different iterative possibilities are provided to determine the stiffness (see Section ??).. S1 Secant stiffness from given curvatures. SN Secant stiffness from given moments. K0 Plastic strains without iteration. K1 Plastic strains from given curvatures. KN Plastic strains from given moments.\n T0 Tangent stiffness without iteration\n T1 Tangent stiffness from given curvatures\n TN Tangent stiffness from given moments\n The load condition may be specified then by a prefix of S, U, A or N. (eg. US1)\n Tension stiffening must be accounted for by a modification of the stress-strain law with the material definition either for the steel with an assumed reinforcement ratio or by a tensile stress with the concrete.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                41
+            ],
+            "page_labels": [
+                "3-26"
+            ],
+            "type": "text",
+            "sections": "3.11 NSTR – Non-linear Stress and Strain"
+        }
+    },
+    {
+        "content": "• Nonlinear Design\n NSTR ULTI\n It will be checked if the forces can be supported by calculating internal forces with non- linear stress strain relations. As the strains are finite, this is not a plastic analysis and the hardening effects may be used as stated in EN 1993-1-5 Appendix C. A warning will be printed, if the resistance is not sufficient.\n Clause (755) of DIN 18800 part 1 respective (123) in part 2 require that M < 1.25 Mmax,elastic for some selected cases. This may be deactivated with KMIN 0.\n • Design plastic-plastic\n When iterating with ASE / STAR2 and NSTR a calculation according to the yield zone theory is possible. A limit on the plastic moment as requested for the plastic hinge method is not necessary and should be deactivated with KMIN 0.\n The design check of the c/t-ratio has differences for the elastic design and the design tasks elastic-plastic or nonlinear (plastic-plastic):\n •\n If the yield strength is not reached, the section will be checked against the slenderness of class 3, respective the augmented values for small stresses.\n • If the yield stress is exceeded, the limit values of sectional classes 2 (NSTR SERV/ULTI) or 1 (all other NSTR options) will be checked . If these limits are exceeded, the section will be classified as class 4.\n • Is the section classifed as class 4, the non effective parts according EN 1993-1-5 will be calculated and taken into account.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                41
+            ],
+            "page_labels": [
+                "3-26"
+            ],
+            "type": "text",
+            "sections": "3.11.1 Design for Structural Steelwork (DIN 18800, EN 1993)"
+        }
+    },
+    {
+        "content": "To calculate the correct strain condition, knowledge of the actual existing reinforcement is needed. If the latter was not defined in AQUA as the minimum reinforcement or with BEAM as current reinforcement, then an appropriate DESI record needs to have been calculated in advance. The most recently determined distribution of reinforcements for each case is saved in the database. This is not valid, however, for internal forces and moments of the load case 0 !\n Specifying a value for CRAC will perform a check of the crack width and/or the limit diameter with the diameters and distances defined in AQUA and possible reference areas. Non specified distances are calculated for a linear reinforcement based on the total area and the specified diameter, but not larger than the maximum allowed value taken from the INI-file. If required, AQB will try to fulfill the requirements by an increase of the provided reinforcements, unless CTRL REIN FIX/FIXL has been specified.\n The parameter CW is in nearly all cases the necessary crack width (wk, cal) and will be preset accordingly. The utilisation factor for the crack width is the ratio of the achieved crack width to the requested value. If CW is defined as 999 the increase of the reinforcements will be deactivated and the utilisation factor is the absolute crack width.\n Currently there are some design codes implemented defining an admissable stress depending on the diameter and either the distance or the reinforcement ratio for a simplified design:\n EN 1992 2004 (Table 7.2 / 7.3)\n DIN 1045-1 (Table 20 / 21)\n OEN 4700 (Tables 8 to 10)\n SIA 262-2017 (Equation 100a)\n BAEL (Material only), AS 5100, Egyptian design code\n In all cases it is possible to specify a direct admissable stress value with SIGS.\n CW is the necessary crack width (wk, cal), with a default of 0.2 mm. The reduced values for restraining loading of thick cross sections under EC 2 must be converted by the user (e.g. by wk = 1.3/1.7 · 0.2 = 0.15). The item BB has to be specified as 0.5 for long term and 1.0 for short term actions. Other coefficients will be derived from that value, e.g. EN 1992 kt = 0.2+0.4 · BB.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                42
+            ],
+            "page_labels": [
+                "3-27"
+            ],
+            "type": "text",
+            "sections": "3.11.2 Design for Reinforced Concrete"
+        }
+    },
+    {
+        "content": "by wk = 1.3/1.7 · 0.2 = 0.15). The item BB has to be specified as 0.5 for long term and 1.0 for short term actions. Other coefficients will be derived from that value, e.g. EN 1992 kt = 0.2+0.4 · BB..\n If FFCT is not given explicitly a minimum value of 3 MPa is assumed in Germany as mean tensile strength.\n DIN 1045-1 does not need any other factors for the crack width itself. For non-linear methods including Tension Stiffening however formulas are given in Paper 525 of DAfStB section 8.5 (page 36), BB is used to specify the value βt.\n For B 4700 the value BB will control an interpolation between tables 7/8 and 9/10. BB=1 selects mostly constraining, while BB=0 (default) selects mostly loading (no constraint).\n Because not only the codes to the crack width but also their interpretation change continuously,\n it is very probable that with different versions different results show up.\n The more recent design check according to Appendix A1 is selectable via record STRE. NSTR calculates the obsoleted original form where CW is the factor for environmental conditions. The following values can be used:\n Environment 1 CW = 1.0 (default)\n Environment 2 CW = 0.75\n Environment 3 CW = 0.50\n These design codes classify three possible crack width values (0.30, 0.20 and 0.10 mm). For the analysis we need the nominal cover Cnom of table 13 (BS 5400-4) resp. table 16 of IS 456 to be specified at item HMIN.\n We have the following possibilities, where the value of Cnom should be specified with item HMIN in [mm] :\n • BS 5400 according equ. 25 is applied if this design code has been selected. The ratio (1-Mq/Mg) can be taken from the permanent load cases within a combination. If single load cases are used, the parameter BB may be used to specify an explicit ratio. The value of Cnom has to be specified with HMIN, there is no default.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                42,
+                43
+            ],
+            "page_labels": [
+                "3-27",
+                "3-28"
+            ],
+            "type": "text",
+            "sections": "3.11.2 Design for Reinforced Concrete"
+        }
+    },
+    {
+        "content": "25 is applied if this design code has been selected. The ratio (1-Mq/Mg) can be taken from the permanent load cases within a combination. If single load cases are used, the parameter BB may be used to specify an explicit ratio. The value of Cnom has to be specified with HMIN, there is no default..\n • For BS 8110 and IS 456 we have the following: If BB is defined as the tensile stress a reduction of the strain is performed based on the triangular tensile stress distribution. If BB = 0, the approximation of BS/IS for rectangular sections is used instead.\n For these design codes, BB defines with values of 1 or 2 the allowable steel stress according to the SLS or the permanent effects following AS 5100 clause 8.6.1.(c). For tendons an additional check for 200 MPa on the stress increments according 8.6.2. is performed if the tensile stress of the concrete exceeds the tensile strength. Explicit values for the stresses may be specified also with BB, where the original enum of the table has to be shifted to the fractional part. (eg. 190.2). The printout will show either the concrete stress with a preceeding ”c” or the tendon stress with a preceeding ”t”.\n For the design you have to select a crack width. The calculation of the crack width is done for the completed crack pattern according to equation 8.128. The input value BB is used for an explicit parameter ϕ1, default is 1.4.\n This Spanish design code is rather similar to the Eurocode (BB is factor k2). It classifies four possible crack width values (0.40, 0.30, 0.20 and 0.10 mm). But then then formulas for the effective height and the crack distance and the mean strain quite different. Thus there is no dependency on the bond properties of the reinforcements. The distance of the longitudinal\n bars is always taken as 15 ∅, because we have not enough information available for more details. Tension stiffening is treated as with EC 2.\n The check of the decompression for the cracked section is controlled by the definition of NSTR SERV CRAC DECO CW hh, where hh at item CW is the distance to the ducts outer perimeter. The default value for hh is 100 mm, but the INI-file may contain a formula. The strain in these critical points will be printed and saved to the database.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                43,
+                44
+            ],
+            "page_labels": [
+                "3-28",
+                "3-29"
+            ],
+            "type": "text",
+            "sections": "3.11.2 Design for Reinforced Concrete"
+        }
+    },
+    {
+        "content": "Calculation of non-linear stiffnesses in AQB with other values than S0 is successful only if another program like ASE, STAR2 or DYNA is called again with a new iteration as a restart, and this process is repeated until convergence occurs. Thus it is recommended to define these records within ASE or STAR2 and to define the number of iterations there. Within the procedure WPS/SPS it is possible to call several programs in turn with the option PROG ITER which is optimized however for the use with STAR2 (cf. AQB 5.2.2. prefabricated column).\n An analysis of unloading or the hysteresis of load cycles is not possible today for beam ele- ments!\n Selection of the optimum iteration method is not easy, because the selected type of stiffness update determines the iteration and convergence behaviour. In most cases the use of KMOD S1 or SN will be straight forward. KMOD SN is the fastest method for slightly nonlinear prob- lems, while S1 is suited for highly loaded systems where it may happen that the ultimate load capacity of a section is exceeded within an iteration step. For the methods K0, K1 or KN the stiffness will be kept constant, but plastic strains are calculated, to be used as extra loading as initial strains similar to a temperature loading. Using this approach the failure of the system is no longer given by an instability detected during the solution of the equation system, but by monotone increasing deformations, which have to be checked carefully therefore.\n The user should start with SN for lightly loaded systems and with S1 for more heavily loaded systems, and should then shift to K1 or K0 if necessary. When there are many similar systems, it pays to find the optimum method by experimentation.\n To prevent endangering the iteration procedure, only changes of stiffness of a certain magni- tude are permitted. A value of 0.4 for ALPH means that in each step the stiffness can decrease at most to 0.4 times its last value, or increase at most to 1/0.4 times its last value. ALPH is preset to 0.4 in ASE / STAR2, but to 0.01 in AQB itself. Independently of that, the stiffnesses remain limited to the range between KMIN and KMAX, referenced to the elastic stiffness.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                44
+            ],
+            "page_labels": [
+                "3-29"
+            ],
+            "type": "text",
+            "sections": "3.11.3 Iteration Methods"
+        }
+    },
+    {
+        "content": "A value of 0.4 for ALPH means that in each step the stiffness can decrease at most to 0.4 times its last value, or increase at most to 1/0.4 times its last value. ALPH is preset to 0.4 in ASE / STAR2, but to 0.01 in AQB itself. Independently of that, the stiffnesses remain limited to the range between KMIN and KMAX, referenced to the elastic stiffness..\n With critical systems, which exceed their loading capacity in the course of the iteration, it may be necessary to limit the maximum acceleration factor with FMAX. A value of less than 1.0 damps the iteration procedure. A value of 0.0 turns the procedure off. The default of FMAX is 2.0 at a calculation with NSTR KMOD SN and CTRL INTE 4.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                44
+            ],
+            "page_labels": [
+                "3-29"
+            ],
+            "type": "text",
+            "sections": "3.11.3 Iteration Methods"
+        }
+    },
+    {
+        "content": "The table shown is the definition of the ECHO-command’s input syntax in AQB/AQUA. ECHO is used to turn on or off various groups of printed output (node coordinates, internal forces, reinforcement details, etc.) and to select how much detail is produced. The command takes two fields, OPT and VAL, each of type literal (LIT), and each has its own default. Below is a detailed walk-through of each column and the values it may assume.\n\n1. Item “OPT”  \n   – Purpose: Specifies which category (or “option”) of results you want to control.  \n   – Type (Unit): LIT (a literal string keyword).  \n   – Default: FULL  \n   – Allowed Literals:  \n     • NODE   – prints node coordinates and support constraints  \n     • BEAM   – prints beam element geometry and connectivity  \n     • SPRI   – prints spring‐element definitions  \n     • BOUN   – prints distributed support elements  \n     • SECT   – prints cross‐sectional properties (as defined in AQUA)  \n     • MAT    – prints material constants (as defined in AQUA)  \n     • LOAD   – prints applied loads  \n     • FORC   – prints internal forces and moments  \n     • DEFO   – prints beam deformations  \n     • BDEF   – prints nodal displacements (boundary-defined displacements)  \n     • REAC   – prints support reactions  \n     • REIN   – prints reinforcement layouts and areas  \n     • NSTR   – prints strains and stiffnesses  \n     • STEP   – prints every iteration in a nonlinear analysis  \n     • FULL   – a shorthand that turns on ALL of the above  \n\n   By default (if you do not supply an ECHO card), AQB will suppress some categories (NODE, BEAM, SPRI, BOUN, SECT, MAT, BDEF), set FORC to FULL, and enable the rest (DEFO, REAC, REIN, NSTR, STEP) at YES level.\n\n2. Item “VAL”  \n   – Purpose: Defines the verbosity level for the chosen OPT.  \n   – Type (Unit): LIT  \n   – Default: FULL  \n   – Allowed Literals:  \n     • NO    – do not print this category at all  \n     • YES   – print at the standard (moderate) level of detail  \n     • FULL  – print all available detail for this category  \n     • EXTR  – print the maximum, “extreme” level of detail  \n\n   In practice you would combine OPT and VAL in one or more ECHO cards. Examples:  \n     • ECHO NODE YES        – include node coordinates at standard detail  \n     • ECHO FORC FULL       – include all internal forces and moments  \n     • ECHO NSTR EXTR       – include every strain and stiffness output in an “extreme” listing  \n     • ECHO STEP NO         – suppress printing of intermediate nonlinear‐analysis steps  \n\nNotes and Cross-References:  \n– If you are running fatigue checks (e.g. for coupling joints or other repeated‐loading elements) you may already be defining multiple load cases (LCST) and combinations (COMB GMAX) to track maximum/minimum stresses. In such circumstances it is often useful to request extreme NSTR output (ECHO NSTR EXTR) so that you can see the entire history of strain/stiffness under each load case.  \n– The default STEP setting is 99, which means AQB will print every 99th iteration plus always the final one; a negative STEP value suppresses the initial linear analysis. Use ECHO STEP XXX to override.  \n– For full descriptions of each output block and their formatting, see Chapter 4 (Output description) of the AQUA manual.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                46
+            ],
+            "page_labels": [
+                "3-31"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.11 NSTR – Non-linear Stress and Strain",
+                "3.11.4 Fatigue / Stress Range"
+            ]
+        }
+    },
+    {
+        "content": "For coupling joints and other constructions it may be required to design for fatigue with a given stress range. This can be easily accounted for by defining several load cases for the same section. If the fatigue check needs also the permanent stress, you should include one load\n case of type MAXP in the analysis. To save the stress range in the database an extra load case number is required to be specified via COMB GMAX LCST ...\n AQB will keep track of maximum and minimum stresses and will compare the resulting differ- ence with the threshold values specified for concrete and reinforcing steel in AQUA. So gener- ally the allowed stress range should be specified at the material definition. For the simplified check acc. EN 1992-1-1 6.8.6 it is also possible to explicitly set an allowed stress range (e.g. 70 MPa) with the option SIGS. This value is effective for all reinforcement materials. However such a global definition will deactivate some specific stress modifications of the design codes.\n Unless a definition of CTRL REIN FIX/FIXL has been specified, AQB will increase the area of passive reinforcements accordingly, if the limit value for the reinforcements is exceeded. But there will be no reanalysis of the load cases with the changed values. All printed results are therefore valid for the reinforcement before the analysis. Special notice should be given to the fact, that without a preliminary design only the minimum reinforcements for longitudinal and shear links are used.\n For the fatigue design check according to DIN 1045-1 resp. DIN FB-102 the Literal FAT DINF should be entered, further definitions might be done with records LC and BEAM or within the material definition (AQUA).\n It might be helpful to increase the volume of print out via ECHO NSTR EXTR in such cases.\n 3.12 ECHO – Control of the Output Extent\n ECHO\n EXTR extreme output\n The default for options NODE, BEAM, SPRI, BOUN, MAT and SECT as well as BDEF is NO, for FORC FULL, and for all others YES.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                44,
+                45,
+                46
+            ],
+            "page_labels": [
+                "3-29",
+                "3-30",
+                "3-31"
+            ],
+            "type": "text",
+            "sections": "3.11.4 Fatigue / Stress Range"
+        }
+    },
+    {
+        "content": "It might be helpful to increase the volume of print out via ECHO NSTR EXTR in such cases.. 3.12 ECHO – Control of the Output Extent. ECHO. EXTR extreme output. The default for options NODE, BEAM, SPRI, BOUN, MAT and SECT as well as BDEF is NO, for FORC FULL, and for all others YES..\n For the effects of all options refer to Chapter 4 (Output description).\n The option STEP controls the output during non-linear analyses and its default value is 99. The last iteration is always printed. A negative value for this option suppresses the output of the initial linear analysis.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                45,
+                46
+            ],
+            "page_labels": [
+                "3-30",
+                "3-31"
+            ],
+            "type": "text",
+            "sections": "3.11.4 Fatigue / Stress Range"
+        }
+    },
+    {
+        "content": "Upon request the output can be controlled by the user.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                48
+            ],
+            "page_labels": [
+                "4-1"
+            ],
+            "type": "text",
+            "sections": "4 Output Description"
+        }
+    },
+    {
+        "content": "Provided that loads were generated, the global factor for each load case as well as the dead weight components and all other loads of the load case (multiplied by the factor) are output.\n The load type and the direction of the beam loads is given by a four- letter combination:\n a b c d\n for a: S Single load U Uniform load V Variable load C Cubic load (values generated by program) for b: L Load referring to the beam axis P Load referring to the projection for c: P Force M Moment W Displacement D Rotation U Initial deformation T Temperature V Prestress E Strain K Curvature for d: S Local directions 1 2 X Global directions Y\n Possible values\n Z",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                48
+            ],
+            "page_labels": [
+                "4-1"
+            ],
+            "type": "text",
+            "sections": "4.1 Load Assembly"
+        }
+    },
+    {
+        "content": "Nodes and support conditions as well as all elements can be output. This is done by merely\n inputting the corresponding ECHO options NODE, BEAM, SPRI, BOUN or FULL. ECHO NODE FULL causes the additional output of the equation numbers of the degrees of freedom. This is helpful in detecting movable parts of the structure.\n Every time the equation system is reassembled, its parameters are output to the protocol file.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                48,
+                49
+            ],
+            "page_labels": [
+                "4-1",
+                "4-2"
+            ],
+            "type": "text",
+            "sections": "4.2 Output of the Structure"
+        }
+    },
+    {
+        "content": "The beam internal forces and possibly the deformations are output for each section as well as for all positions, at which point loads are applied. The sign convention can be found in Section 2.2. In case of SECT and DEFO, YES results in a printout of values at explicit output sections only. Values at positions between sections where point loads are applied are printed using FULL. Values at all sections are printed using EXTR.\n Where applicable, the internal forces and deformations of springs, truss and cable elements are output.\n The displacements and rotations of nodes are output in mm and 0/00, respectively, in the directions of the coordinates. Rotations are positive clockwise.\n Forces arise at all nodes with supports, couplings or elastic foundations. These are output as follows:\n ECHO REAC YES only reactions ECHO REAC FULL reactions + coupling forces ECHO REAC EXTR\n all nodal forces (accuracy check)\n When forces are exerted on a free node, then either a support has been erroneously specified or the machine’s accuracy is not sufficient for solving the system.\n The sum of the reaction forces is an important index for the completeness of the loads.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                49
+            ],
+            "page_labels": [
+                "4-2"
+            ],
+            "type": "text",
+            "sections": "4.3 Results"
+        }
+    },
+    {
+        "content": "A printout of the 1st iteration step (1st order theory) as well as a printout after the last step take place when nothing is input. If convergence is reached within the specified limits, its results are output too.\n Output after every nth step can be requested by ECHO STEP. The output of the initial linear analysis can be suppressed by using ECHO STEP -99.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                49
+            ],
+            "page_labels": [
+                "4-2"
+            ],
+            "type": "text",
+            "sections": "4.4 Output during Iterations"
+        }
+    },
+    {
+        "content": "It gets checked by every iteration step, whether the accuracy lies within the prescribed limits. This is performed separately for forces, moments, displacements and rotations. The procedure is the following:\n The difference between the result value during the current and the one during the pre- vious iteration is determined at each result point. This difference must be smaller than the absolute result value multiplied by the precision tolerance. If the value is smaller than the largest value encountered in the structure times the precision tolerance, the percentage difference is not computed. This way very small values, which e.g. oscil-\n late around zero from one iteration to the other, thus generating very high percentage changes, get no consideration at all.\n A summary of these values is printed at the beginning of each output iteration. These values are also output to the screen or to the protocol file for all iterations.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                49,
+                50
+            ],
+            "page_labels": [
+                "4-2",
+                "4-3"
+            ],
+            "type": "text",
+            "sections": "4.5 Convergence Criteria"
+        }
+    },
+    {
+        "content": "Design results are output after every iteration which was requested by ECHO STEP, as well as after reaching convergence. There are three tables:\n 1. Design results of the individual load cases\n (only by ECHO REIN FULL)\n 2. Design parameters\n 3. Accumulation of the computed reinforcement\n The design parameter tables include for each section:\n Beamno Beam number x(m) X-value of the beam section NCS Cross section number LC Load case number NI Internal axial force in kN MyI/MzI Internal moments in kNm e1 = Steel strain in case of pure tension e2 Edge strain on tension side in 0/00 = Steel strain when not overpressed yN Intersection of neutral line with axis zN Intersection of neutral line with axis sc/ss Safety factors for concrete and steel RELTRA Relative ultimate strength The total ultimate strength amounts to As in cm2\n Edge strain at compression side in 0/00\n sc·RELTRA, when sc and ss are identical.\n Total reinforcement for each activated layer\n R\n Layer number\n If the strength of the cross section is not exhausted, the internal forces are larger than the external forces by the factor RELTRA. If the cross section is overstressed, RELTRA can be smaller than 1.0 as well. If the minimum reinforcement of the statically required cross sec- tion is critical, the internal forces are computed using the minimum reinforcement percentage, while the reinforcement is already reduced by the factor. The indication ”not recommended”\n appears, when a cross section is not designed due to low stressing. The absolute limit strain EGRE defined in record REIN serves as criterion in this case.\n The global parameters of the design (limit strains, safety factors and minimum reinforcement ratios) are output in a preceding table.\n The maximum reinforcement ratios are output in an additional table. (By GLOB and TOTL for each cross section, by SPAN and BEAM for the beginning of each region, by SECT for each section).",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                50,
+                51
+            ],
+            "page_labels": [
+                "4-3",
+                "4-4"
+            ],
+            "type": "text",
+            "sections": "4.6 Design Output"
+        }
+    },
+    {
+        "content": "The stiffness parameter table includes for each section:\n Beamno\n Beam number\n x(m) X-value of beam section NCS Cross section number LC Load case number Ni Internal axial force e0 Myi Internal moment Mzi Internal moment ky/kz Curvatures in (1/km) Ey Effective E-modulus Ez Effective E-modulus x Height of compressive zone\n Strain at gravity centre in 0/00\n ECHO-Options NSTR or FULL\n NO Table omitted YES Table as described above FULL In addition, the maximum and minimum strains and stresses of the full cross section (Q), the prestressing steel (S) and the plain reinforcement (B). EXTR Stress and strain at all points of the cross section\n Remark:\n The effective E-modules are corrected after output in order to improve convergence as well as to conform to current maximum and minimum values. These values are secant\n modules and they can even be larger than the elastic E-modules in case of oblique bending.\n The maximum strains for prestressing steel are given as differences from the concrete strains, not as total values.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                51,
+                52
+            ],
+            "page_labels": [
+                "4-4",
+                "4-5"
+            ],
+            "type": "text",
+            "sections": "4.7 Stiffness Computation"
+        }
+    },
+    {
+        "content": "[1] Th. Fink and J.-St. Kreutz. Berechnungsverfahren nach Fließzonentheorie II. Ordnung für räumliche Rahmensysteme aus metallischen Werkstoffen. Der Bauingenieur 57, S. 297-302, 1982.\n [2] R. Uhrig. Zur Berechnung der Schnittkrfte in Stabtragwerken nach Theorie II. Ordnung, insbesondere der Verzweigungslasten unter Bercksichtigung der Schubdeformation. Der Stahlbau (2), S. 39-42, 1981.\n [3] V. Gensichen. Zum Ansatz ungnstiger Vorverformungen bei der Berechnung ebener Stabwerke nach der Elastizittstheorie II. Ordnung. Der Bauingenieur 56 , S. 1-7, 1981.\n [4] E. Grasser, K. Kordina, and U. Quast. Bemessung von Beton- und Stahlbetonbauteilen. Deutscher Ausschuß für Stahlbeton, Heft 220 Wilhelm Ernst & Sohn, Berlin, 1977.\n [5] D. Hosser. Tragfähigkeit und Zuverlässigkeit von Stahlbetondruckgliedern. Mitteilungen aus dem Institut für Massivbau der TH Darmstadt Heft 28, Wilhelm Ernst & Sohn, 1978.\n [6] Chr. Petersen. Statik und Stabilität der Baukonstruktionen. Vieweg & Sohn, Braun- schweig, 1980.\n [7] H. Werner et al. TOP Benutzer- und DV-Handbuch. CAD-Bericht Kfk-CAD67, Kern- forschungszentrum Karlsruhe, 1978.\n [8] H. Werner. Rechnerorientierte Nachweise an schlanken Massivbauwerken. Beton- und Stahlbetonbau 73,S. 263-268, 1978.\n [9] S. Palkowski. Einige Probleme der statischen Nachweise von Seilnetzkonstruktionen. Der Bauingenieur 59, S. 381-388, 1984.\n [10] Wai-Fah and Chen. Toward Practical Advanced Analysis for Steel Frame. Structural En- gineering International, 3, 2009.",
+        "metadata": {
+            "document_name": "star2_1.pdf",
+            "page_indices": [
+                54
+            ],
+            "page_labels": [
+                "4-7"
+            ],
+            "type": "text",
+            "sections": "Bibliography"
+        }
+    }
+]

@@ -1,0 +1,14 @@
+{
+    "check_prompt": [
+        {"system": "You are an expert at determining whether a user query requires retrieving documents.\nDetermine wether it is necessary to retrieve documents relevant to Eurocodes or the CADiNP language from the SOFiSTiK documentation \nin order to answer the user query accurately.\nGive a binary scrore \"yes\" or \"no\" to decide to retrieve documents or not.\n"},
+        {"human": "User question: {question}"}
+    ],
+    "retrieval_prompt": [
+        {"system": "You are an expert at reranking documents with score between 0 and 1 based on their relevance to a user query.\n"},
+        {"human": "Question: {question}\n\nDocuments:\n{documents}\n\n"}
+    ],
+    "response_prompt": [
+        {"system": "Use provided documents to answer the question as accurately as possible.\nYou are an assistant for question-answering tasks.\nProvide only valid HTML output, no markdown and do not create a HTML style or title.\nSummary of previous prompts: {summary}\nUse the following document names: {document_names}\n"},
+        {"human": "Question: {question}"}
+    ]
+}

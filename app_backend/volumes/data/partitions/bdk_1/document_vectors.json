@@ -1,0 +1,1014 @@
+[
+    {
+        "content": "Below is a structured, detailed description of the “Input Description” table from the BDK Buckling Resistance manual.  Use this summary to guide ingestion into a RAG-based vector store or to understand exactly what kinds of input records and parameters the BDK solver expects.\n\n1.  Input Description Overview  \n    – Chapter in manual: “3 Input Description” (pp. 3-1 ff.)  \n    – Purpose: defines every record/statement through which the user feeds geometry, support conditions, materials, design-code parameters, loadcases, selected members and output controls into the BDK buckling-resistance task.\n\n2.  Sections and Record Types  \n    3.1  Input Language  \n        •  Specifies the syntax conventions (keywords, field separators, continuation rules).  \n    3.2  Input Records  \n        •  Lists all record names (CVA, CVE, CVM, CVL, CV, TVAR, CTRL, LC, MEMB, ECHO) with a one-line summary.  \n    3.3  Conversion of Projects  \n        3.3.1 CADINP Commands  \n            •  Legacy-conversion commands to adapt older STAR2/AQUA input into BDK.\n\n3.  Support-Definition Records  \n    3.4  CVA – Support at the Beginning  \n        •  Defines translational (u,v,w) and rotational (about local axes) restraints at the “start” node of each individual beam element.  \n        •  Optional elastic‐warping stiffness.  \n    3.5  CVE – Support at the End  \n        •  Same fields as CVA but applied to the “end” node of the beam.  \n    3.6  CVM – Intermediate Support  \n        •  Inserts a set of point supports along the beam span (fractional or absolute coordinate).  \n    3.7  CVL – Lateral Restraints  \n        •  Applies lateral (out‐of‐plane) springs or braces at defined positions.  \n        •  Includes torsional spring stiffness if warping restraint is needed.  \n    3.8  CV – Continuous Support  \n        •  Applies uniform spring support distributed along the entire beam length.  \n        •  Fields: translational springs, rotational springs, warping‐torsion springs.\n\n4.  Parameterization Records  \n    3.9  TVAR – Template Variables  \n        •  Declare user‐defined named scalars (real or integer).  \n        •  Allow reuse in subsequent records (e.g. TVAR L=6.0, B=0.3 → MEMB definitions).\n\n5.  Controlling Parameters  \n    3.10  CTRL – Controlling Parameters  \n        •  Global flags and default values that influence how BDK interprets the model and executes checks.  \n        •  Typical fields:  \n            – NORM: select design code (EN 1993-1-1, DIN 18800-2/OEN 4300, BS 5950).  \n            – BUCK_TYPE: LTB vs. pure lateral.  \n            – WARPING: on/off, stiffness factors.  \n            – TAPERED: allowance for section taper.  \n            – EFFECTIVE: compute effective section (class 4 per EN 1993).  \n        3.10.1 EN 1993–1-1 sub-section (ctrl fields specific to Eurocode 3)  \n        3.10.2 DIN 18800–2 / OEN 4300 sub-section  \n        3.10.3 BS 5950 sub-section  \n\n6.  Selection Records  \n    3.11  LC – Loadcase Selection  \n        •  Identifies which loadcases (from STAR2/AQUA analysis) are to be used for the buckling‐eigenvalue problem.  \n        •  Fields: LCID, scale factor, description.  \n    3.12  MEMB – Member Selection  \n        •  Lists element IDs (beams or trusses) extracted from the global model.  \n        •  Can specify ranges, wildcards, or explicit lists.  \n\n7.  Output Control  \n    3.13  ECHO – Control of Output  \n        •  Toggles printing of input echo, detailed intermediate results, summary tables.  \n        •  Fields: ECHO=ALL/BRIEF/NONE, destination (listing, external file), format options.\n\nSummary of Usage Flow:  \n– Define any TVARs you need.  \n– Set CTRL to choose your code, buckling-type, warping and effective-section options.  \n– Specify support conditions with CVA/CVE (end supports), CVM (mid-span), CVL (lateral items) or CV (distributed).  \n– Point BDK to your analysis loadcase via LC.  \n– Specify which members to check via MEMB.  \n– Control verbosity and output format via ECHO.  \n\nThis table of input records ensures that BDK can build and solve the eigenvalue problem for any straight‐member stability check, accommodate general cross‐sections (including class-4 thin‐walled), and apply the correct design-code formulas for ultimate‐load buckling resistance.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                3
+            ],
+            "page_labels": [
+                null
+            ],
+            "type": "table",
+            "sections": [
+                "Foreword"
+            ]
+        }
+    },
+    {
+        "content": "BDK Buckling Resistance of Steel Members\n BDK Manual, Service Pack 2025-4 Build 146\n Copyright © 2025 by SOFiSTiK AG, Nuremberg, Germany.\n SOFiSTiK AG\n HQ Nuremberg Office Garching Flataustraße 14 Parkring 2 90411 Nürnberg 85748 Garching bei München Germany Germany T +49 (0)911 39901-0 T +49 (0)89 315878-0 F +49(0)911 397904 F +49 (0)89 315878-23 info@sofistik.com\n www.sofistik.com\n This manual is protected by copyright laws. No part of it may be translated, copied or reproduced, in any form or by any means, without written permission from SOFiSTiK AG. SOFiSTiK reserves the right to modify or to release new editions of this manual.\n The manual and the program have been thoroughly checked for errors. However, SOFiSTiK does not claim that either one is completely error free. Errors and omissions are corrected as soon as they are detected.\n The user of the program is solely responsible for the applications. We strongly encourage the user to test the correctness of all calculations at least by random sampling.\n Contents\n Contents\n Contents\n 1\n 2\n 3\n Task Description 1-1 1.1 Task Outline . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1-1 1.2 Supported Design Codes . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1-1 1.3 Assumptions and Limitations . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1-1 Theoretical Principles 2-1 2.1 Model System . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-1 2.2 Boundary Conditions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-1 2.3 Buckling Types . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-2 2.4 Eigenvalues . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-2 2.5 Modes of analysis . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-3 2.6 Design: Buckling Curves . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-3 2.7 Lateral torsional buckling according to EN 1993-1-1 [2] . . . . . . . . . . . 2-5 2.7.1 Interaction factors - Annex A, Annex B . . . . . . . . . . . . . . . 2-7 2.8 Lateral torsional buckling according to DIN 18800-2 [1] / OEN 4300 . . . 2-10 2.9 British Standard - BS 5950 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-10 Input Description 3-1 3.1 Input Language . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-1 3.2 Input Records . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-1 3.3 Conversion of Projects . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-2 3.3.1 CADINP Commands . . . . . . . . . . . . . . . . . . . . . . . . . . 3-2 3.4 CVA – Support at the beginning . . . . . . . . . . . . . . . . . . . . . . . . . . 3-3 3.5 CVE – Support at the end . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-4 3.6 CVM – Intermediate Support . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-5 3.7 CVL – Lateral Restrains . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-6 3.8 CV – Continuous support . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-7 3.9 TVAR – Template Variables . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-8 3.10 CTRL – Controlling Parameters . . . . . . . . . . . . . . . . . . . . . . . . . . 3-9 3.10.1 EN 1993-1-1 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-9 3.10.2 DIN 18800-2 / OEN 4300 . . . . . . . . . . . . . . . . . . . . . . . . 3-10 3.10.3 BS 5950 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-10 3.11 LC – Selection of the Loadcase to be Designed . . . . . . . . . . . . . . . . 3-13 3.12 MEMB – Selection of the Elements to be Designed . . . . . . . . . . . . . . 3-14 3.13 ECHO – Control of Output . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-17 Output Description 4-1 4.1 Design Forces and Moments . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-1 4.2 Sectional Values . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-1",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                1,
+                2
+            ],
+            "page_labels": [
+                null,
+                null
+            ],
+            "type": "text",
+            "sections": "Foreword"
+        }
+    },
+    {
+        "content": "3-13 3.12 MEMB – Selection of the Elements to be Designed . . . . . . . . . . . . . . 3-14 3.13 ECHO – Control of Output . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-17 Output Description 4-1 4.1 Design Forces and Moments . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-1 4.2 Sectional Values . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-1.\n 4\n i\n Bibliography\n 4-11\n 1 Task Description\n BDK provides solution to the problem of beam stability. It determines the stability eigenvalues for buckling of a straight individual member. The member, which is taken from the entire sys- tem, is calculated with STAR2 or ASE and the buckling resistance check of steel members is performed according to the specified design code.\n 1.1 Task Outline\n At first, the user defines the system selecting straight, individual beam or truss elements, which are cut out of the entire structural system and are treated independently. The program allows the user to explicitly define the support conditions at the start and end of each selected indi- vidual beam, as well as continuous supports, offering a complete control on the properties of the selected system. Furthermore, standards-related design parameters may also be explicitly defined.\n Having available the complete system, the program sets up and solves the formed stability eigenvalue problem and the eigenvalues and eigenforms are determined for a pre-specified and calculated loadcase. Following the eigenvalues determination and taking into considera- tion the defined design parameters, BDK performs the buckling check according to the selected design code.\n 1.2 Supported Design Codes\n The design checks are performed according to one of the following supported standards:\n • DIN 18800-2 / OEN 4300: Structural steelwork analysis of safety against buckling of linear members and frames [1].\n • EN 1993-1-1: Design of steel structures - Part 1-1: General rules and rules for buildings [2].\n • BS 5950-1: Structural use of steelwork in building [3].\n 1.3 Assumptions and Limitations\n BDK can determine the stability eigenvalues under the following assumptions:\n • General, also unsymmetric cross-sections\n • General tapered sections (along the beam axis)\n • Straight beam axis and centric haunches\n • Change of the boundary conditions including the elastic warping constraint and distributed support.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                2,
+                3,
+                4
+            ],
+            "page_labels": [
+                null,
+                null,
+                "1-1"
+            ],
+            "type": "text",
+            "sections": "Foreword"
+        }
+    },
+    {
+        "content": "1.3 Assumptions and Limitations. BDK can determine the stability eigenvalues under the following assumptions:. • General, also unsymmetric cross-sections. • General tapered sections (along the beam axis). • Straight beam axis and centric haunches. • Change of the boundary conditions including the elastic warping constraint and distributed support..\n • Solution for the complete lateral torsional buckling problem or for the plain lateral buckling problem with disregard of the normal force.\n For the calculation of the lateral torsional buckling safety for an individual beam, according to DIN 18800-2, the assumptions of this design code hold. This implies that the design is strictly valid only for double symmetric I and H sections, without the intended torsional loading.\n Materials, section profiles and the design code to comply with, are selected by the user at the early steps of defining the total structural system. Regardless of the initial design standard selection, the user may explicitly redefine in the BDK task the specification of a different design standard (see NORM). This practice should be done with caution, since significant differences exist between the design codes, regarding material mechanical behaviour and properties as well as the considered safety factors.\n Furthermore, a cross-section of class 4 of EN 1993-1-1 and EN 1993-1-5 can be treated, since the calculation of the effective cross-section values in BDK is available.\n Warning\n At the current version of BDK, it is possible to calculate only the effective properties for THIN-WALLED cross-sections (Iterative Method). Another approach would be to use the SIG NEFF input in AQUA, which works both for solid, as well as for thin-walled cross- sections. Please refer to the VERIFICATION Manual Design - Example DCE-EN 30.\n For the determination of the critical force and moment for buckling, always an eigenvalue anal- ysis is performed, except of explicitly user-defined buckling lengths. In the unlikely event that the eigenvalue analysis fails, analytical formulas are used.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                4,
+                5
+            ],
+            "page_labels": [
+                "1-1",
+                "1-2"
+            ],
+            "type": "text",
+            "sections": "Foreword"
+        }
+    },
+    {
+        "content": "A model system can consist of several beam or truss elements, forming a member, although there are no individual supports between its endings, other than the optionally defined. The user can select any straight beam or truss element to cut out of the entire structural system. Each selected member is then treated by BDK as an individual independent system, taking into account the inner forces and displacements derived from the parental system analysis for a considered loadcase. For a member that represents a subsystem of the total system, the corresponding support conditions have to be defined carefully. This applies in particular to the sway perpendicular to the system plane, for the case where the system was entered as a planar system.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                6
+            ],
+            "page_labels": [
+                "2-1"
+            ],
+            "type": "text",
+            "sections": "2.1 Model System"
+        }
+    },
+    {
+        "content": "The start and end boundary conditions can be defined using the CVA and CVE input. With- out this specification, they are set to Fork-Fork. Moreover, BDK assumes that there are no intermediate individual supports between the endings of the selected member, other than the optionally defined intermediate supports (CVM), lateral restraints (CVL), and continuous sup- ports (CV). Therefore, the user should explicitly enter the exact boundary conditions at both ends (CVA / CVE) and in between them (CVM / CVL / CV). For this purpose, different input options are available:\n the assignment of spring constant values,\n the definition of fixities using the literal FIX,\n •\n the automatic computation of the spring constant values using the literal AUTO.\n •\n The supports thus defined are oriented in the local directions of the member.\n In the case of the literal AUTO, the corresponding spring constant value of a support is auto- matically determined by a linear analysis of the global structure. This value is independent of the design load case. Hence, imperfections or second order effects are not incorporated. It should be also noted that the supports only constrain single degrees of freedom and do not couple them. Therefore, coupling effects are considered in a simplified way. Between different nodes, coupling effects are neglected. The literal AUTO can be used in the CVA, CVE, and CVM input.\n The automatic calculation of the boundary conditions (AUTO) supports parallel processing of the elements and uses a parallel finite element solver. This means, that the performance may be improved by using multicore processors.\n Hint\n See Example 58 of the VERIFICATION Manual Mechanical for a demonstration of the automatic computation of the spring constant values.\n EE\n Warning\n (Warning continued...)\n Default start and end boundary conditions are assumed as Fork-Fork. Therefore, it is recommended for the user to explicitly enter the support conditions!\n • See CVA, CVE, CVM, CVL, CV.\n Hint\n A member rotated about the longitudinal axis can be modelled by rotating the cross sec- tion with the ALPH input in AQUA instead of rotating the local coordinate system of the member using the DROT input in SOFIMSHA/C. In this way, the supports defined in BDK, which refer to the local coordinate system of the member, can be better aligned to the boundary conditions of the global structure, such as fixities.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                7,
+                6
+            ],
+            "page_labels": [
+                "2-2",
+                "2-1"
+            ],
+            "type": "text",
+            "sections": "2.2 Boundary Conditions"
+        }
+    },
+    {
+        "content": "Literature and design codes distinguish between the following cases for beam structures:\n • Lateral Torsional Buckling: the most general case of buckling where deflections towards both axes as well as torsional rotation (twist) occur.\n • Lateral Buckling: lateral deflection and torsional rotation (twist).\n • Flexural Buckling: buckling about the strong or weak axis, in-plane deformation, no tor- sional rotation.\n • Torsional Buckling: buckling about the longitudinal axis, torsional rotation (twist), the beam axis remain straight.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                7
+            ],
+            "page_labels": [
+                "2-2"
+            ],
+            "type": "text",
+            "sections": "2.3 Buckling Types"
+        }
+    },
+    {
+        "content": "The figure is a two-dimensional Cartesian plot of the buckling reduction factor χ (vertical axis) as a function of the non-dimensional slenderness λ̄ (horizontal axis), presenting the five characteristic “buckling curves” a₀, a, b, c and d as specified in EN 1993-1-1 (Eurocode 3 for steel structures).  \n\nAxes and Grid  \n • The horizontal axis is labeled “λ̄” and spans from 0.0 at the left up to 2.3 at the right, with major tick marks (and light grey grid lines) at 0.2-unit intervals.  \n • The vertical axis is labeled “χ” and runs from 0.0 at the bottom up to 1.1 at the top, with major ticks (and grid lines) every 0.1 unit.  \n • A light-grey background grid covers the plotting area, reinforcing both axes’ tick intervals and aiding the eye in reading off pairs of (λ̄, χ).  \n\nBuckling Curves  \n • All five curves originate at the point (λ̄ = 0, χ = 1.0), reflecting that perfectly stubby elements (zero slenderness) carry full elastic capacity.  \n • As λ̄ increases, each curve slopes downward in an “S-like” fashion: gently at first, then more steeply for λ̄ roughly between 0.6 and 1.4, before flattening out toward the right.  \n • The topmost curve, labeled a₀, gives the highest χ values at any given λ̄, indicating the least sensitivity to slenderness. Immediately below it is curve a, then b, then c, and finally the lowest curve d. This ordering reflects increasingly conservative (lower) reduction factors for more imperfection-sensitive cross-section classes or imperfection amplitudes.  \n • By λ̄ ≈ 2.0–2.2, all five curves have converged close to χ ≈ 0.15–0.20, indicating that for very slender sections the allowable buckling capacity becomes small and nearly independent of the precise imperfection category.  \n\nStyling and Annotation  \n • Each curve is drawn as a smooth, solid black line of uniform thickness. Adjacent curves are labeled by their letter designations (“a₀,” “a,” “b,” “c,” “d”) placed roughly mid-span on each line, slanted to follow the curve’s slope.  \n • The axes’ labels and the legend annotations use a serif font consistent with technical typesetting.  \n • Beneath the plot, centered, is the caption “Figure 2.1: Buckling curves according to EN 1993-1-1.”  \n\nContextual Role  \nIn the broader design methodology (referenced in Petersen [4], Roik–Carl–Lindner [5], and extended by Schroeter [6]), these χ vs. λ̄ curves encapsulate geometric-nonlinear (imperfection-sensitive) buckling effects. They provide the reduction factor applied to the elastic critical load in order to obtain a realistic ultimate buckling resistance for slender steel members under compression. This approach bridges the gap between purely elastic-stability theory (which ignores material yielding) and plastic design rules (which ignore geometric nonlinearities), forming a key part of the energy-based variational formulation implemented in advanced structural-stability software.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                10
+            ],
+            "page_labels": [
+                "2-5"
+            ],
+            "type": "image",
+            "sections": [
+                "2 Theoretical Principles",
+                "2.4 Eigenvalues"
+            ]
+        }
+    },
+    {
+        "content": "The case of buckling will occur if an element will suffer from large forces due to small defor- mations induced by geometric non-linear effects. This will limit the ultimate load for slender structures.\n The elasto-static theory of stability will not account for material non-linearities, while the stan- dard plastic design method will not account for the geometric non-linearities. As both theories are not applicable in a general case, their results will define basic design parameters used for the combined design of the effects.\n For the quite general case treated within the program a solution based on an analytical ap- proach is no longer available. The solution is obtained by a variational approach based on the energy. The expression of the energy comprehends quite a lot of terms and is given and explained in detail in the book of Petersen [4] (eq. 7.65 page 675) or Roik, Carl, and Lindner [5]. BDK uses an extended formulation according to Schroeter [6].\n χ",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                7,
+                10
+            ],
+            "page_labels": [
+                "2-2",
+                "2-5"
+            ],
+            "type": "text",
+            "sections": "2.4 Eigenvalues"
+        }
+    },
+    {
+        "content": "The image is a 2-D schematic of a hot-rolled equal-leg angle section, presented in plan view and annotated to show both its principal axes (y-y and z-z) and its geometric axes (u-u and v-v). It is labeled “Figure 2.2: Axes of angle section.”\n\nGeneral geometry and coloring  \n• The section outline is drawn with a continuous red line. It forms an L-shape with one vertical leg rising from the lower left corner and one horizontal leg extending to the right from that same corner.  \n• The inner corner of the L-section is sharply defined (no fillet radius), but five small red ticks mark subdivision points along each leg.  \n• At two locations—one on the vertical leg and one on the horizontal leg—magenta asterisks denote reference points, perhaps mid-points or check points for section properties.  \n• Along the bottom of the vertical leg, slightly above the inner corner, a small yellow circle containing the letters “SC” is placed (suggesting the shear center or another special point).\n\nAxes and centroid  \n• The centroid of the cross-section is indicated by a yellow ring centered on a tiny crosshair symbol. From that point, four dashed brown lines radiate outward: two align with the global Cartesian axes (horizontal and vertical) and two lie along intermediate, rotated directions.  \n• The horizontal dashed line is labeled “y” near its rightward end; the vertical dashed line is labeled “z” immediately above its upward extension. Together they define the principal axes y-y (horizontal) and z-z (vertical) of the section.  \n• Two additional dashed lines are drawn crossing at the same centroid: one slopes upward to the right and is labeled “u,” the other slopes downward to the right and is labeled “v.” These denote the geometric axes u-u and v-v, which for angle sections generally represent the axes of symmetry or maximum/minimum second moments of area.\n\nAnnotations and context  \n• The red ticks along the legs likely mark equal subdivisions or control points used in numerical shape representation.  \n• The yellow “SC” circle on the vertical leg hints at the shear-center location, relevant when locating loads that induce only bending without twisting.  \n• Magenta asterisks may indicate special measurement points for cross-section properties or buckling checks.  \n• The caption at the bottom reads “Figure 2.2: Axes of angle section,” tying the graphic back to the text’s discussion of principal-axis orientation in Eurocode beam-stability checks.  \n\nInterpretation relative to Eurocode context  \n• The image visually emphasizes that for nonsymmetric sections like angles, the principal neutral axes (y-y and z-z) do not coincide with the geometric symmetry axes (u-u and v-v).  \n• In the context of EN 1993-1-1, Section 6.3.3 (combined bending and axial compression), interaction checks must refer to principal properties about y-y and z-z. Even though the section’s “natural” axes might be u-u and v-v, the code requires evaluation about the true principal axes, as illustrated here.  \n• This figure thus underpins the BDK software’s approach: always perform buckling and bending–compression interaction checks about the principal axes y-y and z-z, irrespective of any other axis system used to define the shape.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                11
+            ],
+            "page_labels": [
+                "2-6"
+            ],
+            "type": "image",
+            "sections": [
+                "2 Theoretical Principles",
+                "2.7 Lateral torsional buckling according to EN 1993-1-1 [2]"
+            ]
+        }
+    },
+    {
+        "content": "Eurocode’s approach to the beam stability design checks depends mostly on two important factors:\n 1. The type of loading:\n (a) Compressive axial force (EN 1993-1-1, 6.3.1)\n (b) Major axis bending moment (EN 1993-1-1, 6.3.2)\n (c) Combined bending and axial compression (EN 1993-1-1, 6.3.3)\n The type, shape and properties of the cross-section.\n BDK performes the design check for the combined bending and axial compression, as it is described in EN 1993-1-1, 6.3.3, Eq. 6.61 and 6.62 with the interaction factors kyy, kyz, kzy, kzz. Interaction factors are calculated according to Method 1 (1993-1-1, Annex A) or Method 2 (EN 1993-1-1, Annex B).\n all rules relate to principal axis properties, which are generally defined by the axes ”y-y” and ”z-z”, but for the sections such as angles are defined by the axes ”u-u” and ”v-v”, as shown in Fig. 2.2. BDK performs the check with respect to ”y-y” and ”z-z” and not ”u-u” and ”v-v”.\n A more pictorial representation of the design algorithm according to EN 1993-1-1, for compres- sion and for bending can be visualised in Fig. 2.3 and 2.4.\n As mentioned earlier, for the determination of the critical load Ncr and moment Mcr, an eigen- value analysis is performed. In the unlikely event that the eigenvalue analysis fails, e.g. due to non adequate input of the system definition, a fallback solution with approximatively analytical formulas is used. For the case of the elastic critical load for flexural buckling Ncr the Euler Formula with effective buckling length factor β = 1.0 is used:",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                10,
+                11
+            ],
+            "page_labels": [
+                "2-5",
+                "2-6"
+            ],
+            "type": "text",
+            "sections": "2.7 Lateral torsional buckling according to EN 1993-1-1 [2]"
+        }
+    },
+    {
+        "content": "In the unlikely event that the eigenvalue analysis fails, e.g. due to non adequate input of the system definition, a fallback solution with approximatively analytical formulas is used. For the case of the elastic critical load for flexural buckling Ncr the Euler Formula with effective buckling length factor β = 1.0 is used:.\n determination of kc in EN 1993-1-1, Table 6.6.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                11,
+                12
+            ],
+            "page_labels": [
+                "2-6",
+                "2-7"
+            ],
+            "type": "text",
+            "sections": "2.7 Lateral torsional buckling according to EN 1993-1-1 [2]"
+        }
+    },
+    {
+        "content": "The image is a schematic flowchart (titled “Figure 2.3: Flexural Buckling”) illustrating the step-by-step procedure prescribed in EN 1993-1-1 for determining the buckling resistance of a doubly-symmetric member under axial compression with possible bending (i.e. flexural buckling). Below is a detailed walk-through of its elements and logical connections:\n\n1. Top block (process box)  \n   • “Eigenvalue Analysis – only axial force (Ncr)”  \n   – This is the starting point: an eigenvalue (finite-element or analytical) calculation of the pure-axial critical force.  \n\n2. First decision (diamond)  \n   • “Input of SKy and SKz?”  \n   – SKy, SKz represent lateral restraint stiffnesses about the y- and z-axes.  \n   – If “Yes,” the flow loops back to a later stage (the Euler-formula path), indicating that these spring stiff­nesses can be included later.  \n   – If “No,” proceed downward to check whether the eigen­value analysis succeeded.  \n\n3. Second decision (diamond)  \n   • “Eig. Anal. successful?”  \n   – If “Yes,” go to the next box  \n   – If “No,” branch to the “Euler Formula” block  \n\n4. Euler-formula path (process box)  \n   • “Euler Formula”  \n   – Used whenever the eigenvalue analysis fails or is not invoked; calculates the classical Euler buckling load Ncr based on pinned-end length, moment of inertia, material E, etc.  \n\n5. Trapezoid (data/output)  \n   • “Critical force Ncr”  \n   – Whether obtained via eigenvalue analysis or via the Euler formula, the resulting critical force Ncr is the starting point for slenderness evaluation.  \n\n6. Non-dimensional slenderness (process box)  \n   • “Calculate non-dimensional slenderness λ, EN 1993-1-1, 6.3.2”  \n   – λ = √(A·f0,y / Ncr) or another equivalent form, depending on section class and reference stress f0,y.  \n\n7. Buckling curve selection (process box)  \n   • “Determine buckling curve EN 1993-1-1, Table 6.5 (or Table 6.4 for general case or section classes G1–G3)”  \n   – Select the appropriate buckling imperfection curve (a, b, c, etc.) according to cross-section type and end-restraint conditions.  \n\n8. Imperfection factor (process box)  \n   • “Imperfection factor α, EN 1993-1-1, Table 6.1”  \n   – α quantifies initial out-of-straightness or residual stress imperfection magnitude for the chosen curve.  \n\n9. Calculation of Φ (process box)  \n   • “Calculate Φ, EN 1993-1-1, Table 6.x”  \n   – Φ is an intermediate factor defined by Φ = [1 + α·(λ – 0.2) + λ²] / 8 (or analogous formula) per the standard’s tables.  \n\n10. Reduction factor χ (process box)  \n    • “Calculate reduction factor χ ≤ 1.0, EN 1993-1-1, Eq. 6.57 (or 6.56, 6.58 for modified forms)”  \n    – χ = 1 / [Φ + √(Φ² – λ²)], limited to a maximum of 1.0.  Modified factors (χmod) account for end moments or lateral restraints, if applicable.  \n\n11. Design buckling resistance (process box)  \n    • “Calculate design buckling resistance Nb,Rd, EN 1993-1-1, 6.3.2.1(3)”  \n    – Nb,Rd = χ·A·fy / γM1, where fy is the design yield strength and γM1 the partial safety factor.  \n\n12. End box  \n    • “Design buckling resistance Nb,Rd”  \n    – Final output: the governing buckling resistance for ultimate limit state design.  \n\nLoop-backs and Optional Steps:  \n– If SKy and SKz are defined, the chart indicates the Euler-formula path may re-enter the slenderness evaluation stage with modified boundary conditions (i.e. accounting for lateral support springs).  \n– In a fully coupled eigenvalue solution with lateral‐torsional restraints (Annex B Method 2 of EN 1993-1-1), one would supply these spring stiffnesses directly and produce Ncr considering both flexural and torsional buckling modes.  \n\nShape Legend:  \n– Rectangles/process boxes = computational steps (e.g. calculate λ)  \n– Diamonds = decision points (e.g. eigenvalue analysis successful?)  \n– Trapezoid = data output (critical force)  \n– Rounded rectangles or parallelograms for inputs/outputs and final results.  \n\nOverall, the chart synthesizes both the classical Euler approach and the full eigenvalue treatment into a single procedure, in line with the two alternative methods (Annex A Method 1 and Annex B Method 2) described in EN 1993-1-1 for the derivation of interaction factors and ultimate buckling resistance.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                13
+            ],
+            "page_labels": [
+                "2-8"
+            ],
+            "type": "image",
+            "sections": [
+                "2 Theoretical Principles",
+                "2.7 Lateral torsional buckling according to EN 1993-1-1 [2]",
+                "2.7.1 Interaction factors - Annex A, Annex B"
+            ]
+        }
+    },
+    {
+        "content": "The image is a tall, narrow flowchart titled “Figure 2.4: Lateral Buckling,” overprinted with the SOFiSTiK logo and name at the very top. It is a step‐by‐step procedure, laid out vertically, for determining lateral‐torsional buckling resistance according to EN 1993-1-1. Blocks and diamonds are connected by downward-pointing arrows; decision diamonds are shaded light purple, start/end boxes are pale red, and process boxes are white or light gray with fine borders.\n\n1. Header  \n   - At the very top, centered, is the SOFiSTiK wordmark (stylized blue grid icon and “SOFiSTiK” text). A thin horizontal rule runs beneath it.\n\n2. START  \n   - A rounded‐corner rectangle, pale red, containing the word “START.”\n\n3. Eigenvalue Analysis  \n   - A plain white rectangle: “Eigenvalue Analysis – only axial force.”\n\n4. Decision: Eigenvalue Analysis successful?  \n   - A light purple decision diamond labeled “Eig. Anal. successful.” Two outgoing arrows:\n     • “No” branch goes left.  \n     • “Yes” branch goes straight down.\n\n5. No-branch (left): Analytical formulas  \n   - A light‐gray rectangle:  \n     “Analytical formulas  \n      ECCS TC 8”  \n   - An arrow from this box points right and rejoins the Yes-branch at the next step (“Critical force M_cr”).\n\n6. Yes-branch (and merge from analytical formulas): Critical force  \n   - A white rectangle: “Critical force M_cr.”\n\n7. Section modulus selection  \n   - A white rectangle listing:  \n     • “W_y = W_pl,y for cross-section class 1”  \n     • “W_y = W_el,y for cross-section class 2”  \n     • “W_y = W_eff,y for cross-section class 3”  \n     • (If class 4, “W_y = W_eff,fv,y,” though only three lines are shown in the crop.)\n\n8. Non‐dimensional slenderness  \n   - A white rectangle: “Calculate non-dimensional slenderness λ_L T  \n     EN 1993-1-1, 6.3.2.2”\n   - Directly below, in italics: “Slenderness λ̄_L T.”\n\n9. Decision: Cross-section G1–G3 general case?  \n   - A light purple diamond labeled “Cross-section  \n     G1-G3  \n     general case.”  \n   - Two outgoing arrows:\n     • If “No,” go left.  \n     • If “Yes,” go right.\n\n10. No-branch (left) – classical EN 1993 procedure  \n    a. Determine buckling curve  \n       - White box: “Determine buckling curve  \n         EN 1993-1-1, Table 6.5.”  \n    b. Imperfection factor  \n       - Italic below: “Imperfection factor α_LT  \n         EN 1993-1-1, Table 6.3.”  \n    c. Calculate Φ_LT  \n       - White box: “Calculate Φ_LT  \n         EN 1993-1-1, 6.3.2.3(1).”  \n    d. Φ_LT  \n       - Small italic box: “Φ_LT.”  \n    e. Reduction factor χ_LT  \n       - White box:  \n         “Calculate reduction factor χ_LT ≤ 1.0  \n          or χ ≤ 1.0/λ_L T^2  \n          EN 1993-1-1, Eq. 6.57.”  \n    f. Reduction factor result  \n       - White box: “Reduction factor χ_LT.”  \n    g. Merge back to the right branch at “Determine correction factor k_c.”\n\n11. Yes-branch (right) – modified approach with correction factor  \n    a. Correction factor k_c  \n       - White box: “Determine correction factor k_c  \n         EN 1993-1-1, Table 6.6.”  \n    b. Check slenderness ratio f  \n       - White box: “f ≤ 1.0  \n         EN 1993-1-1, 6.3.2.3(2).”  \n    c. Modified reduction factor  \n       - White box: “Calculate modified reduction factor  \n         χ_LT,mod  \n         EN 1993-1-1, Eq. 6.58.”  \n    d. Reduction factor χ_LT,mod  \n       - White box: “Reduction factor χ_LT,mod.”  \n    e. Design buckling resistance  \n       - White box: “Calculate design buckling resistance M_b,Rd  \n         EN 1993-1-1, 6.3.2.1(3).”  \n    f. Design of buckling resistance  \n       - White box: “Design of buckling resistance M_b.”  \n    g. Utilisation check  \n       - White box: “Calculate utilisation M_Ed/M_b,Rd  \n         EN 1993-1-1, 6.3.2.1(1).”  \n    h. M_Ed/M_b,Rd  \n       - White box: “M_Ed/M_b,Rd.”\n\n12. END  \n    - A rounded‐corner rectangle, pale red, labeled “END.”\n\n13. Caption  \n    - Underneath (outside the flowchart) the caption reads:  \n      “Figure 2.4: Lateral Buckling.”\n\nOverall, the chart guides the user from performing an eigenvalue analysis (or falling back on ECCS analytical formulas) through selection of the critical force, calculation of non‐dimensional slenderness, branching into two sets of formulae depending on cross‐section type—either the classical EN 1993 Tables 6.5/6.3/6.57 chain (left) or the modified correction-factor route with k_c and χ_LT,mod (right)—and finally computation of the design buckling resistance and utilisation ratio.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                14
+            ],
+            "page_labels": [
+                "2-9"
+            ],
+            "type": "image",
+            "sections": [
+                "2 Theoretical Principles",
+                "2.7 Lateral torsional buckling according to EN 1993-1-1 [2]",
+                "2.7.1 Interaction factors - Annex A, Annex B"
+            ]
+        }
+    },
+    {
+        "content": "For the determination of the interaction factors kyy, kyz, kzy, kzz, both methods of Annex A and B of EN 1993-1-1[2], have been implemented. The interaction factors have been derived from two alternative approaches. The National Annex may give a choice from alternative method 1 or alternative method 2. The application range of the two methods is in both cases basically a single span member of doubly symmetrical cross section subjected to axial compression, end-moments and transverse loading [8].\n Hint\n Both, method 1 (Annex A) and method 2 (Annex B) have been developed by ECCS. An essential difference in the application between these two methods is, that in the method 1 no possibility is provided to take into account the intermediate supports and lateral restraints for the LTB analysis. In method 2 the intermediate and lateral supports may be taken into account in the k,j interaction factors.\n • Annex A, Method 1: The intention of the formulae for Method 1 is to present general, transparent, consistent and accurate interaction criteria, as described in ECCS TC 8 - No. 119 [7]. Each factor involved in this formulae is linked with a physical effect, which allows for the influence of the different phenomena to be represented. This method can represent both members susceptible and not susceptible to torsional deformation.\n Various factors in this method, need to be determined explicitly. BDK employs the eigen- value analysis to determine them and does not derive them from analytical formulas, in order to offer a more accurate representation of the system under consideration:\n – ¯λ0, representing the reduced slenderness for lateral torsional buckling for the partic- ular case of constant bending moment,\n – C1, the factor depending on the bending moment distribution and end restraints con- ditions,\n – Ncr,T, the torsional critical force,\n – ¯λm, the maximum non-dimensional slenderness.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                12
+            ],
+            "page_labels": [
+                "2-7"
+            ],
+            "type": "text",
+            "sections": "2.7.1 Interaction factors - Annex A, Annex B"
+        }
+    },
+    {
+        "content": "– ¯λ0, representing the reduced slenderness for lateral torsional buckling for the partic- ular case of constant bending moment,. – C1, the factor depending on the bending moment distribution and end restraints con- ditions,. – Ncr,T, the torsional critical force,. – ¯λm, the maximum non-dimensional slenderness..\n • Annex B, Method 2: Method 2 distinguishes the two standard cases of torsionally stiff and torsionally flexible members separately [8]. It has been developed principally in such a way that the application range also covers members with intermediate lateral restraints, which may not be effective for in plane flexural buckling.\n | START\n START\n |\n START\n |\n Vv\n Eigenvalue Analysis - only axial force (KNIC)\n Vv\n Analytical\n Analytical\n formulas\n ECCS TC 8\n No\n Eig. Anal.\n successful\n / . ~\n Effects of lateral torsional\n buckling may be ignored\n EN 1993-1-1, 6.3.2.2(4)\n '\n Yes\n |\n Critical force Mcr\n J\n a\n Yes/ , Niro\n MEd/Mcr ≤ λ\n Wy = Wp,y cross-section class 1 or 2, Wy = We,y for cross-section class 3, Wy = Weƒƒ,y for cross-section class 4\n $$Calculate non-dimensional slenderness lLT  EN 1993-1-1, 6.3.2.2  Slenderness lLT  Determine buckling curve  EN 1993-1-1, Table 6.5  No  Cross-section  G1-G3  general case  Yes  Determine buckling curve  EN 1993-1-1, Table 6.4  Imperfection factor aLT  Imperfection factor aLT  EN 1993-1-1, Table 6.3  Determine correction factor kc  EN 1993-1-1, Table 6.3  Calculate LT  EN 1993-1-1, Table 6.6  Calculate LT  EN 1993-1-1, 6.3.2.3(1)  EN 1993-1-1, 6.3.2.2(1)  f <= 1.0  LT  EN 1993-1-1, 6.3.2.3(2)  LT  Calculate reduction  factor khLT <= 1.0  or kh <= 1.0/l2  LT  EN 1993-1-1, Eq. 6.57  Calculate modified reduction factor  khLT,mod  EN 1993-1-1, Eq. 6.58  Reduction factor khLT,mod  Calculate reduction  factor khLT <= 1.0  EN 1993-1-1, Eq. 6.56  Reduction factor khLT  Calculate design buck-  Reduction factor khLT  ling resistance Mb,Rd  EN 1993-1-1, 6.3.2.1(3)  Design of buckling resistance Mb,Rd  Calculate utilisation MEd/Mb,Rd  EN 1993-1-1, 6.3.2.1(1)  MEd/Mb,Rd  END$$",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                12,
+                13,
+                14
+            ],
+            "page_labels": [
+                "2-7",
+                "2-8",
+                "2-9"
+            ],
+            "type": "text",
+            "sections": "2.7.1 Interaction factors - Annex A, Annex B"
+        }
+    },
+    {
+        "content": "The analysis procedure for the lateral torsional buckling design is made according to DIN 18800, Part 2 Element 301, where it says: For the simplification of beams, continuous beams and frames, one can evaluate flexural buckling and lateral torsional buckling separately. Whereby the flexural buckling analysis is followed by the lateral torsional buckling analysis. Each analysis is made for individual beams, which are picked from the entire system. Each beam is subjected to the beam-end internal forces and moments, which are determined for the entire system.\n The flexural buckling analysis is made with the programs STAR2 or ASE. All the individual beams, of the system being analysed for flexural buckling, are provided with support conditions, usually torsional restraints are applied. The STAR2 or ASE calculation has to be made with ultimate loads or γ-factor loads. Whereby the analysis procedure elastic-elastic or plastic- plastic (non-linear theory) according to DIN 18800, Part 2 Table 101 is possible in STAR2 or ASE. All the elasto-plastic regions must be fixed laterally against torsion and deformation, which is required for the conservation of the cross-section.\n The individual checks are then calculated with the equations from the elements 310, 318 and 321 of the DIN 18800-2.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                15
+            ],
+            "page_labels": [
+                "2-10"
+            ],
+            "type": "text",
+            "sections": "2.8 Lateral torsional buckling according to DIN 18800-2 [1] / OEN 4300"
+        }
+    },
+    {
+        "content": "If you set the record NORM BS within the program AQUA, you will check lateral-torsional buckling, according to chapter 4.3 of BS 5950-1:2000. The essential equation is:\n 3 Input Description",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                15,
+                16
+            ],
+            "page_labels": [
+                "2-10",
+                "3-1"
+            ],
+            "type": "text",
+            "sections": "2.9 British Standard - BS 5950"
+        }
+    },
+    {
+        "content": "The image is a schematic flowchart titled “Figure 3.1: BDK Input representation.” It uses the CADINP notation as described in the SOFiSTiK “FEA / STRUCTURAL Installation and Basics” manual. The diagram is laid out vertically, with processing steps represented by white rectangular boxes (black outlines and black text), joined by thin gray arrows indicating the sequence of input commands or modules. A single rounded‐corner pill in light red marks the entry point.\n\nStarting at the top, a light red rounded rectangle reads “Start.” A single gray arrow points downward to the first stage:\n\n1. System Definition  \n   – A white rectangle labeled “System Definition.”  \n   – No CADINP keyword is shown here; it refers generally to the initial geometric and material setup.\n\n2. Loadcase selection LC  \n   – A white box containing “Loadcase selection LC,” with “LC” in blue text to indicate the CADINP keyword or module name.\n\n3. Support conditions CVA, CVE, CV, CVM, CVL  \n   – A white box listing five comma-separated codes in blue: “CVA, CVE, CV, CVM, CVL.”  \n   – This denotes the possible CADINP support condition modules that can be invoked.\n\n4. Element selection MEMB  \n   – Next box labeled “Element selection MEMB,” with “MEMB” in blue to signal the CADINP element type for line‐elements or frame members.\n\n5. Type of analysis  \n   – The white rectangle “Type of analysis” represents the branching point where the user specifies what kind of structural analysis to perform.\n\nAt “Type of analysis,” the flow splits:\n\n• Left branch:  \n   a. Eigenvalue analysis  \n      – White box labeled “Eigenvalue analysis.”  \n   b. Design check  \n      – A downstream box named “Design check,” representing post‐processing of eigenresults against design criteria.  \n   c. Output ECHO  \n      – Final box “Output ECHO,” with “ECHO” in blue, indicating the CADINP echoing or printing of results.\n\n• Right branch (partially visible in the extract):  \n   – Though faint or truncated in the provided image, it indicates an alternate “Type of analysis,” possibly “Temp. analysis” or other analysis types, returning to “Design check” or similar result processing.\n\nAll arrows are simple straight gray lines with arrowheads, guiding the user from “Start” through each CADINP input stage to the final echo output. The consistent use of blue text highlights the exact module or command names (LC, CVA, CVE, etc.), while black text conveys descriptive stage labels. This flowchart encapsulates the logical sequence for building a BDK input deck: define the model, specify loading and supports, choose elements, pick the analysis type, run eigenvalues if required, check results, and finally echo the output.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                16
+            ],
+            "page_labels": [
+                "3-1"
+            ],
+            "type": "image",
+            "sections": [
+                "2 Theoretical Principles",
+                "3.1 Input Language"
+            ]
+        }
+    },
+    {
+        "content": "The input is made in the CADINP language (see general manual SOFiSTiK: ”FEA / STRUC- TURAL Installation and Basics”).",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                16
+            ],
+            "page_labels": [
+                "3-1"
+            ],
+            "type": "text",
+            "sections": "3.1 Input Language"
+        }
+    },
+    {
+        "content": "Below is a concise yet comprehensive description of the table you provided. In SOFiSTiK’s FEA/STRUCTURAL workflows, most of these records must be declared before the MEMB record (which actually launches the calculation). The HEAD, END and PAGE records are covered separately in the general manual “FEA / STRUCTURAL Installation and Basics.”\n\n1. Overview\n   • The left column (“Record”) lists the SOFiSTiK record names used to define geometry and analysis attributes.  \n   • The right column (“Items”) enumerates the parameters (fields) each record accepts.  \n   • All records except MEMB, HEAD, END and PAGE must appear prior to the MEMB record.  \n\n2. Record-by-Record Description\n\n1. CVA (Coordinate Variation—Start)  \n   • Purpose: Defines the starting offset or variation of a coordinate system or point set.  \n   • Items:  \n     – CB, CY, CZ  → Base coordinate offsets along X, Y, Z  \n     – DX, DY, DZ  → Additional delta offsets in X, Y, Z  \n\n2. CVE (Coordinate Variation—End)  \n   • Purpose: Mirrors CVA but for the “end” values of a variation; often used to sweep or interpolate between start and end positions.  \n   • Items:  \n     – CB, CY, CZ  → Base offsets at the end point  \n     – DX, DY, DZ  → Delta offsets at the end point  \n\n3. CVM (Coordinate Variation—Member)  \n   • Purpose: Applies a variation to a specific member or element in the structural model.  \n   • Items:  \n     – TYPE  → Variation type code (e.g. linear, quadratic)  \n     – NO    → Member (or element) identification number  \n     – CB, CY, CZ  → Base coordinate offsets for that member  \n     – DX, DY, DZ  → Delta offsets for that member  \n\n4. CVL (Coordinate Variation—Line)  \n   • Purpose: Introduces variation along a line element, controlling how geometry or loads interpolate along that line.  \n   • Items:  \n     – REF   → Reference line or element ID  \n     – S     → Parametric position on the line (0 ≤ S ≤ 1)  \n     – CY    → Offset in the local Y direction  \n     – DX    → Offset in the local X direction  \n     – HDIV  → Hierarchy or division factor for subdividing the line  \n\n5. CV  (Coordinate Variation—Generic)  \n   • Purpose: A generic variation record; often used for simple point or node shifts.  \n   • Items:  \n     – DX, CY, CZ  → Offsets in X, Y, Z  \n\n6. TVAR (Table of Variables)  \n   • Purpose: Declares named variables for use in parameterized input. These can control dimensions, loads, or other attributes without hard-coding numbers.  \n   • Items:  \n     – NAME  → Variable name (up to 8 characters)  \n     – VAL   → Initial numeric value  \n     – SCOP  → Scope (GLOBAL, LOCAL, etc.)  \n     – CMNT  → Optional comment string  \n\n7. CTRL (Control Parameters)  \n   • Purpose: Fine-tunes solver behavior, step sizes, convergence criteria, output control, and more. Typically appears once, immediately before MEMB.  \n   • Items (common ones highlighted):  \n     – OPT   → Optimization flag or control option  \n     – CURV  → Curvature control parameter  \n     – SCL   → Scaling factor for loads or geometry  \n     – BETA  → Damping or stabilization coefficient  \n     – LLT0  → Initial load step length  \n     – TAB   → Table output switch (e.g. switch for det. prints)  \n     – BMY/BMZ  → Bending moment print flags about Y/Z  \n     – BMQY/BMQZ → Quadratic bending moment print flags  \n     – SFAC  → Stress output scaling factor  \n     – LCST  → Load case start index  \n     – SWY/SWZ → Shear force output flags in Y/Z  \n\n3. Usage Notes\n   • Define all CV*/TVAR/CTRL records before issuing the MEMB record.  \n   • HEAD, END, PAGE are global file-control records and are documented in the main SOFiSTiK manual.  \n   • Each record’s fields accept numeric expressions, references to TVAR variables, or literal constants as appropriate.  \n\nThis breakdown should help you map each record to its role in the input deck and enable efficient indexing in a RAG-style vector store.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                16
+            ],
+            "page_labels": [
+                "3-1"
+            ],
+            "type": "table",
+            "sections": [
+                "2 Theoretical Principles",
+                "3.2 Input Records"
+            ]
+        }
+    },
+    {
+        "content": "Below is a conceptual breakdown of the “record‐definition” table you provided, organized so that it can be readily indexed in a Retrieval-Augmented-Generation (RAG) vector store.  It emphasizes each record’s name, its role in the analysis workflow, dependencies and pointers to further documentation.\n\n1. Overall Structure  \n   • The table is a registry of “records” (data-block types) used by the SOFiSTiK FEA/Structural module.  \n   • Records appear in two logical groups:  \n     – General bookkeeping (HEAD, END, PAGE)  \n     – Analysis-specific definitions (MEMB plus all attribute records)  \n\n2. Record Categories  \n   A. General Control Records  \n     1. HEAD  \n        – Purpose: Marks the very beginning of any input deck.  \n        – Usage: Always the first record; sets up global file header.  \n        – Documentation: Detailed in “FEA/STRUCTURAL Installation and Basics” manual.  \n     2. PAGE  \n        – Purpose: Inserts a page break in the listing/output.  \n        – Usage: Optional; purely for formatting.  \n        – Documentation: See general manual.  \n     3. END  \n        – Purpose: Terminates the entire input deck.  \n        – Usage: Must appear once, at the very end of all records.  \n        – Documentation: See general manual.  \n\n   B. Analysis Attribute Records  \n     • These records define the various physical, geometrical, loading, and support conditions that the finite-element solver needs in order to perform a “MEMB” (member/frame) analysis.  \n     • They must be declared in the input sequence before the MEMB record appears.  \n     • Each attribute record corresponds to a specific aspect of the model: cross-section, material, loadcases, boundary conditions, meshing parameters, etc.  \n\n     Example attribute records (to be detailed in subsequent sections of your manual):  \n       – SECT  (section property definitions)  \n       – MAT   (material property definitions)  \n       – LOAD  (load application definitions)  \n       – SUPP  (support/restraint definitions)  \n       – ELEM  (element type and connectivity definitions)  \n       – … plus any custom or advanced record types your project requires  \n\n3. The MEMB Record  \n   • Purpose: Signals the solver to assemble and solve the frame / beam / shell system described by all preceding attribute records.  \n   • Placement: Must be the first record of an analysis block, but only after all relevant attributes have been defined.  \n   • Behavior: Upon encountering MEMB, the program reads all current definitions (materials, geometry, loads, etc.) and triggers the structural analysis routine.  \n   • Follow-up: After MEMB, output-control records (e.g. RESULT) can be issued, and finally the END record.  \n\n4. Dependencies & Workflow  \n   • You always start with HEAD.  \n   • Define all necessary attribute records: SECT, MAT, ELEM, LOAD, SUPP, etc.  \n   • Issue MEMB to run the structural calculation.  \n   • Optionally request result processing or visualization records.  \n   • Terminate with END.  \n   • Use PAGE records at any point to format printouts.  \n\n5. Documentation Pointers  \n   – General concepts and syntax of HEAD, PAGE, END: see SOFiSTiK manual “FEA / STRUCTURAL Installation and Basics.”  \n   – Detailed parameter listings, keyword formats, allowed value ranges, and examples for each attribute record are provided in the following sections of your document.  \n   – Cross-references to tutorial examples frequently illustrate a minimal valid input deck, demonstrating the proper order of record declarations.  \n\nThis structured overview is intended to serve as a rapid-lookup guide in a vector store: each bullet or subheading can be embedded as a small text chunk, linked to specific documentation sections or code examples.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                16
+            ],
+            "page_labels": [
+                "3-1"
+            ],
+            "type": "table",
+            "sections": [
+                "2 Theoretical Principles",
+                "3.2 Input Records"
+            ]
+        }
+    },
+    {
+        "content": "The table shown above is a compact overview of three of the input‐file “records” that the SOFiSTiK FEA core recognizes, together with the individual keywords (“items”) that each record may carry.  In the bigger picture, these records live alongside the standard HEAD, END and PAGE records (which are documented in SOFiSTiK’s “FEA/STRUCTURAL Installation and Basics” manual).  Any analysis‐specific attributes must be declared before you invoke the MEMB record, and MEMB itself is the record that actually kicks off the calculation.  A full description of each record follows in its own section; here we simply list the records and their associated fields:\n\n1.  Two “global” item names (LTB, MTHD) are shown immediately beneath the Items heading to indicate that they are available in the table, but in this particular excerpt none of the three records actually makes use of them.  \n\n2.  Record: LF  \n    •  Purpose: Define a load case or “load function” that can later be applied to members or other entities.  \n    •  Available item:  \n       – NO   (integer)  \n         •  The load case number.  \n         •  This must be unique within the job.  \n\n3.  Record: MEMB  \n    •  Purpose: Start a member‐based analysis.  This record must appear only after all of the pre-processing records (HEAD, attribute definitions, LF, etc.) have been defined.  Once SOFiSTiK reads MEMB, it assembles the model, applies loads, and launches the solver.  \n    •  Available items:  \n       – REF   (string or integer)  \n         •  A user‐supplied reference name or number for this “run.”  \n       – FROM  (node or coordinate)  \n         •  Start coordinate or node for the member sequence.  \n       – TO    (node or coordinate)  \n         •  End coordinate or node for the member sequence.  \n       – INC   (integer)  \n         •  A subdivision increment for automatically generated member segments.  \n       – SKY   (integer)  \n         •  A directional flag about how the load is applied in the Y–direction.  \n       – SKZ   (integer)  \n         •  A directional flag for the Z–direction.  \n       – TYPE  (string)  \n         •  Specifies the member family or analysis type (e.g. beam, truss, grillage).  \n\n4.  Record: ECHO  \n    •  Purpose: Control the diagnostic or echo output that the program writes back to the screen or to the echo file.  \n    •  Available items:  \n       – OPT   (string)  \n         •  Option keyword such as ‘ALL’, ‘NONE’, or specific blocks of information.  \n       – VAL   (integer or string)  \n         •  A value associated with the chosen OPT—for example, the level of verbosity or a sub‐group name.  \n\nOrdering rule reminder:  \n•  All attribute‐defining records (including LF and ECHO) must appear before the MEMB record.  \n•  Once MEMB is read, no further attribute or control records are accepted until the next HEAD/END cycle.  \n\nIn the manual you will find complete descriptions of all parameters, default values, keyword syntax and cross‐references.  Subsequent sections of this guide drill down into each record—LF, MEMB and ECHO—in full detail.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                17
+            ],
+            "page_labels": [
+                "3-2"
+            ],
+            "type": "table",
+            "sections": [
+                "2 Theoretical Principles",
+                "3.2 Input Records"
+            ]
+        }
+    },
+    {
+        "content": "The following records are defined:\n The record MEMB is used to start a calculation. The other records describe the attributes of an analysis. They have to be defined before MEMB.\n The records HEAD, END and PAGE are described in the general manual SOFiSTiK: ”FEA / STRUCTURAL Installation and Basics”.\n A description of the individual records is given in the following sections.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                16,
+                17
+            ],
+            "page_labels": [
+                "3-1",
+                "3-2"
+            ],
+            "type": "text",
+            "sections": "3.2 Input Records"
+        }
+    },
+    {
+        "content": "In this BDK version some CADINP commands have been replaced by new ones (SOFiSTiK FEA 2014 → SOFiSTiK FEA 2018). Below, a list of the corresponding changes is provided, for the right conversion of projects:\n • CURV has been replaced by CTRL\n • EIGE has been replaced by MEMB and LC\n • ECHO BDK has been replaced by ECHO MEMB",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                17
+            ],
+            "page_labels": [
+                "3-2"
+            ],
+            "type": "text",
+            "sections": "3.3.1 CADINP Commands"
+        }
+    },
+    {
+        "content": "The table under review defines six elemental support‐spring parameters that BDK employs when establishing fork‐support conditions on beam elements. These parameters are only “activated” when you follow them immediately with a MEMB input, and they govern how the beam’s local translational and rotational degrees of freedom interact with elastic springs or rigid fixities. In the context of BDK, positive parameter values specify spring stiffness, negative values (–1.0 or the literal FIX) impose a rigid support, and the literal AUTO instructs BDK to compute an appropriate spring constant automatically. See also the CVE and CVA cards for related connectivity and cross‐section assignments.\n\n1. Item Codes and Physical Meaning  \n   • CB – Spring constant for warping bi‐moment. This parameter resists “warping” deformations along the beam’s longitudinal axis by providing a torsional‐warping stiffness.  \n   • CY – Spring constant for lateral displacement in the local Y‐direction. It represents a translational spring that resists transverse shear in Y.  \n   • CZ – Spring constant for lateral displacement in the local Z‐direction. Analogous to CY, but acting in the beam’s Z lateral axis.  \n   • DX – Rotational spring constant for pure torsion about the beam’s longitudinal (X) axis. It couples the twist angle to an internal torsional moment.  \n   • DY – Rotational spring constant for bending about the local Y‐axis (Moment My). This provides a rotational restraint to bending in the Y‐plane.  \n   • DZ – Rotational spring constant for bending about the local Z‐axis (Moment Mz). It serves the same role as DY, but for bending in the Z‐plane.\n\n2. Units  \n   • CB is given in kN·m³, corresponding to a warping‐moment per unit warping rotation.  \n   • CY and CZ each use kN/m, consistent with a force per unit lateral displacement.  \n   • DX, DY, and DZ are all in kN·m/rad, specifying the moment resisted per unit rotation about the respective axis.\n\n3. Default Values and Behavioral Implications  \n   • CB defaults to 0. A zero stiffness here means no warping restraint unless explicitly defined.  \n   • CY and CZ default to ∞ (infinite stiffness), effectively clamping lateral translations in Y and Z by default. Users must override this if they want an elastic lateral support.  \n   • DX defaults to ∞, implying a rigid torsional support unless changed or set to AUTO.  \n   • DY and DZ both default to 0, indicating no rotational spring resistance about the Y or Z axes unless specified.\n\n4. Special Literals  \n   • FIX or –1.0: Forces a fully rigid constraint in that degree of freedom, overriding any numerical value.  \n   • AUTO: Delegates the choice of an appropriate stiffness value to BDK’s internal algorithm, useful for scenarios where a semi‐rigid support model is desired without manually estimating spring constants.\n\n5. Application Notes  \n   – These inputs must immediately precede a MEMB entry to take effect.  \n   – The combination of translational springs (CY, CZ) and rotational springs (DX, DY, DZ), plus warping bi‐moment (CB), allows detailed modelling of semi‐rigid supports such as soil springs, bearings, or flexible connections.  \n   – Always cross‐check with CVE (element connectivity) and CVA/CVA cards (alignment and orientation) to ensure that “local directions” align with the intended global geometry.  \n\nThis table thus provides a concise but flexible mechanism for engineers to define a range of support conditions—from fully fixed to selectively elastic—in a single, unified input block.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                18
+            ],
+            "page_labels": [
+                "3-3"
+            ],
+            "type": "table",
+            "sections": [
+                "2 Theoretical Principles",
+                "3.4 CVA – Support at the beginning"
+            ]
+        }
+    },
+    {
+        "content": "See also: CVE, MEMB\n CVA\n As a default BDK employs a fork support condition.\n The supports are in the local directions of the beam and are defined as spring constants (positive values) or as fixities (negative values). The value -1.0 or the literal FIX represent a fixed constraint. The literal AUTO enables the automatic computation of a spring constant value.\n These input values are active only for the subsequent MEMB input.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                18
+            ],
+            "page_labels": [
+                "3-3"
+            ],
+            "type": "text",
+            "sections": "3.4 CVA – Support at the beginning"
+        }
+    },
+    {
+        "content": "The table shown defines the spring‐support parameters that may be applied, in the local coordinate system of a beam element, when you issue a MEMB entry in BDK.  These parameters control how the beam “sees” supports in six degrees of freedom—three translations (along local y and z axes plus warping in x) and three rotations (about local x, y and z).  By default, BDK employs what it calls a “fork support” condition; the entries in this table override or augment that default for the subsequent MEMB record only.  Positive values are interpreted as linear (or rotational) spring constants; negative values (–1.0 or the literal FIX) impose a fully fixed constraint; and the literal AUTO tells BDK to compute an appropriate stiffness automatically.\n\nColumn definitions  \n• Item  \n  – The two‐letter code that you use on your MEMB card to specify that particular support stiffness.  \n• Description  \n  – A brief explanation of which degree of freedom the spring term affects.  \n• Unit  \n  – The physical units in which the stiffness is specified.  \n• Default  \n  – The value assumed if you omit the parameter on the MEMB card.  \n    • A default of 0 means no spring (i.e. free in that degree of freedom).  \n    • A default of ∞ (infinity) means infinitely stiff – essentially a fixed support in that direction.  \n\nRow summaries  \n  1. CB  \n     – “Spring constant warping bi‐moment”  \n     – Controls resistance to warping about the beam’s longitudinal (x) axis.  \n     – Unit: kN·m³  \n     – Default: 0 (no restraint unless you specify a value)  \n  2. CY  \n     – “Spring constant for lateral displacement y”  \n     – Stiffness resisting transverse motion in the local y‐direction.  \n     – Unit: kN/m  \n     – Default: ∞ (locked in y by default)  \n  3. CZ  \n     – “Spring constant for lateral displacement z”  \n     – Stiffness resisting transverse motion in the local z‐direction.  \n     – Unit: kN/m  \n     – Default: ∞ (locked in z by default)  \n  4. DX  \n     – “Rotational spring constant Torsion”  \n     – Stiffness resisting twisting about the beam’s longitudinal axis.  \n     – Unit: kN·m/rad  \n     – Default: ∞ (torsionally fixed unless overridden)  \n  5. DY  \n     – “Rotational spring constant Moment My”  \n     – Stiffness resisting rotation about the local y‐axis (bending about z).  \n     – Unit: kN·m/rad  \n     – Default: 0 (free unless you specify otherwise)  \n  6. DZ  \n     – “Rotational spring constant Moment Mz”  \n     – Stiffness resisting rotation about the local z‐axis (bending about y).  \n     – Unit: kN·m/rad  \n     – Default: 0 (free unless you specify otherwise)  \n\nKey points and usage notes  \n  - If you want to “fix” a particular degree of freedom, you may either enter –1.0 (or FIX) as the value, or rely on the ∞ default where provided.  \n  - Entering AUTO in place of a numeric value will cause BDK to compute a spring stiffness based on local beam properties and global model settings (see also CVA for automatic hinge assignment logic).  \n  - These parameters only apply to the very next MEMB record you issue; subsequent elements revert to the fork support defaults unless you supply another set of spring constants.  \n  - Typical engineering practice is to leave CY and CZ infinite if you want a fully laterally fixed beam, then adjust DX, DY, or DZ to introduce rotational springs for bending or torsion studies.  ",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                19
+            ],
+            "page_labels": [
+                "3-4"
+            ],
+            "type": "table",
+            "sections": [
+                "2 Theoretical Principles",
+                "3.5 CVE – Support at the end"
+            ]
+        }
+    },
+    {
+        "content": "See also: CVA, MEMB\n CVE\n As a default BDK employs a fork support condition.\n The supports are in the local directions of the beam and are defined as spring constants (positive values) or as fixities (negative values). The value -1.0 or the literal FIX represent a fixed constraint. The literal AUTO enables the automatic computation of a spring constant value.\n These input values are active only for the subsequent MEMB input.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                19
+            ],
+            "page_labels": [
+                "3-4"
+            ],
+            "type": "text",
+            "sections": "3.5 CVE – Support at the end"
+        }
+    },
+    {
+        "content": "The table shown defines the parameters for the CVM (constraint‐via‐member) input record used when assigning spring‐type or fixed restraints to beam nodes in a finite‐element model.  Each row corresponds to one input field (“Item”), provides a concise English “Description,” indicates the physical “Unit,” and lists the “Default” value assumed when that field is omitted.  In context, CVM entries must be coupled with a corresponding MEMB record; any CVM settings remain in effect only until the next MEMB line is processed.  A typical use case is to introduce intermediate supports or lateral‐torsional restraints at a particular node—for example, “CVM NO 1001 CY FIX CZ FIX DX FIX” will lock out displacements in y- and z-directions and torsional rotation at node 1001.  Below is a field-by-field breakdown:\n\n 1. NO  \n    • Description: Node number (integer)  \n    • Unit: none (–/)  \n    • Default: “!” (the exclamation mark denotes that the user must explicitly supply a node number; no implicit default)  \n\n 2. CB  \n    • Description: Spring constant for warping bi-moment (i.e. resistance to warping about the beam’s longitudinal axis)  \n    • Unit: kN·m³  \n    • Default: 0 (no warping spring; free warping)  \n\n 3. CY  \n    • Description: Linear spring constant for lateral displacement in the local y-direction  \n    • Unit: kN/m  \n    • Default: 0 (no support in y; free translation)  \n\n 4. CZ  \n    • Description: Linear spring constant for lateral displacement in the local z-direction  \n    • Unit: kN/m  \n    • Default: 0 (no support in z; free translation)  \n\n 5. DX  \n    • Description: Rotational spring constant for pure torsion about the beam’s longitudinal (x) axis  \n    • Unit: kN·m/rad  \n    • Default: 0 (free torsion)  \n\n 6. DY  \n    • Description: Rotational spring constant for bending moment about the local y-axis (My)  \n    • Unit: kN·m/rad  \n    • Default: 0 (free rotation about y)  \n\n 7. DZ  \n    • Description: Rotational spring constant for bending moment about the local z-axis (Mz)  \n    • Unit: kN·m/rad  \n    • Default: 0 (free rotation about z)  \n\nKey behavioral notes:  \n- Any positive numeric value imposes a linear‐elastic spring stiffness in the indicated dof.  \n- A negative value of –1.0 or the literal keyword FIX indicates a rigid (infinite‐stiffness) support.  \n- The special keyword AUTO may be used in place of a numeric value: the software will compute an “appropriate” spring constant automatically based on other model data.  \n- Before defining intermediate supports via CVM, you must specify the target node with NO.  \n- These CVM parameters take effect immediately and apply only to the next MEMB record you enter; subsequent MEMB inputs “consume” the active CVM settings.  \n- See also related commands:  \n    • CVA/CVE: axial or eccentric spring supports in beam local x-direction  \n    • CVL: longitudinal stiffness adjustments  \n    • MEMB: element connectivity input where CVM supports become active.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                20
+            ],
+            "page_labels": [
+                "3-5"
+            ],
+            "type": "table",
+            "sections": [
+                "2 Theoretical Principles",
+                "3.6 CVM – Intermediate Support"
+            ]
+        }
+    },
+    {
+        "content": "See also: CVA, CVE, CVL, MEMB\n CVM\n The supports are in the local directions of the beam and are defined as spring constants (positive values) or as fixities (negative values). The value -1.0 or the literal FIX represent a fixed constraint. The literal AUTO enables the automatic computation of a spring constant value.\n To use the CVM input for intermediate supports it is necessary to select a node.\n A lateral-torsional restraint for e.g. node 1001 is defined by:\n +PROG BDK\n HEAD ! ... CVM NO 1001 CY FIX CZ FIX DX FIX ! ... END\n These input values are active only for the subsequent MEMB input.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                20
+            ],
+            "page_labels": [
+                "3-5"
+            ],
+            "type": "text",
+            "sections": "3.6 CVM – Intermediate Support"
+        }
+    },
+    {
+        "content": "The table defines the syntax and meaning of the CVL (“constraint‐at‐a‐local‐station”) input card, which allows you to impose spring‐type supports or full fixities at arbitrary points along a beam member.  These CVL definitions remain in effect for all subsequent MEMB cards until changed.  You do not need a finite‐element mesh node exactly at the specified station; CVL will internally locate or create the necessary constraint point.  \n\nBelow is a breakdown of each column and row in the table, together with the overall context in which CVL is used:\n\n1. Overall Context  \n   • CVL is used in the +PROG BDK input deck, typically placed before one or more MEMB definitions.  \n   • Each CVL line defines one support or spring constraint in the beam’s local coordinate system.  \n   • Positive values for CY and DX are spring constants (stiffness).  \n   • A value of –1.0 or the literal FIX indicates a fully fixed constraint in that degree of freedom.  \n\n2. Columns  \n   • Item: the keyword or parameter name you must supply.  \n   • Description: what the parameter means and any special options.  \n   • Unit: the physical units or data type of the parameter.  \n   • Default: value assumed if you omit the parameter or use ‘*’.  \n\n3. Row‐by‐Row Detail  \n\n   a) REF  (Unit: LIT; Default: *)  \n      – “Reference” location on the member where this CVL entry applies.  You must choose one of four literal codes:  \n         • STRT — measured from the start (first end) of the member  \n         • MID  — measured from the midpoint of the member  \n         • END  — measured from the end (second end) of the member  \n         • XI   — a relative coordinate between start (0) and end (1)  \n      – This field is required.  If omitted or ‘*’, CVL is not applied.  \n\n   b) S  (Unit: m or – for XI; Default: 0)  \n      – Offset distance along the member local axis from the chosen REF point.  \n      – For REF=STRT, MID or END, S is in meters.  For REF=XI, S is a dimensionless fraction [0, 1].  \n      – Default of 0 means exactly at the reference location.  \n\n   c) CY  (Unit: kN/m; Default: 0)  \n      – Linear spring constant resisting lateral displacement in the local y-direction.  \n      – CY > 0 imposes a lateral spring.  CY = 0 means no lateral spring.  \n      – CY = –1.0 or FIX means fully restrain the local‐y translation (i.e. pinned in that direction).  \n\n   d) DX  (Unit: kNm/rad; Default: 0)  \n      – Rotational spring constant around the local-x axis (torsion).  \n      – DX > 0 imposes a torsional (about-x) spring.  DX = 0 means free rotation.  \n      – DX = –1.0 or FIX means fully fix the torsional rotation.  \n\n   e) HDIV  (Unit: –; Default: *)  \n      – “Homogeneous DIVision” parameter.  If specified as an integer N > 1, the member is subdivided into N equal finite‐element segments at this point.  \n      – Use this when you want to guarantee an FEM node exactly at the CVL location.  \n      – If omitted or ‘*’, no additional partitioning occurs beyond what is automatically required.  \n\n4. Usage Example  \n   +PROG BDK  \n     …  \n     CVL REF STRT S 1.0 CY FIX DX FIX   ! a fully fixed support 1 m from the start  \n     CVL REF MID  S 0.5 CY FIX DX FIX   ! a pinned support at midspan  \n     CVL REF END  S 0.5 CY FIX DX FREE ! only local‐y is fixed, rotation free  \n     CVL REF XI   S 0.4 CY FIX DX FREE ! using a 40% fractional location  \n     CVL HDIV 4                        ! subdivide the member into 4 equal parts  \n     …  \n     MEMB  …  \n\nBy organizing the CVL card in this way, you can precisely locate springs or fixities anywhere along a beam, control both translational and rotational restraint, and ensure the FEM mesh conforms to your support locations.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                21
+            ],
+            "page_labels": [
+                "3-6"
+            ],
+            "type": "table",
+            "sections": [
+                "2 Theoretical Principles",
+                "3.7 CVL – Lateral Restrains"
+            ]
+        }
+    },
+    {
+        "content": "See also: CVA, CVE, MEMB\n CVL\n The supports are in the local directions of the beam and are defined as spring constants (positive values) or as fixities (negative values). The value -1.0 or the literal FIX represent a fixed constraint.\n +PROG BDK\n HEAD ! ... CVL REF STRT S 1.0 CY FIX DX FIX CVL REF MID S 0.5 CY FIX DX FIX CVL REF END S 0.5 CY FIX DX FREE CVL REF XI S 0.4 CY FIX DX FREE CVL HDIV 4 CY 0 DX FIX ! ... END\n These input values are active only for the subsequent MEMB input.\n The input CVL can be set at any station along the member, it is NOT required that a FEM node exists at the station.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                21
+            ],
+            "page_labels": [
+                "3-6"
+            ],
+            "type": "text",
+            "sections": "3.7 CVL – Lateral Restrains"
+        }
+    },
+    {
+        "content": "This table defines three elemental support‐stiffness inputs (DX, CY and CZ) that apply exclusively when you follow up with a MEMB input in your model. Each entry prescribes a localized spring or torsional restraint, with a user‐specified stiffness value and a default of zero. In practice, these support parameters let you simulate elastic footing or embedment conditions on beam‐oriented elements.\n\n1. Columns and Their Roles  \n   • Item  \n     – The parameter identifier that you reference in your input deck.  \n     – Must be spelled exactly as shown (DX, CY, CZ).  \n   • Description  \n     – A concise explanation of the mechanical effect of the support.  \n     – DX is torsional, CY and CZ are translational along local axes.  \n   • Unit  \n     – The physical unit in which the stiffness must be supplied.  \n     – DX: kNm/m/rad (torsional stiffness per unit length and per radian)  \n     – CY & CZ: kN/m² (translational stiffness per unit area)  \n   • Default  \n     – The assumed stiffness if you omit this item from your input.  \n     – All three default to 0, i.e. no restraint.\n\n2. Row‐by‐Row Explanation  \n   – DX (Torsional support)  \n     • Applies a spring that resists twist about the beam’s local x-axis.  \n     • Useful for modelling rotational restraint from flanges, shear walls or diaphragms.  \n     • Unit is kNm/m/rad: you supply the stiffness per metre of beam length, per radian of rotation.  \n     • Default = 0 (free torsion).  \n     • Special note: if you already have support CX or support CY creating torsional restraint, you must manually include any flange flexural stiffness in your DX value to capture the combined effect.  \n   – CY (Support in local y-direction)  \n     • A linear elastic spring resisting translation along the beam’s local y-axis.  \n     • Use to simulate lateral soil pressure, guide bearings, or distributed shelf contact.  \n     • Unit is kN/m²: stiffness per unit area.  \n     • Default = 0 (no support in y).  \n   – CZ (Support in local z-direction)  \n     • A linear elastic spring resisting translation along the beam’s local z-axis.  \n     • Suited for modelling vertical support pads, grout layers, or bearing plates.  \n     • Same unit as CY (kN/m²).  \n     • Default = 0 (no support in z).\n\n3. Context of Use  \n   • These parameters are inactive until you issue a MEMB record. MEMB triggers membrane‐type behavior and activates the DX/CY/CZ supports on the element.  \n   • See also: MEMB and CV for related inputs controlling membrane forces and sectional stiffness.  \n   • If your structural model already imposes rotational restraint through other means (e.g., CV springs in bending directions), remember to superpose flange flexural contributions into DX to avoid underestimating the total torsional stiffness.\n\n4. Practical Tips for RAG Indexing  \n   • Tag each item name (DX, CY, CZ) as a distinct retrieval key.  \n   • Record units and default values as metadata fields (“unit”: “kN/m²”, “default”: “0”).  \n   • Highlight the MEMB‐dependency in the description field so that vector searches about “activated only after MEMB” will surface these entries.  \n   • Include the cross‐reference “See also: MEMB, CV” to facilitate semantic linking in your knowledge graph.\n\nBy capturing these four dimensions—identifier, mechanical meaning, units/default, and conditional activation—you ensure that a downstream RAG system or structural‐analysis expert can quickly reconstruct the intended support behavior in any beam or membrane element.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                22
+            ],
+            "page_labels": [
+                "3-7"
+            ],
+            "type": "table",
+            "sections": [
+                "2 Theoretical Principles",
+                "3.8 CV – Continuous support"
+            ]
+        }
+    },
+    {
+        "content": "See also: MEMB\n CV\n For the torsional support the user has to manually add the flexural stiffness of the flange to the value DX, for the case where the support is created by the support CX or CY.\n These input values are active only for the subsequent MEMB input.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                22
+            ],
+            "page_labels": [
+                "3-7"
+            ],
+            "type": "text",
+            "sections": "3.8 CV – Continuous support"
+        }
+    },
+    {
+        "content": "The table shown defines the four fields you must supply whenever you declare a numeric variable via the TVAR input record in SOFiSTiK.  It summarizes each field’s name, purpose, data‐type or unit, and the default behavior if you omit it.\n\nOverall record purpose  \n• TVAR lets you introduce a pure numeric variable within a freely selectable scope (SCOP).  \n• You cannot use it to define literals, tables or functions—only numbers (or expressions that evaluate to numbers).  \n• Once defined, the variable remains “in memory” for all subsequent input until you override it with another TVAR of the same NAME.\n\nField‐by‐field description  \n1. NAME  \n  – Description: The identifier of your variable.  \n  – Unit/Data type: Lit16 (up to 16 characters).  \n  – Default: “!” (mandatory—you must supply a name).  \n  – Notes:  \n    • Must conform to SOFiSTiK’s literal naming rules (letters, digits, hyphens, no spaces).  \n    • Common practice: use a mnemonic that relates to Eurocode boxed values (e.g. GAM-S0, KFCT, ALFAM).  \n\n2. VAL  \n  – Description: The numeric value or an arithmetic expression to be evaluated.  \n  – Unit/Data type: Lit64 (up to 64 characters, to accommodate longer expressions).  \n  – Default: “!” (mandatory—you must supply something here).  \n  – Notes:  \n    • If you precede the entry with “=” you may input a formula (e.g. =1.2*0.85).  \n    • If you supply a pure number, it is taken literally.  \n    • The expression may use previously defined variables (global or in‐scope).  \n\n3. SCOP  \n  – Description: The variable’s scope—i.e. where in the input deck it remains visible.  \n  – Unit/Data type: none (free text token).  \n  – Default: “*” (local scope only for this record; not stored to database).  \n  – Notes:  \n    • If you omit SCOP or use “*”, the variable lives only in the immediate processing context.  \n    • To push the variable into the database for later retrieval, supply a scope name (e.g. DESI, GEOM).  \n    • In typical Eurocode design runs you might do:  \n        TVAR NAME GAM-S0 VAL 1.0 SCOP DESI  \n        TVAR NAME GAM-S1 VAL 1.1 SCOP DESI  \n\n4. CMNT  \n  – Description: A free‐text comment or explanation attached to your variable.  \n  – Unit/Data type: Lit32 (up to 32 characters).  \n  – Default: “–” (no comment).  \n  – Notes:  \n    • Useful for documenting why you chose a nonstandard national factor or for linking back to a clause in a National Annex.  \n    • This comment will appear in the database listing and input listing.  \n\nHow it ties into the workflow  \n– TVAR must appear before any input records that reference the variable (e.g. in cross‐section definitions, load definitions or design commands).  \n– If you define the same NAME twice in the same scope, the later definition overrides the earlier one.  \n– Variables defined with TVAR can be used inside expressions for section classification (AQB), lateral–torsional buckling parameters (β, λLT,0), safety factors (GAM-S0, GAM-S1), or any other numeric input field that accepts =expressions.  \n– When you switch design codes (CTRL …), those scoped variables remain active unless you explicitly reinitialize them.  \n\nBy following this field‐by‐field specification, you ensure that your TVAR records are syntactically correct, well documented, and behave predictably in subsequent design modules.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                23
+            ],
+            "page_labels": [
+                "3-8"
+            ],
+            "type": "table",
+            "sections": [
+                "2 Theoretical Principles",
+                "3.9 TVAR – Template Variables"
+            ]
+        }
+    },
+    {
+        "content": "The table shown defines the syntax and default values of the “CTRL” input record in SOFiSTiK’s BDK (steel design) module. CTRL is used to select the design code and to set various analysis parameters (cross‐section classification, lateral–torsional buckling options, sway, method choices, etc.). Once issued, a CTRL record’s settings remain in effect for all subsequent MEMB input records, until overridden by a new CTRL. Below is a field‐by‐field breakdown:\n\n1. Columns  \n • Item: the keyword to be supplied on the CTRL line.  \n • Description: a brief explanation of the parameter’s role.  \n • Unit: the type of value expected (if any).  \n • Default: the value assumed when the keyword is omitted.\n\n2. Rows / CTRL parameters\n\n  OPT  \n  – Description: selects the design standard.  \n  – Values (literal):  \n    • EN → EN 1993-1-1  \n    • DIN → DIN 18800-2 / ÖN 4300  \n    • BS → BS 5950  \n  – Unit: LIT  \n  – Default: none (you must choose one)\n\n  CURV  \n  – Lateral–torsional buckling curve (per EN 1993-1-1, Tables 6.4/6.5 or user‐defined).  \n  – Unit: –  \n  – Default: AUTO (automatic selection, based on section geometry and root‐radius flag in AQUA)\n\n  SCL  \n  – Cross‐section class (EN 1993-1-1 §6.3.2).  \n  – Unit: –  \n  – Default: AUTO (automatic classification via AQB; if AQB is not run, class 3 is assumed)\n\n  BETA  \n  – Coefficient β for lateral–torsional buckling equation (analysis option).  \n  – Unit: –  \n  – Default: 0.75 (corresponds to EN 1993-1-1 §6.3.2.3 default)\n\n  LLT0  \n  – Reference slenderness λ<sub>LT,0</sub> for lateral–torsional buckling.  \n  – Unit: –  \n  – Default: 0.4\n\n  TAB  \n  – If YES, limit kc and C<sub>1</sub> to the eight standard cases in EN 1993-1-1 Table 6.6.  \n  – Unit: –  \n  – Default: NO (kc and C<sub>1</sub> are computed via eigenvalue analysis)\n\n  BMY  \n  – Moment coefficient for LT buckling about major axis (primary bending).  \n  – Unit: –  \n  – Default: * (computed internally if not specified)\n\n  BMZ  \n  – Moment coefficient for LT buckling about minor axis (analogous transverse bending).  \n  – Unit: –  \n  – Default: *\n\n  BMQY  \n  – Moment coefficient for transverse load in global y-direction.  \n  – Unit: –  \n  – Default: 1.35\n\n  BMQZ  \n  – Moment coefficient for transverse load in global z-direction.  \n  – Unit: –  \n  – Default: 1.35\n\n  SFAC  \n  – System factor n (for combination of moments/imperfections).  \n  – Unit: –  \n  – Default: 2.5\n\n  LCST  \n  – Loadcase number in which to store the enveloped design results.  \n  – Unit: –  \n  – Default: – (no result storage beyond standard output)\n\n  SWY  \n  – Allow sway about the strong‐axis (EC 3, Method 2).  \n  – Unit: –  \n  – Default: NO\n\n  SWZ  \n  – Allow sway about the weak‐axis (EC 3, Method 2).  \n  – Unit: –  \n  – Default: NO\n\n  LTB  \n  – Susceptibility to torsional deformations (EC 3, Method 2).  \n  – Unit: –  \n  – Default: AUTO (determined from section warping properties unless forced)\n\n  MTHD  \n  – Choice of design method under EN 1993-1-1:  \n    1 → Method 1 (Annex A),  \n    2 → Method 2 (Annex B)  \n  – Unit: –  \n  – Default: 1\n\n3. Contextual notes  \n  – CTRL parameters like BETA, LLT0, TAB, BMY/BMZ enable customization of the lateral–torsional buckling design beyond the generic “boxed values” in the master.ini.  \n  – CTRL LCST allows the grouping of designs into a particular loadcase envelope for post‐processing in WinGRAF or Result Viewer.  \n  – If code‐specific national factors (GAM-S0, GAM-S1, etc.) are set via TVAR in scope DESI, they remain compatible with CTRL settings for the chosen standard.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                24
+            ],
+            "page_labels": [
+                "3-9"
+            ],
+            "type": "table",
+            "sections": [
+                "2 Theoretical Principles",
+                "3.9 TVAR – Template Variables"
+            ]
+        }
+    },
+    {
+        "content": "The snippet you provided is a small “parameter table” describing two of the EN-1993-1-1 design‐control options that you can set via the CTRL record in SOFiSTiK’s BDK module. In a RAG/vector-store setting it is best to break this out into its constituent fields and explain the meaning of each, so that an ingestion pipeline can index “CURV” and “SCL” along with their semantics, valid values, defaults, and cross-references. Below is a detailed, self-contained description of that table:\n\n1. Table-level purpose  \n   • Context: these parameters govern how lateral-torsional buckling and cross-section classification are handled when you run a steel‐design (BDK) job to EN 1993-1-1 (Eurocode 3) or its National Annexes.  \n   • Location in input: they are set via “CTRL …” records prior to MEMB- or LC-based design.  \n   • Scope: once defined, these parameters remain active for all subsequent member-design records until overridden.\n\n2. Column descriptions  \n   • EN  \n     – The keyword that you must use in the CTRL input record.  \n     – Always uppercase in BDK.  \n   • Description  \n     – A concise human‐readable summary of what this keyword sets.  \n     – May include a reference to the relevant sub‐clause in EN 1993-1-1.  \n   • Unit  \n     – The physical unit or code‐specific “type” of the parameter.  \n     – In this table both are unitless (“–”) because they are enumerations or method selectors.  \n   • Default  \n     – The value that BDK will assume if you do *not* specify this CTRL parameter.  \n     – Explicitly given as the exact token you would omit if you are happy with the standard behavior.\n\n3. Row-by-row semantics  \n\n   A. CURV  \n   – Keyword:   “CURV”  \n   – Description:  \n       Lateral-torsional buckling (LTB) curve designation.  \n       In EN 1993-1-1 this corresponds to Tables 6.4/6.5, which define curves a, b, c, d for various cross-section shapes and curve “auto-selection” by aspect ratio.  \n       If you do not know which letter to pick, or you want SOFiSTiK to choose based on h/b, use AUTO.  \n   – Unit:      – (unitless enumeration)  \n   – Valid values: a, b, c, d or AUTO  \n   – Default:    AUTO  \n   – Notes:  \n       · AUTO triggers SOFiSTiK’s internal logic (rolled I-sections use h/b ratio; welded shapes need zero root radius to force “welded” branch).  \n       · If AUTO fails to find a match, it will fall back to curve d (“other cross-sections,” per Table 6.4).  \n       · You can override later via “CTRL CURV c” (or any other letter) if you know your section’s classification.\n\n   B. SCL  \n   – Keyword:   “SCL”  \n   – Description:  \n       Cross-section class selector for flange/web classification (sections 6.3.1-6.3.2 of EN 1993-1-1).  \n       Classes 1–4 relate to local buckling behavior; G1–G3 are “general case” for default code method (6.3.2.2 vs. 6.3.2.3).  \n       AUTO invokes an automatic classification (AQB module) and uses that for design.  \n   – Unit:      – (unitless enumeration)  \n   – Valid values: AUTO, 1, 2, 3, 4, G1, G2, G3, AUTO:G  \n       · AUTO (default): run AQB internally, then adopt its class for subsequent design. If AQB isn’t run separately, BDK still invokes it.  \n       · AUTO:G: same but forces “general case” rules (EN 1993-1-1 6.3.2.2) even if default would be 6.3.2.3.  \n       · G1–G3: user‐specified class using “general case” formulas.  \n       · 1–3: explicitly choose class 1–3 under default design rules (6.3.2.3).  \n       · 4: treat as class 4; non-effective widths per EN 1993-1-5 will be computed.  \n   – Default:    AUTO\n\n4. How to index in a RAG‐vector store  \n   • Terms to extract: “CURV,” “SCL,” “lateral torsional buckling curve,” “cross‐section class,” “AUTO,” “Eurocode 3 clause 6.3.2,” “AQB,” etc.  \n   • Attribute mapping:  \n       – parameter_name → CURV/SCL  \n       – description → text field  \n       – valid_values → list field  \n       – default_value → atomic field  \n       – code_reference → EN 1993-1-1 6.3.x  \n   • Potential queries served:  \n       – “What lateral‐torsional buckling curves can I request in BDK?”  \n       – “How do I force class 4 cross‐section in Eurocode design?”  \n       – “What is the default buckling curve if I don’t specify CTRL CURV?”  \n       – “Does SOFiSTiK compute kc automatically or from Table 6.6?”\n\nBy capturing all of the above in your vector store, downstream agents can precisely answer questions on how to control EN 1993 parameters in SOFiSTiK, while also surfacing normative references and default behaviors.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                24
+            ],
+            "page_labels": [
+                "3-9"
+            ],
+            "type": "table",
+            "sections": [
+                "2 Theoretical Principles",
+                "3.9 TVAR – Template Variables"
+            ]
+        }
+    },
+    {
+        "content": "The table in question defines the “CTRL” input record (and briefly the “LC” record) for SOFiSTiK’s steel‐design module (BDK). It governs all of the code‐specific control parameters for cross‐section classification, lateral-torsional buckling, factor selection and result-enveloping.  Every column in the original table corresponds to one keyword or parameter, its meaning, units (if any), permissible values and defaults. Below is a field‐by‐field breakdown, together with how it ties into the preceding discussion of TVAR and national annex settings:\n\n1. Record name:  \n   • CTRL  \n   – This activates the control‐parameter block for subsequent MEMB inputs. All values remain in force until they are explicitly redefined by another CTRL record.\n\n2. Cross-section classification (codes EN 1993-1-1 & BS 5950-1):  \n   • Keyword: CLASS  \n   • Values:  \n     – AUTO (automatic classification according to EN 1993-1-1 clause 6.3.2.3)  \n     – AUTO:G (automatic per EN 1993-1-1 clause 6.3.2.2, the “general case”)  \n     – G1, G2, G3 (user‐defined sections class 1–3 for clause 6.3.2.2)  \n     – 1–4 (explicit class numbers; class 4 triggers calculation of effective widths per EN 1993-1-5)  \n   • Default: AUTO  \n\n3. Lateral-torsional buckling parameters:  \n   • β  (imperfection factor)  \n   • λₗₜ,₀ (limiting non-dimensional slenderness)  \n   – Default values are read from the INI‐file for the chosen design code (typically β=0.75, λₗₜ,₀=0.4 for the default case; β=1.0, λₗₜ,₀=0.2 if AUTO:G or G1–G3 is chosen).  \n   – No explicit unit.\n\n4. Buckling curve selection:  \n   • If no curve is specified for rolled I-sections, an automatic interpolation of tables 6.4/6.5 is performed based on h/b.  \n   • Welded I-sections require a zero root radius flag in the PROF record to be classified; otherwise default curve “d” is assumed.\n\n5. Correction factor kₙ  and C₁ factor:  \n   • By default BDK evaluates kₙ (EN 1993-1-1, 6.3.2.3) using eigenvalue analysis and computes C₁ = kₙ⁻² (per DIN EN 1993-1-1).  \n   • If the user wants to restrict to the eight standard cases of EN 1993-1-1 Table 6.6, they enter:  \n     CTRL TAB YES  \n     – Both kₙ and C₁ are then picked directly from the tabulated values.\n\n6. Enveloping results store (load‐case storage):  \n   • CTRL LCST <nr>  \n   – Specifies a special load‐case number in which the maximum utilization ratios from all subsequent designs are collected.  \n   – CTRL LCST 0 clears the envelope storage.  \n\n7. Interaction with TVAR and boxed values:  \n   • Although “TVAR” (scope-limited numeric variables) and boxed Eurocode values (e.g. GAM-S0, GAM-S1) can be defined globally via STO# or LET#, CTRL operates at the procedural level. It does not define new variables but reads those global or INI‐file values and adjusts the calculation flow accordingly.\n\n8. LC (Loadcase selection) record summary:  \n   • Record name: LC  \n   • NO: Loadcase number to be activated for design (integer)  \n   • Default: 1  \n   • Unit: –  \n   • Purpose: Selects which pre‐computed loadcase is to be treated by subsequent MEMB design calls.  \n\nIn practice, you would precede your MEMB definitions with one or more CTRL records to set national annex factors (via TVAR if needed), cross-section rules and buckling options. Only once the desired combination of standards (EN 1993-1-1, DIN 18800-2/OEN 4300, BS 5950-1) and numeric parameters is established do you switch to LC to pick the individual loadcases for which the steel members will be designed.  \n",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                24
+            ],
+            "page_labels": [
+                "3-9"
+            ],
+            "type": "table",
+            "sections": [
+                "2 Theoretical Principles",
+                "3.9 TVAR – Template Variables"
+            ]
+        }
+    },
+    {
+        "content": "The table shown defines the CTRL parameters available when performing member design according to EN 1993-1-1 in the SOFiSTiK BDK module.  Each line of the table corresponds to a keyword (EN column) that controls a specific aspect of the lateral-torsional buckling checks, sway considerations, load-case selection or design method.  The four columns are:\n\n  • EN: the keyword to be used in the input file (“BETA”, “LLT0”, etc.)  \n  • Description: what the keyword governs, with references to clauses in EN 1993-1-1  \n  • Unit: none of these parameters carry physical units (they are nondimensional settings)  \n  • Default: the value assumed if the keyword is omitted\n\nBelow is a detailed breakdown of each parameter:\n\n1. BETA  \n   – Defines both cross-section classification and the β factor in the buckling resistance formula.  \n   – Options “1”, “2”, “3” or “AUTO” follow clause 6.3.2.3 for rolled or equivalent welded shapes.  \n   – Options “G1”, “G2”, “G3” or “AUTO:G” follow clause 6.3.2.2 (“general case”).  \n   – If a numeric β is needed directly (clause 6.3.2.3), it is taken here.  \n   – Default: 0.75  \n\n2. LLT0  \n   – The reference slenderness λ_LT,0 used in the lateral-torsional buckling check (clause 6.3.2.3).  \n   – Default: 0.4  \n\n3. TAB  \n   – Activates use of the correction factor k_c from Table 6.6 in EN 1993-1-1 (clause 6.3.2.3).  \n   – Keyword value “YES” forces k_c and C1 to come from the eight discrete cases in that table; “NO” (default) uses the continuous eigenvalue-based calculation.  \n   – Default: NO  \n\n4. LCST  \n   – Specifies a load-case number in which the enveloped design results (max utilisation ratios) will be stored.  \n   – If set to 0, no further design results overwrite a previously defined LCST.  \n   – Default: – (none)  \n\n5. SWY / SWZ  \n   – Toggles consideration of sway in the local y or z-direction (EC 3, Method 2).  \n   – Set to “YES” to include sway; “NO” omits sway effects.  \n   – Both default to NO.  \n\n6. LTB  \n   – Defines whether the member is “susceptible to torsional deformations” (i.e. lateral-torsional buckling) under EC 3 Method 2.  \n   – “AUTO” (default) leaves the decision to the internal classification and buckling analysis.  \n\n7. MTHD  \n   – Selects EC 3 design method: 1 or 2.  \n   – Method 1 corresponds to Annex A; Method 2 to Annex B.  \n   – Default: 1  \n\nHow it ties together:  \nWhen you invoke CTRL in your BDK input, these settings remain active for all subsequent MEMB records until they are overridden by a new CTRL line.  By default, BDK will automatically classify the cross-section (via an internal AQB step), assume the default lateral-torsional parameters (β = 0.75, λ_LT,0 = 0.4) and compute k_c continuously.  Specifying TAB=YES, or choosing AUTO:G vs. AUTO, or switching to Method 2, all adjust how EN 1993-1-1’s clauses 6.3.2.2–6.3.2.3 and Tables 6.4–6.6 are applied in your design.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                25
+            ],
+            "page_labels": [
+                "3-10"
+            ],
+            "type": "table",
+            "sections": [
+                "2 Theoretical Principles",
+                "3.9 TVAR – Template Variables"
+            ]
+        }
+    },
+    {
+        "content": "The table excerpt under the heading “DIN” is part of the BDK program’s CTRL‐record definitions for controlling parameters in steel‐design checks (particularly lateral–torsional buckling and general system factors) according to Eurocode EN 1993-1-1, DIN 18800-2 and BS 5950-1. It consists of four columns—parameter name (DIN), description, unit, and default value—and six rows, each defining one control variable. Below is a detailed breakdown suitable for indexing in a RAG vector store:\n\n1. Column Structure  \n   • DIN (Parameter Name)  \n     – The keyword used in the CTRL input record.  \n   • Description  \n     – A short statement of what the parameter controls or represents, often referencing the relevant Eurocode clause or table.  \n   • Unit  \n     – The physical dimension (if any). A dash “–” indicates dimensionless quantities.  \n   • Default  \n     – The value assumed if the parameter is not explicitly set. An asterisk (*) indicates that the default is code-dependent or must be supplied elsewhere (e.g. by the INI file).\n\n2. Parameter Entries  \n   1. BMY  \n      • Description: βMy moment coefficient for lateral torsional buckling under primary bending.  \n      • Reference: Eurocode EN 1993-1-1 Chapter 3.5.1, Table 11.  \n      • Unit: dimensionless.  \n      • Default: “*” (taken from the code’s INI file or earlier CTRL definitions).  \n      • Role: Influences the reduction factor for major-axis bending buckling checks.  \n   2. BMZ  \n      • Description: βMz coefficient for lateral torsional buckling under transverse bending in the global z-direction.  \n      • Reference: analogous to BMY, EN 1993-1-1.  \n      • Unit: dimensionless.  \n      • Default: “*” (code-provided).  \n      • Role: Similar to BMY but for the weak axis.  \n   3. BMQY  \n      • Description: βM,Qy moment coefficient for transverse loading in the global y-direction (Chapter 3.5.1, Table 11).  \n      • Unit: dimensionless.  \n      • Default: 1.35  \n      • Role: Applies to combined bending checks when major bending is due to transverse loads.  \n   4. BMQZ  \n      • Description: βM,Qz analogous coefficient for transverse loading in the global z-direction.  \n      • Unit: dimensionless.  \n      • Default: 1.35  \n      • Role: Used in weak-axis transverse bending buckling evaluations.  \n   5. SFAC  \n      • Description: System factor n, which accounts for degree of static indeterminacy (Chapter 3.3.4, Table 9).  \n      • Unit: dimensionless.  \n      • Default: 2.5  \n      • Role: Adjusts the global safety factor depending on whether the structure is statically determinate or indeterminate.  \n   6. LCST  \n      • Description: Load‐case number for collecting and storing enveloped results. When present, the maximum utilization per member is saved to this load‐case identifier.  \n      • Unit: dimensionless.  \n      • Default: “–” (none; if omitted no new result set is created).  \n      • Role: Directs the program to produce a separate load‐case envelope in WinGRAF or Result Viewer.\n\n3. Usage Notes  \n   • All of these CTRL parameters remain in effect for subsequent MEMB records until overridden by a new CTRL.  \n   • BMY and BMZ default to code tables unless explicitly overridden—this allows customization for special national annexes.  \n   • LCST 0 resets the result‐store feature, preventing further envelopes from being appended to the previously specified load‐case.  \n   • The combination of BMY/BMZ and BMQY/BMQZ controls whether lateral torsional buckling curves, correction factors kc and C1, and section classifications (AUTO, AUTO:G, class 1–4) follow the general or default EN 1993-1-1 cases.\n\nBy capturing each parameter’s name, role, numeric default, and relevant code reference, this description supports both human understanding and machine retrieval in a RAG vector store.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                25
+            ],
+            "page_labels": [
+                "3-10"
+            ],
+            "type": "table",
+            "sections": [
+                "2 Theoretical Principles",
+                "3.9 TVAR – Template Variables"
+            ]
+        }
+    },
+    {
+        "content": "The table below defines the four optional sub-parameters of the “BS” input group used by the BDK “CTRL” module to control cross-section classification and lateral-torsional buckling coefficients. All entries remain in effect for subsequent MEMB records until they are overridden.\n\n1. Field name (column “BS”)  \n   – SCL  \n     • Description: Selects the cross-section class to be used for design checks under EN 1993-1-1 or BS 5950. Valid entries are:  \n       – 1, 2 or 3 : fix the section class explicitly (Class 1 = plastic, Class 2 = compact, Class 3 = slender)  \n       – AUTO : perform automatic classification according to AQB (if AQB is not run separately, BDK will call it internally).  \n     • Unit: –  \n     • Default: AUTO  \n     • Notes:  \n       – If AUTO and no AQB result is available, Class 3 is assumed.  \n       – Class 4 sections (excessively slender) can also be treated; effective widths for non-effective parts will be calculated per EN 1993-1-5.  \n       – Specifying AUTO:G forces the “general case” rules of EN 1993-1-1 § 6.3.2.2 (allowed only in conjunction with a G1-G3 manual override).  \n\n   – BMY  \n     • Description: βMy, the moment‐gradient coefficient for lateral-torsional buckling about the strong axis (primary bending). See EN 1993-1-1, Table 4.3.6.6 (Tab. 18).  \n     • Unit: –  \n     • Default: * (take βMy from the code’s INI file for the selected design standard)  \n     • Notes:  \n       – If omitted, BDK uses the code‐prescribed default:  \n         • For the default (6.3.2.3) case: βMy = 0.75  \n         • For the general case (6.3.2.2) via G1-G3: βMy = 1.00  \n\n   – BMZ  \n     • Description: βMz, the moment‐gradient coefficient for lateral-torsional buckling about the weak axis (secondary or transverse bending).  \n     • Unit: –  \n     • Default: * (take βMz from the code’s INI file)  \n     • Notes: same conventions and defaults as for BMY, applied to the weak-axis bending moment gradient.  \n\n   – LCST  \n     • Description: Loadcase number under which the enveloped (maximum) member utilization from the design run will be stored. This allows you to output design results for a specific envelope loadcase in WinGRAF or the Result Viewer.  \n     • Unit: –  \n     • Default: – (no LCST is set by default; results aren’t assigned to a specific envelope case)  \n     • Usage:  \n       – Any subsequent CTRL/BDK design will record its maximum u-values to the specified LCST.  \n       – To clear or stop recording, specify LCST 0.  \n\nGeneral behavior: once any of these BS parameters is defined under a CTRL input record, they remain active for all following MEMB definitions until they are changed by a new CTRL record.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                25
+            ],
+            "page_labels": [
+                "3-10"
+            ],
+            "type": "table",
+            "sections": [
+                "2 Theoretical Principles",
+                "3.9 TVAR – Template Variables"
+            ]
+        }
+    },
+    {
+        "content": "The image is a flow-chart style schematic (labelled “Figure 3.2: Schematic representation of C₁ calculation”) showing the two‐step eigenvalue analyses required to compute the lateral-torsional buckling modification factor C₁ as defined in EN 1993-1-1. It uses a combination of colored and shaded boxes, arrows and simple beam sketches to guide the reader through the calculation logic:\n\n1. A pink, rounded‐corner box at the very top is labeled “START.” From its bottom edge, a single dark gray arrow leads downward to the first analysis step.\n\n2. On the right side, aligned with that arrow, is a large white rectangular process box (black outline) containing:\n   • A small beam sketch: a horizontal line supported at its left end by a pinned support icon (triangle) and on the right end by a roller icon (circle on horizontal line).  \n   • A downward‐pointing blue arrow at midspan indicating an applied vertical load.  \n   • A red, triangular‐filled region below the beam (“load diagram”) emphasizing a distributed or concentrated load.  \n   • Above this sketch the text reads “System definition: boundary conditions and applied loads.”  \n   An arrow labeled “Eigenvalue Analysis →” points leftward from this box.\n\n3. On the left side of the chart, directly opposite that arrow, is a small gray trapezoidal box (slanted top and bottom) labelled “M_cr.” This represents the critical moment obtained from the first eigenvalue buckling analysis. A dark gray arrow continues downward from this “M_cr” block.\n\n4. Part way down, that arrow meets a second white rectangular process box on the right. This box is similar in style to the first but its contents differ:\n   • A beam sketch again supported pinned–roller.  \n   • A curved blue arrow wrapped around each end of the beam signifying pure bending (i.e. a “virtual moment”).  \n   • A red rectangular block under the beam representing a constant bending moment distribution.  \n   • Above the sketch is the legend “Create virtual bending moment (M = constant).”  \n   From the right side of this box, another arrow labelled “Eigenvalue Analysis →” points left.\n\n5. Opposite that arrow is another gray trapezoidal box labelled “M_cr,0,” denoting the critical buckling moment from the second, pure-moment eigenvalue analysis. A second arrow from “M_cr,0” rejoins the earlier arrow coming down from the first “M_cr,” forming a single downward arrow.\n\n6. That combined arrow enters a small gray rectangle (square‐cornered) bearing the formula  \n   C₁ = M_cr / M_cr,0  \n\n7. Beneath that box, a final arrow leads to a pink rounded‐corner box labeled “END.”\n\nFlow and color coding:\n • Pink boxes mark the start and end of the procedure.  \n • White process boxes (with black borders) describe the actions or model setups.  \n • Gray trapezoidal boxes capture key numeric results (M_cr and M_cr,0).  \n • Arrows carry the logical progression: first eigenvalue → M_cr, second eigenvalue → M_cr,0 → compute C₁.\n\nThis diagram succinctly shows how BDK (SOFiSTiK’s buckling design kernel) determines the C₁ factor by comparing the system’s true critical buckling moment to that of an idealized constant-moment (pure bending) case.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                27
+            ],
+            "page_labels": [
+                "3-12"
+            ],
+            "type": "image",
+            "sections": [
+                "2 Theoretical Principles",
+                "3.9 TVAR – Template Variables"
+            ]
+        }
+    },
+    {
+        "content": "See also: CTRL\n TVAR\n SOFiSTiK variables, defined via STO# or LET# are globally valid. For more complex tasks, it becomes necessary to define variables valid only within a scope. TVAR allows a very general definition of those numeric variables within a freely selectable scope. The definition of literals or the definition of tables or functions is not possible.\n There is a range of variables in the Eurocodes allowing to adopt national factors called boxed values. They are defined in the INI files in general. A survey of the accepted names is given in the file master.ini.\n For special cases, these values may be defined with TVAR. If for example a change of the material safety factor is required, for the design according to a specific National Annex, then it is possible to specify the factor GAM-S0 or GAM-S1 for SCOP DESI:\n +PROG BDK\n HEAD NORM DC \"EN\" NDC \"1993-2005\" TVAR NAME GAM-S0 VAL 1.0 SCOP DESI TVAR NAME GAM-S1 VAL 1.1 SCOP DESI ! ... END\n 3.10 CTRL – Controlling Parameters\n CTRL\n 3.10.1 EN 1993-1-1\n 3.10.2 DIN 18800-2 / OEN 4300\n 3.10.3 BS 5950\n The control values according to DIN 18800-2, EN 1993-1-1, BS 5950-1, can be defined with this input record.\n For design according to EN 1993-1-1 and BS 5950-1, a cross-section class is needed. An automatic cross section classification is performed with respect to AQB. No separate run of the module AQB is needed. Then this AQB-deliverd class is taken over as default for the design. If this is not the case, then a class 3 will be assumed. For design according to EN 1993-1- 1, a class of G1-G3 can be defined, corresponding to class 1-3, but design with respect to EN 1993-1-1, 6.3.2.2 denoted as \"general case\". If design according to EN 1993-1-1, 6.3.2.3 (default case), is to be performed, then cross-section class 1-3 has to be input. Input AUTO treats cross-section class respectively to EN 1993-1-1, 6.3.2.3 while AUTO:G - respectively to EN 1993-1-1, 6.3.2.2. As already mentioned, BDK may also treat class 4 cross sections. If the section is classifed as 4, the non effective parts according EN 1993-1-5 will be calculated and taken into account.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                23,
+                24,
+                25,
+                26
+            ],
+            "page_labels": [
+                "3-8",
+                "3-9",
+                "3-10",
+                "3-11"
+            ],
+            "type": "text",
+            "sections": "3.9 TVAR – Template Variables"
+        }
+    },
+    {
+        "content": "Input AUTO treats cross-section class respectively to EN 1993-1-1, 6.3.2.3 while AUTO:G - respectively to EN 1993-1-1, 6.3.2.2. As already mentioned, BDK may also treat class 4 cross sections. If the section is classifed as 4, the non effective parts according EN 1993-1-5 will be calculated and taken into account..\n Since the default case for lateral torsional buckling design according to EN 1993-1-1, is done with respect to section 6.3.2.3, the values of β and λLT,0 are chosen from the file for the design code (INI file) mostly with 0.75 and 0.4, respectively. If design according to section 6.3.2.2 is requested through the cross-section class G1-G3, then β and λLT,0 are chosen 1.0 and 0.2, respectively, leading to the simplification of equation 6.57 to 6.56.\n The lateral torsional buckling curve is equivalently determined from tables 6.4 and 6.5. For rolled steel shapes of I-section, if no curve is specified, an automatic determination is per- formed, taking into account the ratio of h/b. For classification of these sections as welded, a zero root radius has to be input in the cross-section definition (see AQUA record PROF). In case the automatic determination is not able to deliver a curve for the type of the cross- section, a default type d is assumed, corresponding to \"other cross-sections\" as denoted in EN 1993-1-1, Table 6.4.\n The correction factor kc (EN 1993-1-1, 6.3.2.3), is by default calculated by BDK and not taken by the limited eight only cases that are provided in EN 1993-1-1, Table 6.6. According to DIN EN 1993-1-1, C1 = k−2 c holds. This enables the option to determine a more representative value for kc, according to the moment distribution of the system under consideration, through the eigenvalue analysis and the C1 factor.\n In case the user wants to limit the solution to the eight cases presented in EN 1993-1-1, Table 6.6, then CTRL TAB YES has to be provided and both kc and C1 will be derived by the table values.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                26,
+                27
+            ],
+            "page_labels": [
+                "3-11",
+                "3-12"
+            ],
+            "type": "text",
+            "sections": "3.9 TVAR – Template Variables"
+        }
+    },
+    {
+        "content": "This enables the option to determine a more representative value for kc, according to the moment distribution of the system under consideration, through the eigenvalue analysis and the C1 factor.. In case the user wants to limit the solution to the eight cases presented in EN 1993-1-1, Table 6.6, then CTRL TAB YES has to be provided and both kc and C1 will be derived by the table values..\n With the option of CTRL LCST a loadcase number can be provided, where the results of enveloping of the corresponding loadcases and members, i.e. the maximum utilisation level for the designed members, will be stored and can then be represented in WinGRAF or Result Viewer. If CTRL LCST 0 is input, then any further design will not be considered to the previous LCST specified.\n These input values remain active for the subsequent MEMB-inputs, as long as they are not newly defined.\n 3.11 LC – Selection of the Loadcase to be Designed\n See also: MEMB\n LC\n Item Description Unit Default NO Loadcase number 1\n LC activates a loadcase. LC is used to select the loadcases to be designed. Loadcases should consist of calculated loadcases and their respective loads. Superimposed loadcases are usually not proper.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                26,
+                27,
+                28
+            ],
+            "page_labels": [
+                "3-11",
+                "3-12",
+                "3-13"
+            ],
+            "type": "text",
+            "sections": "3.9 TVAR – Template Variables"
+        }
+    },
+    {
+        "content": "Below is a comprehensive, field‐by‐field breakdown of the MEMB input table as used in BDK for beam or truss analyses. This description will help you index and retrieve the right parameter definitions in a RAG‐style vector store.\n\n1. General Context  \n   • The MEMB record is the final input block that triggers a continuous deflection‐curve analysis on a series of structural lines or beams.  \n   • If you need to chain multiple structural lines into one “member,” you can use the CONT keyword.  \n   • As of version 2020, you can also reference pre‐defined design elements (from DECREATOR) by their ID in the MEMB record.\n\n2. Table Columns  \n   • Item: The keyword you use in the MEMB input.  \n   • Description: What that keyword means and how it affects the analysis.  \n   • Unit: The expected data type or unit (often literal, LIT, or dimensionless).  \n   • Default: The value assumed if you omit this keyword.\n\n3. Field Descriptions\n\n• REF (Reference type)  \n  – Description: Specifies how the member is defined. Options are:  \n     • BEAM – use individual beam numbers  \n     • SLN  – structural line numbers  \n     • TRUS – truss numbers  \n     • CONT – continuation record (to append additional segments)  \n  – Unit: Literal (LIT)  \n  – Default: CONT  \n\n• FROM (Start index)  \n  – Description: Indicates the first element number or structural line in the member sequence. If you are using a range, this is the lower bound.  \n  – Unit: none  \n  – Default: 1  \n\n• TO (End index)  \n  – Description: Marks the last element number in the continuous sequence. Ignored if you use explicit CONT entries.  \n  – Unit: none  \n  – Default: same as FROM (i.e. single‐element member)  \n\n• INC (Increment)  \n  – Description: Step size between element numbers when generating a range (FROM to TO).  \n  – Unit: none  \n  – Default: 1  \n\n• SKY (Buckling length factor, major axis)  \n  – Description: User‐supplied effective length factor for flexural buckling about the major axis. Overrides code defaults if provided.  \n  – Unit: none  \n  – Default: “–” (i.e. let the code compute it)  \n\n• SKZ (Buckling length factor, minor axis)  \n  – Description: Same as SKY but for the minor (transverse) axis.  \n  – Unit: none  \n  – Default: “–”  \n\n• TYPE (Analysis type)  \n  – Description: Selects which internal check to perform. Options are:  \n     • FLEX – centric compression only  \n     • LAT  – major‐axis bending (lateral‐torsional buckling check)  \n     • LTB  – combined bending & axial compression  \n     • EIGE – eigenvalue extraction (buckling loads)  \n  – Unit: Literal (LIT)  \n  – Default: LAT  \n\n• ID (Design‐Element ID)  \n  – Description: A numerical identifier for a pre‐defined design element (created via DECREATOR) or, if omitted, BDK uses the SLN number. If multiple design elements exist, enter the exact ID here.  \n  – Unit: none  \n  – Default: SLN number  \n\n4. Usage Notes  \n   – Always place MEMB records last. Any CONT lines immediately following the MEMB line are treated as part of the same member.  \n   – Avoid inserting supports or point loads between concatenated structural lines, or the deflection curve will not be continuous.  \n   – When invoking a design element by ID (with TYPE=EIGE, for example), be sure you have run DECREATOR first to define that element.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                29
+            ],
+            "page_labels": [
+                "3-14"
+            ],
+            "type": "table",
+            "sections": [
+                "2 Theoretical Principles",
+                "3.12 MEMB – Selection of the Elements to be Designed"
+            ]
+        }
+    },
+    {
+        "content": "See also: LC, CVA, CVE, CVM, CV, CVL, CTRL\n MEMB\n The ID number represents the Design Element number. If nothing is defined BDK will automat- ically try to use the SLN Number as ID. In case the user has defined a sequence of Structural lines and nothing is defined, then BDK will randomly use an ID that is available.\n +PROG BDK\n HEAD Example ! ... ! ID = 3 for SLN 5 (User defined) MEMB SLN 5 TYPE LTB ID 3\n ! ID = 6 (BDK - automatic) MEMB SLN 6 TYPE LTB\n ! ...\n END\n For every MEMB record an analysis is made for the selected series of beams or trusses. Therefore an MEMB record must always come last in the input order, because it concludes the input definition of the requested analysis. A series of beams or trusses should generally not have any supports, bends or extreme point loads between its endings, because only a\n continuous deflection curve is generated.\n The input option CONT serves as a continuation line, offering the possibility to enter a number of different elements to be considered in the designed member. For example, the following input would process the member consisting of structural lines 5, 3, 11:\n +PROG BDK\n HEAD Example ! ... MEMB SLN 5 TYPE LTB CONT 3 CONT 11 ! ... END\n MEMB SLN 5 TYPE LTB\n CONT 3\n CONT 11\n For the buckling design, further eigenvalue analyses may be performed internally for the deter- mination of the critical loads, depending on the specified standard. This is done independently of the specification of the MEMB input.\n From version 2020 you can call the design elements (created via DECREATOR) directly in BDK (via MEMB ID).\n Step 1) First create the design element(s) via DECREATOR.\n +PROG DECREATOR HEAD DDEL ALL ! Delete all previous design elements DSLN NO 1000 TITL \"DLN 1000\" FREF \"REF\" DGEO OPT SLN ID 1",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                29,
+                30
+            ],
+            "page_labels": [
+                "3-14",
+                "3-15"
+            ],
+            "type": "text",
+            "sections": "3.12 MEMB – Selection of the Elements to be Designed"
+        }
+    },
+    {
+        "content": "Step 1) First create the design element(s) via DECREATOR.. +PROG DECREATOR HEAD DDEL ALL ! Delete all previous design elements DSLN NO 1000 TITL \"DLN 1000\" FREF \"REF\" DGEO OPT SLN ID 1.\n ! Generate explicit sections (Increment = 0.1*L)\n DSLC REF XI S (0 1 0.10)\n END\n Step 2) Call the design element via MEMB ID input in BDK.\n +PROG BDK HEAD LATERAL TORSIONAL BUCKLING CHECK EN 1993-1-1 ECHO FULL EXTR CTRL TAB YES CTRL MTHD 2\n ! Loadcase\n LC\n 100\n ! Boundary conditions CVA CY FIX CZ FIX DX FIX CVE CY FIX CZ FIX CVL REF MID S 0 CY FIX\n ! Element CTRL OPT EN SCL 1 LCST 951 MEMB TYPE EIGE ID 1000 END",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                31,
+                30
+            ],
+            "page_labels": [
+                "3-16",
+                "3-15"
+            ],
+            "type": "text",
+            "sections": "3.12 MEMB – Selection of the Elements to be Designed"
+        }
+    },
+    {
+        "content": "The table excerpt defines two related ECHO-command parameters used by the BDK (Buckling Design Kit) for controlling which types of results are returned and how much detail is included. Both parameters are literal fields (Unit = LIT), and neither has an implicit default value in the table itself (Default = “–”), but broader default behaviors are described in the surrounding documentation.\n\n1. OPT (Option Selector)  \n   • Purpose: Specifies which categories of analysis results should be output.  \n   • Unit: LIT (a literal keyword)  \n   • Default: none listed here; actual defaults are governed by the general ECHO defaults (see below).  \n   • Allowed literals and their meanings:  \n     ‑ FORC: design forces and bending moments  \n     ‑ SECT: sectional (geometric) values of members  \n     ‑ MAT: material properties  \n     ‑ BOUN: support or boundary‐condition definitions  \n     ‑ EIGE: buckling eigenvalues  \n     ‑ MEMB: buckling resistance checks for steel members  \n     ‑ SUM: summary of all results  \n     ‑ FULL: shorthand for selecting every available option  \n     ‑ DESE: design elements listing  \n     ‑ CLAS: cross-section classification data  \n     ‑ PLOT: graphical (member) representation output  \n\n2. VAL (Output Extent)  \n   • Purpose: Determines the verbosity or extent of the selected output categories.  \n   • Unit: LIT (a literal keyword)  \n   • Default: none listed here; default verbosity is “YES” (normal output) for most options, with exceptions noted below.  \n   • Allowed literals and their meanings:  \n     ‑ NO: suppress all output for the categories specified by OPT  \n     ‑ YES: produce normal (default) output  \n     ‑ FULL: produce extended output with additional intermediate details  \n     ‑ EXTR: produce extreme, highly detailed output  \n\nAdditional Context and Default Behavior  \n• Unless overridden by VAL, every OPT choice will yield normal output (YES) by default. Two notable exceptions:  \n  – EIGE (buckling eigenvalues) defaults to NO output (i.e., eigenvalues are not printed unless VAL is set to YES or higher).  \n  – SUM (summary) defaults to EXTR (extreme output), ensuring the summary is as detailed as possible unless altered.  \n• From BDK version 2020 onward, the MEMB and/or PLOT options automatically include member-plot generation. Plotting can be turned off explicitly by issuing “ECHO PLOT NO.”  \n• The “Chapter 4: Output Description” section of the BDK manual provides deeper insight into what each level of VAL (YES/FULL/EXTR) adds in terms of tables, intermediate calculation steps, and plotting details.\n\nHow This Table Fits into a RAG-Friendly Vector Store  \n• Fields (columns) become named metadata axes: “Item,” “Description,” “Unit,” “Default.”  \n• Each OPT literal and VAL literal can be stored as distinct concept tokens with attached descriptive text.  \n• The additional context—default behaviors, version-specific changes, pointer to Chapter 4—can be incorporated as supplementary context documents to support retrieval‐augmented generation and precise answer grounding.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                32
+            ],
+            "page_labels": [
+                "3-17"
+            ],
+            "type": "table",
+            "sections": [
+                "2 Theoretical Principles",
+                "3.13 ECHO – Control of Output"
+            ]
+        }
+    },
+    {
+        "content": "ECHO\n All options have a normal extent of output as default, except of EIGE with a default of no output and SUM with an extreme output as default. The effect of the individual options can be seen in Chapter 4: Output Description.\n From version 2020 per default, BDK will activate the member plots. This may be deactivated by using ECHO PLOT NO.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                32
+            ],
+            "page_labels": [
+                "3-17"
+            ],
+            "type": "text",
+            "sections": "3.13 ECHO – Control of Output"
+        }
+    },
+    {
+        "content": "The input table is a comprehensive summary of all design forces, moments, section properties and resistance values for each beam element in a structural model. It is organized section-by-section along each beam’s longitudinal axis (x), and contains the following groups of information:\n\n1. Identification & Position  \n • Beam number: unique identifier for each beam element  \n • Section coordinate x [m]: distance along the beam where the section data is reported  \n • Cross-section number: links to the cross-section database  \n • Material number: links to the material database (e.g. for Young’s modulus, yield strength)\n\n2. Section Geometric Properties  \n • Cross-sectional area A [m²]  \n • Torsional constant J [m⁴] (torsional moment of inertia)  \n • Warping constant Cw [m⁶] (resistance to section warping under torsion)  \n • Second moments of area Iy, Iz [m⁴] about the local y- and z-axes\n\n3. Design Internal Forces & Moments (all in kN or kNm)  \n • N: axial (normal) force  \n • Vy, Vz: shear forces in local y- and z-directions  \n • Mt (Mx): torsional moment about the longitudinal axis  \n • My, Mz: bending moments about the local y- and z-axes  \n • Mt2: secondary torsional moment (warping‐related torsion)\n\n4. Resistance & Capacity Values  \n • N_Rd: design plastic resistance to axial compression (kN)  \n • M_pl,y,Rk; M_pl,z,Rk: characteristic plastic bending resistances about y and z (kNm)  \n • M_pl,z,Rd: design plastic bending resistance about z (kNm)  \n • Additional columns may repeat or expand on characteristic vs. design resistances for different bending axes, to support code‐compliance checks.\n\n5. Support & Continuity Conditions  \n • DX [kNm/m]: distributed torsional stiffness (continuous‐beam spring rigidity)  \n • CY, CZ [kN/m²]: distributed translational stiffness in local y and z  \n   – Positive values indicate real (elastic) springs;  \n   – Negative values (usually –1.0) denote fully fixed conditions.\n\n6. Echo/Control Flags  \n Throughout the export you see tags such as ECHO_FORC, ECHO_SECT, ECHO_MAT, ECHO_BOUN. These do not carry numerical data but instruct the finite‐element software to “echo” or list each block of results in the output.\n\nHow it’s used in a RAG Vector Store  \n– Each row (beam-section entry) becomes a vectorized document embedding representing the local internal forces, section properties and resistances.  \n– Identifiers (beam number, section number) form keys for retrieval.  \n– Numeric fields (forces, moments, stiffnesses, capacities) serve as searchable attributes to support queries such as “find all sections where Mt exceeds 10 kNm” or “retrieve sections with torsional springs.”  \n– The grouping into geometry, loads, capacities and support conditions allows fine-grained indexing and retrieval for downstream code‐checking, reporting and design‐optimization tasks.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                34
+            ],
+            "page_labels": [
+                "4-1"
+            ],
+            "type": "table",
+            "sections": [
+                "4 Output Description",
+                "4.1 Design Forces and Moments"
+            ]
+        }
+    },
+    {
+        "content": "The input “DESIGN FORCES AND MOMENTS” table is organized to report all of the internal actions at discrete cross-sections along each beam in a structural model.  It is intended for insertion into a Retrieval-Augmented Generation (RAG) vector store, so that each field can be indexed, retrieved and combined with explanatory text in downstream queries.  Below is a structured description of its content, layout and purpose:\n\n1.  Table Purpose and Scope  \n    •  Captures computed internal forces and bending/torsional moments for every beam segment in a frame or grillage model.  \n    •  Associates each set of actions with a unique beam identifier and cross-section location (x-coordinate).  \n    •  Supports design checks against resistance capacities (compression, bending, warping, torsion).  \n\n2.  Primary Columns (per beam section)  \n    •  Beam number: Integer index of the beam line element in the mesh.  \n    •  x [m]: Longitudinal coordinate along the beam, measured from its start node.  \n    •  Cross-section number (SNo): Internal index pointing to a section property library.  \n    •  N [kN]: Axial (normal) force, positive in tension/compression depending on sign convention.  \n    •  Vy [kN] and Vz [kN]: Transverse shear forces in the local y- and z-directions.  \n    •  Mt [kNm]: Torsional moment about the beam’s longitudinal axis.  \n    •  My [kNm] and Mz [kNm]: Bending moments about the local y- and z-axes.  \n    •  Mb [kNm2]: Warping moment, capturing the rate of twist-induced warping along the section.  \n    •  Mt2 [kNm]: Secondary torsional moment, often arising from coupled warping effects.\n\n3.  Resistance and Capacity Echoes  \n    •  ECHO FORC NO: When activated, prints characteristic and design resistances for compression and bending.  \n      – Characteristic compression resistance (N-Rd,k).  \n      – Design plastic bending resistances M-pl,y,Rk and M-pl,z,Rk (about y and z axes).  \n      – Design bending resistances M-pl,z,Rd for limit state checks.  \n    •  ECHO SECT NO: Exports section-specific properties.  \n      – Material number (linking to the material library).  \n      – Young’s modulus (E) for elasticity.  \n    •  ECHO MAT NO: Outputs material mechanical data.  \n      – Shear modulus (G) and yield stress, if relevant.  \n\n4.  Boundary Condition Details  \n    •  ECHO BOUN NO: Lists support reactions at beam ends or nodes.  \n    •  CONTINUOUS section (4.4.2): Defines elastic restraint springs when the beam is not fully fixed.  \n      – DX [kNm/m]: Rotational stiffness about the local x-axis (torsional spring).  \n      – CY [kN/m2] and CZ [kN/m2]: Translational spring stiffness in y and z directions.  \n      – Convention: Positive entries denote real (elastic) springs; negative (–1.0) indicates full fixity.\n\n5.  Report Formatting Flags  \n    •  “Table is printed” / “Table is not printed”: Control whether the detailed design-force table appears in the final output.  \n    •  These flags help manage large models by suppressing unnecessary detail when not needed.\n\n6.  How This Maps to a RAG Vector Store  \n    •  Each beam-section record can be stored as a document embedding, keyed by beam number and x-location.  \n    •  Column names become field identifiers for retrieval (“Vy”, “Mz”, “ECHO_FORC_N0”).  \n    •  Capacity checks (ECHO FORC values) are stored alongside demands (N, My, Mz) to enable rapid “is this section OK?” queries.  \n    •  Support stiffness values (DX, CY, CZ) allow constraint-based search (e.g. “find all beams with partial fixity in torsion”).\n\nBy detailing every numeric field, unit and echo mechanism, this description ensures that any RAG-driven system can automatically interpret, index and cross-reference forces, moments and section capacities from the “DESIGN FORCES AND MOMENTS” table.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                35
+            ],
+            "page_labels": [
+                "4-2"
+            ],
+            "type": "table",
+            "sections": [
+                "4 Output Description",
+                "4.1 Design Forces and Moments"
+            ]
+        }
+    },
+    {
+        "content": "The input table is a comprehensive, row-by-row listing of all relevant design forces, moments, stiffness properties and resistance parameters for each beam section in a structural model.  It is organized into several conceptual groups, each of which is summarized below.  All values refer to a local beam‐axis coordinate system unless otherwise noted.\n\n1.  Identification and Location  \n   •  Beam (text) – a unique name or label for each beam element.  \n   •  Beam number (integer) – numerical index of the beam.  \n   •  x [m] (real) – the longitudinal coordinate along the beam, in meters, at which the section is evaluated.  \n   •  x‐value of the beam section (text/ID) – a code or reference for that section location.  \n   •  SNo/Cross‐section number (integer) – the index of the cross‐section property set used at this station.\n\n2.  Internal Forces and Moments  \n   •  N [kN] – axial (normal) force, positive in tension.  \n   •  Vy [kN], Vz [kN] – shear forces in the local y‐ and z‐directions.  \n   •  Mt [kNm] – torsional moment about the beam‐axis (often called torque).  \n   •  My [kNm], Mz [kNm] – bending moments about the local y‐ and z‐axes, respectively.  \n   •  Mb [kNm2] – warping moment (bimoment), capturing non‐uniform torsional warping effects.  \n   •  Mt2 [kNm] – secondary torsional moment (often associated with bimoment-induced torques).\n\n3.  Plastic Resistance Parameters  \n   For design verification (e.g. plastic design or capacity checks), four characteristic/plastic capacities are given:  \n   •  M-pl,y,Rd [kNm] – design plastic bending resistance about the local y‐axis.  \n   •  M-pl,y,Rk [kNm] – characteristic plastic bending resistance about y.  \n   •  M-pl,z,Rd [kNm] – design plastic bending resistance about z.  \n   •  M-pl,z,Rk [kNm] – characteristic plastic bending resistance about z.\n\n4.  Echo and Print Control Flags  \n   •  ECHO FORC NO – flag indicating whether the force/moment output is printed.  \n   •  ECHO SECT NO – flag for printing section property data.  \n   •  ECHO MAT NO – flag for printing material data.  \n   •  ECHO BOUN NO – flag for printing boundary/support data.\n\n5.  Section and Material Properties  \n   •  Material number (integer) – index of the material assigned to this beam.  \n   •  Young’s modulus E [units] – elastic modulus of the beam material.\n\n6.  End Condition & Warping Stiffness  \n   Per “Beginning of beam” and “End of beam” station, warping restraint is defined by:  \n   •  Warping moment spring constant DX [kNm/m] – positive values denote an elastic spring support against warping, negative values denote a fixed restraint (–1.0 = fully fixed).  \n   •  CY [kN/m2] – translational spring support stiffness in local y‐direction.  \n   •  CZ [kN/m2] – translational spring support stiffness in local z‐direction.\n\n7.  Boundary/Continuous Support Data  \n   Under the “CONTINUOUS” heading, additional support continuity properties may be listed, connecting adjacent beam elements’ warping, torsion or translations.\n\n8.  Miscellaneous Labels  \n   The table also includes textual markers such as “Beginning of beam,” “End of beam,” “Warping moment,” “Displacement,” “Torsion,” “Rotating spring” to signal sub‐blocks within the output file.\n\nOverall, each table row gives a snapshot of the internal actions (axial, shear, torsion, bending, warping), the associated resistance capacities, the section and material references, plus any specified end restraints or elastic supports.  This structured dataset is essential for post‐processing in a RAG (retrieval‐augmented generation) vector store, allowing queries such as “find all sections where Mz exceeds plastic capacity,” or “list beams with no warping restraint at their ends,” to be answered efficiently.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                35
+            ],
+            "page_labels": [
+                "4-2"
+            ],
+            "type": "table",
+            "sections": [
+                "4 Output Description",
+                "4.1 Design Forces and Moments"
+            ]
+        }
+    },
+    {
+        "content": "The provided table—titled “DESIGN FORCES AND MOMENTS”—serves as a comprehensive data set for each discrete section along a beam in a structural analysis model. It is organized into several logical blocks that describe the internal forces and moments, the section’s resistances, material properties, and support conditions. Below is a structured breakdown of its columns and their significance:\n\n1. Beam Identification and Position  \n   • Beam: Name or label of the member (e.g. “Beam”).  \n   • Beam number: Unique integer ID for each beam.  \n   • x [m]: Longitudinal coordinate along the beam’s axis, in meters, at which the section is evaluated.  \n\n2. Section Reference  \n   • SNo (Cross-section number): Index referring to a predefined cross-sectional geometry and properties.  \n\n3. Internal Forces (Units in kN)  \n   • N: Axial (normal) force—positive sign convention typically tensile.  \n   • Vy: Shear force in the local y-direction.  \n   • Vz: Shear force in the local z-direction.  \n\n4. Internal Moments (Units in kNm)  \n   • Mt: Torsional (twisting) moment about the beam’s longitudinal axis.  \n   • My: Bending moment about the local y-axis (strong or weak axis depending on section orientation).  \n   • Mz: Bending moment about the local z-axis.  \n\n5. Warping and Secondary Torsion  \n   • Mb [kNm²]: Warping moment constant—captures warping restraint effects along open‐sections.  \n   • Mt2 [kNm]: Secondary torsional moment due to warping restraint.  \n\n6. Section Resistance Characteristics  \n   Under the heading “Characteristic value of resistance to compression” and “Design plastic resistance to bending moments,” the following are tabulated:  \n   • M-pl,y,Rk [kNm]: Characteristic (95% fractile) plastic moment capacity about the y-axis.  \n   • M-pl,y,Rd [kNm]: Design plastic moment resistance (reduced by partial safety factors) about the y-axis.  \n   • M-pl,z,Rk [kNm]: Characteristic plastic moment capacity about the z-axis.  \n   • M-pl,z,Rd [kNm]: Design plastic resistance about the z-axis.  \n\n7. Sectioning and Material Echo Blocks  \n   The lines beginning with “ECHO SECT” and “ECHO MAT” serve as checkpoints in the export stream:  \n   • After “ECHO SECT NO,” the table reiterates the section number, the associated material number, and the section’s Young’s modulus E [e.g. in kN/mm² or GPa].  \n   • “ECHO MAT NO” confirms the material entry.  \n\n8. Boundary and Support Conditions  \n   • Under “Beginning of beam” warping springs: tabulated values represent spring constants at the very start of the beam. Positive values denote elastic springs; negative values (e.g. –1.0) denote fully fixed supports.  \n   • “CONTINUOUS” support data (if present) lists:  \n     – DX [kNm/m]: Warping‐stiffness per unit length for continuous spring support.  \n     – CY [kN/m²]: Linear spring support in local y direction.  \n     – CZ [kN/m²]: Linear spring support in local z direction.  \n   • “ECHO BOUN NO” marks the end of the support‐condition block.  \n\nUsage Notes for RAG/VECTOR STORE  \n• Each row is a feature vector keyed by (Beam number, x-position).  \n• Numeric fields (forces, moments, resistances, springs) become the embedding dimensions.  \n• The “SNo,” “material number,” and ECHO markers can serve as categorical tags or metadata.  \n• Units and sign conventions must be normalized before indexing: e.g. convert all length units to meters, force units to kN, moment units to kNm.  \n\nBy capturing both the internal force/moment state and the capacity/resistance parameters alongside boundary stiffness, this table allows a retrieval‐augmented generation system to answer queries about strength checks, section utilization ratios, support fixity, and dynamic response predictions for any point along the beam.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                36
+            ],
+            "page_labels": [
+                "4-3"
+            ],
+            "type": "table",
+            "sections": [
+                "4 Output Description",
+                "4.1 Design Forces and Moments"
+            ]
+        }
+    },
+    {
+        "content": "This table contains the design forces and moments for each beam section.\n DESIGN FORCES AND MOMENTS\n Beam Beam number x[m] x-value of the beam section SNo Cross-section number N[kN] Normal force Vy[kN] Shear force Vz[kN] Shear force Mt[kNm] Torsional moment My[kNm] Bending moment Mz[kNm] Bending moment Mb[kNm2] Warping moment Mt2[kNm] Secondary torsional moment\n ECHO FORC\n NO\n Characteristic value of resistance to compression\n Design plastic resistance to bending moments\n M-pl,y,Rk[kNm]\n M-pl,z,Rd[kNm] M-pl,z,Rk[kNm] Characteristic value of resistance to bending mo- ments Design plastic resistance to bending moments Characteristic value of resistance to bending mo- ments\n ECHO SECT\n NO\n Material number\n Young’s modulus\n ECHO MAT\n NO\n Beginning of beam\n Warping moment\n positive values are real spring constants negative values are fixities (-1.0 = fully fixed)\n 4.4.2 Continuous\n CONTINUOUS\n DX[kNm/m] Torsional support CY[kN/m2] Support in local y-direction CZ[kN/m2] Support in local z-direction\n ECHO BOUN\n NO",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                34,
+                35,
+                36
+            ],
+            "page_labels": [
+                "4-1",
+                "4-2",
+                "4-3"
+            ],
+            "type": "text",
+            "sections": "4.1 Design Forces and Moments"
+        }
+    },
+    {
+        "content": "The input “Buckling Eigenvalues” table is organized into a series of thematic blocks, each capturing a different aspect of the member’s buckling behavior, design checks and auxiliary terms. Its overall purpose is to record, compute and report the key parameters that govern flexural, lateral, torsional and interaction buckling for compression members in steel structures. Below is a detailed breakdown of its structure:\n\n1. Table Header  \n  • Title: “BUCKLING EIGENVALUES”  \n  • Subtitle: “TYPE” and “Type of eigenvalue analysis” indicate whether the row refers to flexural buckling, lateral buckling, lateral–torsional buckling or a mixed‐mode analysis (denoted by codes such as FLEX, LAT, LTB).  \n  • “No.” / “Eigenvalue number” gives the sequence index for multiple buckling modes per loadcase.\n\n2. Loadcase Information  \n  • Loadcase number (Loadcase) links the buckling output to a specific combination of applied forces and moments.  \n  • N-Ed [kN]: design axial force (negative values indicate compression).  \n  • M-y,Ed [kNm], M-z,Ed [kNm]: absolute maximum bending moments about the y–y and z–z principal axes respectively.\n\n3. Flexural Buckling (Elastic Critical Forces and Lengths)  \n  • N-cr [kN]: elastic critical flexural buckling force.  \n  • L-cr [m]: calculated comparative buckling length (effective length) in the relevant axis.  \n  • Buckling curve for cross-section (y–y or z–z) with associated α (imperfection factor), λ (non-dimensional slenderness) and χ (reduction factor).  \n  • N-b,Rd [kN]: design buckling resistance under axial load (reduced by χ).\n\n4. Lateral–Torsional Buckling  \n  • M-cr [kNm]: elastic critical moment for lateral–torsional buckling.  \n  • C-1: moment gradient factor (based on bending diagram and end restraint).  \n  • LTB recommended curve (α-LT imperfection factor, λ-LT slenderness, λ-LT0 plateau length).  \n  • β: correction factor for the lateral–torsional buckling curve.  \n  • χ-LT: reduction factor (with optional k-c moment distribution factor and f modification factor yielding χ-LT,mod).  \n  • M-b,Rd [kNm]: design buckling resistance moment.\n\n5. Interaction Factors  \n  • k-yy, k-yz, k-zy, k-zz: factors that account for cross‐interaction between bending axes and axial load when combining utilization ratios.\n\n6. Auxiliary Terms for Torsional and Combined Modes  \n  • λ-0: slenderness parameter for buckling due to uniform bending.  \n  • N-cr,T [kN]: elastic critical torsional buckling force.  \n  • C-my,0, C-mz,0: equivalent uniform moment factors used in non-uniform bending checks.  \n  • Non-dimensional slenderness for lateral–torsional buckling repeated for context in combined checks.\n\n7. Utilisation Checks  \n  • CHECK OF FLEXURAL BUCKLING/TORSIONAL BUCKLING:  \n     – n-y = N-Ed / N-b,y,Rd, n-z = N-Ed / N-b,z,Rd  \n  • CHECK OF LATERAL BUCKLING:  \n     – m-y = M-y,Ed / M-b,Rd  \n  • CHECK OF LATERAL–TORSIONAL BUCKLING:  \n     – m-y, m-z, n-y, n-z ratios as above, plus combined utilization indices nm-y and nm-z per EN 1993-1-1 Eqs. 6.61 and 6.62.\n\n8. Printing Control Flags  \n  • NO / YES / FULL: specify whether this table is omitted, printed partially (only design values) or printed in full detail depending on the selected output mode (FLEX, LAT, LTB).\n\n9. Steel Members Metadata (beginning of next section)  \n  Although truncated in the input snapshot, this section lists global properties such as:  \n  • Selection type and sign convention  \n  • Total length of the member  \n  • Cross-section number and class  \n  • Partial safety factors, etc.\n\nEach row therefore corresponds to one eigenvalue mode under a defined loadcase, listing elastic critical loads or moments, reduction and interaction factors, design resistances and verification ratios. This organized, multi‐block layout enables automated RAG vector stores to index not only the raw numbers but also the derivation path—linking slenderness parameters, imperfection factors, buckling curves and eventual utilisation checks in a self‐consistent chain.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                36
+            ],
+            "page_labels": [
+                "4-3"
+            ],
+            "type": "table",
+            "sections": [
+                "4 Output Description",
+                "4.5 Buckling eigenvalues"
+            ]
+        }
+    },
+    {
+        "content": "The buckling eigenvalues are given out in a table.\n BUCKLING EIGENVALUES\n TYPE Type of eigenvalue analysis No. Eigenvalue number Buckling factor Buckling factor\n ECHO EIGE\n NO\n Loadcase Loadcase number N-Ed [kN] Maximum compressive force ( < = 0.0) M-y,Ed [kNm] Absolute maximum moment My M-z,Ed [kNm] Absolute maximum moment Mz\n N-cr [kN] Elastic critical flexural buckling force L-cr [m] Comparative buckling length y − y, z − z Buckling curve for a cross-section α Imperfection factor λ Non-dimensional slenderness χ Reduction factor for flexural buckling N-b,Rd [kN]\n Design buckling resistance of a compression mem-\n ber\n LATERAL BUCKLING\n M-cr [kNm] Elastic critical moment for lateral torsional buckling C-1 Moment factor, depending on bending moment di- agram and support conditions LTB Recommended lateral torsional buckling curve α-LT Imperfection factor for lateral torsional buckling λ-LT Slenderness for lateral torsional buckling λ-LT0 Plateau length for the lateral torsional buckling curve -LT Value to determinate the reduction factor β Correction factor for the lateral torsional buckling curve χ-LT Reduction factor for lateral torsional buckling k-c Correction factor for moment distribution f Modification factor χ-LT,mod Modified reduction factor for lateral torsional buck- ling M-b,Rd [kNm] Design buckling resistance moment\n INTERACTION FACTORS\n k-yy, k-yz, k-zy, k-zz\n Interaction factors\n AUXILIARY TERMS\n λ-0 buckling due to uniform bending N-cr,T[kN] Elastic critical torsional buckling force C-my,0, C-mz,0 Equivalent uniform moment factor\n Non-dimensional slenderness for lateral torsional\n CHECK OF FLEXURAL BUCKLING/TORSIONAL BUCKLING",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                36,
+                37,
+                38
+            ],
+            "page_labels": [
+                "4-3",
+                "4-4",
+                "4-5"
+            ],
+            "type": "text",
+            "sections": "4.5 Buckling eigenvalues"
+        }
+    },
+    {
+        "content": "AUXILIARY TERMS. λ-0 buckling due to uniform bending N-cr,T[kN] Elastic critical torsional buckling force C-my,0, C-mz,0 Equivalent uniform moment factor. Non-dimensional slenderness for lateral torsional. CHECK OF FLEXURAL BUCKLING/TORSIONAL BUCKLING.\n n-y N-Ed / N-b,y,Rd\n n-z N-Ed / N-b,z,Rd\n CHECK OF LATERAL BUCKLING\n m-y\n M-y,Ed / M-b,Rd\n CHECK OF LATERAL TORSIONAL BUCKLING\n n-y N-Ed / N-b,y,Rd n-z N-Ed / N-b,z,Rd m-y M-y,Ed / M-b,Rd m-z M-z,Ed / M-b,Rd nm-y Buckling resistance according to EN 1993-1-1, Eq. 6.61 nm-z Buckling resistance according to EN 1993-1-1, Eq. 6.62\n NO YES FULL No printing of results Only design values table and corresponding utili- sation table is printed according to type FLEX, LAT, LTB All tables are printed",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                39,
+                38
+            ],
+            "page_labels": [
+                "4-6",
+                "4-5"
+            ],
+            "type": "text",
+            "sections": "4.5 Buckling eigenvalues"
+        }
+    },
+    {
+        "content": "DESIGN VALUES\n Selection Selection type and element or sequence to be de- signed\n Length[m] Total length of the selected member\n Lambda-Kz Corresponding slenderness ratio, only due to com- pression ky Coefficient used to consider the moment distribu- tion My and the corresponding slenderness ratio Lambda-Kz kz analogous to y ay Coefficient az Ccoefficient Kappa-M Reduction factor for the lateral torsional buckling Lambda-M Corresponding slenderness ratio, only due to bending moment effects Beta-My Moment coefficient to find the shape of the bending moments My Beta-Mz analogous to y Beta-Mqy Moment shape coefficient for the lateral direction Beta-Mqz analogous to y System-Faktor System factor according to Table 9 DIN 18800 Part 2 Buckling Curves According to Table 4 DIN 18800 Part 2\n CHECK OF TORS.-FLEXURAL BUCKLING\n BDK\n Utilisation of the lateral torsional buckling safety\n ECHO MEMB\n NO No printing of results YES Only design values table and utilisation table is printed FULL All tables are printed\n 4.7 Summary of the results\n 4.7.1\n EN 1993-1-1\n Selection Loadcase n-y n-z m-y m-z nm-y nm-z Selection type and element or sequence to be de- signed Loadcase number N-Ed / N-b,y,Rd N-Ed / N-b,z,Rd M-y,Ed / M-b,Rd M-z,Ed / M-b,Rd Buckling resistance according to EN 1993-1-1, Eq. 6.61 Buckling resistance according to EN 1993-1-1, Eq. 6.62\n Check\n Passed or Not passed\n DIN 18800/ OEN 4300 SUMMARY OF THE RESULTS Selection Loadcase BDK Check BS 5950 SUMMARY OF THE RESULTS Selection Loadcase BDK Check ECHO SUM Selection of elements forming the member to be designed Loadcase number Utilisation of the lateral torsional buckling safety Passed or Not passed Selection type and element or sequence to be de- signed Loadcase number Utilisation of the lateral torsional buckling safety Passed or Not passed",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                39,
+                40,
+                41
+            ],
+            "page_labels": [
+                "4-6",
+                "4-7",
+                "4-8"
+            ],
+            "type": "text",
+            "sections": "4.6.2 DIN 18800/ OEN 4300"
+        }
+    },
+    {
+        "content": "DIN 18800/ OEN 4300 SUMMARY OF THE RESULTS Selection Loadcase BDK Check BS 5950 SUMMARY OF THE RESULTS Selection Loadcase BDK Check ECHO SUM Selection of elements forming the member to be designed Loadcase number Utilisation of the lateral torsional buckling safety Passed or Not passed Selection type and element or sequence to be de- signed Loadcase number Utilisation of the lateral torsional buckling safety Passed or Not passed.\n 4.7.2\n 4.7.3\n NO YES FULL Table is not printed Table for globally maximum utilisation level will be printed Table of utilisation level for every member will be printed\n EXTR\n Full table of utilisation level for every member and every loadcase will be printed",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                41,
+                42
+            ],
+            "page_labels": [
+                "4-8",
+                "4-9"
+            ],
+            "type": "text",
+            "sections": "4.6.2 DIN 18800/ OEN 4300"
+        }
+    },
+    {
+        "content": "[1] DIN 18800-2:2008. Stahlbauten, Teil 2: Stabilitätsfälle - Knicken von Stäben und Stabw- erken. DIN. 2008.\n [2] EN 1993-1-1:2005. Eurocode 3: Design of steel structures, Part 1-1: General rules and rules for buildings. CEN. 2005.\n [3] BS 5950-1:2000. Structural use of steelwork in building, Part 1: Code of practice for design - Rolled and welded sections. BSi. 2001.\n [4] Chr. Petersen. Statik und Stabilität der Baukonstruktionen. Vieweg & Sohn, Braunschweig, 1980.\n [5] K. Roik, J. Carl, and J. Lindner. Biegetorsionsprobleme gerader dünnwandiger Stäbe. Wilhelm Ernst & Sohn, Berlin, 1972.\n [6] H. Schroeter. Berechnung idealer Kipplasten von Trägern veränderlicher Höhe mit Hilfe Hermit’scher Polynome. Mitteilungen aus dem Institut für Bauingenieurwesen I, Heft 5 Technische Universität München, 1980.\n [7] N. Boissonnade et al. Rules for Member Stability in EN 1993-1-1, Background documen- tation and design guidelines. ECCS Technical Committee 8 - Stability. No. 119. 2006.\n [8] R. Greiner and J. Lindner. “Interaction formulae for members subjected to bending and ax- ial compression in EUROCODE 3 - the Method 2 approach”. In: Journal of Constructional Steel Research 62 (2006), pp. 757–770.",
+        "metadata": {
+            "document_name": "bdk_1.pdf",
+            "page_indices": [
+                44
+            ],
+            "page_labels": [
+                "4-11"
+            ],
+            "type": "text",
+            "sections": "Bibliography"
+        }
+    }
+]

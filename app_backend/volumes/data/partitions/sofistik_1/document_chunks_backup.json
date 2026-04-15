@@ -1,0 +1,2044 @@
+[
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            2
+        ],
+        "page_labels": [
+            null
+        ],
+        "type": "table",
+        "sections": [
+            "Foreword"
+        ],
+        "coordinates": [
+            [
+                675.2308959960938,
+                1423.641357421875
+            ],
+            [
+                2968.791015625,
+                4301.2197265625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Definitions and Descriptions . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-2 2.1.1 Lines (physical sentences) . . . . . . . . . . . . . . . . . . . . . . . 2-2 2.1.2 Records (logical structure) . . . . . . . . . . . . . . . . . . . . . . . 2-2 2.1.3 Separation Characters . . . . . . . . . . . . . . . . . . . . . . . . . 2-2 2.1.4 Data . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-3 Input Syntax . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-3 2.2.1 Basic Input Format . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-3 2.2.2 Default Value . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-4 2.2.3 Repetition . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-4 2.2.4 Increments/Decrements . . . . . . . . . . . . . . . . . . . . . . . . 2-4 2.2.5 Comments . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-4 2.2.6 Record Continuation . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-4 2.2.7 Record Partition . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-5 2.2.8 Positioning . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-5 2.2.9 Defining Tables . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-5 2.2.10 Help-Record . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-6 2.2.11 Generation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-6 2.2.12 List of Values . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-7 2.2.13 Conversion of Units . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-7 2.2.14 LET - and STO - Variables . . . . . . . . . . . . . . . . . . . . . . . 2-8 2.2.15 Arithmetic Expressions . . . . . . . . . . . . . . . . . . . . . . . . . 2-10 2.2.16 FUN - Definition of functions . . . . . . . . . . . . . . . . . . . . . . 2-12 2.2.17 LOOP, ENDLOOP - Loops and Jumps . . . . . . . . . . . . . . . 2-13 2.2.18 IF - Logical Conditions . . . . . . . . . . . . . . . . . . . . . . . . . 2-14 2.2.19 @CDB - Selection of a CDBASE . . . . . . . . . . . . . . . . . . . 2-16 2.2.20 @KEY - Access to the CDBASE . . . . . . . . . . . . . . . . . . . 2-17 2.2.21 @() - Access to the CDBASE . . . . . . . . . . . . . . . . . . . . . 2-18 General Records . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-20 2.3.1 HEAD – Title Lines . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-21 2.3.2 END – End of an Input Block . . . . . . . . . . . . . . . . . . . . . 2-21 2.3.3 TXB – Introducing Text . . . . . . . . . . . . . . . . . . . . . . . . . 2-21 2.3.4 TXE – Concluding Text . . . . . . . . . . . . . . . . . . . . . . . . . 2-22 2.3.5 <TEXT> – Text block . . . . . . . . . . . . . . . . . . . . . . . . . . 2-22 2.3.6 </TEXT> – End of a text block . . . . . . . . . . . . . . . . . . . . 2-23 2.3.7 ECHO – Output Control . . . . . . . . . . . . . . . . . . . . . . . . . 2-23 2.3.8 UNIT – Units for Input/Output . . . . . . . . . . . . . . . . . . . . . 2-25"
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            3
+        ],
+        "page_labels": [
+            null
+        ],
+        "type": "table",
+        "sections": [
+            "Foreword"
+        ],
+        "coordinates": [
+            [
+                580.4249267578125,
+                371.76300048828125
+            ],
+            [
+                2981.904541015625,
+                2677.92333984375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "2.3.9 PAGE – Control of Input/Output . . . . . . . . . . . . . . . . . . . . 2-27 2.3.10 SIZE – Graphic Format . . . . . . . . . . . . . . . . . . . . . . . . . 2-29 Generation of Pictures . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-32 2.4.1 <PICT> – Start of a picture . . . . . . . . . . . . . . . . . . . . . . 2-32 2.4.2 GNT – Scale of a picture . . . . . . . . . . . . . . . . . . . . . . . . 2-32 2.4.3 GPL – Polyline . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-32 2.4.4 GPM – Polymarker . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-33 2.4.5 GFA – Fill Area . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-33 2.4.6 GGDP – Generalized Drawing Primitive . . . . . . . . . . . . . . 2-34 2.4.7 GTXT – Text Label . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-35 2.4.8 GSCA – Dimensioning . . . . . . . . . . . . . . . . . . . . . . . . . 2-35 Attributes of Graphic Representations . . . . . . . . . . . . . . . . . . . . . . 2-36 2.5.1 GCOL – Colour Selection . . . . . . . . . . . . . . . . . . . . . . . 2-36 2.5.2 GPLI – Polyline Attributes . . . . . . . . . . . . . . . . . . . . . . . 2-36 2.5.3 GPMI – Polymarker Attributes . . . . . . . . . . . . . . . . . . . . . 2-38 2.5.4 GTXI – Text Attributes . . . . . . . . . . . . . . . . . . . . . . . . . . 2-38 2.5.5 GFAI – Fill Area Attributes . . . . . . . . . . . . . . . . . . . . . . . 2-39 Insertion of a Picture . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-40 2.6.1 <LINK> – Insertion of a Picture . . . . . . . . . . . . . . . . . . . 2-40 Parametric Input . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-41 Compatibility of Data files . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-42 Starting an Analysis . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-43 2.9.1 #DEFINE - Parameter Substitution . . . . . . . . . . . . . . . . . . 2-43 2.9.2 #INCLUDE - Block Definitions . . . . . . . . . . . . . . . . . . . . . 2-44 2.9.3 APPLY - Integration of data during the calculation . . . . . . . . 2-45 2.9.4 #IF - Conditional Input . . . . . . . . . . . . . . . . . . . . . . . . . 2-46 2.9.5 Templates . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-47 2.9.6 Iterative Analysis with Multiple Modules . . . . . . . . . . . . . . 2-47 2.9.7 Operating System Commands . . . . . . . . . . . . . . . . . . . . 2-48"
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            1,
+            2,
+            3,
+            4
+        ],
+        "page_labels": [
+            null,
+            null,
+            null,
+            "1-1"
+        ],
+        "type": "text",
+        "sections": [
+            "Foreword"
+        ],
+        "content": "SOFiSTiK Basics\n SOFiSTiK Manual, Service Pack 2025-4 Build 146\n Copyright © 2025 by SOFiSTiK AG, Nuremberg, Germany.\n SOFiSTiK AG\n HQ Nuremberg Office Garching Flataustraße 14 Parkring 2 90411 Nürnberg 85748 Garching bei München Germany Germany T +49 (0)911 39901-0 T +49 (0)89 315878-0 F +49(0)911 397904 F +49 (0)89 315878-23 info@sofistik.com\n www.sofistik.com\n This manual is protected by copyright laws. No part of it may be translated, copied or reproduced, in any form or by any means, without written permission from SOFiSTiK AG. SOFiSTiK reserves the right to modify or to release new editions of this manual.\n The manual and the program have been thoroughly checked for errors. However, SOFiSTiK does not claim that either one is completely error free. Errors and omissions are corrected as soon as they are detected.\n The user of the program is solely responsible for the applications. We strongly encourage the user to test the correctness of all calculations at least by random sampling.\n Contents\n Contents\n i\n If you miss something here...\n 1-1\n CADINP - Input Language\n 2.1\n 2.2\n 2.3\n 2-1\n 2.4\n 2.5\n 2.6\n 2.7\n 2.8\n 2.9\n 1\n If you miss something here...\n Hint\n From version 2022 we have moved a large part of the content to the new SOFiSTiK FEA manual.\n The new SOFiSTiK FEA Manual can be opened by following:\n https://www.sofistik.de/documentation/2025/en/fea\n Or you may also open the manual by following:\n Help Ribbon (SSD, Teddy, ...) →",
+        "token_count": 438
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            4
+        ],
+        "page_labels": [
+            "1-1"
+        ],
+        "type": "text",
+        "sections": [
+            "Foreword"
+        ],
+        "content": "From version 2022 we have moved a large part of the content to the new SOFiSTiK FEA manual.. The new SOFiSTiK FEA Manual can be opened by following:. https://www.sofistik.de/documentation/2025/en/fea. Or you may also open the manual by following:. Help Ribbon (SSD, Teddy, ...) →.\n <=\n Online Help → FEA Manual",
+        "token_count": 86
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            6
+        ],
+        "page_labels": [
+            "2-1"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language"
+        ],
+        "content": "The input language CADINP for free input format of data is the result of a further development of a project CADINT, which originated from the Federal Ministry of Research and Technology for the study in the CAD area (M.Ahn, K.H.Böckeler, W.Haas / Eingabe Konventionen für CAD- Programme, CAD-Bericht Kfk-CAD 39, Kernforschungszentrum Karlsruhe, 1976).\n The variation of this format, which was developed by SOFiSTiK, includes several additional ca- pabilities. In certain points it therefore has some deviations from the above mentioned CADINT standard.\n The full capability of the language can be achieved in combination with SPS and/or WPS, when functions for block building and parameter substitution are used. CADINP and SPS represent a full programming language for the calculation of problems in structural engineering, which will outdo any guided GUI. The processing occurs in two stages.\n • SPS or WPS use a single file or a set of sub-files to create an input file for every program being used. This is called parsing. During this process globally defined text elements are inserted and larger blocks are inserted or skipped. Strings are addressed with $(name). The strings can be defined or undefined in the input file or the SOFiSTiK-environment. At this stage no calculations have take place, that is why there is a difference, whether the string A = ”2+2” is inserted at $(A)*3 or ($(A))*3.\n • Each computational program starts its own CADINP processor, which then starts the arith- metic calculations. The variables used within CADINP are marked with a # at the beginning. They do not need any brackets and represent numbers. They can be converted to text input data where needed, especially within comments. However they can only be used within the local scope of the single program.\n The combination of these two stages allows the description of a complete analysis systems by means of manual calculations and documentation of the analysis assumptions and the resulting computer calculations. This in turn produces a complete analysis document in the computer.",
+        "token_count": 438
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            7,
+            6
+        ],
+        "page_labels": [
+            "2-2",
+            "2-1"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language"
+        ],
+        "content": "They can be converted to text input data where needed, especially within comments. However they can only be used within the local scope of the single program.. The combination of these two stages allows the description of a complete analysis systems by means of manual calculations and documentation of the analysis assumptions and the resulting computer calculations. This in turn produces a complete analysis document in the computer..\n Each computational program expects its input data in a file. The input consists of records, which have a name and are constructed in free format according to the CADINP rules.\n Generally several individual modules are executed while working on a project. The interaction of these modules is necessary for a complete analysis. In this case the normal procedure is to gather the entire data in one or a few files, and through the appropriate records within the data make calls to the respective programs.\n In principle, an input file may be structured as follows:\n PROG AQUA\n HEAD ! Material and cross-section definition END\n PROG SOFIMSHA\n HEAD\n ! Input data for FE-system\n END\n PROG ASE\n HEAD ! Input data for analysis of 1st load case END\n PROG ASE\n HEAD ! Input data for analysis of 2nd load case END\n ! Copy the report file somewhere else ...\n +SYS COPY \"*.plb\"d:\n PROG WING\n HEAD ! System and result plots END\n HEAD\n The first line should be a PROG line. Each module can be called as often as desired. The order of execution of the programs corresponds to the order of the PROG lines in the file. If -PROG is entered instead of PROG or +PROG, the associated module will be omitted. Single modules can also be selected directly.\n Hint\n Processing a complete SOFiSTiK input file can be done either interactively using WPS or alternatively as a batch-job using SPS.",
+        "token_count": 379
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            7
+        ],
+        "page_labels": [
+            "2-2"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.1 Definitions and Descriptions",
+            "2.1.1 Lines (physical sentences)"
+        ],
+        "content": "The input consists of lines. Each line contains up to 255 characters and corresponds to one line on the screen.",
+        "token_count": 23
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            7
+        ],
+        "page_labels": [
+            "2-2"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.1 Definitions and Descriptions",
+            "2.1.2 Records (logical structure)"
+        ],
+        "content": "Similar or logical connected data are put together in records. Each record has a name. The records do not have to conform with the line separation.",
+        "token_count": 29
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            7
+        ],
+        "page_labels": [
+            "2-2"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.1 Definitions and Descriptions",
+            "2.1.3 Separation Characters"
+        ],
+        "content": "The individual values within a record are separated by the separation character. One or more blank characters (space bar) serve as separation characters.",
+        "token_count": 27
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            8
+        ],
+        "page_labels": [
+            "2-3"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.1 Definitions and Descriptions",
+            "2.1.4 Data"
+        ],
+        "content": "Data can be numbers or text (=Literals). Numbers may have a sign and an exponent. If an integer number is expected, the given number will be rounded to the nearest integer, e.g.\n 2 0.04 -.5 3.7E8 -0.5E-3\n Texts are arbitrary strings of characters. Only the first four characters are significant. Text should be delimited by apostrophes if there is danger of confusion with numbers, record names or items, or if it includes blank spaces or the characters ’,’ or ’;’ or ’$’, e.g.\n ALFA NODE 1S45 'A B' '1.45' 'A;B' \"Ab\"\n With Version 2010 all international characters (UTF8) may be used, previous versions allowed only the local code-page characters. However the short ident keys with exactly 4 characters allow only for pure ANSI-characters (i.e. no Umlauts or accents).\n Lower case characters are automatically converted to uppercase characters, as long as they are not between apostrophes. However a few exceptions are enforced to upper case (e.g. names of actions) to avoid ambiguites, these will be marked as LITnn instead of Litnn in the column ”unit”.\n If a literal contains a variable (see ) there are three cases to be distinguished:\n • The literal has been defined with apostrophes and starts with an equal sign (=). In that case the literal is passed unchanged but without the leading = to the program allowing to define formulas. This if course only useful if the program can handle the literal in that form as intended.\n • If the variable has been defined with a literal, this content will be inserted instead of the variable.\n • If the variable has been defined with a value, this value will be formatted and inserted instead of the variable in the literal.\n For an optional literal i.e. instead of a number and for variables containing literals only the form #name without any arithmetics or indices is allowed (e.g. A#1 with #1=25 yields ”A25”). If a number with arithmetics is required an equal sign has to be added at the beginning. Thus #X/2 will yield the literal \"‘25/2\"’, while =#X/5 will yield the number 12.5.",
+        "token_count": 484
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            8
+        ],
+        "page_labels": [
+            "2-3"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.1 Definitions and Descriptions",
+            "2.1.4 Data"
+        ],
+        "content": "A#1 with #1=25 yields ”A25”). If a number with arithmetics is required an equal sign has to be added at the beginning. Thus #X/2 will yield the literal \"‘25/2\"’, while =#X/5 will yield the number 12.5..\n Within a real pure Literal however the #() function with the format as a second parameter i.e. #(#ALPHA,8.3) has to be used. The integer part of the format selects the number of total characters (8), while the decimal part selects the numbers of decimal digits (3). The first argument may be any complex arithmetic expression.",
+        "token_count": 136
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            8,
+            9
+        ],
+        "page_labels": [
+            "2-3",
+            "2-4"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.2 Input Syntax",
+            "2.2.1 Basic Input Format"
+        ],
+        "content": "• The input consists of records.\n • The input record consists of the record name followed by data in the order specified in the input description.\n • Each record occupies one input line.\n • The record name can be omitted when the record is of the same type as the preceding one.\n • A record can start at any position in a line.\n • The data is separated from each other by one or several separation characters.",
+        "token_count": 83
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            9
+        ],
+        "page_labels": [
+            "2-4"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.2 Input Syntax",
+            "2.2.2 Default Value"
+        ],
+        "content": "If the minus sign (-) is given instead of a data value, the program uses the corresponding default value as specified in the programs description. This has been used in the past also to skip unwanted items. As this is strongly dependant on the sequence of the items which may change sometimes, it shouldn’t be used any more.\n If less data is entered for some record than its description demands, the corresponding default values will be used in the place of the missing data.\n The minus sign must be embedded between separation characters.\n Default values can be redefined inside a header record that defines a table.",
+        "token_count": 119
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            9
+        ],
+        "page_labels": [
+            "2-4"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.2 Input Syntax",
+            "2.2.3 Repetition"
+        ],
+        "content": "If the equal sign (=) is entered in the place of a data value, the program will use the corre- sponding value of the preceding record. However this is only possible if the record name has not been changed.\n If two equal signs (==) (with no blank spaces in between!) are entered, all of the values in the following records will be the same. Positioning of the preceding record is not considered.\n If the value of the previous record is a generation instruction or a list of values, the generation or the complete list will be repeated.\n The repetition characters must be enclosed in separation characters.",
+        "token_count": 124
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            9
+        ],
+        "page_labels": [
+            "2-4"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.2 Input Syntax",
+            "2.2.4 Increments/Decrements"
+        ],
+        "content": "If a double plus or minus (++ or --) is entered in the place of a data value, the program will use the corresponding value of the preceding record incremented or decremented by 1. This will also work with Literals, Lists and Generation sequences. However this is only possible if the record name has not been changed.\n The increment/decrement characters must be enclosed in separation characters.",
+        "token_count": 78
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            9
+        ],
+        "page_labels": [
+            "2-4"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.2 Input Syntax",
+            "2.2.5 Comments"
+        ],
+        "content": "The comment characters $ , ! or // turns the rest of a line into a comment, which will be ignored by the program. All this comment operators should be separated from the comment itself and the input data in the same line with a separation character.\n Within a +PROG-line (see SPS) only the $-character is allowed as a comment and it must be separated by blancs. Within a +SYS-command line no comments are allowed at all.",
+        "token_count": 93
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            9,
+            10
+        ],
+        "page_labels": [
+            "2-4",
+            "2-5"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.2 Input Syntax",
+            "2.2.6 Record Continuation"
+        ],
+        "content": "A double dollar sign $$ means that the input record is continued in the next line.\n The characters following $$ are considered as a comment.\n A separation character must be entered right before $$. Thus it is not possible to write expres- sions or a list of values extending more than one line.",
+        "token_count": 59
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            10
+        ],
+        "page_labels": [
+            "2-5"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.2 Input Syntax",
+            "2.2.7 Record Partition"
+        ],
+        "content": "More than one record can be in the same line. The records must be separated by a semicolon (;). The semicolon needs not to be between separation characters. This feature is not valid for the input of text lines (e.g. HEAD).",
+        "token_count": 50
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            10
+        ],
+        "page_labels": [
+            "2-5"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.2 Input Syntax",
+            "2.2.8 Positioning"
+        ],
+        "content": "By entering a name of an item inside a record, you can provide the value for that item regardless of its position.\n Example:\n A record is defined by the items K1 K2 K3 K4 K5. The following input is then equivalent:\n RECORD 1.00 - - 2.00 3.00 RECORD 1.00 K4 2.00 3.00 RECORD K1 1.00 K4 2.00 K5 3.00 RECORD K4 2.00 K1 1.00 K5 3.00",
+        "token_count": 119
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            10,
+            11
+        ],
+        "page_labels": [
+            "2-5",
+            "2-6"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.2 Input Syntax",
+            "2.2.9 Defining Tables"
+        ],
+        "content": "The predefined order of the input data can be altered by entering a record consisting only of the names of the items. In this case the following records must not contain a record name, as this would reinitialize the sequence of items.\n The last example could have also been given as:\n RECORD K1 K4 K5\n 1.00 2.00 3.00\n A table definition remains valid until a new record name is entered or the same record name is repeated. Inside a table the positioning is still possible even for those items not defined in the table definition.\n The default values can be modified inside the header of a table by following the item with an equal sign (=) and the new default value without any separation characters.\n RECORD K1 K2 K5=4\n 1 2 6\n 2 5\n 3 6 -\n is equivalent to\n RECORD K1 K2 K5\n 1 2 6\n 2 5 4\n 3 6 4\n Such a construct is also a nice suitable solution to the problem of ambiguous literals. If a literal value exists (e.g. GRP) for the first item position which is also a valid record name, a change of the sequence and perhaps a default assignment may solve this problem without the need to use quotes:\n BEAM TO TYPE PA FROM=GRP\n 1 TEMP 30\n 2 TEMP 25",
+        "token_count": 290
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            11
+        ],
+        "page_labels": [
+            "2-6"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.2 Input Syntax",
+            "2.2.10 Help-Record"
+        ],
+        "content": "A list of the possible record names can be obtained by entering HELP. HELP followed by a record name prints a list of the items of the record. HELP followed by a record name and an item name will print the allowable input values and parameters for the corresponding position.\n This option is meaningful especially during interactive error finding.",
+        "token_count": 63
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            11,
+            12
+        ],
+        "page_labels": [
+            "2-6",
+            "2-7"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.2 Input Syntax",
+            "2.2.11 Generation"
+        ],
+        "content": "An instruction for automatic record generation can be given instead of a data value. In this way a series of records can be created automatically.\n When generating a record the command must be enclosed within parentheses. Its elements must be separated by separation or underline characters.\n There are two types of generation instructions:\n primary automatic generation instruction\n (Start_value End_value Increment)\n secondary generation instruction\n (Start_value Increment)\n The primary generation instruction specifies the number of the individual records to be gener- ated. It can be used only once per record, yet in any position inside the record. The corre- sponding secondary generation instruction can be defined for every parameter.\n The generation of literals is also possible. The increment is then also considered as a literal but may contain only numbers.\n The increment can also be negative.\n Long sequences of generated data may accumulate numerical round off errors. Thus if the specified end value of a primary generation instruction is not reached with an accuracy of 0.0001 of the increment, or more than 9999 values would be created an error message will be issued and the generation will not start.\n Example:\n NODE (1 5 1) 0 (0.5 -0.1)\n generates the input records:\n NODE\n 1 0 0.5\n NODE 1 @ @.5\n NODE\n 2 0 0.4\n NODE 2 0 0.4\n NODE\n 3 0 0.3\n NODE 3 @ 0.3\n NODE\n 4 0 0.2\n NODE 4 0 0.2\n NODE\n 5 0 0.1\n NODE 5 @ Q.1\n Example:\n REIN (A0.1 D0.4 10.1)\n generates the input records:\n REIN A0.1\n REIN B0.2\n REIN C0.3\n REIN D0.4",
+        "token_count": 398
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            12
+        ],
+        "page_labels": [
+            "2-7"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.2 Input Syntax",
+            "2.2.12 List of Values"
+        ],
+        "content": "A list of values can be given instead of a generation loop . This is a series of values separated by commas or underline characters.\n Value,Value,Value,Value e.g. 1,2,7,9\n A list of values may not contain any separation characters and can not be spread across multiple lines.\n When several lists of values are defined within a single record, their number of values must agree not only with each other, but also with any other defined primary generation.\n The maximum number of values per list is limited by an internal amount of memory. A list of 25 values is usually possible.\n A list of values can also be built up by fixed literals (LIT). Combinations of numbers and literals or a list of freely defined literals are however not allowed.",
+        "token_count": 157
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            12
+        ],
+        "page_labels": [
+            "2-7"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.2 Input Syntax",
+            "2.2.13 Conversion of Units"
+        ],
+        "content": "For every numerical value, list of values or generation it is possible in general to append the input unit explicitly in square brackets. So instead of definig a length in the default unit m as 0.3048 it is also possible to specify 304.8[mm] or 12[in] . This option is available for explicit and implicit units (see section Units). CADINP will check if the specified unit is permitted, i.e., belongs to the family of related units.\n If a unit is defined in a table header, this unit identifies the default unit for all data in the re- spective column; it may be overwritten with an explict definition of course. If only a default unit should be selected but no default value, the default value may be omitted, e.g.,\n NODE X=[m] Y=5.0[m] Z=[mm]",
+        "token_count": 177
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            13
+        ],
+        "page_labels": [
+            "2-8"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.2 Input Syntax",
+            "2.2.14 LET - and STO - Variables"
+        ],
+        "content": "One can define variables to be used in the following records. After the leadin LET# (only valid within current program) or STO# (value will be saved to database) the name of the variable is appended directly (up to 16 characters of an alpha-numerical text, 1st character has to be a letter) and an optional index, starting with zero. The variables can be used then instead of numbers. After the variable name a separation character and the value to be assigned to the variable is expected. The value may be either numeric or a literal inclosed in quotes. LET# or STO# do not alter the currently defined record name and thus must be given in each assignment. Names of variables must not contain special characters or collide with a reserved sequence of characters like (SIN, COS or SQR). Instead of one numerical value a list of values or a primary generation instruction or a literal may be entered. In this case the rest of the values is assigned to the variables following the input variable. This defines an array if a named variable is used.\n If large arrays are used, it is strongly suggested to define the element with the largest index first, to avoid reallocation requests. However, no value will be assigned to the array elements.\n The unit of a variable is depending on the context, where this variable is used. Thus it is not possible in general to use the same variable for a section definition in [mm]] and a system definition in [m]. But it is possible to assign a unit to a variable, then the given value will be converted immediately and the value can be used everywhere. If a variable has been assigned a unit, it will be inherited to all other variables and expressions. However this will also trigger a check if the obtained unit is allowed for the current use.\n If for example a stress is expected and defined as #P/#A, both variables may have no unit, #P may be a force and #A an area, or #P may be a load per length while #A is a width. If a constant is added or subtracted to a variable, the constant will be taken as specified in the same unit. An array has for all members the unit which has been defined for the item with index 0.",
+        "token_count": 463
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            13,
+            14
+        ],
+        "page_labels": [
+            "2-8",
+            "2-9"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.2 Input Syntax",
+            "2.2.14 LET - and STO - Variables"
+        ],
+        "content": "If for example a stress is expected and defined as #P/#A, both variables may have no unit, #P may be a force and #A an area, or #P may be a load per length while #A is a width. If a constant is added or subtracted to a variable, the constant will be taken as specified in the same unit. An array has for all members the unit which has been defined for the item with index 0..\n A variable is used if a leading # sign allows the clear identification as a variable name. If the expression starts with an additional leading = character, all unidentified characters will be taken as variable names.\n For local usage the legacy convention to use scalar variables with pure number between 1 and 9999 instead of a name is still supported.\n LET#TXT 'My Text'\n ! Assigning a literal\n LET#11 4,5,6 ! Assigned to legacy variables 11,12,13 LET#A 4,5,6 7,8,9 ! 4,5,6 and 7,8,9 are assigned to A(0:5) LET#A(2) 5.1 ! Assignment to a single array element LET#A(0:10) 0.0 ! Assignment of the same value to consecutive elements LET#A(#1:#2) 1.0 ! Assignment of the same value to consecutive elements LET#1 #A ! Using first element of array LET#1 =A(1) ! Using second element of array LET#A(3) 7,8 ! Assignment to consecutive elements (3) and (4) LET#1 #A(#i) ! Access to the element with index #i LET#1 #A(2) ! Using third element of array LET#B #A(:) ! Copy all elements of array A to array B LET#B #A(3:) ! Copy all elements starting at 3 of array A to array B LET#B #A(2:4) ! Copy 3 elements starting at 2 of array A to array B\n LET#B #A(2:3) #A(5:6) ! Create a new array with different sequence\n // (but lists of sub-arrays are not allowed) LET#C #A(#11) ! Value of the variable, whose number is // stored in legacy variable 11 // is assigned to variable 4 LET#B 20[mm] ! Assignment with unit LET#D 1.5[m] ! Assignment with unit LET#A #B*#D ! Assignment with unit: A is 0.3[m2] LET#X #B*#D[-] ! Assignment without unit: A is 0.3[-]",
+        "token_count": 573
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            14
+        ],
+        "page_labels": [
+            "2-9"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.2 Input Syntax",
+            "2.2.14 LET - and STO - Variables"
+        ],
+        "content": "// (but lists of sub-arrays are not allowed) LET#C #A(#11) ! Value of the variable, whose number is // stored in legacy variable 11 // is assigned to variable 4 LET#B 20[mm] ! Assignment with unit LET#D 1.5[m] ! Assignment with unit LET#A #B*#D ! Assignment with unit: A is 0.3[m2] LET#X #B*#D[-] ! Assignment without unit: A is 0.3[-].\n If a variable is assigned to an expression, the expression is calculated first and then its value is assigned to the variable.\n To print variables for debugging purpose you may use the construct PRT# with a similar syntax for addressing the variable name. The name of the variable is expected without separation characters immediately behind the #. For more comfort one should use TXB / TXE or <TEXT> within literal text.\n Variables with a name may be saved permanently in the database. The command STO#name will save the current or specified value of this variable in the database, which then can be used by all other programs accessing the database from that. E.g.\n STO#C 30 ! Assignment and storage of the variable in the database\n If a save variable should be removed from the database there is the command DEL#name. For this case it is also allowed to specify wild card characters. The commands DEL#OPT* or DEL#A?00 will delete all variables with that pattern. The use of DEL# within a control construct like a loop or an IF-block may yield unexpected results.\n For special cases it is possible to reinitialize a variable with the last saved value with the follow- ing commands:\n RCL#ALL Read all named variables RCL#name Read one named variable/array RCL#name(3) Read one entry of an array RCL#name cdbfile\n Read variable from another CDB data base\n There are some reserved Names, which are automatically created by a programm run. The user may use and redefine those names however within his CADINP-data block with new values.\n • Variables VERSION(0),VERSION(1) and VERSION(2) will be preset with the version num- ber of the Release, the servicepack number and the intermediate release number, allowing to define common input data for multiple versions.\n • Variable PI will be preset to 3.141593.\n • The arrays of variables GRP_MASS, SCT_MASS and MAT_MASS as well as GRP_REIN and SCT_REIN are redefined after a print or evaluation of system statistics. They contain",
+        "token_count": 542
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            15,
+            14
+        ],
+        "page_labels": [
+            "2-10",
+            "2-9"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.2 Input Syntax",
+            "2.2.14 LET - and STO - Variables"
+        ],
+        "content": "• Variables VERSION(0),VERSION(1) and VERSION(2) will be preset with the version num- ber of the Release, the servicepack number and the intermediate release number, allowing to define common input data for multiple versions.. • Variable PI will be preset to 3.141593.. • The arrays of variables GRP_MASS, SCT_MASS and MAT_MASS as well as GRP_REIN and SCT_REIN are redefined after a print or evaluation of system statistics. They contain.\n the masses (MASS) and reinforcements (REIN) of all groups (GRP_) and section numbers (SCT_) or Materials (MAT_), where the index 0 contains the total sum.\n All other variables start with the first three characters of the program creating them followed by an underline:\n • ASE uses the array ASE_ITER as follows\n ASE_ITER(0) = first load case number\n ASE_ITER(1) = last load case number\n ASE_ITER(2) = last achieved load factor\n • Variables of Array AQB_USAGE will be set by AQB with the usage factors of the design tasks of the last input block.\n • All Variables starting with OPT_ are reserved for OPTIMA.\n To trace the assignment of values, there is a command DBG#. This will toggle test prints and an interactive debug mode. DBG# uses the variable #0, which can not be used for other purpose therefore\n DBG#0 No output of intermediate values\n DBG#1 Output of the generated input records\n DBG#2 Additional output of all value\n assignments\n DBG#3 Additional output of selected\n structures (CDB access)\n DBG#4\n Printout to console stream/window\n DBG#8 Input from console stream/window\n (interactive mode)\n DBG# Switch between option 15 and option 0\n (=break and continue)\n (=break and continue)\n and\n and\n DBG# -2 Immediate STOP of total program run,\n although all outstanding\n TXE-Lines will be printed after the\n error message",
+        "token_count": 409
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            15,
+            16
+        ],
+        "page_labels": [
+            "2-10",
+            "2-11"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.2 Input Syntax",
+            "2.2.15 Arithmetic Expressions"
+        ],
+        "content": "In place of a numerical value any desired arithmetic expression may be used. The expression may contain parentheses, but no separation characters.\n The allowable operators are:\n + - Addition, Subtraction\n * / Multiplication, Division\n ** or ^ Exponentiation\n == <> Condition of equality/inequality\n >= <= Relational condition\n > < Relational condition\n result: true (1.) or false (0.)\n &\n |\n Bitwise logical operation on the\n integer part with AND or OR\n If no operator is given, a multiplication will be performed. The bindings of the operators are according to the mathematical rules. The logical operators have the same weight, thus it is strongly recommended to use parentheses for combined expressions.\n The following functions are allowed inside an expression:\n SIN(x),COS(x),TAN(x)\n Trigonometric functions\n ASIN(x),ACOS(x) Arc sine, arc cosine ATN(x),ATN(y,x) Arc of tangent x or y/x ARC(x) Convert angles to arcus SQR(x) Square root ABS(x) Absolute value EXP(x) Exponents of e LOG(x) Natural logarithm LGT(x) Base 10 logarithm DIV(x,y),xDIVy,DIV(x/y) Integer part of x/y MOD(x,y),xMODy Division remainder of x/y MOD(x) Division remainder of x/y MIN(x,y,..),MAX(x,y,..) Minimum or Maximum numbers RANDOM(x) random value between 0 and 1 (x=0 reinitialises the seed) IIF(expr,val1,val2) returns val1 if expr is not equal zero and val2 if expr\n equals to zero.\n Arithmetic expressions may also appear within a list of values or generation instructions. The functions DEG, GON and RAD may be placed before any argument, but separated from it by a comma. Their definition is kept if an assignement contains only one of those names (e.g. LET#0 RAD).\n Examples:\n SIN(30.)+3*COS(45.)",
+        "token_count": 413
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            16,
+            17
+        ],
+        "page_labels": [
+            "2-11",
+            "2-12"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.2 Input Syntax",
+            "2.2.15 Arithmetic Expressions"
+        ],
+        "content": "Arithmetic expressions may also appear within a list of values or generation instructions. The functions DEG, GON and RAD may be placed before any argument, but separated from it by a comma. Their definition is kept if an assignement contains only one of those names (e.g. LET#0 RAD).. Examples:. SIN(30.)+3*COS(45.).\n oder SIN30+3COS45\n SIN(30.)+3%*COS(45.) oder SIN3@+3C0S45\n SIN(RAD,2.435)\n 100.+MOD(354,32)\n oder 100+354MOD32\n 100.+MOD (354, 32) oder 100+354M0D32\n 120.+12.\n 3(5.0+4.0)\n COS(#1)\n SIN(#1)\n COS(#1) SIN(#1)\n 345*#11+##12\n A special feature is available when accessing arrays of variables. If the index is not integer, but rational, an interpolation between the values of the array will take place:\n LET#A(0) 10.0 LET#A(1) 14.0 LET#A(2) 16.0 LET#A(3) 17.0 LET#B =A(1.3) => #B = 14.6\n LET#A(2) 16.0\n LET#B =A(1.3) => #B = 14.6\n The same procedure is also available for higher interpolation schemes. Then we need two arrays of the X and Y values with the same length. These variables are then connected by a special assignement of a literal as a table definition:\n LET#X 0.0,2.0,3.5 LET#Y 0.0,100.0,100.0 LET#SIG 'TAB(X,Y)'\n The expression #SIG(1.73) interpolates for this X-value betwen the given Y-values linearly. If higher functions are requested, a third array is needed, giving the derivatives of the function:\n LET#DY -,0,-\n LET#SIG 'TAB(X,Y,DY)'\n For the example above only the derivative at the middle point has been specified. Thus we have quadratic parabulas for the interpolation function. If derivatives are specified at both ends of an interval we have cubic splines as interpolation functions.",
+        "token_count": 506
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            17
+        ],
+        "page_labels": [
+            "2-12"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.2 Input Syntax",
+            "2.2.15 Arithmetic Expressions"
+        ],
+        "content": "If higher functions are requested, a third array is needed, giving the derivatives of the function:. LET#DY -,0,-. LET#SIG 'TAB(X,Y,DY)'. For the example above only the derivative at the middle point has been specified. Thus we have quadratic parabulas for the interpolation function. If derivatives are specified at both ends of an interval we have cubic splines as interpolation functions..\n In case it is required to store text in a variable this may be done with the LET/STO command in the same way (The use of apostrophes is manadatory):\n LET#TEXT 'ABCDEFGHIJK'\n The text will be saved in blocks with 8 characters each in the name of the variable, #TEXT(1) would thus be equivalent to ”IJK ” in the above example and it is possible to change that item only, but there is no storage of single characters. However when using a text variable it is possible to use sub strings with the format #TEXT(3:7) selecting the third to seventh charac- ter. (Instead of the numbers any arithmetic expresssionas are also valid of course). A text variable may be read from the CDB and it is possible to convert with a LET/STO command a text to numbers. The following example will save the two numbers in variables #VALT(0) and #VALT(1):\n LET#TEXT '1.23,1.48' LET#VALT VAL(#TEXT)",
+        "token_count": 305
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            17,
+            18
+        ],
+        "page_labels": [
+            "2-12",
+            "2-13"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.2 Input Syntax",
+            "2.2.16 FUN - Definition of functions"
+        ],
+        "content": "If an arithmetic expression is needed more often or the meaning of a variable should be changed during the run, it is possible to define a function. Such definition is done as a lit-\n LET#F '=FUN(var,formulaexpression)'\n ! e.g. LET#F '=FUN(x,3*#x**3-2*#x**2+5*#x)' LET#1 #F(1.234)\n The Literal has to start with the character sequence ”=FUN(” , followed by a formal param- eter name, followed by an expression containing any variables defined so far. If the formal parameter’s name has been defined already, it will not be changed by the call.\n But this requires that this variable (LET#X) must be initialized before the first function call. Recursive calls are allowed.",
+        "token_count": 168
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            18,
+            19
+        ],
+        "page_labels": [
+            "2-13",
+            "2-14"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.2 Input Syntax",
+            "2.2.17 LOOP, ENDLOOP - Loops and Jumps"
+        ],
+        "content": "The most powerful form of generation is achieved through loops. This form corresponds to the FORTRAN DO-Loops or to the FOR NEXT loops of BASIC. The loop is initiated by the record LOOP and terminated by the record ENDLOOP. A loop is executed as many times as determined by the number following LOOP (Default 9999). It may also be terminated if the expression following ENDLOOP becomes zero or negative. If the name of a variable is given instead of the number after the LOOP, then the number of elements contained in that variable will be used.\n Loops can be nested up to 32 levels, containing any number of input elements. If LOOP is not followed by a number, it will be performed at most 9999 times.\n Each loop construction must not exceed 255 lines. Multiple records, however, can be entered at the same line (separated by ;). If you still need more than 256 lines you have to specify before the first LOOP\n LET#LOOPSIZE number_of_lines\n It is possible to store the index of the loop in a variable, if the name is appended to the LOOP keyword. The index starts counting at zero. The variable may be changed within the loop, but it will be restored after evaluation of the terminating condition in each cycle. Generation of nodes and springs on a semicircle at a distance of 30 degrees.\n LET#1 1 , LET#2 0.\n LOOP 7 NODE #1 COS(#2) SIN(#2) SPRI #1 #1 DX COS(#2) DY SIN(#2) CP 1.E5 LET#1 #1+1 LET#2 #2+30. ENDLOOP\n Instead of LOOP 7 / ENDLOOP you could use LOOP / ENDLOOP #2 < =180. With an endloop condition one can leave a loop prematurely.\n Example for two-level generation:\n LOOP#1 3\n TXB ADEF #1+1 LOOP 2 TXB BDIV 0.5 #1+1 TXB 0.2 1 ENDLOOP ENDLOOP",
+        "token_count": 422
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            18,
+            19
+        ],
+        "page_labels": [
+            "2-13",
+            "2-14"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.2 Input Syntax",
+            "2.2.17 LOOP, ENDLOOP - Loops and Jumps"
+        ],
+        "content": "Instead of LOOP 7 / ENDLOOP you could use LOOP / ENDLOOP #2 < =180. With an endloop condition one can leave a loop prematurely.. Example for two-level generation:. LOOP#1 3. TXB ADEF #1+1 LOOP 2 TXB BDIV 0.5 #1+1 TXB 0.2 1 ENDLOOP ENDLOOP.\n creates:\n ADEF 1\n BDIV 0.5 1\n BDIV 0.5 1\n 0.2 1\n 0.21\n 0.5 1\n 0.51\n 0.2 1\n 0.21\n ADEF 2\n BDIV 0.5 2\n BDIV 0.5 2\n 0.2 1\n 0.21\n 0.5 2\n 0.5 2\n 0.2 1\n 0.21\n ADEF 3\n BDIV 0.5 3\n BDIV 0.5 3\n 0.2 1\n 0.21\n 0.5 3\n 0.5 3\n 0.2 1\n If you want to run a loop over all elements of an array, this may be done by giving only the name of the array (without the # ):\n LET#A 10,22,34,55,76,83\n LOOP#1 A ! Only the name, #A would be the value 10!\n NODE #1+1 X #A(#1)\n ENDLOOP\n If not all elements have been defined, ist is possible to perform the loop only over the defined elements, the loop index will then obtain the value of the defined elements only:\n LET#ANZ 0\n LOOP#1 DEF(A) LET#ANZ #ANZ+1 ENDLOOP",
+        "token_count": 397
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            21
+        ],
+        "page_labels": [
+            "2-16"
+        ],
+        "type": "image",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.2 Input Syntax",
+            "2.2.18 IF - Logical Conditions"
+        ],
+        "coordinates": [
+            [
+                765.233642578125,
+                396.1857604980469
+            ],
+            [
+                2096.302978515625,
+                1324.6839599609375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 2.1: VALUE depending on A"
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            19,
+            20,
+            21
+        ],
+        "page_labels": [
+            "2-14",
+            "2-15",
+            "2-16"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.2 Input Syntax",
+            "2.2.18 IF - Logical Conditions"
+        ],
+        "content": "Conditional blocks are an important element of every programming language. The execution of jumps (go to) is not possible within CADINP as it is proven to be able to solve any problem without this feature. The conditional block is executed if the expression following the IF is greater than zero. You might want to use the logical expressions for this. Texts may be only compared with == and != operators, the comparison is case sensitive. As the complete string\n on both sides of the operator is considered, no parentheses are allowed, they are part of the strings.\n As float numbers cannot be represented exactly within a computer in most cases, comparison with == or != should use a tolerance if applied to fractional values.\n ! #1 is the control variable with possible values +1/-1\n IF #1 ! These lines are input when #1 > 0 ! ... ELSE ! These lines are input when #1 < 0 or = 0 ! ...\n ENDIF\n IF #1==12\n ! These lines are input when #1 equals 12\n ! ...\n ENDIF\n IF ABS(#1-0.35)<0.001\n ! These lines are input when #1 equals 0.35 ! ...\n ENDIF\n The generation of a CASE construction is available by using a series of additional ELSEIF statements:\n if (Condition_1)\n .... elseif (Condition_2) .... elseif (Condition_3) .... else .... endif\n elseif (Condition_2)\n elseif (Condition_3)\n Example:\n IF (#A < 0.3) ! condition 1 LET#VALUE 0.50 ELSEIF (#A>1.0) ! or condition 2 LET#VALUE 0.70 ELSE LET#VALUE 0.50+0.20*(#A-0.3) ! else this value ENDIF\n That means that only one possibility is chosen for VALUE depending on A.\n In special cases it is possible to create the following input which can be used in different SOFiSTiK environments with various versions:",
+        "token_count": 413
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            20,
+            21
+        ],
+        "page_labels": [
+            "2-15",
+            "2-16"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.2 Input Syntax",
+            "2.2.18 IF - Logical Conditions"
+        ],
+        "content": "IF (#A < 0.3) ! condition 1 LET#VALUE 0.50 ELSEIF (#A>1.0) ! or condition 2 LET#VALUE 0.70 ELSE LET#VALUE 0.50+0.20*(#A-0.3) ! else this value ENDIF. That means that only one possibility is chosen for VALUE depending on A.. In special cases it is possible to create the following input which can be used in different SOFiSTiK environments with various versions:.\n IF (#VERSION>=2012) !.... ELSEIF (#VERSION==2010) !.... ELSE // older SOFiSTiK Releases !.... ENDIF\n ENDIF",
+        "token_count": 145
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            21,
+            22
+        ],
+        "page_labels": [
+            "2-16",
+            "2-17"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.2 Input Syntax",
+            "2.2.19 @CDB - Selection of a CDBASE"
+        ],
+        "content": "CADINP allows the access to data of any SOFiSTiK-Database. Of course you need a descrip- tion of the contents of the database (cdbase.chm ). The syntax has three parts. The @CDB selects the file name of the data base:\n @CDB filename\n Selects an arbitrary database filename.cdb . Default is the actual project database. An explicit definition of this database is however not allowed.\n All data within the CDB consists of multiple records with identical structures organised within different 64-Bit indices KWH/KWL. In general each data record has a part containing integer numbers and a second one containing the floating point data. The description of all structures is given for the user within the file cdbase.chm and for the programs within the file cdbase.cdb .\n Materials, sections, load cases or other elements are organized to have a separate key for every instance. With the given example of a definition like:\n LET#mat KWL(MAT) LOOP#M mat TXB #mat(#M)\n ENDLOOP\n LET#sect KWL(SECT)\n !cross-section numbers\n LET#sect KWL(9)\n LET#sect KWL(LC_CTRL)\n !loadcases\n LET#sect KWL(12)\n LET#sect KWL(GPT)\n !structural points\n LET#sect KWL(30)\n LET#sect KWL(GLN)\n !structural sub-lines\n LET#sect KWL(31)\n LET#sect KWL(GAR)\n !structural sub-areas\n LET#sect KWL(32)\n LET#sect KWL(SLVL_DEF) !storey levels\n LET#sect KWL(34)\n LET#sect KWL(DSLN_DEF) !design elements\n LET#sect KWL(35)\n the variable #mat will contain a list of defined material numbers which will be printed in the following loop.\n Instead of the argument MAT the name of any key defined in the (cdbase.chm ) or a direct number may be given.",
+        "token_count": 417
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            22
+        ],
+        "page_labels": [
+            "2-17"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.2 Input Syntax",
+            "2.2.20 @KEY - Access to the CDBASE"
+        ],
+        "content": "@KEY KWH KWL [ SEL1 SEL2 SEL3 SEL4 SEL5 SEL6 IERR ]\n Selects an access index KWH/KWL according to the CDBASE description. KWH is a 8 character identifier while KWL is an optional number (e.g. load case or section number). Values KWL and SEL1 to SEL6 are preset automatically.\n For special purpose an optional filtering rule given by up to 6 integer or 4 character key values SEL1 to SEL6 may be specified. Key values which are not important or will be defined with the access-function have to be specified as -1. The keys correspond to the integer positions of the database.\n The record index has to exist in the database. You will get an error otherwise. The read position is set to the beginning of the index. If you specify for IERR a number of a variable (for example 999), its value will be set to a positive value if the given key exists. If the variable #CDB_IER has been defined, it will contain the same value.",
+        "token_count": 219
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            23
+        ],
+        "page_labels": [
+            "2-18"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.2 Input Syntax",
+            "2.2.21 @() - Access to the CDBASE"
+        ],
+        "content": "A record is accessed by the use of an arithmetic function @() as special case of an arithmetic expression:\n @(position+offset) or @(no,position+offset)\n Reads from the database the next record, which passes the @KEY-filter which is modified for the second case by ”no” at the position of the last defined KEY. The value of the ex- pression is the stored data with the name ”position” or if position is a number the value at the position relative to the last selection value of the filter. The value 0 and negative values will therefore yield the integer values within the selection keys. An access to the index of an array can be done via ”offset”.\n The access function will start at the current position. If you access a value with the same or a lower position, CDBASE will read the next record. If the end-of-file condition is encoun- tered an error will occur if you have used the form @(position), while for @(nr,position) a loop is used once and the function jumps to the beginning.\n You may also specify two state variables. If these variables have been defined non negative, the result values will be saved there and error messages will not appear:\n CDB_LEN for the actual length of the record\n CDB_IER for the error-flag\n •\n (0=ok, 1=record to short, 2=end_of_file, 3=key_not_defined).\n This is required to prevent the program to enter an infinite loop.\n To get the effective Iy-value of cross section 5 from the actual project-database, you enter:\n @KEY SECT_EFF 5\n LET#5 @(IY)\n To use shell forces of the nodes 101 and 102 of group 2 of load case 12 you enter:\n @CDB PROJECT1\n @KEY QUAD_NFO 12 2 ! Selector Group 2 LET#101 @(101,MXX) ! moment m-xx LET#102 @(102,MYY) ! moment m-yy",
+        "token_count": 415
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            23,
+            24
+        ],
+        "page_labels": [
+            "2-18",
+            "2-19"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.2 Input Syntax",
+            "2.2.21 @() - Access to the CDBASE"
+        ],
+        "content": "To use shell forces of the nodes 101 and 102 of group 2 of load case 12 you enter:. @CDB PROJECT1. @KEY QUAD_NFO 12 2 ! Selector Group 2 LET#101 @(101,MXX) ! moment m-xx LET#102 @(102,MYY) ! moment m-yy.\n To get all support forces of nodes with last digit 0 as loads you may enter:\n LET#CDB_IER 0\n @CDB PROJECT1 @KEY N_DISP 12 LOOP ! All records LET#10 @NR,@PX,@PY,@PZ IF (#CDB_IER < 2)&(#10 <> 0) ! End or header IF 0==MOD(#10,10) ! Last digit 0 LOAD #10 PX #11 #12 #13 ENDIF\n ENDIF\n ENDLOOP #CDB_IER < 2\n ! To terminate the loop\n ENDLOOP #CDB_IER < 2 ! To terminate the loop\n To get the section number of the beam 101 (As we have to read two different cases alternate, we can not use the predefined literals):\n LET#CDB_IER 0\n @CDB PROJECT1 ! 4 Integer-Keys @KEY 100 0 -1 -1 -1 -1 LET#NR 0\n @CDB PROJECT1\n ! ALL records\n ! 1. and 2. Integer LET#10 @(-3),@(-2) IF #10 ! New BEAM LET#NR #10 ELSE IF #NR==101 LET#Q #11 ENDIF ENDIF\n LOOP\n ENDLOOP #CDB_IER < 2 ! To terminate the loop\n For text elements saved in the database, a proper treatment is only possible if the data structure is known. Respective by using the names defined in the cdbase.chm :\n @KEY LC_CTRL 101 ! Action and designation of load case 101 LET#ACT LIT(@ITYP) LET#TXT LIT(@RTEX)\n ! Designation of material 1 @KEY MAT 1 LET#MATTXT LIT(@TITLE)\n @KEY MAT 1\n Hint\n With the variable names #COOR_X(number), #COOR_Y(number), #COOR_Z(number) it is possible to acces the nodal coordinates directly, if the module has initialized the nodal arrays, which is done by e.g. SOFILOAD and all anlysis tools (ASE, DYNA, TALPA, HYDRA). SOFIMSHA and SOFIMSHC cannot grant access to nodes during the input processing if theses nodes will be created only later.",
+        "token_count": 556
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            26
+        ],
+        "page_labels": [
+            "2-21"
+        ],
+        "type": "table",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.3 General Records"
+        ],
+        "coordinates": [
+            [
+                401.46240234375,
+                772.087158203125
+            ],
+            [
+                2915.346435546875,
+                1221.5042724609375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default Title line LT72 -"
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            25,
+            26
+        ],
+        "page_labels": [
+            "2-20",
+            "2-21"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.3 General Records"
+        ],
+        "content": "The input consists of blocks. Each input block usually begins with the HEAD lines and ends with an END record. Some programs allow the input of more than one block. The analysis is ended in those cases when an empty block (END/END) is found.\n The same layout is used in all manuals for the input description of all records. Apart from the record name, which is written in a special box at the upper right, there are four columns in each table.\n • The first column contains the names of the items of the record.\n • Explanations and allowable literals are given in the second column.\n • The unit of the input parameter can be found in the third column. The ”-” character stands for a scalar parameter without a unit, a ”*” stands for values with different possibilities, that are selected via PAGE UNII. LIT is given for items allowing only preddefined literals. LITnn defines input, which can accept free text of up to nn characters. LITnn defines literals which are enforced to upper case.\n • The last column shows the default values. Here, the ”-” character means that no default value exists, and that the parameter itself is not necessary. On the contrary, a ”!” means that a value must definitely be specified. Finally, a ”*” means that the default values depend on various conditions which are explained in the text.\n 2.3.1 HEAD – Title Lines\n HEAD\n Up to 10 title lines can be defined. The first one is reserved for the structure description and can only be defined in the programs AQUA, SOFiMSHA/B/C and in templates of the SOFiSTiK series. This line is imported by all other modules from the database, thus it can not be changed. The rest of the lines can freely be defined by entering the record HEAD followed by a separation character and any desired text up to 72 characters. If no title lines are defined inside a data block, the previous ones remain in use. See PAGE about specifying a page headline. Title lines must not be delimited by apostrophes. Defaults of the Heading lines may be specified in SOFiSTiK.DEF via the variables KOPF1, KOPF2 and KOPF3.",
+        "token_count": 462
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            26
+        ],
+        "page_labels": [
+            "2-21"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.3 General Records",
+            "2.3.2 END – End of an Input Block"
+        ],
+        "content": "END\n Item Description Unit Default End of input or of an input block − -\n The record END closes each input block. Inside a data block for instance, each single load case of the analysis can be defined. The end of the entire input is defined by a double END record. If this record is missing and the input file is at its physical end, this record is automatically generated by CADINP.",
+        "token_count": 81
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            26
+        ],
+        "page_labels": [
+            "2-21"
+        ],
+        "type": "table",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.3 General Records",
+            "2.3.3 TXB – Introducing Text"
+        ],
+        "coordinates": [
+            [
+                2206.347412109375,
+                4213.335795555555
+            ],
+            [
+                2884.7548828125,
+                4264.5927734375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Table continued on next page."
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            27
+        ],
+        "page_labels": [
+            "2-22"
+        ],
+        "type": "table",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.3 General Records",
+            "2.3.3 TXB – Introducing Text"
+        ],
+        "coordinates": [
+            [
+                397.3697509765625,
+                1165.432373046875
+            ],
+            [
+                2932.671142578125,
+                1609.6524658203125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default Closing text LT72 -"
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            29
+        ],
+        "page_labels": [
+            "2-24"
+        ],
+        "type": "table",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.3 General Records",
+            "2.3.3 TXB – Introducing Text"
+        ],
+        "coordinates": [
+            [
+                384.286865234375,
+                659.6931762695312
+            ],
+            [
+                2931.15673828125,
+                1914.3797607421875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default OPT Echo option LT FULL This parameter defines a set of output or computing options, to which the record ECHO applies. The ac- tual list of the possible options can be found in the corresponding manual. FULL stands for all output options. VAL -1 or OFF no computation LT FULL 0 or NO no output 1 or YES normal output 2 or FULL extended output 3 or EXTR extreme output"
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            26,
+            27,
+            28
+        ],
+        "page_labels": [
+            "2-21",
+            "2-22",
+            "2-23"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.3 General Records",
+            "2.3.3 TXB – Introducing Text"
+        ],
+        "content": "TXB\n Item Description Unit Default Introductory text LT72 -\n Item Description Unit Default\n 2.3.4 TXE – Concluding Text\n TXE\n Any desired explanatory text can be added to an input block by TXB and TXE, either before the analysis (TXB) or after it (TXE). The number of lines is unlimited. For each of those two kinds of text, one may specify larger text blocks between <TEXT> ... </TEXT> and pictures between the items <PICT> and </PICT>. However a picture is not allowed within a <TEXT> ... </TEXT> block.\n The TXB/TXE - lines should not be entered between apostrophes. Within the text variables in the form of #(variable,dd) will be replaced by their current value using the format dd.\n HTML components may be used within the text. A component starts with a < not followed by a blank or another < . Known components will be interpreted, unknown will be discarded. SOFiSTiK programs know about (others will be discarded):\n <FF> New Page <LF> Blank Line <b> .... </b> Bold <i> .... </i> Italic <u> .... </u>\n Underlining\n 2.3.5 <TEXT> – Text block\n <TEXT>\n Item Description Unit Default Header of a text block LT72 -\n 2.3.6 </TEXT> – End of a text block\n </TEXT>\n Item Description Unit Default End of a text block LT72 -\n You may define a continuous block of text within the special record names <TEXT> and </TEXT> without the need of specifying record names. The text will be appended to the region selected by the last TXB or TXE command. The Text following the <TEXT> name will become part of the table of contents in Report Browser.\n The text block may be written to a file, by defining:\n <TEXT,FILE=foobar.txt>\n If a further text block should be added to the file, a + has to be input:",
+        "token_count": 421
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            28,
+            29
+        ],
+        "page_labels": [
+            "2-23",
+            "2-24"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.3 General Records",
+            "2.3.3 TXB – Introducing Text"
+        ],
+        "content": "The text will be appended to the region selected by the last TXB or TXE command. The Text following the <TEXT> name will become part of the table of contents in Report Browser.. The text block may be written to a file, by defining:. <TEXT,FILE=foobar.txt>. If a further text block should be added to the file, a + has to be input:.\n <TEXT,FILE=+foobar.txt>\n For the definition of templates one can specify editable fields via special HTML-Tags:\n <EDIT:name>$(name) </EDIT>\n Editable Reference on Parameter value\n <EDIT:name,Format=6.2>$(name) </EDIT>\n Editable Reference on Parameter value with a format of ”###.##” (total width.decimal digits) Format=6 reserves 6 characters wide Format=-6 places left adjusted\n <EDIT:name,List=str1,str2,str3>$(name) </EDIT>\n Editable Reference on Parameter value\n with a list box of allowed values\n <EDIT:name,List=str1,str2,str3,Update=Yes>$(name) </EDIT>\n Enforces an update of the template\n immediately after input of data\n 2.3.7 ECHO – Output Control\n ECHO\n At the beginning of the program all options for new results are preset to 1. The output pa- rameter for already computed values (e.g. nodal coordinates in analysis programs) is set to 0. By entering ECHO NODE you can for example assign the value FULL to the option NODE. Therefore the default value for VAL will only be activated if an ECHO record for this option is given. The exact effect of all options can be found in the output description of the individual manuals. You should generally note that the shortest possible output is achieved by YES, while a rich output is obtained by FULL. By EXTR one achieves the output of values, which are ei- ther useful in further computational steps or can use up a lot of paper. Thus, use of this value should be made with care.\n If the user wants to prevent the output of certain results, he must deactivate them explicitly by NO. If for example one only wants the option REAC set, one must enter:\n ECHO OPT FULL VAL NO\n ECHO REAC\n This option is only available in following PROG:\n • SOFIMSHC: ECHO\n • SOFIMSHA: ECHO",
+        "token_count": 498
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            29,
+            30
+        ],
+        "page_labels": [
+            "2-24",
+            "2-25"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.3 General Records",
+            "2.3.3 TXB – Introducing Text"
+        ],
+        "content": "If the user wants to prevent the output of certain results, he must deactivate them explicitly by NO. If for example one only wants the option REAC set, one must enter:. ECHO OPT FULL VAL NO. ECHO REAC. This option is only available in following PROG:. • SOFIMSHC: ECHO. • SOFIMSHA: ECHO.\n • TEMPLATE\n ECHO-Option SYST may be defined instead of NO/YES/FULL/EXTR as a numerical value of a bitpattern:\n General primary group statistics\n 1\n 2 Beam / Truss / Cable statistics\n 4 Area elements statistics\n 8 Volume elements statistics\n 16 Ordered by primary groups\n respectively by structural members for design elements\n 32 Ordered by cross-sections\n 64 Ordered by material\n (not for design elements)\n 128 Sum of reinforcements\n 256 Detailed sum of area element reinforcements\n 1024 Nodal masses\n 2048 Life cycle assessment\n 4096 Life cycle assessment per elements type\n 8192 Only life cycle assessment, without group statistics or masses\n 16384 Only the sums of Finite Elements\n 32768 Sum of tendons\n 65536 Design elements\n 131072 Ordered by secondary groups defined by user\n 262144 Ordered by all secondary groups\n 524288 Only calculating the statistic and saving in database, but no print out\n ECHO-Option SYST saves the results of the evaluation also in the database as CADINP- Variables. The arrays of variables GRP_MASS, SCT_MASS and MAT_MASS as well as GRP_REIN and SCT_REIN contain the masses (MASS) and reinforcements (REIN) of all groups (GRP_) and section numbers (SCT_) or Materials (MAT_), where the index 0 contains the total sum.",
+        "token_count": 378
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            30
+        ],
+        "page_labels": [
+            "2-25"
+        ],
+        "type": "table",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.3 General Records",
+            "2.3.8 UNIT – Units for Input/Output"
+        ],
+        "coordinates": [
+            [
+                355.4256896972656,
+                3095.8642578125
+            ],
+            [
+                2929.423583984375,
+                4072.942626953125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default TYPE No of a complete unit set (0-8) or Lt16 ! No or designation of an implicit unit item USE The unit to be used for that item Lt16 * DIG Number of decimal digits − * or E1 to E7 for exponential formats SET Effectiveness LT INOU OUT Output IN Input INOU Input and Output"
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            32
+        ],
+        "page_labels": [
+            "2-27"
+        ],
+        "type": "table",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.3 General Records",
+            "2.3.8 UNIT – Units for Input/Output"
+        ],
+        "coordinates": [
+            [
+                319.3910217285156,
+                735.1602172851562
+            ],
+            [
+                2967.9619140625,
+                3939.08837890625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default FIRS Number of the first page of the output − * Negative entries turn page numbering off LINE Number of lines per page − * MARG Column number for left margin − * LANO Output language, if implemented − * 0 German 1 English 2 French 3 Spanish LANI Input language, if implemented − * 0 German 1 English UNIO obsoleted: System of units for output − * UNII obsoleted: System of units for input − * FORM Format of page header − * 0 single line header 1 multiline header 2 ZTVK with graphic char. 3 ZTVK without graphic char. 4 short header PRIL Printout level in the output file − 0 -2 error messages only -1 warnings as well 0 additional information 1 computing times as well PAG Identification of page LT12 * (e.g. ”page II/”)"
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            34
+        ],
+        "page_labels": [
+            "2-29"
+        ],
+        "type": "table",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.3 General Records",
+            "2.3.8 UNIT – Units for Input/Output"
+        ],
+        "coordinates": [
+            [
+                334.123046875,
+                2373.692138671875
+            ],
+            [
+                2938.2529296875,
+                4197.97216796875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description TYPE Paper size Positive value landscape format Negative value portrait format SC Scale 0 format filling * engineering scale, best pos- sible for filling the page W Paper width H Paper height MARG Draws a border NO draws an inner border + scale here W and H define the size of the area to be drawn at (for single sheet plotters and laser printers) Unit Default − -URS − * cm * cm * LT FULL"
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            34
+        ],
+        "page_labels": [
+            "2-29"
+        ],
+        "type": "table",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.3 General Records",
+            "2.3.8 UNIT – Units for Input/Output"
+        ],
+        "coordinates": [
+            [
+                2213.70947265625,
+                4236.469128888889
+            ],
+            [
+                2878.698974609375,
+                4288.31103515625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Table continued on next page."
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            35
+        ],
+        "page_labels": [
+            "2-30"
+        ],
+        "type": "table",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.3 General Records",
+            "2.3.8 UNIT – Units for Input/Output"
+        ],
+        "coordinates": [
+            [
+                363.76885986328125,
+                413.9669189453125
+            ],
+            [
+                2939.80712890625,
+                2067.36865234375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default YES draws a free border around the drawing W and H define the size of the paper (2cm margin, otherwise .5cm) FULL an additional border to cut the drawing at the outer paper limits is drawn (for drum plotters) FORM Form of the border LT * STAN standard frame ZTVK ZTVK-88 frame URS Report Browser definition"
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            31,
+            32,
+            30
+        ],
+        "page_labels": [
+            "2-26",
+            "2-27",
+            "2-25"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.3 General Records",
+            "2.3.8 UNIT – Units for Input/Output"
+        ],
+        "content": "UNIT\n The SOFiSTiK programs allow the input and output in the most suitable engineering units. The\n units used in the database are stored based on SI-units kN, m, sec. The Units for input and output will be preselected with the definition of the design code with a global set. However, other units can also be used for input and output (e.g. N, mm or cm2) as well as a different number of decimals. The record UNIT allows to specify within a current program run different units to be used for input or output. It is possible either to select a complete unit set with TYPE:\n 0 = Standard units (m, kN, sec with some historic deviations)\n ON OOF\n 1 = German buildings (sections in cm, system in m)\n 2 = German steel construction, (sections mm,cm2,dm4, system in m)\n 3 = Bridge construction (like 0 but internal forces in MN instead of kN)\n 4 = Soil Mechanics (m, kN, sec)\n 5 = Structural Engineering (sections in mm, system in m)\n 6 = Metric system (All dimensions in mm, loads in kN)\n 7 = Mechanical (All dimensions in mm, loads in N)\n 8 = US customary (Imperial) Units (AASHTO: foot, lbs, kip)\n 9 = US customary (Imperial) Units (ACI/AISC: inch, lbs, kip)\n It is also possible to select a specific object form the list of implicit units, specified in the CD- BASE.CHM description (e.g. 1001 or GEO_LENGTH, see cdbase.chm). Then a matching unit has to be specified at USE and optionally the number of decimal digits just for this item may be selected.\n 2.3.9 PAGE – Control of Input/Output\n PAGE\n The record PAGE is somehow obsolete, because its parameters are derived from the operating system or should be defined in the sofistik.def file. All parameters except the languages and units may be defined in Report Browser at the time of printing.",
+        "token_count": 438
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            31,
+            32,
+            33
+        ],
+        "page_labels": [
+            "2-26",
+            "2-27",
+            "2-28"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.3 General Records",
+            "2.3.8 UNIT – Units for Input/Output"
+        ],
+        "content": "Then a matching unit has to be specified at USE and optionally the number of decimal digits just for this item may be selected.. 2.3.9 PAGE – Control of Input/Output. PAGE. The record PAGE is somehow obsolete, because its parameters are derived from the operating system or should be defined in the sofistik.def file. All parameters except the languages and units may be defined in Report Browser at the time of printing..\n SOFIiSTiK AG * Bruckmannring 38 * 85764 OberschleiRheim SOFISTIK 2018 AQUA- GENERAL CROSS SECTIONS\n Page 1 2017-12-05\n #HEAD1\n #HEAD2\n #HEAD3\n #HEAD4\n #HEAD5\n #HEAD6\n SOFiSTiK AG * Bruckmannring 38 * 85764 Oberschleif&heim SOFiSTIK 2018 AQUA - GENERAL CROSS SECTIONS\n Page 1 2017-12-05\n Materials and Cross-Section\n Default design code is EuroNorm EN 1993-1-1:2005 Steel Structures (Europe) V 2018 Structure: A (Buildings) Snow load zone 2 1\n SOFiSTiK AG * Bruckmannring 38 * 85764 Oberschleif&heim SOFiSTIK 2018 AQUA- GENERAL CROSS SECTIONS\n SOFiSTIK 2018 AQUA- GENERAL #HEAD1 #HEAD2 #HEAD3 #HEAD4 #HEAD5 #HEAD6 Materials and Cross-Section\n Page 1 2017-12-05\n In the ZTVK Version only the first 48 characters of header lines are used. The persistent name of the company can be changed only by SOFiSTiK. However it is possible to change the name for a specific project within the SOFiSTiK-Environment.\n Author =: SOFISTIK AG * Bruckmannring 38 * 85764 OberschleiRheim Program : SOFiSTiK 2018 AQUA - GENERAL CROSS SECTIONS Structure : #HEAD1 Date: #HEAD2 2017-12-05 Part : HHEAD3 Archiv No.: Block : HHEAD4 Record :#HEAD5 #HEAD6\n In the sofistik.def few attributes should be manually inputted (Baumassnahme, Strassen- bauverwaltung Aufsteller). Every HEAD input will fill the next free space in the Page Frame options.",
+        "token_count": 531
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            33,
+            34,
+            35
+        ],
+        "page_labels": [
+            "2-28",
+            "2-29",
+            "2-30"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.3 General Records",
+            "2.3.8 UNIT – Units for Input/Output"
+        ],
+        "content": "Author =: SOFISTIK AG * Bruckmannring 38 * 85764 OberschleiRheim Program : SOFiSTiK 2018 AQUA - GENERAL CROSS SECTIONS Structure : #HEAD1 Date: #HEAD2 2017-12-05 Part : HHEAD3 Archiv No.: Block : HHEAD4 Record :#HEAD5 #HEAD6. In the sofistik.def few attributes should be manually inputted (Baumassnahme, Strassen- bauverwaltung Aufsteller). Every HEAD input will fill the next free space in the Page Frame options..\n KOPF1 Baumassnahme\n KOPF2 Strassenbauverwaltung\n KOPF3 Aufsteller\n KOPF4 Bauteil\n KOPF5 Kapitel 1\n KOPF6 Kapitel 2\n |Baumagnahme: #HEADY, | Bau werksnummer (ASB): [Statenbawensating: weaned TT Aufsteller: #HEAD3 | Date: 2017-12-05\n |\n Materials and Cross-Section\n Default design code is EuroNorm EN 1993-1-1:2005 Steel Structures (Europe) V 2018 Structure: A (Buildings) Snow load zone\n 1\n :\n Materials | |\n Mat |Classification als 275 (EN 1993)\n Kapitel / Vorgang: #HEAD5 Archiv No.: #HEAD6\n 2.3.10 SIZE – Graphic Format\n SIZE\n This record appears within all programs having a graphical output. It defines the output format. In general, there are two variations of the task.\n • The user selects the paper format either implicitly using TYPE or explicitly by the width W and the height H. The program can set the scale itself by picking the largest possible scale with the common values of 1:1, 1:2 and 1:5 or their multiples. An explicit setting of the scale SC will be used, if technically feasible. Setting SC to 0 results in the largest possible drawing regardless of the scale.\n • The user specifies the scale and by setting W and/or H to zero the appropriate paper size is automatically chosen. If only one of the two values is set to zero, then the drawing size will be automatically calculated to fit in the second direction, the scale does not need to be defined in this case.\n When using TYPE you can also specify the American formats or the special format for Hewlett- Packard Plotters instead of the DIN sizes. In this case a frame is created around the picture using the inputs of FORM and MARG. This picture will printed with program Report Browser in exactly this form. In the case of URS or FORM URS a picture without a frame is created. Then the frame is drawing from program Report Browser before printing. DINA URS correspond to a DIN-A4 paper, in this case W and H change the picture size. FORM URS calculates the pictures size from the given paper size, e.g. ”SIZE 3 FORM URS”; in this case W and H set the paper size. A preceding minus sign selects the portrait orientation:",
+        "token_count": 658
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            35,
+            36
+        ],
+        "page_labels": [
+            "2-30",
+            "2-31"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.3 General Records",
+            "2.3.8 UNIT – Units for Input/Output"
+        ],
+        "content": "DINA URS correspond to a DIN-A4 paper, in this case W and H change the picture size. FORM URS calculates the pictures size from the given paper size, e.g. ”SIZE 3 FORM URS”; in this case W and H set the paper size. A preceding minus sign selects the portrait orientation:.\n URS,-URS The maximum picture size usable within Report Browser\n A,-A ANSI Paper A (11 x 8.5 inch)\n B,-B ANSI Paper B (17 x 11 inch)\n C,-C D,-D HPA,-HPA HPB,-HPB HPC,-HPC HPD,-HPD HP4,-HP4 HP3,-HP3 HP2,-HP2 HP1,-HP1 WIN,-WIN MP,-MP LP,-LP MPW ANSI Paper C (22 x 17 inch) ANSI Paper D (34 x 22 inch) Hewlett Packard Paper A (259 x 199 mm) Hewlett Packard Paper B (416 x 259 mm) Hewlett Packard Paper C (529 x 378 mm) Hewlett Packard Paper D (809 x 528 mm) Hewlett Packard Paper 4 (276 x 193 mm) Hewlett Packard Paper 3 (404 x 276 mm) Hewlett Packard Paper 2 (564 x 366 mm) Hewlett Packard Paper 1 (787 x 564 mm) Paper size of current WINDOWS printer Matrix printers with 8 x 12 inch (200 x 287 mm) Laser printers with A4 paper (198.4 x 280 mm) Wider Matrix-printers 14 x 12 inch paper For these formats the default is MARG NO.",
+        "token_count": 354
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            37
+        ],
+        "page_labels": [
+            "2-32"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.4 Generation of Pictures"
+        ],
+        "content": "With the following records true scale sketches may be inserted within the comments before or after the analysis. The classical GKS-primitives Polyline, Polymarker, fill area and text are avail- able. Further there are the generalized Drawing primitive and a special command to measure distances which provides extended labelling possibilities.",
+        "token_count": 62
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            37
+        ],
+        "page_labels": [
+            "2-32"
+        ],
+        "type": "table",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.4 Generation of Pictures",
+            "2.4.1 <PICT> – Start of a picture"
+        ],
+        "coordinates": [
+            [
+                398.4715270996094,
+                1324.796142578125
+            ],
+            [
+                2941.6669921875,
+                1764.9664306640625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default XCM Horizontal size cm * YCM Vertical size cm * TEXT Heading of picture Lt64 -"
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            37
+        ],
+        "page_labels": [
+            "2-32"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.4 Generation of Pictures",
+            "2.4.1 <PICT> – Start of a picture"
+        ],
+        "content": "<PICT>\n Every picture starts with the record <PICT> . It contains all elements up to the next </PICT>. A transformation No 1 will be preset in cm as dimension.",
+        "token_count": 40
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            37
+        ],
+        "page_labels": [
+            "2-32"
+        ],
+        "type": "table",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.4 Generation of Pictures",
+            "2.4.2 GNT – Scale of a picture"
+        ],
+        "coordinates": [
+            [
+                392.4582824707031,
+                2551.027099609375
+            ],
+            [
+                2924.266357421875,
+                3689.530029296875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default NO Number of transformation − * SC Desired Scale − - XMIN Window of user-coordinates ∗ - YMIN ∗ - XMAX ∗ - YMAX ∗ - WXMI Window of workstation (paper space) cm 0 WYMI cm * WXMA cm 0 WYMA cm *"
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            37
+        ],
+        "page_labels": [
+            "2-32"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.4 Generation of Pictures",
+            "2.4.2 GNT – Scale of a picture"
+        ],
+        "content": "GNT\n A transformation is selected (only NO given) or defined with this record. The program will automatically select an uniform scaling in all directions. If the user wishes different scalings in X and Y-direction. he has to specify SC < 0 and all four coordinates of the window. GKS supports three different transformations.",
+        "token_count": 66
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            38
+        ],
+        "page_labels": [
+            "2-33"
+        ],
+        "type": "table",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.4 Generation of Pictures",
+            "2.4.3 GPL – Polyline"
+        ],
+        "coordinates": [
+            [
+                364.9465026855469,
+                652.951416015625
+            ],
+            [
+                2929.307861328125,
+                1657.429443359375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description X1 Coordinates of Polygon Y1 X2 (Alternate definition of polygons is via multiple records each containing only one single vertex X1,Y1. This allows the definition of up to 255 vertices) Y2 .... X16 Y16 Unit Default ∗ ! ∗ ! ∗ X1 ∗ Y1 ... ... ∗ X15 ∗ Y15"
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            38
+        ],
+        "page_labels": [
+            "2-33"
+        ],
+        "type": "table",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.4 Generation of Pictures",
+            "2.4.3 GPL – Polyline"
+        ],
+        "coordinates": [
+            [
+                371.4811706542969,
+                2201.90673828125
+            ],
+            [
+                2923.802734375,
+                3038.365478515625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description X1 Coordinates of Polymarker locations Y1 X2 Y2 .... X16 Y16 Unit Default ∗ ! ∗ ! ∗ X1 ∗ Y1 ... ... ∗ X15 ∗ Y15"
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            38
+        ],
+        "page_labels": [
+            "2-33"
+        ],
+        "type": "table",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.4 Generation of Pictures",
+            "2.4.3 GPL – Polyline"
+        ],
+        "coordinates": [
+            [
+                383.1850891113281,
+                3570.4873046875
+            ],
+            [
+                2923.911376953125,
+                4160.0068359375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description X1 Coordinates of Fill area Y1 X2 (Alternate definition of polygons is via multiple records each containing only one single vertex X1,Y1. This allows the definition of up to 255 vertices) Unit Default ∗ ! ∗ ! ∗ X1"
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            38
+        ],
+        "page_labels": [
+            "2-33"
+        ],
+        "type": "table",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.4 Generation of Pictures",
+            "2.4.3 GPL – Polyline"
+        ],
+        "coordinates": [
+            [
+                2213.999755859375,
+                4196.357421875
+            ],
+            [
+                2877.9751733333333,
+                4251.06201171875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Table continued on next page."
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            39
+        ],
+        "page_labels": [
+            "2-34"
+        ],
+        "type": "table",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.4 Generation of Pictures",
+            "2.4.3 GPL – Polyline"
+        ],
+        "coordinates": [
+            [
+                390.427978515625,
+                393.80511474609375
+            ],
+            [
+                2940.6044921875,
+                946.109375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default Y2 ∗ Y1 .... ... ... X16 ∗ X15 Y16 ∗ Y15"
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            39
+        ],
+        "page_labels": [
+            "2-34"
+        ],
+        "type": "table",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.4 Generation of Pictures",
+            "2.4.3 GPL – Polyline"
+        ],
+        "coordinates": [
+            [
+                358.7811279296875,
+                1484.6966552734375
+            ],
+            [
+                2904.169921875,
+                3169.740234375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default TYPE Type of element LT CIRC CIRC Full circle BUTT Filled circle ARC circular arc VECT centred vectors VEC1 starting vectors VEC2 ending vectors X1 Coordinates or ∗ ! Y1 Increments of coordinates of element ∗ ! X2 ∗ ! Y2 ∗ ! .... .... .... X15 ∗ - Y15 ∗ -"
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            39,
+            40,
+            38
+        ],
+        "page_labels": [
+            "2-34",
+            "2-35",
+            "2-33"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.4 Generation of Pictures",
+            "2.4.3 GPL – Polyline"
+        ],
+        "content": "GPL\n 2.4.4 GPM – Polymarker\n GPM\n 2.4.5 GFA – Fill Area\n GFA\n GGDP – Generalized Drawing Primitive\n GGDP\n The GGDP is a method provided by GKS to create more complex primitives. With SOFiSTiK these are:\n CIRC A full circle with centre at (X1,Y1) and a point on the periphery (X2,Y2). OPT is not used.\n BUTT A filled circle with centre at (X1,Y1) and a point on the periphery (X2,Y2). OPT is not used.\n ARC A circular arc with centre at (X1,Y1) and a periphery from point (X2,Y2) to (X3,Y3). OPT is not used.\n VECT A single vector at point (X1,Y1) with the directional components (X2,Y2) or an array of vectors extending along the base line from P1 to P3 to P5 etc in the direction P2,\n P4 P6 etc. VECT will draw the vectors with its centre at the baseline, while VEC1 will put the starting point and VEC2 will use the end point with the arrow head at the baseline.",
+        "token_count": 264
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            40
+        ],
+        "page_labels": [
+            "2-35"
+        ],
+        "type": "table",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.4 Generation of Pictures",
+            "2.4.7 GTXT – Text Label"
+        ],
+        "coordinates": [
+            [
+                391.887939453125,
+                1099.8072509765625
+            ],
+            [
+                2926.164794921875,
+                1848.644287109375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default X Coordinates of insertion point ∗ ! Y ∗ ! TEXT Text − - VAL numeric value ∗ - UNIT Unit Lt/− 1 ND Number of digits − *"
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            40
+        ],
+        "page_labels": [
+            "2-35"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.4 Generation of Pictures",
+            "2.4.7 GTXT – Text Label"
+        ],
+        "content": "GTXT\n Text may be positioned in several ways. The displayed text itself may be composed from a given text and an numerical value. For the latter you may select a conversion and format according to the cdbase.chm.",
+        "token_count": 46
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            40
+        ],
+        "page_labels": [
+            "2-35"
+        ],
+        "type": "table",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.4 Generation of Pictures",
+            "2.4.8 GSCA – Dimensioning"
+        ],
+        "coordinates": [
+            [
+                389.4029846191406,
+                2705.461669921875
+            ],
+            [
+                2919.9697265625,
+                3645.27392578125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default X1 Coordinates of first point ∗ ! Y1 ∗ ! X2 Coordinates of second point ∗ - Y2 ∗ - TEXT Text − 1 VAL Numeric value ∗ * UNIT Unit Lt/− ND Number of digits −"
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            40
+        ],
+        "page_labels": [
+            "2-35"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.4 Generation of Pictures",
+            "2.4.8 GSCA – Dimensioning"
+        ],
+        "content": "GSCA\n GSCA is a special form of labelling. A dimensioning line will be drawn and a text will be written at the line. The default of the text is the distance between the two points, but it may be specified as explicit number and/or a given text. The combination of the default distance with a given text requires the text to end with an equal ”=” sign. For the shown value a conversion and format according to the cdbase.chm see may be selected.",
+        "token_count": 102
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            41
+        ],
+        "page_labels": [
+            "2-36"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.5 Attributes of Graphic Representations"
+        ],
+        "content": "The drawing elements Line, Mark, Text and Area can have various attributes. The user usu- ally specifies all the attributes within the programs with graphical output by entering bundled numbers. These are constructed according to the following expression:\n nd = 1000 · co + 100 · br + typ\n For Windows programs different palettes are foreseen for screens with bright or dark back- ground as well as monochrome or coloured printers. You can change these definitions via Report Browser Options in the Registry for all programs.\n The following CADINP-records are only available within the picture definitions <PICT> ... </PICT>. The comments and descriptions of the parameters are valid however for all other graphical programs as well.",
+        "token_count": 143
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            41
+        ],
+        "page_labels": [
+            "2-36"
+        ],
+        "type": "table",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.5 Attributes of Graphic Representations",
+            "2.5.1 GCOL – Colour Selection"
+        ],
+        "coordinates": [
+            [
+                392.37420654296875,
+                1966.690673828125
+            ],
+            [
+                2933.27197265625,
+                2517.61181640625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default COL Pen number or colour name − 1 R Red component − - G Green component − - B Blue component − -"
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            42
+        ],
+        "page_labels": [
+            "2-37"
+        ],
+        "type": "table",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.5 Attributes of Graphic Representations",
+            "2.5.1 GCOL – Colour Selection"
+        ],
+        "coordinates": [
+            [
+                391.2489929199219,
+                655.6708984375
+            ],
+            [
+                2892.558837890625,
+                2635.82421875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default IND Bundled SOFiSTiK-Index − 1 COL Colour (as with GCOL) −/LT - TYPE Line type LT - SOLI solid DASH dashed DOT dotted DDOT dash-dotted NDAS narrow dashed NDOT narrow dotted NDDO narrow dash dotted WDAS wide dashed WDOT wide dotted WDDO wide dash-dotted WIDT Width factor of line − - SCAT Style of dimensioning GSCA − 2 1 inclined small lines 2 small circles"
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            41,
+            42,
+            43
+        ],
+        "page_labels": [
+            "2-36",
+            "2-37",
+            "2-38"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.5 Attributes of Graphic Representations",
+            "2.5.1 GCOL – Colour Selection"
+        ],
+        "content": "GCOL\n GCOL selects the colour for all primitives. For COL you have the choice between one of the numbers from 1 to 15 or the literals for the standard colours from below. If your device allows it, you may specify a colour (recommended 9 to 15) by its RGB-components.\n col = Colour Index 0 = background STAN 1 = black or white (Pen 1) RED 2 = red (Pen 2) GREE 3 = green (Pen 3) BLUE 4 = blue (Pen 4) YELL 5 = yellow (Pen 5) MAGE 6 = magenta (Pen 6) CYAN 7 = cyan (Pen 7) BROW 8 = brown (Pen 8)\n 2.5.2 GPLI – Polyline Attributes\n GPLI\n 3\n arrow heads\n For Polylines holds for the bundled index:\n nd = 1000 · co + 100 · dt + type\n widt = Line thickness factor\n 0 = normal thickness\n 1 = thickness times 1.4\n 2 = thickness times 2.0\n 3 = thickness times 2.8\n 4 = thickness times 4.0\n 5 = thickness times 5.6\n etc.\n type = line style\n 1 = continuous\n 2 = medium dashed\n 3 = medium dotted\n 4 = medium dotted dashed\n 5 = tightly dashed 6 = tightly dotted 7 = tightly dotted dashed 8 = sparsely dashed 9 = sparsely dotted 10 = sparsely dotted dash",
+        "token_count": 339
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            43
+        ],
+        "page_labels": [
+            "2-38"
+        ],
+        "type": "table",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.5 Attributes of Graphic Representations",
+            "2.5.3 GPMI – Polymarker Attributes"
+        ],
+        "coordinates": [
+            [
+                378.8899841308594,
+                1419.2734375
+            ],
+            [
+                2940.7216796875,
+                2067.26904296875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description IND Bundled SOFiSTiK-Index COL Colour (as with GCOL) TYPE Marker type (Number or Literal) . + * o X SIZE Scale factor Unit − −/LT LT − Default 1 - - -"
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            44
+        ],
+        "page_labels": [
+            "2-39"
+        ],
+        "type": "table",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.5 Attributes of Graphic Representations",
+            "2.5.3 GPMI – Polymarker Attributes"
+        ],
+        "coordinates": [
+            [
+                360.7413024902344,
+                377.4517517089844
+            ],
+            [
+                2925.66650390625,
+                3110.496337890625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description IND Bundled SOFiSTiK-Index COL Colour (as with GCOL) H Text height BX Writing direction BY HALI Horizontal alignment NORM default of PATH LEFT aligned to the left CENT centred RIGH aligned to the right VALI Vertical alignment NORM default of PATH TOP top of cell CAP top of characters HALF centre line BASE writing line BOTT lower bottom line PATH Writing direction RIGH to the right LEFT to the left UP upwards DOWN downwards EXPA Expansion factor SPAC Additional spacing Unit Default − 1 −/LT - cm - − 1 − 0 LT NORM LT NORM LT RIGH − 1.0 − 0.0 −"
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            45
+        ],
+        "page_labels": [
+            "2-40"
+        ],
+        "type": "table",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.5 Attributes of Graphic Representations",
+            "2.5.3 GPMI – Polymarker Attributes"
+        ],
+        "coordinates": [
+            [
+                353.4642639160156,
+                394.88360595703125
+            ],
+            [
+                2928.9443359375,
+                1587.6771240234375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default IND Bundled SOFiSTiK-Index − 1 COL Colour (as with GCOL) −/LT - STYL Fill area Style LT - HOLL Hollow SOLI Solid PATT Pattern HATC Hatch BPAT Pattern with boundary BHAT Hatch with boundary TYPE Style index − -"
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            46
+        ],
+        "page_labels": [
+            "2-41"
+        ],
+        "type": "table",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.5 Attributes of Graphic Representations",
+            "2.5.3 GPMI – Polymarker Attributes"
+        ],
+        "coordinates": [
+            [
+                393.7178955078125,
+                652.5357666015625
+            ],
+            [
+                2930.992431640625,
+                1099.5267333984375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default filename.bmp LT72 -"
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            43,
+            44,
+            45
+        ],
+        "page_labels": [
+            "2-38",
+            "2-39",
+            "2-40"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.5 Attributes of Graphic Representations",
+            "2.5.3 GPMI – Polymarker Attributes"
+        ],
+        "content": "GPMI\n For Polymarkers hold:\n nd = 1000 · co + 100 · sze + type\n size = marker size\n 0 = normal size\n 1 = size times 1.4\n 2 = size times 2.0\n 3 = size times 2.8\n 4 = size times 4.0\n 5 = size times 5.6\n etc.\n type = Mark type\n 1 = . Point\n 2 = + Plus\n 3 = * Star\n 4 = o Circle\n 5 = x Cross\n 2.5.4 GTXI – Text Attributes\n GTXI\n FONT\n Font number\n -\n For text the following hold for the bundled index:\n nd = 1000 · co + ƒont\n font = Character style\n installation dependent\n 2.5.5 GFAI – Fill Area Attributes\n GFAI\n For areas (Fill Area) for the bundled index holds:\n nd = 1000 · co + 100 · sty + type\n ibr = Fill Area Style\n 0 = hollow (only boundary drawn)\n 1 = solid (entire area filled)\n 2 = pattern\n 3 = hatch\n type = Fill Area Style Index (only styl =2/3)\n The effect of the parameter type is device dependent. Classical vector plotters for example cannot represent any bit patterns. Pattern 1 corresponds to completely blank, whereas pattern 2 usually corresponds to a uniform sparse shading, which gets more dense by increasing numbers. Special patterns are reserved from type=11 and above. Adding a 32 to a pattern will make it opaque.\n Different variations exist for opaque hatch lines, in one or two directions.\n type 1 / 2 / 3 = vertical / horizontal / vertical+horizontal\n 4 / 5 / 6 = diagonal +45 deg / -45 deg / +45 and -45 deg\n 7-12 = as 1 to 6 dashed\n 13-24 = as 1 to 12 with larger scale\n 25,26 = reinforced concrete\n 27\n = earth\n 2.6 Insertion of a Picture\n 2.6.1 <LINK> – Insertion of a Picture",
+        "token_count": 469
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            45,
+            46
+        ],
+        "page_labels": [
+            "2-40",
+            "2-41"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.5 Attributes of Graphic Representations",
+            "2.5.3 GPMI – Polymarker Attributes"
+        ],
+        "content": "4 / 5 / 6 = diagonal +45 deg / -45 deg / +45 and -45 deg. 7-12 = as 1 to 6 dashed. 13-24 = as 1 to 12 with larger scale. 25,26 = reinforced concrete. 27. = earth. 2.6 Insertion of a Picture. 2.6.1 <LINK> – Insertion of a Picture.\n <LINK>\n Pictures with BMP-format can be inserted with <Link> in input files and templates.\n The insertion of pictures is not possible in a block for texts with <Text> ... </Text> or for pictures which should be generated with <Pict> ... </Pict>.",
+        "token_count": 149
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            46
+        ],
+        "page_labels": [
+            "2-41"
+        ],
+        "type": "image",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.7 Parametric Input"
+        ],
+        "coordinates": [
+            [
+                492.3572692871094,
+                2113.80126953125
+            ],
+            [
+                1875.37939453125,
+                2694.731201171875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 2.2: Truss"
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            47,
+            46
+        ],
+        "page_labels": [
+            "2-42",
+            "2-41"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.7 Parametric Input"
+        ],
+        "content": "The current version of the input language CADINP allows the definition of standard input with free parameters.\n For example, a simple truss of the following type can be defined by:\n The parameters here are the span width, the height as well as the cross-sectional area of the bars. An input for SOFIMSHA could be defined as follows:\n +PROG SOFIMSHA\n HEAD TRUSS\n LET#1 12.40 ! SPAN WIDTH\n LET#2\n 2.30 ! HEIGHT\n LET#2 2.3Q ! HEIGHT\n NODE 1 0 0 PP\n (2 4 1) (#1/4 #1/4) 0 5 #1 0 PP NODE 6 #1/4 -#2/2 7 #1/2 -#2 8 3*#1/4 -#2/2 TRUS (1 4 1) (1 1) (2 1) NCS 1 TRUS 5 1 6 NCS 1 6 6 7 ==\n 7 7 8 == 8 8 5 == TRUS (11 13 1) (2 1) (6 1) NCS 2 TRUS (14 15 1) (6 2) 3 NCS 2 END\n 7 7 8 ==\n 8 8 5 ==\n More powerful data generation is available using loops. For example, the following input allows the generation of a series of nodes on a hyperbolic arc:\n +PROG SOFIMSHA\n HEAD COOLING TOWER ! MERIDIAN HYPERBOLIC EQUATION (R/R0)**2-((Z-Z0)/ZZ)**2 = 1 ! (R1/R0)**2-(-Z0/ZZ)**2 = 1 => (1/ZZ)**2 ! (R2/R0)**2-((H-Z0)/ZZ)**2 = 1 ! PARAMETER: STO#H 160.0 ! TOTAL HEIGHT STO#R0 30.0 ! SMALLEST RADIUS STO#R1 55.0 ! RADIUS AT BOTTOM STO#R2 35.0 ! RADIUS AT TOP LET#1 SQR(#R1**2-#R0**2) LET#Z0 #H*#1*(SQR(#R2**2-#R0**2)-#1)/(#R2**2-#R1**2) LET#ZZ #Z0/SQR((#R1/#R0)**2-1.0) LET#M 16 ! SUBDIVISION IN HEIGHT",
+        "token_count": 568
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            47
+        ],
+        "page_labels": [
+            "2-42"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.7 Parametric Input"
+        ],
+        "content": "HEAD COOLING TOWER ! MERIDIAN HYPERBOLIC EQUATION (R/R0)**2-((Z-Z0)/ZZ)**2 = 1 ! (R1/R0)**2-(-Z0/ZZ)**2 = 1 => (1/ZZ)**2 ! (R2/R0)**2-((H-Z0)/ZZ)**2 = 1 ! PARAMETER: STO#H 160.0 ! TOTAL HEIGHT STO#R0 30.0 ! SMALLEST RADIUS STO#R1 55.0 ! RADIUS AT BOTTOM STO#R2 35.0 ! RADIUS AT TOP LET#1 SQR(#R1**2-#R0**2) LET#Z0 #H*#1*(SQR(#R2**2-#R0**2)-#1)/(#R2**2-#R1**2) LET#ZZ #Z0/SQR((#R1/#R0)**2-1.0) LET#M 16 ! SUBDIVISION IN HEIGHT.\n TXB GENERATION OF A HYPERBOLIC COOLING TOWER\n TXB HEIGHT RADIUS TXB 0.0 #(R1,9.1) TXB #(Z0,9.1) #(R0,9.1) TXB #(H,8.1) #(R2,9.1) TXB TXB PARAMETER ZZ OF HYPERBOLIC EQUATION = #(ZZ,9.3)\n LET#2 #H/#M ! DELTA-Z\n LOOP#1 #M+1 LET#Z #1*#2 NODE #1*50+1 #R0*SQR(1.+((#Z-#Z0)/#ZZ)**2) 0.0 #Z ENDLOOP END\n For the beginner these inputs are likely to be confusing, however, this is a very powerful pos- sibility which allows to automize frequently happening calculations. Many macros have devel- oped from simple beginnings.",
+        "token_count": 432
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            47,
+            48
+        ],
+        "page_labels": [
+            "2-42",
+            "2-43"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.8 Compatibility of Data files"
+        ],
+        "content": "Text based input data is suited to be used for long term storage of data, better than any propri- etary binary format. Unfortunately the input syntax is changed some times,\n SOFiSTiK has to trade the readability of the manual, the catch of data errors and the compati- bility of the data records.\n Thus we have established the following guidelines:\n •\n Input records will be extended most likely at the end of the structure, but if an entry fits in better at an other position (e.g. third coordinate added) it will be inserted. Especially designations will remain the last entry in most cases. Thus the user should use the names of the item as a prefix for all extended data, eg.:\n NODE 100 10.25 20.00 24.00 FIX PZ\n For larger data volumes the use of a table is always favourable, the use of explicit standard items ’-’ should be avoided. For exported data the deletion of ”unnecessary” data may help to reuse elder data records.\n • It is also possible that the names of a record or the items will be changed. This is a strong indication for a changed syntax or data format. The general procedure is that there will be a warning about an obsolete feature to be removed in a future release. We recommend to change data records to be intented to be used in upcoming versions rather soon. Althouh we try to keep the obsoleted input as long as possible, it will be removed from the manuals for the next major release.\n • The most critical issue is the change of the format for an unchanged item name. We try to catch old data definitions (eg. mm instead of m) or to issue a warning about possible old data (If a warning is issued, an explicit unit definition might clearify the subject.) But the user should control his data after a switch to a new major release thoroughly.\n • However a rather common case is that the defaults have to be changed. This may be triggered by change of the design codes, a better programming logic or the demands of our customers. There is no golden way. If one specifies only the minimum range of values, one may reuse the data more easily, but it may happen that a new release will produce different results. The default to select national dependant parameters depending on the settings of the operating system is a nice feature, but it may create different results on different computers and should be avoided therefore.",
+        "token_count": 499
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            48,
+            49
+        ],
+        "page_labels": [
+            "2-43",
+            "2-44"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.9 Starting an Analysis",
+            "2.9.1 #DEFINE - Parameter Substitution"
+        ],
+        "content": "SPS is further capable of making global replacements in the input file. The declaration of text blocks must take place before they are used. This is done via a line #define text=name. The name of a text block consists of up to 40 characters without $. The first character of a name of a text block has to be a letter. The value of the text block is a text of arbitrary length. Parameters within an assignment are not evaluated until the replacement. A redefinition of an assignment is possible.\n A parameter in the input data or in a block can be referred to by using the syntax $(name). Blank spaces are not allowed between $ and (. Upper/lower case letters have no influence. The replacement can be recursive. Definitions like $(A$(INDEX)) are allowed.\n Example:\n $PROG\n (extension for TEDDY)\n #define LENGTH=3.70 #define WIDTH=30 #define HEIGHT=50 #define PLATE=50 20 10 80\n PROG AQUA\n CONC 1 B 25 STEE 1 BST 500 SREC 1 $(HEIGHT) $(WIDTH) SREC 2 $(PLATE) ASU 2.3 END\n CONC 1 B 25\n STEE 1 BST 500\n PROG SOFIMSHA\n SYST GIRD NODE 1 0.0 0.0 FIX PP NODE 2 $(LENGTH)/2 0.0 NODE 3 $(LENGTH) BEAM 1 1 2 1 BEAM 2 2 3 1 END\n SYST GIRD\n NODE 1 0.@ @.0 FIX PP\n NODE 2 $(LENGTH)/2 0.0\n NODE 3 $ (LENGTH)\n BEAM 11 2 1\n Unlike the CADINP variables #() the $() variables are replaced by strings, so we can insert literals or generation macros.\n There are two default parameters, namely $(NAME) containing the primary name of the output file and $(PROJECT) containing the name of the project. These can be helpful especially for SYS commands.",
+        "token_count": 433
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            49
+        ],
+        "page_labels": [
+            "2-44"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.9 Starting an Analysis",
+            "2.9.1 #DEFINE - Parameter Substitution"
+        ],
+        "content": "Unlike the CADINP variables #() the $() variables are replaced by strings, so we can insert literals or generation macros.. There are two default parameters, namely $(NAME) containing the primary name of the output file and $(PROJECT) containing the name of the project. These can be helpful especially for SYS commands..\n Text blocks which are not defined in the input file can be set with a SET-record. When the command (e.g. in the environment) is given:\n SET SIZE=LP O FORM ZTVK\n SPS can insert in all the files the relevant format:\n SIZE $(SIZE)\n Moreover it is possible to describe global parameters for SPS in a SOFISTIK.DEF file. This results in a hierarchy of three layers:\n Firstly a definition in the input data\n Secondly the definition with SET (to be avoided!)\n Lastly a definition in SOFISTIK.DEF",
+        "token_count": 180
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            49,
+            50
+        ],
+        "page_labels": [
+            "2-44",
+            "2-45"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.9 Starting an Analysis",
+            "2.9.2 #INCLUDE - Block Definitions"
+        ],
+        "content": "By the use of block building several lines of the data can be used more than once at any point in the dataset. A maximum of 256 internal blocks and an unlimited number of data blocks in an arbitrary order are allowed. Blocks can be recursively built in a depth of up to 32 levels.\n #DEFINE name Beginning of block name (up to 40 characters)\n #ENDDEF\n End of block\n #UNDEF name Delete a defined block\n #INCLUDE name Insertion of block name from memory or file name\n Using blocks does not only free the user from copying re-occurring input lines, but also enables the use of sub-programs.\n Example:\n #define SECT\n $PROG AQUA $ TRAPEZOIDAL CROSS-SECTION PARAMETER BO,BU,H POLY UPZ VERT 1 #1/2 -#3/2 2 #2/2 #3/2 CURF 3 #enddef\n PROG AQUA\n STEE 1 ST 37 SECT 1 ; LET#1 0.60,0.20,0.60 #include sect SECT 2 ; LET#1 0.60,0.30,0.60 #include sect SECT 3 ; LET#1 0.60,0.30,0.70 #include sect END\n When inserting files in UNIX it is important to consider the lower/uppercase letters used for the filenames! The old formats $BLOCK BEG/END/SET are still supported, but should not be used anymore.",
+        "token_count": 321
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            50,
+            51
+        ],
+        "page_labels": [
+            "2-45",
+            "2-46"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.9 Starting an Analysis",
+            "2.9.3 APPLY - Integration of data during the calculation"
+        ],
+        "content": "With the APPLY command a file can be included anywhere between two blocks in the input data set, but not inside a module. This file should contain one or more module calls +PROG.\n While with #INCLUDE (see Section 2.9.2: #INCLUDE - Block Definitions) the data are inserted before the calculation into the data set, the APPLY command is executed during the computa- tion, i.e. the data can be generated during a calculation and thereafter be inserted at the right place.\n Additionally APPLY is controlled with a sign +/- , that means with +APPLY the command is executed, with -APPLY it will be skipped.\n A typical example for the use of APPLY is the program CSM (Construction Stage Manager). With the CSM a file $(NAME)_csm.dat is created. This file is inserted with APPLY into the calculation.\n +PROG CSM\n ...\n END\n +APPLY \"$(NAME)_csm.dat\" $ contains at least one +PROG\n +PROG ASE\n ...\n END",
+        "token_count": 209
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            51,
+            52
+        ],
+        "page_labels": [
+            "2-46",
+            "2-47"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.9 Starting an Analysis",
+            "2.9.4 #IF - Conditional Input"
+        ],
+        "content": "IF THEN ELSE constructions can be defined. This means that larger input blocks can be inserted and removed, which is more difficult using the IF constructions in CADINP, and that several program calls can be grouped in one block.\n The relevant control lines are familiar to all C-Programmers. In the first column the following possibilities can be used:\n #if expression\n any line, also PROG and SYS\n #else\n any line, also PROG and SYS\n #endif\n ”expression” may be just the name of a block or a variable which is evaluated to be true if it is defined and not empty and not equal to zero. But it might be also a comparison $(MODE)==EC or $(MODE) < >EC or $(MEMBERS)>3. Be aware however that the comparisons are purely lexically based on strings, adjusted to the right for numbers, and to the left for all other cases. Therefore we have A < B, AA < BA, 10 < 18 but unfortunately also 10.0 > 12.\n If ”expression” is not true, the first block will be skipped and the block after #else will be used. Naturally the second block can be omitted if not needed.\n These constructions can be nested in up to 32 levels. An unmotivated #else or #endif will lead to errors, as well as an unfinished construction.\n Example:\n #define DOAQB=0\n #if DOAQB\n PROG AQB HEAD ..... LC ..... DESI ..... END #endif\n PROG STAR2\n HEAD .....\n #if DOAQB\n $ Design with AQB\n #else\n DESI .....\n #endif\n #endif\n .....\n END\n The indentation is only used for readability. In the above example STAR2 is used for the design. If DOAQB=1, AQB is used for the design task.",
+        "token_count": 384
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            52
+        ],
+        "page_labels": [
+            "2-47"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.9 Starting an Analysis",
+            "2.9.5 Templates"
+        ],
+        "content": "A special form of input files is called a template. The structure of these files is given as follows:\n #DEFINE L1=10.0 #DEFINE L2=20.0 #DEFINE L3=30.0 #DEFINE P=12.0\n PROG TEMPLATE (or any other program name)\n LET#L1 $(L1) LET#L2 $(L2) LET#L3 $(L3) LET#L #L1+#L2+#L3 TXA Introduction <TEXT> This is the analysis of a continuous beam with 3 spans: L1 = <EDIT:L1>$(L1)</EDIT> L2 = <EDIT:L2>$(L2)</EDIT> L3 = <EDIT:L3>$(L3)</EDIT> SUM = #(L,10.2) </TEXT> <PICT> ....\n </PICT>\n PROG AQUA\n following al the data\n In many cases this is like a normal dataset, which only includes the preface of the total analysis. It is summarised under a special program name called TEMPLATE. The input consists only of text and picture elements combined with arithmetic expressions. But the mechanism is general available for all programs.\n Now within Report Browser you may change the selected parameters and re-analyse this given module. This allows other users to benefit from these macros which may contain rather com- plicated treatment, but need only a few problem dependant parameters .",
+        "token_count": 298
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            52,
+            53
+        ],
+        "page_labels": [
+            "2-47",
+            "2-48"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.9 Starting an Analysis",
+            "2.9.6 Iterative Analysis with Multiple Modules"
+        ],
+        "content": "2nd Order Theory for nonlinear materials is contained in the programs STAR2/AQB. However, only one method of computation of the reinforcement can be considered by STAR2. A com-\n putation with different methods can be implemented by an iteration between AQB and STAR2. The iteration is controlled by the parameter ITER of the record PROG.\n PROG STAR2\n 1st Step for 1st Order Theory\n CTRL I Definition of loading cases LC .... END PROG AQB ITER parm parm separated by blank spaces BEAM ....; LC.... 1st selection and design definition ULTI ....; NSTR.... END BEAM ....; LC.... 2nd selection and design definition ULTI ....; NSTR.... END PROG STAR2 ITER parm HEAD .... CTRL II 1 END\n The maximum number of iterations to be made is regulated by ITER (e.g. ITER 30), default is 20 iterations.\n This mechanism has been extended with Release 23 for other combinations of general mod- ules. To terminate the iteration it is required to specify within the CADINP-definition explicitly EXIT_ITERATION.\n PROG TEMPLATE\n STO#TARGET 0 ; STO#PARAM 1.0 PROG AQUA ITER RCL#PARAM QNR .... Definition of sectuion using #PARAM PROG AQB ITER BEME .... Design and save results ENDE @KEY / LET# TARGET ... Calculate a target function to become zero IF ABS(#TARGET) < 0.001 EXIT_ITERATION ELSE STO#PARAM new_target_value ENDIF\n IF ABS(#TARGET) < @.001\n EXIT_ITERATION\n ELSE\n STO#PARAM new_target_value",
+        "token_count": 342
+    },
+    {
+        "document_name": "sofistik_1.pdf",
+        "page_indices": [
+            53,
+            54
+        ],
+        "page_labels": [
+            "2-48",
+            "2-49"
+        ],
+        "type": "text",
+        "sections": [
+            "2 CADINP - Input Language",
+            "2.9 Starting an Analysis",
+            "2.9.7 Operating System Commands"
+        ],
+        "content": "Any desired shell commands can be integrated in an analysis. Parameter substitution is also active for these lines, for example the character string $(NAME) is replaced by the primary name of the input or the output file, while $(PROJECT) is replaced by the name of the project.\n *SYS command command will be executed as in any\n batch file, if the last PROG\n +SYS command -SYS command e.g: +SYS del \"$(PROJECT).$D1\" +SYS wait \"name.exe\" parameter command command line was active. will be executed as in any batch file. will not be executed, all following *SYS lines deactivated. deletes the stiffness matrix WPS is initiated to wait with the process- ing of the further modules until the ac- tive process is finished with ”+SYS -wait name.exe”.",
+        "token_count": 166
+    }
+]

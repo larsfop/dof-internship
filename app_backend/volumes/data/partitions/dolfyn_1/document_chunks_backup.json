@@ -1,0 +1,1627 @@
+[
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            2
+        ],
+        "page_labels": [
+            null
+        ],
+        "type": "table",
+        "sections": [
+            "Foreword"
+        ],
+        "coordinates": [
+            [
+                472.16534423828125,
+                1190.806884765625
+            ],
+            [
+                2923.18603515625,
+                3958.019775390625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Task Description 1-1 Theoretical abstract 2-1 2.1 Fluid Mechanics . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-1 2.2 Boundary conditions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-3 2.2.1 Inlet and Outlet . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-3 2.2.2 Walls . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-4 2.3 Atmospheric boundary layers . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-6 2.4 Detachement of flow . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-6 2.5 Literature . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-7 Input Description 3-1 3.1 Mesh Generation and DOLFYN-Files . . . . . . . . . . . . . . . . . . . . . . . 3-1 3.2 Input Language . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-2 3.3 Input Records . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-2 3.4 FLOW – Properties of the Fluid . . . . . . . . . . . . . . . . . . . . . . . . . . 3-3 3.5 WIND – Atmospheric Boundary Layer . . . . . . . . . . . . . . . . . . . . . . 3-4 3.6 CASE – Analysis case . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-6 3.7 IN – Inlet Conditions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-7 3.8 OUT – Outlet Condition . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-8 3.9 INOU – In and Outlet Conditions . . . . . . . . . . . . . . . . . . . . . . . . . . 3-9 3.10 WALL – Wall conditions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-10 3.11 DRAG – Dragforce evaluation . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-12 3.12 STEP – Transient Analysis . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-14 3.13 HIST – Transient Results . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-15 3.14 SOLV – Solver Controls . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-16 3.15 DOLF – Control Values for DOLFYN . . . . . . . . . . . . . . . . . . . . . . . 3-17 Examples 4-1 4.1 Flow around a cylinder . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-1 4.1.1 Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-1 4.1.2 Classical Navier-Stokes Solutions . . . . . . . . . . . . . . . . . . 4-1 4.1.3 Turbulent Solutions . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-2 4.2 Bridge Section . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-5"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            1,
+            2,
+            4
+        ],
+        "page_labels": [
+            null,
+            null,
+            "1-1"
+        ],
+        "type": "text",
+        "sections": [
+            "Foreword"
+        ],
+        "content": "DOLFYN Fluid Dynamics powered by Cyclone Fluid Dynamics BV\n DOLFYN Manual, Service Pack 2025-4 Build 146\n Copyright © 2025 by SOFiSTiK AG, Nuremberg, Germany.\n SOFiSTiK AG\n HQ Nuremberg Office Garching Flataustraße 14 Parkring 2 90411 Nürnberg 85748 Garching bei München Germany Germany T +49 (0)911 39901-0 T +49 (0)89 315878-0 F +49(0)911 397904 F +49 (0)89 315878-23 info@sofistik.com\n www.sofistik.com\n This manual is protected by copyright laws. No part of it may be translated, copied or reproduced, in any form or by any means, without written permission from SOFiSTiK AG. SOFiSTiK reserves the right to modify or to release new editions of this manual.\n The manual and the program have been thoroughly checked for errors. However, SOFiSTiK does not claim that either one is completely error free. Errors and omissions are corrected as soon as they are detected.\n The user of the program is solely responsible for the applications. We strongly encourage the user to test the correctness of all calculations at least by random sampling.\n Contents\n Contents\n Contents\n i\n 1\n 2\n 3\n 4\n Bibliography\n 4-11\n 1 Task Description\n DOLFYN has been developed by Henk Krüs from Cyclone Fluid Dynamics BV and is available as open-source-software (www.dolfyn.net). It is a program for the analysis of complex flow phenomena:\n • Fluid mechanic (Navier-Stokes equations)\n • Turbulence models for high Reynold numbers\n • Free Surfaces for Fluids\n • Heat Conduction and Convection\n The program is a general unstructured 3D Finite Volume solver. Although it is possible to use volumes of any shape, for Post and Preprocessing it is more common to have only tetrahedra, Hexahedra or wedges with a triangular base area. This allows an easy connection to other Finite Element codes.",
+        "token_count": 460
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            4
+        ],
+        "page_labels": [
+            "1-1"
+        ],
+        "type": "text",
+        "sections": [
+            "Foreword"
+        ],
+        "content": "The program is a general unstructured 3D Finite Volume solver. Although it is possible to use volumes of any shape, for Post and Preprocessing it is more common to have only tetrahedra, Hexahedra or wedges with a triangular base area. This allows an easy connection to other Finite Element codes..\n However, SOFiSTiK provides also higher polyhedra cell types of the so called \"dual mesh\". The solution is then obtained for the nodes of the primary mesh, which has strong advantages for computing time and precision in 3D.\n DOLFYN has been adopted to the SOFiSTiK-environment by importing the mesh, material and boundary conditions from the data base and saving results for postprocessing into the data base. All Pre- and Postprocessing tools of SOFiSTiK may be used therefore.",
+        "token_count": 174
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            7
+        ],
+        "page_labels": [
+            "2-2"
+        ],
+        "type": "image",
+        "sections": [
+            "2 Theoretical abstract",
+            "2.1 Fluid Mechanics"
+        ],
+        "coordinates": [
+            [
+                609.3761596679688,
+                2992.552978515625
+            ],
+            [
+                2078.236328125,
+                3672.938232421875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 2.1: Turbulent length scale"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            7,
+            8,
+            6
+        ],
+        "page_labels": [
+            "2-2",
+            "2-3",
+            "2-1"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical abstract",
+            "2.1 Fluid Mechanics"
+        ],
+        "content": "The physics of a fluid flow follows rather simple conservation and material laws (mass, mo- mentum, energy). From the continuity equation for example we get the fact that in case of a reduction of the cross section, the velocity will increase. From the law of Bernoulli follows a loss of pressure, as the total energy is the sum of pressure, kinetic energy and geodetic height and a transient acceleration term:\n ρ\n p + 2 · 2 + ρ · g · z = const\n (2.1)\n For an incompressible flow two material constants, the density ρ and the viscosity ν or μ are sufficient. From conservation laws and equilibrium we have the basic Navier-Stokes-Equation:\n $$-- 1, ---- --_, 3 2 _~ j= \"(1.0 k= sui = 5 (um + uy uy + usu', = 5 (li Ui) (2.6)$$\n • A length scale Lt, which is the Prandtl mixing length and might be taken as the dimension of the largest eddy or a structural width:\n This value is correlated to the integral length scales, but there are 9 different values in the atmospheric boundary layer. Recommended values are the smallest dimensions of the body or the smallest (vertical) length scale. Near the ground, the distance to the ground multiplied with the Karman constant (0.4) is selected as upper limit in many cases.\n The additional turbulent viscosity is defined with an empirical constant as:\n Ut =p-Cy-Le-VkK ; Cy=0.09\n (2.7)\n In some cases it is sufficient to use a constant value, but more common are models with two additional equations for the turbulent energy and some dissipation rate.\n • The best known is the k-ε model with the rate of dissipation ε [m2/sec3], describing the\n energy conversion per time based on the Prandtl-Kolmogorov formula:",
+        "token_count": 407
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            7,
+            8
+        ],
+        "page_labels": [
+            "2-2",
+            "2-3"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical abstract",
+            "2.1 Fluid Mechanics"
+        ],
+        "content": "In some cases it is sufficient to use a constant value, but more common are models with two additional equations for the turbulent energy and some dissipation rate.. • The best known is the k-ε model with the rate of dissipation ε [m2/sec3], describing the. energy conversion per time based on the Prandtl-Kolmogorov formula:.\n $$e  0.168 k3/2 Lt ; mt = r * Cm * k2 e (2.8)$$\n This model is rather robust, thus, the quasi standard in industrial applications. It is well suited for most 2D shear layers. Its weakness is relatively well known. It has problems with boundary layer separation (not very precise, often too short) and problems with curved stream lines, curved surfaces or sudden changes (rotating fluids) sometimes even with buoyancy. Excessive turbulence generation in stagnation points is a major concern. Thus enhanced models (e.g. RNG or RKE) have been developped, whioch are available in DOLFYN.\n • There is also the so called k-ω Model with some kind of frequency ω [ 1/sec].\n k1/2",
+        "token_count": 246
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            9
+        ],
+        "page_labels": [
+            "2-4"
+        ],
+        "type": "image",
+        "sections": [
+            "2 Theoretical abstract",
+            "2.1 Fluid Mechanics",
+            "2.2.2 Walls"
+        ],
+        "coordinates": [
+            [
+                529.8616333007812,
+                1001.745212222221
+            ],
+            [
+                2006.622802734375,
+                2429.8604677777776
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 2.2: Boundary layers"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            10
+        ],
+        "page_labels": [
+            "2-5"
+        ],
+        "type": "image",
+        "sections": [
+            "2 Theoretical abstract",
+            "2.1 Fluid Mechanics",
+            "2.2.2 Walls"
+        ],
+        "coordinates": [
+            [
+                0,
+                0
+            ],
+            [
+                2127.88671875,
+                2422.22998046875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 2.3: Velocity profile at the wall"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            9,
+            10
+        ],
+        "page_labels": [
+            "2-4",
+            "2-5"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical abstract",
+            "2.1 Fluid Mechanics",
+            "2.2.2 Walls"
+        ],
+        "content": "The most simple form of a wall is the symmetry condition, which is the natural boundary con- dition describing a flow parallel to the wall without any interaction with the wall itself.\n If the flow has friction, the fluid particles at a wall are fixed (sticky) and will have the velocity zero. Fluid particles in the vicinity will be decelerated by friction forces. For a Newtonian fluid we have a linear relation between stress and velocity gradient:\n certain distance from the wall the flow is described by a logarithmic law. This is defined for the relative velocity y+ dependant on the height and either an absolute sand roughness height ks according to Nikuradse or an atmospheric roughness parameter zo:\n τ\n in Fig 2.3.\n 40\n Universal velocity profile, smooth and rough walls\n +\n Fully rough\n 100000\n log10(y*) [-]\n For the lowest laminar part ( y+ < 5 ) we have u+= y+, then we have a transition zone and from ( y+= 70 ) we have the logarithmic law up to y+= 500.\n If the value y+ is within that region, it may be checked only after an analysis, when the velocities are calulated.\n For high precission requests the boundary layer itself should be modelled with a sufficient number of cells (approx. 10 over the height) on the other side the closest vertex must obey the rule ( y+ > 12.5 ). In [6] an optimal value of y+ ≈ 100 is recommended. However if the mesh size becomes very small it is recommendable to drop the wall boundary condition and to resolve the boundary layer with a mesh with y+ < 1.\n Based on a developement length L of a straight plate the thickness of the boundary layer may be estimated with:\n $$2 --l/7 u LU cf =2| --] =0.025Re~\"/7 = 0.025( ---- U x Vv (oe) (2.15)$$",
+        "token_count": 412
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            9,
+            10,
+            11
+        ],
+        "page_labels": [
+            "2-4",
+            "2-5",
+            "2-6"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical abstract",
+            "2.1 Fluid Mechanics",
+            "2.2.2 Walls"
+        ],
+        "content": "Based on a developement length L of a straight plate the thickness of the boundary layer may be estimated with:. $$2 --l/7 u LU cf =2| --] =0.025Re~\"/7 = 0.025( ---- U x Vv (oe) (2.15)$$.\n The boundary layer thickness δ is established as reference mesh size for all elements at boundaries and saved into the CDB. Within the flow region a similar indicator may be estab- lished via:\n Then a definition of a desired y+value will allow an adaptive mesh generation.",
+        "token_count": 120
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            11
+        ],
+        "page_labels": [
+            "2-6"
+        ],
+        "type": "image",
+        "sections": [
+            "2 Theoretical abstract",
+            "2.3 Atmospheric boundary layers"
+        ],
+        "coordinates": [
+            [
+                527.9487915039062,
+                1349.0077777777778
+            ],
+            [
+                2093.202986666667,
+                2934.466023333333
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 2.4: Roughness measure z0"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            12
+        ],
+        "page_labels": [
+            "2-7"
+        ],
+        "type": "image",
+        "sections": [
+            "2 Theoretical abstract",
+            "2.3 Atmospheric boundary layers"
+        ],
+        "coordinates": [
+            [
+                904.8576049804688,
+                505.58697509765625
+            ],
+            [
+                2058.930419921875,
+                1868.277587890625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 2.5: Detachment of FLow"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            11,
+            12
+        ],
+        "page_labels": [
+            "2-6",
+            "2-7"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical abstract",
+            "2.3 Atmospheric boundary layers"
+        ],
+        "content": "The boundary conditions of natural wind are governed by the fact that all important effects take place within that critical lowest layer of the atmospheric boundary layer. SOFILOAD has fea- tures available to calculate those wind profiles according to the design codes and provide them as constant or transient boundary conditions for DOLFYN. DOLFYN has also the possibility to define a theroretical solution of the turbulent flow in the atmospheric boundary layer.\n Within that subject a slightly modified form of the logarithmic law is used in general, yielding defined values also for small values of z:\n will have a recirculation zone with a rather constant pressure as it is represented in Fig 2.5.",
+        "token_count": 135
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            12
+        ],
+        "page_labels": [
+            "2-7"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical abstract",
+            "2.5 Literature"
+        ],
+        "content": "Ferziger and Peric [1], Spurk [2], Schlichting and Gersten [3], Ruscheweyh [4], Glück [5], Tucker and Mosquera [6], and Blocken, Stathopoulos, and Carmeliet [7]",
+        "token_count": 61
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            14
+        ],
+        "page_labels": [
+            "3-1"
+        ],
+        "type": "image",
+        "sections": [
+            "3 Input Description",
+            "3.1 Mesh Generation and DOLFYN-Files"
+        ],
+        "coordinates": [
+            [
+                829.7927856445312,
+                2751.186279296875
+            ],
+            [
+                1996.5023193359375,
+                3937.180419921875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 3.1: Files for Dolfyn"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            14
+        ],
+        "page_labels": [
+            "3-1"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.1 Mesh Generation and DOLFYN-Files"
+        ],
+        "content": "DOLFYN uses the Finite Volume Method with an own geometry format The geometric file (nodes, faces, volumes) with extension .dge is exported by SOFIMSHA. There are two principal variants:\n • The primary mesh uses the existing elements as cells. The solution is calculated for the centre of these cells. This is the standard procedure for the finite volume method.\n • The dual mesh is generated by a Voronoi-process based on the faces perpendicular on the element edges. The solution is then obtained for the nodes. The finite volumes are then polyhedra. This method has large benefits for the speed and precision for generated tetrahedra meshes in 3D.\n For spatial systems the BRIC-elements are taken directly. Surfaces have to be described via QUADs or structural areas.\n For planar systems SOFIMSHA will export for DOLFYN all QUAD-Elements as hexahedra with a thickenss of 1.0, the Volume-Patch number is generated from the properties of the QUAD. The edges of the QUAD become surfaces the patch numbers for those are taken from structural edges or boundary elements defined with SOFIMSHA.\n DOLFYN boundary conditions are given for a total surface or a volume only, adressed by a unique region number. When exporting the mesh the user the primary group number will be used for this region number.\n DOLFYN works beside the SOFiSTiK Database with some additional files:",
+        "token_count": 298
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            15
+        ],
+        "page_labels": [
+            "3-2"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.2 Input Language"
+        ],
+        "content": "The input is made in the CADINP language (see general manual SOFiSTiK: ’FEA / STRUC- TURAL Installation and Basics’). A speciality of this software is that we do not supply only CADINP-Syntax, but that we allow also for the native DOLFYN commands.",
+        "token_count": 66
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            15
+        ],
+        "page_labels": [
+            "3-2"
+        ],
+        "type": "table",
+        "sections": [
+            "3 Input Description",
+            "3.3 Input Records"
+        ],
+        "coordinates": [
+            [
+                402.0586853027344,
+                1140.531494140625
+            ],
+            [
+                2873.607177734375,
+                3249.705322265625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Record Items FLOW TURB TEMP MAT RHO NUE TREF BET COND CP K WIND LC V HREF Z0 Z0M DX DY DZ HG C1 C2 HMAX CASE LC PLC U V W DEN K EPS TEMP P PREF PRFX PRFY PRFZ TITL IN NO LC U V W DEN K EPS TEMP OUT NO F INOU NO LC P DEN K EPS TEMP WALL NO Z0 U V W TEMP R EPS HFLX DRAG VREF HREF AREF AX AY AZ AXX AYY AZZ ALF REFX REFY REFZ W W1 W2 .. W15 STEP N T TFAK DTM INT TOL TORD HIST TYPE FROM TO INC SOLV VAR DIFF BFAC SLIM WITH RELA"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            15
+        ],
+        "page_labels": [
+            "3-2"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.3 Input Records"
+        ],
+        "content": "The following records are defined:\n DOLF\n Origi\n The records HEAD, END and PAGE are described in the general manual SOFiSTiK: ’FEA / STRUCTURAL Installation and Basics’.\n A description of the individual records is given in the following sections.",
+        "token_count": 55
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            16
+        ],
+        "page_labels": [
+            "3-3"
+        ],
+        "type": "table",
+        "sections": [
+            "3 Input Description",
+            "3.4 FLOW – Properties of the Fluid"
+        ],
+        "coordinates": [
+            [
+                353.1197509765625,
+                823.114990234375
+            ],
+            [
+                2938.419677734375,
+                2628.89501953125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Description Default Type of turbulent flow NONE. laminar flow KE turbulent with k-e model RNG _ turbulent with RNG k-e model RKE _ turbulent with realizable k-e model Temperature modelling NONE No temperatures KELV Yes, Temperatures in Kelvin C Yes, Temperatures in oCelsius FAHR_ Yes, Temperatures in oFahrenheit Material number or fluid material type (AIR, H2O etc) LIT Weight of the Fluid [kg/m? ] Kinematic Viscosity [m/sec | Reference/Initial Temperature [°] 1281 Volumetric thermal expansion factor [—/o] Thermal conductivity [W/Km] Specific Heat U/kgK] Compressibility modulus [MPa] 1090"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            16
+        ],
+        "page_labels": [
+            "3-3"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.4 FLOW – Properties of the Fluid"
+        ],
+        "content": "See also: FLOW, WIND, CASE, IN, OUT, INOU, WALL, STEP, HIST, CTRL\n FLOW\n K\n Compressibility modulus\n [MP]1090\n *\n TURB and TEMP are used to activate the extended flow properties.\n MAT may be used to preset fluid material constants for some materials, but can be overwritten individually:\n AIR Air (1 bar, 20 deg Celsius) H2O Water (1 bar, 10 deg. Celsius) CO2, O, N Carbondioxid, Oxygen, Nitrogen AR, KR, XE, SF6\n Argon, Krypton, Xenon, Sulfurhexafluorid",
+        "token_count": 143
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            17
+        ],
+        "page_labels": [
+            "3-4"
+        ],
+        "type": "table",
+        "sections": [
+            "3 Input Description",
+            "3.5 WIND – Atmospheric Boundary Layer"
+        ],
+        "coordinates": [
+            [
+                358.4831848144531,
+                794.1774291992188
+            ],
+            [
+                2926.364013671875,
+                2486.46337890625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default LC Type of wind definition −/LT ABL TUNN Wind tunnel with ceiling ABL Natural wind with open air lc Loadcase with a wind definition V Windspeed [m/sec] - HREF Reference height for wind speed [m]1006 10.0 Z0 Roughness of wind profile [m] 0.30 Z0M Roughness of measured wind profile [m] Z0 LSC Factor on integral length scale − 0.491 DX Components of the wind direction − 0.0 DY default is ( 1 , 0 , 0 ) − 0.0 DZ − 0.0 HG height of terrain [m]1006 - C1 Scaling factor − 0.0 C2 Scaling factor − 1.0 HMAX maximum height of logarithmic wind profile [m]1006 -"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            17
+        ],
+        "page_labels": [
+            "3-4"
+        ],
+        "type": "image",
+        "sections": [
+            "3 Input Description",
+            "3.5 WIND – Atmospheric Boundary Layer"
+        ],
+        "coordinates": [
+            [
+                481.2807312011719,
+                2955.8519205555554
+            ],
+            [
+                2164.184326171875,
+                4234.58203125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 3.2: Atmospheric Boundary Layer"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            17,
+            18
+        ],
+        "page_labels": [
+            "3-4",
+            "3-5"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.5 WIND – Atmospheric Boundary Layer"
+        ],
+        "content": "See also: FLOW, WIND, CASE, IN, OUT, INOU, WALL, STEP, HIST, CTRL\n WIND\n The atmospheric boundary layer is the lower part of the atmosphere, where the flow of the air is dominated by the viscosity (fluid friction) and the roughness of the terrain.\n The definition is either taken from SOFiLOAD where we have defined a complex wind profile or it is defined by two important parameters.\n • The reference wind speed measured at height HREF\n • The roughness height zo of the terrain\n • Two optional scaling parameters to adjust a turbulence gradient over the height\n τ\n Z+Zo\n $$u2 Z+zZ T O k= ; C1 In| exe > Cy=0.09 (3.2) / Cu Zo$$\n $$uz Z+zZ T O 6=--__t __. cxin| exe - k=0.419 (3.3) 0.415-[z+2Z)] O$$\n Lit: Yi Yang, Ming Gu, Suqin Chen, Xinyang Jin, New inflow boundary conditions for modelling the neutral equilibrium atmospheric boundary layer in computational wind engineering. Journal of Wind Engineering and Industrial Aerodynamics 97 (2009) 88-95.\n If the wind speed has been measured in another location in the vicinty with a different rough- ness, the profile may be converted by defining this value Z0M based on conservation of masses, which is based on a constant wind speed at a meso-height of 300 m.\n With the definition of an atmospheric boundary layer are prescribed: the initial conditions, the boundary conditions at the inlet and the flow in the top most cells in the fluid volume.\n The definition in SOFiLOAD may be defined as steady state with a load case containing a wind defintion or as transient wind generated with WGEN. For the latter, the inflow has to be done with a single group with the attribut WIND INFL.",
+        "token_count": 410
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            19
+        ],
+        "page_labels": [
+            "3-6"
+        ],
+        "type": "table",
+        "sections": [
+            "3 Input Description",
+            "3.6 CASE – Analysis case"
+        ],
+        "coordinates": [
+            [
+                364.3014221191406,
+                820.5279541015625
+            ],
+            [
+                2886.774169921875,
+                2691.223388671875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Description Default Loadcase for results Primary load case load case increment for differences Initial velocity in X-direction [m/sec] Initial velocity in Y-direction [m/sec] Initial velocity in Z-direction [m/sec] Initial pressures [kg/m? | Initial turbulent energy / intensity [m?2/sec? | Dissipation rate / Length scale [m3/sec? | Initial temperature [o] Initial Pressure [ bar] Reference nodal point for zero pressure - explicit x-coordinate for zero pressure [M] i00: explicit y-coordinate for zero pressure [LM] 00: explicit z-coordinate for zero pressure [M] i001 Result case designation Lit32"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            19
+        ],
+        "page_labels": [
+            "3-6"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.6 CASE – Analysis case"
+        ],
+        "content": "See also: FLOW, WIND, CASE, IN, OUT, INOU, WALL, STEP, HIST, CTRL\n CASE\n Any initial condition my be defined by a primary load case or the definition of an atmospheric boundary layer. Every individual variable may be overwritten by an explicit numerical value or by a formula string depending on the variables #X, #Y, #Z, which will be the coordinates of the element center.\n For the turbulent energy it is also possible to define the turbulence intensity (e.g. 2[%] ). For the dissipation rate an alternate definition is as length scale (e.g. 12.4[m] )\n With a definition of LCD additional result cases will be created with a number incremented by LCD containing the differences of the velocities to the initial values.",
+        "token_count": 161
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            20
+        ],
+        "page_labels": [
+            "3-7"
+        ],
+        "type": "table",
+        "sections": [
+            "3 Input Description",
+            "3.7 IN – Inlet Conditions"
+        ],
+        "coordinates": [
+            [
+                360.2364807128906,
+                812.9342041015625
+            ],
+            [
+                2928.1396484375,
+                2004.544677734375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Description Default Region number of the boundary Loadcase in the data base Type der Randbedingung Velocity in X-direction Velocity in Y-direction Velocity in Z-direction Density of incoming fluid Turbulent energy / turbulence intensity Dissipation rate / Integral length scale Temperature of incoming fluid"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            20
+        ],
+        "page_labels": [
+            "3-7"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.7 IN – Inlet Conditions"
+        ],
+        "content": "See also: FLOW, WIND, CASE, IN, OUT, INOU, WALL, STEP, HIST,\n CTRL\n ; on\n Inlet conditions may be defined by a load case in the data base or the definition of an atmo- spheric boundary layer. Every individual variable may be overwritten by an explicit numerical value or by a formula string depending on the variables of the coordinates #X, #Y, #Z and the time #T.\n IN 1 U ’=0.30*(1.-((#Y-0.005)/0.205)**2)’\n For the turbulent energy it is also possible to define the turbulence intensity (e.g. 2 [%] ) for the dissipation rate an alternate definition is as Integral length scale (e.g. 12.4 [m] )",
+        "token_count": 169
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            21
+        ],
+        "page_labels": [
+            "3-8"
+        ],
+        "type": "table",
+        "sections": [
+            "3 Input Description",
+            "3.8 OUT – Outlet Condition"
+        ],
+        "coordinates": [
+            [
+                398.0690612792969,
+                809.9366455078125
+            ],
+            [
+                2910.854248046875,
+                1155.030517578125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description NO Region number of the boundary F Partial factor of outlet Unit − − Default 1 1.0"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            21
+        ],
+        "page_labels": [
+            "3-8"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.8 OUT – Outlet Condition"
+        ],
+        "content": "See also: FLOW, WIND, CASE, IN, OUT, INOU, WALL, STEP, HIST, CTRL\n OUT",
+        "token_count": 28
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            22
+        ],
+        "page_labels": [
+            "3-9"
+        ],
+        "type": "table",
+        "sections": [
+            "3 Input Description",
+            "3.9 INOU – In and Outlet Conditions"
+        ],
+        "coordinates": [
+            [
+                376.4769592285156,
+                816.2941284179688
+            ],
+            [
+                2918.902099609375,
+                1807.0406494140625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Description Default Region number of the boundary Loadcase in the data base Type of boundary condition Pressure Density of the incoming fluid Turbulent energy / turbulence intensity Dissipation rate / Integral length scale Temperature of incoming fluid"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            22
+        ],
+        "page_labels": [
+            "3-9"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.9 INOU – In and Outlet Conditions"
+        ],
+        "content": "See also: FLOW, WIND, CASE, IN, OUT, WALL, STEP, HIST, CTRL\n INOU\n Compared to the IN condition where we provide flow velocities, we have here a pressure P as boundary condition, i.e. depending on the gradient of the pressure a flow will occur inwards or outwards. Values for density, turbulence and temperature have to be specified and will become effective for an inflow situation.\n Inlet conditions may be defined by a load case in the data base or the definition of an atmo- spheric boundary layer. Every individual variable may be overwritten by an explicit numerical value or by a formula string depending on the variables #X, #Y, #Z and the time #T.\n For the turbulent energy it is also possible to define the turbulence intensity (e.g. 2[%] ) for the dissipation rate an alternate definition is as Integral length scale (e.g. 12.4[m] )",
+        "token_count": 196
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            23
+        ],
+        "page_labels": [
+            "3-10"
+        ],
+        "type": "table",
+        "sections": [
+            "3 Input Description",
+            "3.10 WALL – Wall conditions"
+        ],
+        "coordinates": [
+            [
+                339.28375244140625,
+                808.7801513671875
+            ],
+            [
+                2915.482666015625,
+                2185.953125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Description Default Region number of the boundary Roughness of the wall X.XX numerical value for Zo SLIP not adherent NOSL adherent, hydraulic smooth SYMP _ natural boundary condition Velocity in X-direction [m/sec] Velocity in Y-direction [m/sec] Velocity in Z-direction [m/sec] Temperature of the wall [o] Linear heat conduction resistance [W/o/m? ] Emmission grade for radiation boundary [—] Heattflux at the Wall [W/m ]"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            23
+        ],
+        "page_labels": [
+            "3-10"
+        ],
+        "type": "table",
+        "sections": [
+            "3 Input Description",
+            "3.10 WALL – Wall conditions"
+        ],
+        "coordinates": [
+            [
+                413.7175598144531,
+                3423.2734375
+            ],
+            [
+                2858.14501953125,
+                4205.62255859375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Surface Roughness Surface Roughness k [ mm] k [ mm] glass 0.0015 galvanised steel 0.2 polished metal 0.002 spinning concrete 0.2 smooth painting 0.006 cast in situ concrete 1.0 spray painting 0.02 rust 2.0 blasted steel 0.05 masonry 3.0"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            23,
+            24
+        ],
+        "page_labels": [
+            "3-10",
+            "3-11"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.10 WALL – Wall conditions"
+        ],
+        "content": "See also: FLOW, WIND, CASE, IN, OUT, INOU, WALL, STEP, HIST, CTRL\n WALL\n WALL sets the boundary condition for any wall or boundary region not belonging to IN or OUT.\n • The simplest case would be SYMP, for this natural boundary condition the fluid will become parallel to the boundary without any other interaction of the fluid with the wall.\n • SLIP / NOSL are simple boundary conditions for the fluid velocity (no adherence and fixed at a hydraulically smooth wall). Compared to SYMP a SLIP boundary will enforce the turbulence parameters k and ε to become zero.\n • A definition of the roughness by an explicit value is the most elaborated definition of the behavior at the wall by a logarithmic wall law. This law is only applicable if the value y+ is larger than 1.0.\n The equivalent roughness according to Table 10.8.1 of EC 1 part 2-4, may be introduced by zo ≈ k / 30 :\n cast iron\n 0.2\n For the heatflow at the wall we have the following components:\n • Transition from wall to the fluid\n Linear resistance of the wall by heat conduction\n •\n If neither R nor HFLX is defined, the wall is treated as adiabatic.",
+        "token_count": 272
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            25
+        ],
+        "page_labels": [
+            "3-12"
+        ],
+        "type": "table",
+        "sections": [
+            "3 Input Description",
+            "3.11 DRAG – Dragforce evaluation"
+        ],
+        "coordinates": [
+            [
+                385.9506530761719,
+                792.7625122070312
+            ],
+            [
+                2922.81982421875,
+                2853.52099609375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Description Reference fluid velocity [m/sec] or height defining VREF in the Windprofile [M] s006 Type of reference area definition LIT BOX box with dimensions AX,AY,AZ [1M] 400; AREA _ explicit areas [m2 ];o02 and [M? },o08 Dimension / reference area for cwx Dimension / reference area for cwy Dimension / reference area for cwz Reference for moments, cmx (e.g.L:B2) Reference for moments, cmy (e.g.L:B2) Reference for moments, cmz (e.g.L:B2) [m3] Angle of inclination (-180< a <180) [grad] Reference ordinates for moments [M] s001 [M] i001 [1M] 001 Type of reference to W? (only GRP allowed) Number of a boundary condition (WALL) Number of a boundary condition (WALL)"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            26
+        ],
+        "page_labels": [
+            "3-13"
+        ],
+        "type": "image",
+        "sections": [
+            "3 Input Description",
+            "3.11 DRAG – Dragforce evaluation"
+        ],
+        "coordinates": [
+            [
+                942.2974853515625,
+                390.9766540527344
+            ],
+            [
+                2328.59326171875,
+                1136.8493566666668
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 3.3: Wind coefficients according angle of attack"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            26
+        ],
+        "page_labels": [
+            "3-13"
+        ],
+        "type": "image",
+        "sections": [
+            "3 Input Description",
+            "3.11 DRAG – Dragforce evaluation"
+        ],
+        "coordinates": [
+            [
+                975.23876953125,
+                1209.805908203125
+            ],
+            [
+                2318.8548,
+                2009.916023333333
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 3.4: Wind coefficients for a rotated bridge deck"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            25,
+            26
+        ],
+        "page_labels": [
+            "3-12",
+            "3-13"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.11 DRAG – Dragforce evaluation"
+        ],
+        "content": "See also: FLOW, WIND, CASE, IN, OUT, INOU, WALL, HIST\n DRAG\n W15\n Number of a boundary condition (WALL)\n -\n The force coefficients are needed for the calculation of wind loads in dependence of the wind direction. These values have to be stipulated according to an angle sequence. It is especially important to consider the exact definition of the coefficients, because the literature often uses different conventions or references:\n • The best usage is for the section to consider the wind coming from different directions. The drag coefficients are then taken for the unrotated coordinate system depending on the angle of attack:\n • The alternate values are obtained in wind direction and transverse upwards as measured in a wind tunnel:\n For every DRAG-command the forces and drag values will be calculated for the selected groups based on the given reference point. For the first selected group a summation of all other groups in the drag will be done to the first group. A group may be selected multiple times in several DRAG commands. Thus the calculation for individual members and the total sum may be obtained by:\n WIND\n WIND ——)\n DRAG ... W GRP 10 11 12 13 14 DRAG ... W GRP 11 13 DRAG ... W GRP 12 14",
+        "token_count": 269
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            27
+        ],
+        "page_labels": [
+            "3-14"
+        ],
+        "type": "table",
+        "sections": [
+            "3 Input Description",
+            "3.12 STEP – Transient Analysis"
+        ],
+        "coordinates": [
+            [
+                368.5495300292969,
+                818.2852783203125
+            ],
+            [
+                2910.903564453125,
+                2033.2113037109375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default N Number of time/iteration steps − 500 T Time value of first step or total Time [sec] - TFAK Factor for time steps − - DTM Maximum time step size [sec] 1 INT Intervall for saving a result case [sec] - TOL Tolerance for Iterations − 0.0001 TORD Time Scheme −/LT LINE LINE Standard implicit Euler QUAD Second order quadratic value Blending factor between those two schemes"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            27
+        ],
+        "page_labels": [
+            "3-14"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.12 STEP – Transient Analysis"
+        ],
+        "content": "See also: FLOW, WIND, CASE, IN, OUT, INOU, WALL, STEP, HIST, CTRL\n STEP\n A transient analysis will be initiated by the specification of T. There are several possibilities to subdivide the analysis time.\n First there are different possibilities for the time step itself:\n • constant time step\n Definition of N and T defines the size of the time step.\n geometric progression with fixed values\n The size of the (n+1)th time step is established by multiplication of the nth time step with\n TFAC. For larger numbers of time steps it is advisable to check the given values with a pocket calculator, as the time steps can grow rather high if TFAC and DTM are chosen improper.\n On the other side one can define the total time of the analysis explicit or via the time steps.\n • With an input of N ≥ 1, N is the number of time steps. The total time is the sum of all time steps.\n • As an alternate definition T is considered to be the total analysis time if N is defined less than 1.0. N is then the factor for the first time step. (e.g. N 0.001 yields without a progres- sion a first time step of one/thousand of the total time T.)\n Without definition of T a steady state analysis is performed, N will then be the maximum number of iteration loops.",
+        "token_count": 288
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            28
+        ],
+        "page_labels": [
+            "3-15"
+        ],
+        "type": "table",
+        "sections": [
+            "3 Input Description",
+            "3.13 HIST – Transient Results"
+        ],
+        "coordinates": [
+            [
+                368.9833984375,
+                813.574951171875
+            ],
+            [
+                2937.539306640625,
+                1846.004150390625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default TYPE Type of result LT * DRAG Resulting forces for a boundary FLOW Velocities TURB Turbulence parameters PN Pressures CP Pressure coefficients TEMP Temperatures FROM First element or boundary region number − ! TO Last number − FROM INC Increment − 1"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            28
+        ],
+        "page_labels": [
+            "3-15"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.13 HIST – Transient Results"
+        ],
+        "content": "See also: FLOW, WIND, CASE, IN, OUT, INOU, WALL, STEP, HIST, CTRL\n HIST\n For transient analysis there are either the method to save the complete results for intervals of time steps with different load case numbers or to select some important results of elements or boundary regions (max 1024) and to save their development in time in a compact form in the database. DYNR will then be used to show and evaluate these diagrams. An import as a function is possible with SOFILOAD.\n DRAG creates the sum of forces types SPX,SPY,SPZ and the moments SPXX,SPYY,SPZZ. First the leading group of the defined sets of groups with DRAG commands are searched. Theo forces are then referenced to the point defined with the DRAG command and if a reference pressure is given converted to force coefficients which will be saved as well. With an appended \":F\" or \":C\" only the forces or only the forces or coefficients will be saved. Second the boundary region numbers are searched, the forces are then relative to the origin of the global coordinate system.\n FLOW creates the velocities U, V and W. TURB creates the components TKP(Kinetic Energy) and TDN(Dissipation)",
+        "token_count": 264
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            29
+        ],
+        "page_labels": [
+            "3-16"
+        ],
+        "type": "table",
+        "sections": [
+            "3 Input Description",
+            "3.14 SOLV – Solver Controls"
+        ],
+        "coordinates": [
+            [
+                330.6950988769531,
+                815.0191040039062
+            ],
+            [
+                2916.685546875,
+                3057.439453125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default VAR Name of Variable LT ! ALL all Variables U,V,W velocity components UVW all velocities P pressure K kinetic energy EPS dissipation rate KEPS all turbulent parameters T Temperature SCAL all other scalars DIFF Differencing scheme LT * OFF no solution ON solution with default solver UD Standard Upwind differencing CD Central differencing (CD2,CD3) LUX Linear upwind with limiters (LUD, MIN) GAM Jasaks blending of UD/CD1 BLEN Blending factor − 1.0 SLOP Slope delimiter functionality LT VNF VNF Venkatarishnan in face center P1F Adapted Polynomial in face ctr. WITH Solver for Variable LT * MKL solution with MKL GMRES (P only) add a \"‘DOLF use cores 4\"’ to go parallel"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            29
+        ],
+        "page_labels": [
+            "3-16"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.14 SOLV – Solver Controls"
+        ],
+        "content": "See also: FLOW, WIND, CASE, IN, OUT, WALL, STEP, HIST, CTRL\n SOLV\n RELA\n Relaxation factor\n −\n *\n This command defines the most important parameters for the solution of the equation system. The properties of the different methods may be seen in the document DOL- FYN_VERIFICATION.PDF. Not all parameters may be selected for all variables, e.g. there is no differencing scheme for the pressure.\n The default is LUX for UVW and KEPS as well as GAM for the temperature, which is suit- able for hexahedral meshes. Tetrahedral meshes are considerably worse than hexahedral or polyhedral. Thus schemes with a strong damping should be used.\n During an initialisation phase (DOLF INIT STEPS nn) all WALL-conditions will set to SYMP and the UD-scheme is used. Sometimes a transient analysis with the UD scheme and a blending factor between 0.8 and 1.0 and a SLOPE delimiter with VNF may be used to establish a better startup vector to be used for a restart with UD or LUX for the velocities.",
+        "token_count": 238
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            30
+        ],
+        "page_labels": [
+            "3-17"
+        ],
+        "type": "table",
+        "sections": [
+            "3 Input Description",
+            "3.15 DOLF – Control Values for DOLFYN"
+        ],
+        "coordinates": [
+            [
+                402.6399230957031,
+                812.5127563476562
+            ],
+            [
+                2931.102783203125,
+                1128.8634033203125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default A line which will be passed to DOLFYN after having Lt replaced the parameters"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            30
+        ],
+        "page_labels": [
+            "3-17"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.15 DOLF – Control Values for DOLFYN"
+        ],
+        "content": "See also: FLOW, WIND, CASE, IN, OUT, WALL, STEP, HIST, CTRL\n DOLF\n Not all parameters for DOLFYN are definable with the CADINP interface. All those other pa- rameters may be specified with a line beginning with DOLF. Please refer to the Dolfyn INput guide for more details.\n Special Hints:\n DOLF INIT STEP 0 Do not perform the laminar initial iterations\n DOLF restart Restart the simulation\n DOLF restart initial Use Restart as initial guess\n If DOLFYN should run directly for tests with the .din file, this might be triggered with \"‘DOLFYN name.din -i\"’.",
+        "token_count": 144
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            32
+        ],
+        "page_labels": [
+            "4-1"
+        ],
+        "type": "image",
+        "sections": [
+            "4 Examples",
+            "4.1 Flow around a cylinder",
+            "4.1.1 Introduction"
+        ],
+        "coordinates": [
+            [
+                471.4233703613281,
+                1261.6929931640625
+            ],
+            [
+                2199.86767578125,
+                2624.445068359375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 4.1: Wind coefficients for a cylinder"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            32
+        ],
+        "page_labels": [
+            "4-1"
+        ],
+        "type": "text",
+        "sections": [
+            "4 Examples",
+            "4.1 Flow around a cylinder",
+            "4.1.1 Introduction"
+        ],
+        "content": "On a first glance a Cylinder might be a simple problem, however it is rather a complex one. If one has a look on the measurements for the drag coefficient depending on the Reynolds number one can distinguish several regions, to be treated in the following text:\n 100\n • A laminar region for Reynold numbers up to approximately 40, the selected case will have a number of 20.\n • A region with a slower descent of the drag coefficient up to reynolds number of 1000, within that region we will have vortex shedding according to Karman.\n • A region with a rather constant drag coefficient up to Reynolds numbers of approximately 300 000. This is called the subcritical region. As the suction at the rear is determining the drag coefficient, it has rather high values.\n • A super critical region from Re = 300 000 to 3 000 000, where the laminar boundary layer becomes turbulent and is now able to follow longer the circular geometry, the drag coeffi- cient drops significantly .\n • A transcrititical region from Re = 3 000 000 where the detachement point moves again to the front and the drag coefficient increases again.",
+        "token_count": 241
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            33
+        ],
+        "page_labels": [
+            "4-2"
+        ],
+        "type": "image",
+        "sections": [
+            "4 Examples",
+            "4.1 Flow around a cylinder",
+            "4.1.2 Classical Navier-Stokes Solutions"
+        ],
+        "coordinates": [
+            [
+                496.28326416015625,
+                393.1341247558594
+            ],
+            [
+                2255.47216796875,
+                1278.1839599609375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 4.2: System for channel flow with cylinder"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            33
+        ],
+        "page_labels": [
+            "4-2"
+        ],
+        "type": "table",
+        "sections": [
+            "4 Examples",
+            "4.1 Flow around a cylinder",
+            "4.1.2 Classical Navier-Stokes Solutions"
+        ],
+        "coordinates": [
+            [
+                573.181884765625,
+                1877.1124267578125
+            ],
+            [
+                2713.96142578125,
+                2512.2861328125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Level Volumes Cd Cl Δ-p CPU 2 552 6.47 0.016 0.1258 0.6 3 2208 5.98 0.012 0.1251 5.5 4 8832 5.79 0.011 0.1245 59 5 35328 5.57 2.20 0.1195 212 reference 5.58 0.011 0.1174"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            33
+        ],
+        "page_labels": [
+            "4-2"
+        ],
+        "type": "table",
+        "sections": [
+            "4 Examples",
+            "4.1 Flow around a cylinder",
+            "4.1.2 Classical Navier-Stokes Solutions"
+        ],
+        "coordinates": [
+            [
+                581.4056396484375,
+                3152.926513671875
+            ],
+            [
+                2733.534912109375,
+                3987.228759765625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Level Volumes Time- Cd Cl St CPU steps 2 552 500 3.18 0.040 - 24 3 2208 500 3.36 0.392 0.250 174 4 8832 1000 3.27 0.694 0.275 1516 4 8832 500 3.18 0.558 0.267 1171 4 8832 200 3.09 0.083 - 590 reference 3.23 1.10 0.300"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            34
+        ],
+        "page_labels": [
+            "4-3"
+        ],
+        "type": "image",
+        "sections": [
+            "4 Examples",
+            "4.1 Flow around a cylinder",
+            "4.1.2 Classical Navier-Stokes Solutions"
+        ],
+        "coordinates": [
+            [
+                1661.9144287109375,
+                426.0021057128906
+            ],
+            [
+                2257.060546875,
+                1871.573974609375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 4.3: Developement in Time for c-d and c-l"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            34
+        ],
+        "page_labels": [
+            "4-3"
+        ],
+        "type": "image",
+        "sections": [
+            "4 Examples",
+            "4.1 Flow around a cylinder",
+            "4.1.2 Classical Navier-Stokes Solutions"
+        ],
+        "coordinates": [
+            [
+                790.9271850585938,
+                2036.558349609375
+            ],
+            [
+                1977.7708740234375,
+                3713.046875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 4.4: Cylinder crisis"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            35
+        ],
+        "page_labels": [
+            "4-4"
+        ],
+        "type": "table",
+        "sections": [
+            "4 Examples",
+            "4.1 Flow around a cylinder",
+            "4.1.2 Classical Navier-Stokes Solutions"
+        ],
+        "coordinates": [
+            [
+                455.8105163574219,
+                413.29327392578125
+            ],
+            [
+                2831.5703125,
+                2144.4736328125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "drag pressure p.-suction tail-suct. cd cp cs ct KE (Re = 186 000) 0.475 -1.185 2.206 0.365 same, 0.5 % Turb.I. 0.421 -1.007 2.188 0.534 RNG (Re = 186 000) 0.410 -1.090 2.076 0.438 same, 0.5 % Turb.I. 0.464 -1.092 1.979 0.378 EC 1.2-4 (10.8.2) 1.20 -1.000 KE (Re = 670 000) 0.446 -1.188 2.251 0.314 same, 0.5 % Turb.I. 0.366 -1.004 2.330 0.487 RNG (Re = 670 000) 0.341 -1.094 2.205 0.376 same, 0.5 % Turb.I. 0.618 -1.100 2.448 1.010 EC 1.2-4 (10.8.2) 0.30 -1.000 2.20 0.40 KE (Re = 1 140 000) 0.391 -1.183 2.483 0.233 same, 0.5 % Turb.I. 0.266 -1.057 2.453 1.057 RNG (Re = 1 140 000) 0.281 -1.085 2.494 0.317 same, 0.5 % Turb.I. 0.637 -1.097 2.287 1.218 EC 1.2-4 (10.8.2) 0.68 -1.000 1.50 0.80"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            32,
+            33,
+            34,
+            35
+        ],
+        "page_labels": [
+            "4-1",
+            "4-2",
+            "4-3",
+            "4-4"
+        ],
+        "type": "text",
+        "sections": [
+            "4 Examples",
+            "4.1 Flow around a cylinder",
+            "4.1.2 Classical Navier-Stokes Solutions"
+        ],
+        "content": "For Reynolds numbers 20 and 100 there are extensive numerical examples available obtained with a Benchmarks of the DFG. (http://www.featflow.de/bench_all/node2.html) (directory dol- fyn.dat/cfd_cyl/dfg.dat) The fluid properties have been defined as: ρ = 1.0 kg/m3, ν = 10−3 m2/sec. The inflow condition is a parabolic distribution with a maximum value of Um, thus a\n mean velocity of 2/3 Um. The Benchmark contains solutions with several Million unknowns on supercomputers.\n The first test case is a steady 2D example with Um = 0.3 m/sec, yielding the Reynolds number Re=20. The following quantities should be computed: drag coefficient cD, lift coefficient cL, length of recirculation zone L and pressure difference ΔP.\n The pictures of the flow agree quite well with the published reference.\n The second test case within that benchmark is a transient 2D example with Um = 1.5 m/sec, yielding the Reynolds number Re=100. The following quantities should be computed: drag co- efficient cD, lift coefficient cL as functions of time, maximum drag coefficient cDm, maximum lift coefficient cLm, Strouhal number St = f•D/U.\n Here it is clearly to be seen, that a coarse solution either in time or in space does not show the effect of Karman vortex shedding.\n 180.\n 160.\n 140.\n 120.\n 100.\n spring forces SPX group [N]\n spring forces SPY group [N]\n For the model there are \"only\" three values to choose: The mesh density, the roughness and the inflow boundary conditions. With a hydraulic smooth cylinder, an input turbulence of 5 % and a length scale equal to the cylinder diameter, the following results have been obtained:\n Thus the use of CFD for this type of analysis yields satisfactory results only for small and very high Reynolds numbers. The effects of the critical flow can not be reproduced. The application for those problems needs taking great care.",
+        "token_count": 439
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            36
+        ],
+        "page_labels": [
+            "4-5"
+        ],
+        "type": "image",
+        "sections": [
+            "4 Examples",
+            "4.2 Bridge Section"
+        ],
+        "coordinates": [
+            [
+                391.9329528808594,
+                896.3248291015625
+            ],
+            [
+                2063.699462890625,
+                1527.429443359375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 4.5: Bridge section Millau"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            37
+        ],
+        "page_labels": [
+            "4-6"
+        ],
+        "type": "image",
+        "sections": [
+            "4 Examples",
+            "4.2 Bridge Section"
+        ],
+        "coordinates": [
+            [
+                414.0548095703125,
+                899.9998779296875
+            ],
+            [
+                1980.780517578125,
+                1978.796630859375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 4.6: Fluidvelocities"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            37
+        ],
+        "page_labels": [
+            "4-6"
+        ],
+        "type": "image",
+        "sections": [
+            "4 Examples",
+            "4.2 Bridge Section"
+        ],
+        "coordinates": [
+            [
+                463.8998107910156,
+                2123.322265625
+            ],
+            [
+                2065.09228515625,
+                3243.2314453125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 4.7: Pressure distribution"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            37
+        ],
+        "page_labels": [
+            "4-6"
+        ],
+        "type": "table",
+        "sections": [
+            "4 Examples",
+            "4.2 Bridge Section"
+        ],
+        "coordinates": [
+            [
+                410.4744873046875,
+                3837.025634765625
+            ],
+            [
+                2920.855712890625,
+                4258.26611328125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "α = -6.0◦ cd c cm CFD I = 9.4 %, L = 81 m 0.197 -1.097 -0.096 CFD I = 9.4 %, L = 4.60 m 0.129 -1.017 -0.112 CFD I = 0.5 %, L = 0.25 m 0.052 -0.983 -0.142"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            38
+        ],
+        "page_labels": [
+            "4-7"
+        ],
+        "type": "table",
+        "sections": [
+            "4 Examples",
+            "4.2 Bridge Section"
+        ],
+        "coordinates": [
+            [
+                406.8049621582031,
+                386.21923828125
+            ],
+            [
+                2913.91943359375,
+                712.0357055664062
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "α = -6.0◦ cd c cm Wind tunnel I = 9.0 %, L=? 0.064 -1.002 -0.162 Wind tunnel I = 0.5 %, L=? 0.058 -1.083 -0.175"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            38
+        ],
+        "page_labels": [
+            "4-7"
+        ],
+        "type": "table",
+        "sections": [
+            "4 Examples",
+            "4.2 Bridge Section"
+        ],
+        "coordinates": [
+            [
+                415.8907775878906,
+                1060.7728271484375
+            ],
+            [
+                2912.24267578125,
+                1689.5194091796875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "α = +6.0◦ cd c cm CFD I = 9.4 %, L = 81 m 0.302 0.089 0.145 CFD I = 9.4 %, L = 4.60 m 0.213 0.136 0.113 CFD I = 0.5 %, L = 0.25 m 0.153 0,045 0,075 Wind tunnel I = 9.0 %, L=? 0.173 -0.139 0.089 Wind tunnel I = 0.5 %, L=? 0.166 -0.116 0.096"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            39
+        ],
+        "page_labels": [
+            "4-8"
+        ],
+        "type": "image",
+        "sections": [
+            "4 Examples",
+            "4.2 Bridge Section"
+        ],
+        "coordinates": [
+            [
+                411.9508972167969,
+                631.0321655273438
+            ],
+            [
+                2320.2664255555555,
+                1939.33642578125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 4.8: Turbulent viscosity for low input turbulence"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            39
+        ],
+        "page_labels": [
+            "4-8"
+        ],
+        "type": "image",
+        "sections": [
+            "4 Examples",
+            "4.2 Bridge Section"
+        ],
+        "coordinates": [
+            [
+                403.4747314453125,
+                2468.154052734375
+            ],
+            [
+                2387.852783203125,
+                4040.808837890625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 4.9: Turbulent viscosity for standard input turbulence"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            40
+        ],
+        "page_labels": [
+            "4-9"
+        ],
+        "type": "image",
+        "sections": [
+            "4 Examples",
+            "4.2 Bridge Section"
+        ],
+        "coordinates": [
+            [
+                378.8056335449219,
+                734.3615112304688
+            ],
+            [
+                2357.733952222223,
+                1874.63916015625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 4.10: Fluid velocities for standard input turbulence"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            40
+        ],
+        "page_labels": [
+            "4-9"
+        ],
+        "type": "image",
+        "sections": [
+            "4 Examples",
+            "4.2 Bridge Section"
+        ],
+        "coordinates": [
+            [
+                391.129638671875,
+                2611.53955078125
+            ],
+            [
+                2291.1505322222224,
+                3937.144775390625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 4.11: Fluid velocities for low input turbulence"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            41
+        ],
+        "page_labels": [
+            "4-10"
+        ],
+        "type": "image",
+        "sections": [
+            "4 Examples",
+            "4.2 Bridge Section"
+        ],
+        "coordinates": [
+            [
+                732.3748779296875,
+                1447.1072998046875
+            ],
+            [
+                2101.195068359375,
+                3308.7271344444443
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 4.12: Wind force coefficients"
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            36
+        ],
+        "page_labels": [
+            "4-5"
+        ],
+        "type": "text",
+        "sections": [
+            "4 Examples",
+            "4.2 Bridge Section"
+        ],
+        "content": "This example (millau.dat) shows the evaluation of the stationary wind drag coefficients for a section of a bridge depending on the angle of attack. The section is taken from the Millau bridge in France (Width 27.75, Height 4.20 m), where results of a wind tunnel test are available for the construction stage and the final stage.\n The first difficulty is given by the selection of the inflow conditions for the wind. For the original project extended CFD studies for the terrain have been performed, for the CFD and wind tunnel we have to generalize the inflow. The wind tunnel report gave a turbulence intensity of 9-10 %. Assuming a roughness of 0.30 m and a height of the bridge deck of 200 m, we get a turbulence intensity of 9.4 %. The integral length scale is 81.0 m.\n For the service state wind shields have been added, which have been modelled in the wind tunnel with perforated plates with 50 % permeability. A perfect match of results should not be anticipated therefore.\n An other question is if one should model the wind tunnel model (scale 1:75) or the real struc- ture. In that case we used the real world dimensions, which is recommended by us in general.\n In that case a 2D-Analysis is performed. To select the analysis model properly one should take care of the parameters for some fundamental questions:\n • Distance of the section to the boundaries above and below. If one selects to small dis- tances, the blocking effect will disturb the pressures obtained considerably. It is recom- mended to block at most 4 % of the flow area, better is 1 to 2 %.\n Length of the area behind and the mesh density. If the mesh behind the section has a coarse mesh or is not long enough, vortices may not be modelled properly and the variation in time may not be obtained at all. Stationary mean values of the pressures may be obtained however in most cases with the k-ε-Turbulence model. The recommendation is to use an extension of 10 to 15 times the bridge width.",
+        "token_count": 442
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            36,
+            37,
+            38
+        ],
+        "page_labels": [
+            "4-5",
+            "4-6",
+            "4-7"
+        ],
+        "type": "text",
+        "sections": [
+            "4 Examples",
+            "4.2 Bridge Section"
+        ],
+        "content": "If the mesh behind the section has a coarse mesh or is not long enough, vortices may not be modelled properly and the variation in time may not be obtained at all. Stationary mean values of the pressures may be obtained however in most cases with the k-ε-Turbulence model. The recommendation is to use an extension of 10 to 15 times the bridge width..\n •\n Length of area before and the mesh density In the incoming undisturbed flow a distance of 1.5 times the deck width is sometimes sufficient, but in this case the high viscosity of the inflow which will be disturbed by the bridge, creates an import zone of some extension before the bridge. The recommendation is to extend the mesh until a nearly constant inflow pressure is obtained. The mesh density is influencing the generated pressures. As the maximum pressure coefficient is 1.0 this is a good control measure of the mesh quality.\n •\n The mesh has been created with a mesh size of 0.12 m at the bridge and 2.0 m in the free filed, extending above and below by the deck width (6 % blocking), and in the direction of the inlet by a factor of 2.5 and for the outlet by a factor of 9.5 of the bridge chord.\n For variant angles of attack the section is rotated within the model. Thus the program has to transform the resulting forces to the sectional coordinate system which is also the case for the results of the wind tunnel experiment.\n For an angle of attack of -6 degree the wind velocities and pressure distributions are given in the next picture.\n The different flow properties become evident if we have a look at the turbulent viscosity. While for the low turbulence the bridge is dominating the generation, the high turbulent inflow will be dissolved in front of the bridge not allowing the large eddies. All wakes created by a detache- ment of the flow are considerably smaller.\n The drag coefficients of the two methods are different for the wind tunnel and the CFD analysis:\n The deviations are greater for the case of +6.0◦ degree (Pictures of velocity magnitude for large and small turbulence) :\n Considering all those imponderabilities for the wind tunnel as well as for the analysis, the match of the values is considered to be acceptable after a sufficient number of iterations:",
+        "token_count": 472
+    },
+    {
+        "document_name": "dolfyn_1.pdf",
+        "page_indices": [
+            42
+        ],
+        "page_labels": [
+            "4-11"
+        ],
+        "type": "text",
+        "sections": [
+            "Bibliography"
+        ],
+        "content": "[1] Joel H. Ferziger and Milovan Peric. Computational Methos for Fluid Dynamics. Springer Verlag, Berlin, 1999.\n [2] J.H. Spurk. Strömungslehre - Eine Einführung in die Theorie der Strömungen. Springer Verlag Berlin, 2003.\n [3] H. Schlichting and K. Gersten. Boundary Layer Theory. Springer Verlag Berlin, 2000.\n [4] H. Ruscheweyh. Dynamische Windwirkung an Bauwerken. Wiesbaden/Berlin: Bauverlag, 1982.\n [5] Markus Glück. Ein Beitrag zur numerischen Simulation von Fluid-Struktur-Interaktionen Grundlagenuntersuchungen und Anwendung auf Membrantragwerke. Shaker Verlag, Aachen, 2002.\n [6] Paul Tucker and Anthony Mosquera. NAFEMS - Introduction to Grid and Mesh Generation for CFD. www.nafems.org, 9999.\n [7] B. Blocken, T. Stathopoulos, and J. Carmeliet. CFD simulation of the atmospheric bound- ary layer - wall function problems. Atmospheric Environment, 41(2), 238-252., 2007.",
+        "token_count": 274
+    }
+]

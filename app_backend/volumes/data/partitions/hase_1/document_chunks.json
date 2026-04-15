@@ -1,0 +1,2192 @@
+[
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            2
+        ],
+        "page_labels": [
+            null
+        ],
+        "type": "table",
+        "sections": [
+            "Foreword"
+        ],
+        "coordinates": [
+            [
+                457.2209777832031,
+                1273.0833740234375
+            ],
+            [
+                2953.521484375,
+                3987.97119140625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Theoretical Principles 2-1 2.1 Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-1 2.2 Soil Profile . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-1 2.3 Soil Profile Interpolation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-1 2.4 Stresses in the Half-Space . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-4 2.5 Strains and Displacements in the Half-Space . . . . . . . . . . . . . . . . . 2-6 2.5.1 Method according to Boussinesq . . . . . . . . . . . . . . . . . . . 2-6 2.5.2 Classical Method . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-7 2.6 Horizontal Stiffness . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-7 2.7 Variable z level . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-7 2.8 Piles in the Half-Space . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-9 2.8.1 PILE - internal HASE Piles . . . . . . . . . . . . . . . . . . . . . . . 2-9 2.8.2 XPIL - Extended Piles . . . . . . . . . . . . . . . . . . . . . . . . . . 2-9 2.9 Limits and CPU Time . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-10 2.10 Files and Combination with Static Programs . . . . . . . . . . . . . . . . . . 2-11 Input Description 3-1 3.1 Input Language . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-1 3.2 Input Records . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-2 3.3 CTRL – Control of the Analysis Method . . . . . . . . . . . . . . . . . . . . . 3-3 3.4 GRP – Selection of Element Groups . . . . . . . . . . . . . . . . . . . . . . . 3-4 3.5 HALF – Halfspace Definition . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-5 3.6 BORE – Selection of Bore Profiles . . . . . . . . . . . . . . . . . . . . . . . . 3-6 3.7 PILE – Internal Piles in the Halfspace . . . . . . . . . . . . . . . . . . . . . . 3-7 3.8 PLAS – Plasticizing . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-9 3.9 LOAR – Load Radii . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-11 3.10 LC – Load Case . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-12 3.11 LOAD – Single Loads . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-14 3.12 SELE – Results Selection . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-15 3.13 SELP – Selection of the Plot Representation . . . . . . . . . . . . . . . . . . 3-16 3.14 ECHO – Output Control . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-19 Output Description 4-1"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            3
+        ],
+        "page_labels": [
+            null
+        ],
+        "type": "table",
+        "sections": [
+            "Foreword"
+        ],
+        "coordinates": [
+            [
+                436.03057861328125,
+                389.0274658203125
+            ],
+            [
+                2909.368408203125,
+                1297.328369140625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "4.5 Check List for Nodes . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4.6 Check List for Loads . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4.7 Results . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . Examples 5.1 Base Plate Calculated with Stiffness Coefficient Method . . . . . . . . . . 5.2 Constant Soil Pofile - Three-dimensional Frame with a Plate . . . . . . . . 5.3 Interpolation with Weight Factor . . . . . . . . . . . . . . . . . . . . . . . . . . 5.4 Stresses in the Halfspace . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5.5 Pile-Slab Foundation with Extended Piles . . . . . . . . . . . . . . . . . . . ."
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            1,
+            2
+        ],
+        "page_labels": [
+            null,
+            null
+        ],
+        "type": "text",
+        "sections": [
+            "Foreword"
+        ],
+        "content": "HASE Half-Space Analysis for Static Soil-Structure Interaction\n HASE Manual, Service Pack 2025-4 Build 146\n Copyright © 2025 by SOFiSTiK AG, Nuremberg, Germany.\n SOFiSTiK AG\n HQ Nuremberg Office Garching Flataustraße 14 Parkring 2 90411 Nürnberg 85748 Garching bei München Germany Germany T +49 (0)911 39901-0 T +49 (0)89 315878-0 F +49(0)911 397904 F +49 (0)89 315878-23 info@sofistik.com\n www.sofistik.com\n This manual is protected by copyright laws. No part of it may be translated, copied or reproduced, in any form or by any means, without written permission from SOFiSTiK AG. SOFiSTiK reserves the right to modify or to release new editions of this manual.\n The manual and the program have been thoroughly checked for errors. However, SOFiSTiK does not claim that either one is completely error free. Errors and omissions are corrected as soon as they are detected.\n The user of the program is solely responsible for the applications. We strongly encourage the user to test the correctness of all calculations at least by random sampling.\n Contents\n Contents\n i\n 1\n 2\n 3\n Task Description\n 1-1\n 4\n 4.1\n Check List for Bore Profiles . . . . . . . . . . . . . . . . . . . . . . . . . . . . .\n 4-1\n 4.2\n Soil Parameters at the Nodes . . . . . . . . . . . . . . . . . . . . . . . . . . . .\n 4-1\n 4.3\n Half-Space Parameters . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .",
+        "token_count": 432
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            1,
+            2,
+            3,
+            4
+        ],
+        "page_labels": [
+            null,
+            null,
+            null,
+            "1-1"
+        ],
+        "type": "text",
+        "sections": [
+            "Foreword"
+        ],
+        "content": "We strongly encourage the user to test the correctness of all calculations at least by random sampling.. Contents. Contents. i. 1. 2. 3. Task Description. 1-1. 4. 4.1. Check List for Bore Profiles . . . . . . . . . . . . . . . . . . . . . . . . . . . . .. 4-1. 4.2. Soil Parameters at the Nodes . . . . . . . . . . . . . . . . . . . . . . . . . . . .. 4-1. 4.3. Half-Space Parameters . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ..\n 4-1\n 4.4\n Pile Values . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .\n 4-2\n 5\n 4-2\n 4-3\n 4-3\n 5-1\n 5-2\n 5-7\n 5-12\n 5-16\n 5-18\n Bibliography\n 5-21\n 1 Task Description\n One of the ways to model the static soil-structure interaction is to model the soil according to the Winkler assumption. This method is relatively simple to use but cannot take into consideration the shear deformations within the soil.\n One of the most accurate methods is to model the soil using 3D finite elements. This however requires a huge number of soil elements which in many cases can sever times exceed the number of elements needed for modeling of the structure itself, which is usually the main part of interest for structural engineers.\n In HASE module a sub-structuring technique, in which the structure will be represented using standard finite elements, while the soil will be modeled semi-analytically using the half-space theory, is adopted. The connection between the two substructures will be assured by stiff- ness/flexibility coefficients at the soil-structure interface nodes. This method overcomes the problems of the other two techniques. It takes into consideration the shear deformations within the soil and it does not require explicit discreet modeling of the entire soil domain.\n Based on the halfspace theory, module HASE calculates the stiffness matrix representing the soil part of the static soil-structure interaction system. The soil- structure interaction analysis itself is then preformed in module ASE, in which the soil stiffness matrix is linked with the structure part and the response of the entire system under the prescribed loads is calculated.\n Once the static analysis is finished, HASE can be used for post-processing to determine stresses and settlements of the half-space (soil) due to the supporting forces calculated in the static analysis. It is also possible to perform independent settlement analysis within HASE, where the loads are directly applied to the half- space.",
+        "token_count": 631
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            4
+        ],
+        "page_labels": [
+            "1-1"
+        ],
+        "type": "text",
+        "sections": [
+            "Foreword"
+        ],
+        "content": "Once the static analysis is finished, HASE can be used for post-processing to determine stresses and settlements of the half-space (soil) due to the supporting forces calculated in the static analysis. It is also possible to perform independent settlement analysis within HASE, where the loads are directly applied to the half- space..\n It is possible to define layered half-space with soil parameters and layer thickness varying in vertical as well as in the radial direction. Therefore each point at the soil-structure inter- face can have different soil-parameters associated to it. This is achieved by interpolating the soil-properties and layer thicknesses from the defined bore profiles. There are following inter- polation schemes available:\n 1. CONS - Constant soil profile at all the points of the half-space\n 2. QUAD - Bilinear interpolation of a separate system containing a discretised model of the soil\n 3. COOR - Interpolation of bore profiles using weight functions\n 4. LAYR - Interpolation of the soil properties from the 3D triangular prism mesh model of the layered half-space defined by the bore profile distribution on the half-space surface\n The stiffness matrix does not need to be full in order to be processed. Therefore, the influence of points which are far away from each other (i.e., their distance is above a predefined limit) can be ignored to reduce CPU time.\n In the basic version of HASE, the program processes halfspace problems for plane slab struc- tures. The halfspace for three-dimensional systems is only available in the expanded version.",
+        "token_count": 318
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            6
+        ],
+        "page_labels": [
+            "2-1"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.1 Introduction"
+        ],
+        "content": "The program HASE first determines the flexibility matrix. This describes the displacement of a point due to a force on the point k within the half-space. The inverse of the flexibility matrix is the stiffness matrix. The entire calculation consists of five main parts (Bellmann and Radmanovi´c [1]):\n 1. Calculation of the soil-profile distribution in the plan view\n 2. Calculation of the flexibility matrix\n Inversion and storage of the stiffness matrix\n 4. Static calculation including structural elements\n 5. Determination of the stresses in the soil due to the calculated displacements.\n The steps 1,2,3 and 5 are executed by HASE. The third step is the most costly in terms of CPU time, accounting for up to 90% of the entire CPU time. However, for a given system, Step 3 need only be calculated once.\n For a half-space analysis with a small or sparse stiffness matrix, Step 3 does not necessarily have to be performed by HASE.\n Requirements:\n analysis of each loadcase separately in ASE with SYST PROB NONL and STEX NONL 1\n •\n Then ASE has to iteratively obtain stiffnesses from the half-space, but it can use the sparse solver much more efficiently and is therefore much faster for certain large systems. In this case, the inversion of the flexibility matrix in HASE can be switched off with CTRL SOLV NONL, because the flexibility matrix is not used. For an example, see hase2.dat.\n A previously generated half-space matrix can simply be reused after a modification to the system. A new calculation of the stiffness matrix is only necessary if the coordinates or the numbering of the contact nodes to the half-space have been changed.",
+        "token_count": 354
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            6
+        ],
+        "page_labels": [
+            "2-1"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.2 Soil Profile"
+        ],
+        "content": "The soil bore profiles position and inclinations are defined in AQUA with the record BORE. Stiffness and resistance soil properties as well as the layer disposition along the bore profile axis are defined using BLAY record. The start depth of the first layer of the bore profile should be on the surface of the half-space (record HALF item Z). If the half-space surface is below the start depth of a bore profile a warning message will appear. If the half-space surface is above the start depth of a bore profile an error message will appear.",
+        "token_count": 111
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            8
+        ],
+        "page_labels": [
+            "2-3"
+        ],
+        "type": "image",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.3 Soil Profile Interpolation"
+        ],
+        "coordinates": [
+            [
+                393.69999999999993,
+                393.6959822222219
+            ],
+            [
+                2861.234375,
+                1821.2057433333339
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 2.1: LAYR interpolation method: (a) Triangulation of the bore profile points at the half- space surface (b) 3D geometric model of the half-space obtained by the extrusion of the surface mesh along the axes of the bore profiles. In the example bore profiles have 3 layers with different thicknesses."
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            7,
+            6
+        ],
+        "page_labels": [
+            "2-2",
+            "2-1"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.3 Soil Profile Interpolation"
+        ],
+        "content": "It is possible to define layered half-space with soil parameters and layer thickness varying in vertical as well as in the radial direction. Therefore each point at the soil-structure inter- face can have different soil-parameters associated to it. This is achieved by interpolating the\n soil-properties and layer thicknesses from the defined bore profiles. There are following inter- polation schemes available:\n 1. CONS - Constant soil profile at all the points of the half-space\n 2. QUAD - Bilinear interpolation of a separate system containing a discretized model of the soil\n 3. COOR - Interpolation of bore profiles using weight functions\n 4. LAYR - Interpolation of the soil properties from the 3D triangular prism mesh model of the layered half-space defined by the bore profile distribution on the half-space surface\n In the 2nd case (QUAD) an arbitrary mesh of QUAD elements (system 2) has to be defined. The contours of the soil profile are described by information stored at the nodes of this second mesh. The soil characteristics are then interpolated bilinearly from the QUAD elements of system 2 to the nodes of the structure in the primary system (structure node A is situated in QUAD element X of system 2; the soil characteristics of A are determined from the four corner profiles of the element X). In this way, irregular soil profile distributions can be defined easily. Also, the soil profile definition is independent of the numbering and organization of the structure contained in the primary system.\n In the 3rd case (COOR), vertical soil profiles are defined at coordinates (X1,Y1) to (Xnp,Ynp). Next, the soil characteristics of the nodes are calculated as the superposition of all bore profile properties c multiplied by a weight factor EP specified in the record HALF. As a rule, the closer a profile, the stronger its influence on a node (REP ) is:\n With this method, a variable soil profile distribution can be implemented quickly without the need for a secondary mesh. The bore profile input records can be easily inferred from the building site soil report.",
+        "token_count": 431
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            7,
+            8
+        ],
+        "page_labels": [
+            "2-2",
+            "2-3"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.3 Soil Profile Interpolation"
+        ],
+        "content": "Next, the soil characteristics of the nodes are calculated as the superposition of all bore profile properties c multiplied by a weight factor EP specified in the record HALF. As a rule, the closer a profile, the stronger its influence on a node (REP ) is:. With this method, a variable soil profile distribution can be implemented quickly without the need for a secondary mesh. The bore profile input records can be easily inferred from the building site soil report..\n Fourth method (LAYR) first constructs the triangular mesh on the surface of the half-space from the defined bore-profiles (Figure 2.1a). Next this mesh is extruded along the axes of bore profiles to construct the three-dimensional mesh of triangular prisms, defining discreet soil (half-space) domain (Figure 2.1b). In this way soil-properties at the corner nodes of the triangular prism are exactly those defined by the corresponding BORE+BLAY record in AQUA. Stiffness and resistance properties within a prism are interpolated using hierarchical shape functions (linear in the radial, quadratic in the vertical direction). Variation of the soil-properties along the BORE axis defined in the BLAY record is preserved. Geometry of the 3D prism mesh is saved in an additional *CDB. The prisms are only used for the interpolation of the defined soil properties; they are not used for the computation of the stiffness matrix of the soil. Stresses and deformations and therefore the stiffness matrix are determined using the half- space theory (see Sections 2.4 and 2.5). All nodes that belong to the structure-soil interface (foundation plate, piles) must be entirely encompassed within defined half-space domain.\n Restrictions:\n • Minimum 3 bore profiles, whose start points describe a convex polygon.\n • For inclined bore profiles: intersection of the sides of prisms should be avoided.\n When specifying different soil characteristics in the plan view, the number of layers must be the same in all bore profiles. The layer thicknesses can vary, however. The values ES, MUE, PMAX, PMAL, C and PHI as well as the layer thicknesses are then interpolated according to either method 2, 3 or 4.\n If there is a large difference between the stiffness of two adjacent soil layers, numerical prob- lems may result. Then half-space theory is no longer applicable, and an error message is printed.",
+        "token_count": 487
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            9
+        ],
+        "page_labels": [
+            "2-4"
+        ],
+        "type": "image",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.4 Stresses in the Half-Space"
+        ],
+        "coordinates": [
+            [
+                852.5136108398438,
+                1442.8153076171875
+            ],
+            [
+                2854.74582,
+                2708.527134444444
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 2.2: Stresses in vertical direction σz under a center point of the circular pressure load σo"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            10
+        ],
+        "page_labels": [
+            "2-5"
+        ],
+        "type": "image",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.4 Stresses in the Half-Space"
+        ],
+        "coordinates": [
+            [
+                594.39990234375,
+                496.159912109375
+            ],
+            [
+                2854.74582,
+                1711.7215788888889
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 2.3: Stresses in vertical direction σz under a center point of the circular pressure load σo"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            9,
+            10
+        ],
+        "page_labels": [
+            "2-4",
+            "2-5"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.4 Stresses in the Half-Space"
+        ],
+        "content": "The stresses in the half-space due to a static load are calculated using classic half-space theory.\n The loads are distributed about the nodes over a predefined load area centered at the node. The load area for each node is assumed to be a circle with a radius r. The load radii of the nodes are determined automatically by summing a fraction of the area of each adjacent rectangular element. For frame and girder systems, the respective load radii (foundation measurements) must be defined manually. For X-piles, the load radii are determined from the cross-sections of the piles.\n acting on the half-space surface.\n The stresses for points on the vertical line under a center point of the uniform circular pressure load are computed according to formula (Smoltczyk [2])\n 3/2\n acting on the half-space surface.\n To determine the stresses of the points outside of the circular load area, the load is treated as a point load. For the point load Pk acting on the surface of the half-space the following formula for the vertical stress σz in the point applies (Figure 2.3) (Smoltczyk [2] and Boussinesq [3]):\n 3Pkz3\n $$_ 3P 3 1 > << _ _; 02= ay (6-9) + 5 [B-46(6 +8) --6(6 + 6) (5C/---8)|+ 10_. 3 (1---2v) (1 +7666 + 4) ~~ (C/-9(4-1)}, (2.9)$$\n where ν = 0.35 (taken as a fixed value), ζ = z/R,¯ζ = ¯z/R and ρ = ¯R/R. The meaning of z, R and ¯R is explained in the Figure 2.3b. In general, this formula produces some tensile stresses in the half-space.",
+        "token_count": 408
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            10,
+            11
+        ],
+        "page_labels": [
+            "2-5",
+            "2-6"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.4 Stresses in the Half-Space"
+        ],
+        "content": "where ν = 0.35 (taken as a fixed value), ζ = z/R,¯ζ = ¯z/R and ρ = ¯R/R. The meaning of z, R and ¯R is explained in the Figure 2.3b. In general, this formula produces some tensile stresses in the half-space..\n For the points in the transition zone (inside of the circular area, excluding the center) interpo- lation of the formulas 2.2 and 2.3, 2.4 is applied.\n These stress formulas are used for the determination of the strains and consequently the set- tlings of the soil.\n Stresses at any depths can be stored and plotted with the record SELP.",
+        "token_count": 154
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            11
+        ],
+        "page_labels": [
+            "2-6"
+        ],
+        "type": "image",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.5 Strains and Displacements in the Half-Space"
+        ],
+        "coordinates": [
+            [
+                583.6477661132812,
+                1573.256591796875
+            ],
+            [
+                2874.001708984375,
+                2636.755743333333
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 2.4: Vertical strain εz(z) and displacement sz(z) along the vertical line in point due to the load Pk at point k"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            11
+        ],
+        "page_labels": [
+            "2-6"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.5 Strains and Displacements in the Half-Space"
+        ],
+        "content": "In the Boussinesq [3] method, the settlings are determined including an effect of the Poisson’s ratio ν. This method is especially useful for undrained clay with a high Poisson’s ratio. The calculation of strains takes besides the vertical stresses σz(z), the sum of principal stresses σp(z), and thus implicitly the horizontal stresses, into an account:\n Z Sz, i(Z) = i Ez i(Z)dZz. Zmax\n (2.6)\n There are two methods for computation of strains and consequently displacements available in HASE - classical method and method according to Boussinesq.",
+        "token_count": 129
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            11,
+            12
+        ],
+        "page_labels": [
+            "2-6",
+            "2-7"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.5 Strains and Displacements in the Half-Space",
+            "2.5.1 Method according to Boussinesq"
+        ],
+        "content": "In the Boussinesq [3] method, the settlings are determined including an effect of the Poisson’s ratio ν. This method is especially useful for undrained clay with a high Poisson’s ratio. The calculation of strains takes besides the vertical stresses σz(z), the sum of principal stresses σp(z), and thus implicitly the horizontal stresses, into an account:\n 1\n !...\n END\n Example - hase13_boussinesq.dat\n Once the Boussinesq method is activated, HASE sets the minimal Poisson’s ratio to 0.2. The input BLAY ES is still interpreted as stiffness modulus Es! Also using a material input MNO in BLAY MNO, the value E in MAT...E is interpreted as stiffness property Es, nevertheless if MAT...MUE is defined or not.",
+        "token_count": 173
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            11,
+            12
+        ],
+        "page_labels": [
+            "2-6",
+            "2-7"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.5 Strains and Displacements in the Half-Space",
+            "2.5.2 Classical Method"
+        ],
+        "content": "Since the Poisson’s ration of the soil is hard to define and not a constant value, in most of the practical applications the Poisson’s ratio is directly taken into consideration by using the stiffness modulus Es instead of the elasticity modulus E (Smoltczyk [2]). For ν = 0 both moduli are formally identical:\n (1 − ν)\n $$Es = E * (1 + n)(1 - 2n) . (2.8)$$\n The vertical strains εz can now be obtained by simply dividing vertical stresses σz with stiffness modulus Es, i.e.\n σz(z)\n $$ez(z) = Es(z) . (2.9)$$\n This method is activated when Poisson’s ratio MUE in BLAY record is not defined or is equal to zero.",
+        "token_count": 164
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            12
+        ],
+        "page_labels": [
+            "2-7"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.6 Horizontal Stiffness"
+        ],
+        "content": "In addition to the vertical stiffness normally used in the description of the half-space, a hori- zontal stiffness can also be calculated and stored. This stiffness can be used to describe the horizontal fixities of the structure and must be given if no other horizontal fixities are defined.\n The horizontal stiffness is determined simply as a proportion of the vertical stiffness. If not specified in the record HALF no horizontal stiffness is stored.\n Vertical walls are not taken into account in the horizontal stiffness as they are shadowed for the more important z action - see next chapter. So horizontally only the lower bottom slabs work on friction as well as enbedded beams (external piles).\n A calculation of three-dimensional systems is possible only in the expanded version of HASE.",
+        "token_count": 151
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            13
+        ],
+        "page_labels": [
+            "2-8"
+        ],
+        "type": "image",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.7 Variable z level"
+        ],
+        "coordinates": [
+            [
+                1149.6166566223685,
+                1133.0410790755554
+            ],
+            [
+                2876.77490234375,
+                2112.7779655555555
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 2.5: Typical cellar situation: shadowing 60 degree, red=active halfspace nodes, green=no halfspace contact assumed"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            14
+        ],
+        "page_labels": [
+            "2-9"
+        ],
+        "type": "image",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.7 Variable z level"
+        ],
+        "coordinates": [
+            [
+                393.7000675958956,
+                393.6933268924987
+            ],
+            [
+                2194.4609833333334,
+                1056.2615966796875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 2.6: Independant halfspace surfaces"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            12,
+            13
+        ],
+        "page_labels": [
+            "2-7",
+            "2-8"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.7 Variable z level"
+        ],
+        "content": "With the default HALF ZVAR AUTO also systems with quad halfspace contact on variable z level can be analyzed, see example hase3_variable_surface_level.dat\n Actually the halfspace theory is no longer valid exactly in such a case, but nevertheless the analysis with HASE also gives big advantages compared to a simple quad bedding. Because\n also in case of variable z level, e.g. a load on a bottom slab at z level 4m causes a settlement in a neighboring bottom slab at z level 8m, and the other way round, = interaction in the HASE stiffness coefficient method. HASE tries to scale the stiffnesses to get good results also if the quad halfspace contact acts on variable z levels.\n In principle, in case a quad bottom slab lies under the halfspace surface, all under 60 degree higher nodes above will not get a halfspace contact. According the following figure, from the lower bottom slab a shadow is assumed under an angle of 60 degree to switch off nodes above:\n The soil in the angle of the cellar wall and the upper slab (green shaded) is inactive and just follows the deformation of the upper slab and the wall. To check this effect of the ZVAR method please plot the bedding stress as iso-area and you will immediately see this shadowing.\n If no shadowing occurs, all bottom slabs work as if they would stand on the top of the halfspace. This es e.g. the case if the right abutment of a bridge has another l level as the left one but both lie on the surrounding terrain surface. So the program looks around a bottom slab if there are other higher bottom slabs around:\n - if yes, the deep bottom slab is assumed to lie inside the halfspace\n - if no, the bottom slab is assumed to lie on top of the surface (uses a separate surface level)\n So with HALF-Z you mainly define, which elements will definitely not get a halfspace contact (all elements above HALF-Z).",
+        "token_count": 403
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            13
+        ],
+        "page_labels": [
+            "2-8"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.7 Variable z level"
+        ],
+        "content": "- if yes, the deep bottom slab is assumed to lie inside the halfspace. - if no, the bottom slab is assumed to lie on top of the surface (uses a separate surface level). So with HALF-Z you mainly define, which elements will definitely not get a halfspace contact (all elements above HALF-Z)..\n In the following example you set HALF-Z to the level of the left bottom slab (red line). As in the nearer surrounding of the right bottom slab no other higher halfspace contact is found, a local halfspace surface is assumed there (green). The same happens at the middle support with enbedded piles. So this represents the brown environmental surface.",
+        "token_count": 137
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            14
+        ],
+        "page_labels": [
+            "2-9"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.8 Piles in the Half-Space"
+        ],
+        "content": "There are two ways to model model load introduction by means of piles in HASE – as internal HASE-piles (PILE) or as extended piles (XPIL).\n Internal HASE-piles are not discretized in the finite element system. They are a property of the halfspace and defined with command PILE. Example - hase8_intern_piles.dat\n Extended piles are real beam elements in the system and thus need not to be defined with command PILE. Example - hase22_abutment_extended_piles.dat",
+        "token_count": 108
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            14
+        ],
+        "page_labels": [
+            "2-9"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.8 Piles in the Half-Space",
+            "2.8.1 PILE - internal HASE Piles"
+        ],
+        "content": "Internal HASE Piles are no ream beam elememts and may be included as part of the calcula- tion of the stiffness matrix at the halfspace surface. In the linear calculation, it is assumed that MANT times the total pile load is transferred by pile skin friction (literal MANT in record PILE) and the rest as point pressure at the foot of the pile.\n The part of load supported by skin friction is evenly distributed, relative to the soil stiffnesses along the pile, over the length of the pile and integrated numerically.\n Loads introduced within the half-space are calculated according to equation 2.5.\n Piles within the half-space can only be calculated in the expanded version of HASE.",
+        "token_count": 146
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            15,
+            14
+        ],
+        "page_labels": [
+            "2-10",
+            "2-9"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.8 Piles in the Half-Space",
+            "2.8.2 XPIL - Extended Piles"
+        ],
+        "content": "Piles are defined as beam-elements in the system that lie below the halfspace surface. In HASE, the stiffnesses of all beam nodes are obtained using the formula 2.5.\n In HASE, it is possible to directly include the effects of soil bedding on a pile- bedded structure, where piles are modeled as discrete beam elements and are part of the structure. The GRP record can be used to select beam groups where stiffness values should be calculated within the halfspace. In contrast to the PILE functionality, which condenses the total effect of the pile to a single stiffness at the point where the pile is attached to the structure, each node along an extended pile represents explicit degrees of freedom within the halfspace. This allows bedding effects to be represented continuously along the pile.\n The effective soil stiffness properties along X-pile are always determined from the half-space stiffness defined using bore profiles.\n If additional nonlinear resistance effects along X-pile are to be considered, this can be done by one of the following:\n 1. Definition of the nonlinear resistance properties for each individual pile directly. If you do not need to give an individual nonlinear effect to every pile, the second method is recommended! If you need individual nonlinear effects this can be achieved by:\n • defining bedding profiles containing nonlinear specific information using BORE + BBAX or BBLA\n assigning these profiles directly to the corresponding X-pile beams at system input\n The following X-pile nonlinear effects can be taken into account when performing a non- linear analysis in combination with ASE:\n • maximum pile skin friction along the pile C0 (see AQUA record BBAX)\n • maximum axial pile foot force PMAX (see AQUA record BBAX)\n • maximum transverse compression PMA1 and PMA2 (see AQUA record BBLA)\n 2. Interpolation of the nonlinear resistance properties from the corresponding soil parame- ters of the defined bore profile distribution. The length of the piles within halfspace, the pile diameter and pile circumference are automatically taken into consideration for the evaluation of the pile specific values. This method is achieved by:",
+        "token_count": 430
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            15
+        ],
+        "page_labels": [
+            "2-10"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.8 Piles in the Half-Space",
+            "2.8.2 XPIL - Extended Piles"
+        ],
+        "content": "• maximum transverse compression PMA1 and PMA2 (see AQUA record BBLA). 2. Interpolation of the nonlinear resistance properties from the corresponding soil parame- ters of the defined bore profile distribution. The length of the piles within halfspace, the pile diameter and pile circumference are automatically taken into consideration for the evaluation of the pile specific values. This method is achieved by:.\n •\n defining the soil nonlinear resistance properties using AQUA records BORE and BLAY\n •\n interpolating these properties using one of four interpolation schemes described in Section 2.3\n The X-pile nonlinear resistance properties that are interpolated in this way are maximum pressure at pile foot (PMAX), maximum lateral pressure (PMAL), cohesion (C) and soil- pile friction angle.\n Method 2 is a preferred method for the definition of X-pile resistance properties. Example: hase21_kpp_extended_piles.dat",
+        "token_count": 191
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            16
+        ],
+        "page_labels": [
+            "2-11"
+        ],
+        "type": "image",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.9 Limits and CPU Time"
+        ],
+        "coordinates": [
+            [
+                489.12222222222215,
+                833.1544799804688
+            ],
+            [
+                2072.45947265625,
+                2210.554912222222
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 2.7: Memory requirement"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            15,
+            16
+        ],
+        "page_labels": [
+            "2-10",
+            "2-11"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.9 Limits and CPU Time"
+        ],
+        "content": "The following limits should be observed:\n Number of bore profiles : 999 Number of system nodes : 999999 Number of halfspace nodes : 65000 Greatest node number : 999999\n Further limits are imposed by HASE and also by the computer hardware.\n The stiffness matrix must be determined by inverting the flexibility matrix. In this case, the system of equations must be solved n times (where n = number of nodes in halfspace). By comparison, in ASE the system of equations must be solved for a load case only 1 time, but for m unknowns (for the plate this is m = 3n, as each node has 3 unknowns).\n Because the inversion step costs a lot of CPU time, it is executed only in-core, that means exclusively in the main memory. Therefore the number of nodes which can be calculated depends on the size of main memory available. It also depends on the band width of the system of equations. This can be reduced by lowering the influence radius with the record CTRL INFL. Reducing bandwidth naturally reduces CPU time. The memory requirements can be estimated with the following diagram. The curves I to IV show different influence radii:\n Curve I : Influence radius = 999m\n Curve II : Influence radius = 30% of the system dimension Curve III : Influence radius = 10% of the system dimension Curve IV : Influence radius = 3% of the system dimension\n A square plate with 16m16m and 4040 elements (4141 = 1681 nodes) needs approxi- mately 6 − 7MB main memory for an influence radius of 4.80m(= 30% of 16m). With 4MB main memory, the problem can be processed with a maximum influence radius of approxi- mately 3.00m.",
+        "token_count": 376
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            16
+        ],
+        "page_labels": [
+            "2-11"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.10 Files and Combination with Static Programs"
+        ],
+        "content": "The stiffness of the halfspace is saved by HASE in the file PROJECT.$E2.\n At the start of the following statics program (ASE), this $E2-file is read in using the command STEX. The stiffness of the superstructure is then combined with the stiffness matrix of the halfspace to form a total stiffness matrix. The system of equations is solved and saved as PROJEKT.$D1.\n The default argument of the STEX command is PROJECT.$E2, so the input of STEX without any argument is generally sufficient. Because the contact nodes of the halfspace are assigned external node numbers, any other $E2-file may alternatively be specified.\n In the following statics calculation, load cases can quickly be computed without having to re- solve the system of equations. The STEX command need only be specified once for multiple load cases. No group selection is allowed. If material values or similar values used as inputs to HASE are modified, the system of equations must be set up and solved again in HASE.",
+        "token_count": 211
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            18
+        ],
+        "page_labels": [
+            "3-1"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.1 Input Language"
+        ],
+        "content": "Input is written in text using the free format of the CADINP input language (see the general manual ’SOFiSTiK Basics’).\n Three categories of units are distinguished:\n mm Fixed unit. Input is always required in the specified unit.\n [mm] Explicit unit. Input defaults to the specified unit. Alternatively, an explicit as- signment of a related unit is possible (eg. 2.5[m] ).\n [mm]1011 Implicit unit. Implicit units are categorised semantically and denoted by a cor- responding identity number (shown in green). Valid categories referring to the unit ”length” are, for example, geodetic elevation, section length and thickness. The default unit for each category is defined by the currently active (design code specific) unit set. This input default can be overridden as described above. The specified unit in square brackets corresponds to the default for unit set 5 (Eu- rocodes, NORM UNIT 5).",
+        "token_count": 199
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            19
+        ],
+        "page_labels": [
+            "3-2"
+        ],
+        "type": "table",
+        "sections": [
+            "3 Input Description",
+            "3.2 Input Records"
+        ],
+        "coordinates": [
+            [
+                401.9881591796875,
+                1091.7745361328125
+            ],
+            [
+                2884.375732421875,
+                2683.6875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Record Items CTRL OPT VAL GRP NO VAL FOOT RC CC HALF TYPE PROF EP Z FAKX FAKY FAKZ NAME BORE NO PILE X Y D0 D Z MANT ZMAN PMAM PMAF MNO TITL PLAS PMAX LOAR NO R LC NO NAME TITL STVZ LOAD NO PZ SELE NO Z SELP Z LCST BRIC DX DY HMIN ECHO OPT VAL"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            19
+        ],
+        "page_labels": [
+            "3-2"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.2 Input Records"
+        ],
+        "content": "Previously defined material values may be modified in HASE.\n The input is ordered in blocks which are terminated by an END record. A particular system or a load case can be analyzed within each block. The program ends if an empty block (END/END) is found.\n The following records are defined:\n The records HEAD, END and PAGE are described in the general manual SOFiSTiK: ”Basics”.",
+        "token_count": 83
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            20
+        ],
+        "page_labels": [
+            "3-3"
+        ],
+        "type": "table",
+        "sections": [
+            "3 Input Description",
+            "3.3 CTRL – Control of the Analysis Method"
+        ],
+        "coordinates": [
+            [
+                371.3575134277344,
+                818.32421875
+            ],
+            [
+                2925.377685546875,
+                1908.7584228515625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default OPT Control option LT - INFL Influence radius for band width reduction TOLS Minimum stiffness cutoff GAUS Number of Gauss points per integration layer SOLV 0/Linear/Nonlinear FAKU Ignore tension caused by pile forces WARN Switch off error messages VAL Value of the option − -"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            20
+        ],
+        "page_labels": [
+            "3-3"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.3 CTRL – Control of the Analysis Method"
+        ],
+        "content": "See also: HALF, PLAS\n CTRL\n INFL Nodes which lie more than INFL m from each other have no influence on each other. With this option, the CPU time can be reduced drastically for big systems. Default = 999 m\n TOLS Stiffnesses which are smaller than TOLS times the maximum stiffness are not saved, but rather replaced by zero. Default = 1.E-6\n GAUS Number of Gauss points per integration layer\n The program automatically divides thick soil layers into thinner layers to produce a more accurate integration of the strains due to the stresses. A finer subdivision of these integration layers leads to improvements in accuracy of only few percent in most cases. Default: GAUS = 1, maximum value: GAUS=3\n SOLV CTRL SOLV 0 : to switch off the calculation to only store non-linear parameters for ASE (see record PLAS).\n CTRL SOLV - : without input to SOLV, HASE calculates the flexibility matrix and inverts it to a stiffness matrix (may take some time).\n CTRL SOLV NONL : works without inversion of the flexibility matrix. But ASE then has to iterate, see ASE STEX OPT ITER. May be quicker in total.\n FAKU Piles in the halfspace: Works only on PILE (HASE-piles) and not on extended piles (real beam elements):\n If a pile foot stands on a rigid subsoil, it transmits its load directly downward and not partially as tension upward (as the equation [1] for a load which acts in the halfspace interior would suggest). Based on the soil profile (the actual available stiffnesses), HASE automatically determines how much of the pile load is diverted directly downward. Then this part produces no tension upward. It is output as “faku” in the table of pile parameters. For special cases, a minimum value can be defined with FAKU - when CTRL FAKU 1 is set, that means all pile forces (also the skin friction forces) are transmitted downward as compression.",
+        "token_count": 416
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            21
+        ],
+        "page_labels": [
+            "3-4"
+        ],
+        "type": "table",
+        "sections": [
+            "3 Input Description",
+            "3.4 GRP – Selection of Element Groups"
+        ],
+        "coordinates": [
+            [
+                370.2155456542969,
+                814.4996948242188
+            ],
+            [
+                2911.0068359375,
+                2007.6910400390625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default NR Group number −/LT ! ALL All groups are selected VAL Option LT FULL OFF do not use YES use, no output of the results FULL use, output of the results FOOT X-Pile foot radius. Negative values are interpreted as m -1.0 a multiplier of pile radius. RC Contact radius (for the stiffness) m - CC Contact circumference (for nonlinear mantle friction) m -"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            21
+        ],
+        "page_labels": [
+            "3-4"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.4 GRP – Selection of Element Groups"
+        ],
+        "content": "See also: CTRL\n GRP\n All elements are used if nothing is input. When there is input, only the specified groups get activated.\n To simulate the effects of additional stiffness at the pile foot, the (positive) diameter of the pile foot can be specified with FOOT. Alternatively, the pile foot diameter can be specified as a multiple of the pile diameter (where the pile diameter is calculated as an equivalent diameter, from the pile cross-section area), in which case the FOOT value is flagged with a minus sign. The default pile footing is 1.4 times the pile diameter, or −1.4.\n With the input of the options RC and CC the user is able to overwrite the values of the contact radius and contact circumference which are computed by HASE automatically.",
+        "token_count": 156
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            22
+        ],
+        "page_labels": [
+            "3-5"
+        ],
+        "type": "table",
+        "sections": [
+            "3 Input Description",
+            "3.5 HALF – Halfspace Definition"
+        ],
+        "coordinates": [
+            [
+                374.04193115234375,
+                821.3250122070312
+            ],
+            [
+                2929.296630859375,
+                2581.161376953125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default TYPE Type of bedding distribution in the plan view LT CONS CONS Constant profile everywhere COOR Interpolation of bore coordinates with weight factor EP LAYR Layered halfspace EP Weight factor (only for TYPE COOR) − 1.5 Z Surface of halfspace in the global system m 0 ZVAR Variable surface level, see chapter 2 LT AUTO NO QUADs below Z are not taken into account AUTO horizontal QUADs below Z also have a half- space contact FAKX Stiffness factor in x direction − 0.4 FAKY Stiffness factor in y direction − 0.4 FAKZ Stiffness factor in z direction − 1 NAME Database name of secondary QUAD system or name LT32 - of newly generated LAYR database"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            22
+        ],
+        "page_labels": [
+            "3-5"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.5 HALF – Halfspace Definition"
+        ],
+        "content": "See also: CTRL, LOAR, LC, LOAD, PLAS\n HALF\n For TYPE CONS, the halfspace in the plan view has constant layer thicknesses, with each layer containing uniform material parameters.\n For TYPE COOR, a variable profile distribution can be defined based on interpolation of bore profiles (see Section 2.3). Example: hase5_profile_interpolation.dat\n For TYPE LAYR soil properties (stiffness and resistance values from BLAY) are interpolated from the discrete model of a layered half-space (3D triangular prism mesh) defined automati- cally by a bore profile definition (see Section 2.3). The geometry of this 3D mesh is saved in an additional database under a file name specified with item NAME. If no name is given, then the newly created *CDB will be saved under a name $(nme)_yr.cdb, where $(nme) stands for the name of the current project. Example: hase4_layr_interpolation.dat\n A horizontal bedding can be simulated with FAKX and FAKY. For FAKX and FAKY see chapter 2: Horizontal Stiffness.",
+        "token_count": 242
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            23
+        ],
+        "page_labels": [
+            "3-6"
+        ],
+        "type": "table",
+        "sections": [
+            "3 Input Description",
+            "3.6 BORE – Selection of Bore Profiles"
+        ],
+        "coordinates": [
+            [
+                389.7164001464844,
+                807.1318359375
+            ],
+            [
+                2937.77685546875,
+                1255.2786865234375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default NO Numbers of selected bore profiles − !"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            23
+        ],
+        "page_labels": [
+            "3-6"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.6 BORE – Selection of Bore Profiles"
+        ],
+        "content": "See also: HALF\n BORE\n The record BORE specifies which bore profiles defined in AQUA are to be used by HASE for the definition of the halfspace. Depending on the type of the interpolation, the following applies:\n 1. CONS - For this type of interpolation only one bore profile will be used for the definition of the halfspace. If BORE record is not specified, then a bore profile with smallest bore profile number (as defined in AQUA) will be selected. Similarly if more than one bore profile is defined with BORE record, bore profile with smallest bore profile number will be used.\n 2. QUAD - BORE record is not used for this interpolation type. All bore profiles which are defined with AQUA and used for the generation of the secondary QUAD system will also be used for the definition of the halfspace.\n 3. COOR - Minimum two bore profiles must be specified with BORE record. If nothing is specified, all bore profiles defined within AQUA are used for the interpolation.\n 4. LAYR - Minimum three bore profiles must be specified for this method to be applied. As before, if nothing is specified, all bore profiles defined within AQUA are used.",
+        "token_count": 254
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            24
+        ],
+        "page_labels": [
+            "3-7"
+        ],
+        "type": "table",
+        "sections": [
+            "3 Input Description",
+            "3.7 PILE – Internal Piles in the Halfspace"
+        ],
+        "coordinates": [
+            [
+                355.9963073730469,
+                800.0113525390625
+            ],
+            [
+                2947.587890625,
+                3076.25341796875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default X Pile coordinates or node number with m ! Y X=NNO and Y=node number m ! D0 Pile diameter m D D Pile foot diameter. The effective stress due to the set- m !/1.5D0 tlement is determined directly under the pile foot with this diameter. Z Pile foot coordinate m ! MANT Fraction of total pile load transferred to the soil as pile − 0.50 skin friction ZMAN Z coordinate starting at which skin friction is active. m * Default: 25% of the pile length, starting from the sur- face, is assumed to be inactive. PMAM Max. load transferable by skin friction kN - PMAF Max. load transferable through pile foot; PMAM, kN - PMAF apply only to nonlinear calculation - see record PLAS MNO Material number of piles − -"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            25
+        ],
+        "page_labels": [
+            "3-8"
+        ],
+        "type": "image",
+        "sections": [
+            "3 Input Description",
+            "3.7 PILE – Internal Piles in the Halfspace"
+        ],
+        "coordinates": [
+            [
+                1298.1492919921875,
+                1001.8856201171875
+            ],
+            [
+                1949.772216796875,
+                2146.048095703125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 3.1: HASE Piles"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            24,
+            25
+        ],
+        "page_labels": [
+            "3-7",
+            "3-8"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.7 PILE – Internal Piles in the Halfspace"
+        ],
+        "content": "See also: PLAS\n PILE\n TITL\n Pile designation\n LT16\n -\n There are two ways to model model load introduction by means of piles in HASE – as internal HASE-piles (PILE) or as extended piles (XPIL).\n Internal HASE-piles are not discretized in the finite element system. They are a property of the halfspace and defined with command PILE. Example - hase8_intern_piles.dat\n (to comare: extended piles see example - hase22_abutment_extended_piles.dat)\n With PILE defined internal piles are not real beam elements but have an impact on the stiffness coefficients calculated for nodes on the halfspace surface. In a linear calculation, it is assumed that the the total pile load is transferred to the soil, by means of a skin friction component (given by MANT) and a pile foot component. In a nonlinear calculation, loads are transferred similarly to the soil, but with the restriction that the limits specified by PMAM/PMAF may not be\n The skin friction is distributed over the length of the pile relative to the soil stiffnesses starting at depth ZMAN, and then numerically integrated. With the ZMAN record, it is possible to simulate that barely any force is transferred by the pile into the ground immediately beneath the bottom plate due to the small relative displacements at shallow depths. The loading occurs inside\n the halfspace according to: [1], p. 195 Halfspace Solution according to Midlin. This divides a load in the halfspace into a downward compressive stress component and an upward tensile stress component.\n The pile precompression is taken into account with Äl=N.l/EA when calculating settlements. The exact normal force distribution is used here with a fixed concrete elastic modulus of 28000 MN/m2 (C30/37). The concrete surface A is calculated from the diameter.\n If a material number is defined for the piles, the elastic modulus of that material is used for the analysis (e.g. for vibrated piles). If a material number is not given, an elastic modulus of 28000 MN/m2 is used for the analysis.",
+        "token_count": 442
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            25
+        ],
+        "page_labels": [
+            "3-8"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.7 PILE – Internal Piles in the Halfspace"
+        ],
+        "content": "The concrete surface A is calculated from the diameter.. If a material number is defined for the piles, the elastic modulus of that material is used for the analysis (e.g. for vibrated piles). If a material number is not given, an elastic modulus of 28000 MN/m2 is used for the analysis..\n The record PILE is available only in the expanded version of HASE (HASE-3D).\n Further notes for non-linear calculations are given in record PLAS.",
+        "token_count": 98
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            26
+        ],
+        "page_labels": [
+            "3-9"
+        ],
+        "type": "table",
+        "sections": [
+            "3 Input Description",
+            "3.8 PLAS – Plasticizing"
+        ],
+        "coordinates": [
+            [
+                396.19586181640625,
+                811.0322265625
+            ],
+            [
+                2943.55029296875,
+                1517.751708984375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default PMAX Maximum bedding stress at boundary of halfspace kN/m2 - DPDS increasing max-sigma to the interior of the slab - - MUE Friction value in the bottom slab for horizontal effects − 0.5"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            26
+        ],
+        "page_labels": [
+            "3-9"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.8 PLAS – Plasticizing"
+        ],
+        "content": "See also: CTRL, HALF, PILE\n PLAS\n Non-linear halfspace calculations:\n The program ASE can be used to analyse the lifting of the bottom plate in a non- linear calcu- lation, as well as plasticizing at the plate edge and at the pile nodes.\n The record PLAS can be used to input a maximum soil pressure PMAX in kN/m2 for the bottom plate (which is valid over the entire halfspace). The input value represents a positive compressive stress.\n The following parameters can be specified for nonlinear calculations in ASE:\n • at halfspace nodes:\n compression: on input of PLAS: max. bedding max-sigma = PMAX (record PLAS)\n compression: with input of PLAS+DPDS you can simulate a phi and C of a soil. The max. bedding max-sigma can then increase starting from the boundary. Directly at the boundary, max-sigma starts with PLAS, to the interior of the slab max-sigma then increases with an e-function.\n Example PLAS=40 DPDS=1.8\n At the boundary: max-sigma =PLAS =40 kN/m2\n 0.25 m inside: max-sigma 40 kN/m2*e0.25∗1.8 = 63 kN/m2\n 1.00 m inside: max-sigma 40 kN/m2*e1.00∗1.8 = 240 kN/m2\n This DPDS e-function also works inside a slab e.g. at an internal gap as shown in example hase1_bottomslab.dat in loadcase 21 (linear) and 22 (nonlinear).\n tension: no tensile forces between the halfspace and the slab\n • at pile nodes:\n compression: max. pile force = PMAM+PMAF (record PILE)\n tension: max. pile force = PMAM (tensile piles)\n If the maximum pile foot force PMAF or the maximum skin friction force PMAM is reached before the maximum total pile force is reached PMAX=PMAM+PMAF (if MANT is not input as relation PMAM/PMAX), a plasticising will occur in ASE beginning at this load condition. The pile deformations then increase disproportionately according to the linear initial condition. If the pile force reaches the value PMAX, from then on the pile will be pressed into the soil.",
+        "token_count": 499
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            26,
+            27
+        ],
+        "page_labels": [
+            "3-9",
+            "3-10"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.8 PLAS – Plasticizing"
+        ],
+        "content": "If the maximum pile foot force PMAF or the maximum skin friction force PMAM is reached before the maximum total pile force is reached PMAX=PMAM+PMAF (if MANT is not input as relation PMAM/PMAX), a plasticising will occur in ASE beginning at this load condition. The pile deformations then increase disproportionately according to the linear initial condition. If the pile force reaches the value PMAX, from then on the pile will be pressed into the soil..\n If only the non-linear parameters in the record PLAS PMAX or PILE -PMAM-PMAF are modi- fied, these can be written into the database with CTRL SOLV 0 in a HASE calculation without a new calculation of the linear halfspace stiffness in the file project.$e2. Then ASE can do a non-linear calculation of the modified data. However, a modification of PILE MANT also affects at the linear stiffness. Therefore PILE MANT should be determined for the expected service pile load.",
+        "token_count": 209
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            28
+        ],
+        "page_labels": [
+            "3-11"
+        ],
+        "type": "table",
+        "sections": [
+            "3 Input Description",
+            "3.9 LOAR – Load Radii"
+        ],
+        "coordinates": [
+            [
+                360.2774658203125,
+                811.0438232421875
+            ],
+            [
+                2948.93408203125,
+                1641.322509765625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description NO Node number ALL Minimum load radius for all nodes is defined with R. Default: 0.01 m BEAM Minimum load radius for beam nodes is de- fined with R. Default: 0.25 m R Load radius Unit Default LT 1 m !"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            28
+        ],
+        "page_labels": [
+            "3-11"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.9 LOAR – Load Radii"
+        ],
+        "content": "See also: HALF\n LOAR",
+        "token_count": 7
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            29
+        ],
+        "page_labels": [
+            "3-12"
+        ],
+        "type": "table",
+        "sections": [
+            "3 Input Description",
+            "3.10 LC – Load Case"
+        ],
+        "coordinates": [
+            [
+                376.7737731933594,
+                811.627685546875
+            ],
+            [
+                2943.651611328125,
+                1527.6435546875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default NO Load case number − 1 NAME Database name of the results LT32 * TITL Load case title LT24 * STVZ Load case number for saving the displacement u-z of − 1 the half space surface"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            29
+        ],
+        "page_labels": [
+            "3-12"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.10 LC – Load Case"
+        ],
+        "content": "See also: HALF, LOAD\n LC\n The default for NAME is the current project name. However, results of a calculation can also be used with another database. Then the support forces of the external database are used. The relation of the data is given by the external node numbers.\n With TITL, a new name can be assigned to the load case. This can be useful if the results are taken from an external database (the designation selected there is used as default). The input of TITL is required for independent settlement calculations.\n There are two calculation modes:\n LC without input of LOAD records: halfspace calculations\n The program uses a load case that was calculated with a statics program and evaluates the stresses with the loads of the halfspace determined by the statics program (= support reactions of the building).\n The halfspace must already have been calculated in a prior HASE calculation and is read in. A specification of the record HALF is not allowed in this case.\n The bedding stresses are stored per default in the database and can be represented graphically. If there are QUAD beddings defined in addition to the halfspace, then it is not possible to store bedding stresses because of the risk of a collision.\n LC followed by a LOAD record: halfspace calculations\n An independent settlement calculation is executed. The halfspace must be defined with the record HALF. The loads at the nodes must be input with the record LOAD. The dis- placements of this calculation are saved with the load case number to be used for a graphical representation. If a load case of the same number already existed, it is deleted. If NO=0 is input, then nothing is stored.\n About STVZ:\n For non-linear analyses in the HASE postprocessing-calculation (calculation mode 1), the dis- placement u-z of the halfspace can be stored in a separate load case number with LC ...STVZ . In non-linear analyses, this displacement differs from the displacement of the lower edge of the bottom plate (displacement from the program ASE), because in the non-linear case the",
+        "token_count": 421
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            29,
+            30
+        ],
+        "page_labels": [
+            "3-12",
+            "3-13"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.10 LC – Load Case"
+        ],
+        "content": "For non-linear analyses in the HASE postprocessing-calculation (calculation mode 1), the dis- placement u-z of the halfspace can be stored in a separate load case number with LC ...STVZ . In non-linear analyses, this displacement differs from the displacement of the lower edge of the bottom plate (displacement from the program ASE), because in the non-linear case the.\n bottom plate can lift up because of tension or can press itself into the soil by plasticizing. The example Hase9.dat: ’Bottom Plate Non-linear Lift and Plasticizing’ shows an application and the comparison of the two displacements with the program WING.",
+        "token_count": 134
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            31
+        ],
+        "page_labels": [
+            "3-14"
+        ],
+        "type": "table",
+        "sections": [
+            "3 Input Description",
+            "3.11 LOAD – Single Loads"
+        ],
+        "coordinates": [
+            [
+                393.0627746582031,
+                810.062255859375
+            ],
+            [
+                2941.43896484375,
+                1255.947998046875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default NO Node number from which the load performs − ! PZ Load in Z direction kN 0"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            31
+        ],
+        "page_labels": [
+            "3-14"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.11 LOAD – Single Loads"
+        ],
+        "content": "See also: HALF, LC\n LOAD\n For an input of loads with LOAD a separate settlement calculation is executed (see record LC). The loads are interpreted as untensioned loads on the halfspace. The stiffnesses from a FE system are not considered. If a load case with the same number already exists, it will be deleted.\n One separate settlement analysis that can be used for test purposes is specifying the node number 0, which causes a constant load to be applied [e.g.: LC 101 ; LOAD NO 0 PZ 1.0] at all halfspace QUAD elements.",
+        "token_count": 122
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            32
+        ],
+        "page_labels": [
+            "3-15"
+        ],
+        "type": "table",
+        "sections": [
+            "3 Input Description",
+            "3.12 SELE – Results Selection"
+        ],
+        "coordinates": [
+            [
+                360.81353759765625,
+                814.3577270507812
+            ],
+            [
+                2962.091796875,
+                1635.791259765625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default NO Node number. − - If NO is not specified, Z coordinates are calculated for all points ZR Depth to be examined (relative to halfspace surface, m 0 to be input always positive, independant if global Z goes up or down) (old input Z has the same effect)"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            32
+        ],
+        "page_labels": [
+            "3-15"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.12 SELE – Results Selection"
+        ],
+        "content": "See also: SELP\n SELE\n Without an input of a depth Z, stresses are output for node NO at all layer boundaries.",
+        "token_count": 28
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            33
+        ],
+        "page_labels": [
+            "3-16"
+        ],
+        "type": "table",
+        "sections": [
+            "3 Input Description",
+            "3.13 SELP – Selection of the Plot Representation"
+        ],
+        "coordinates": [
+            [
+                365.725830078125,
+                822.15869140625
+            ],
+            [
+                2941.472412109375,
+                1928.9586181640625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default ZR Depth to be stored ( >=0.0; relative to halfspace sur- − - face ) LCST Load case storage number − ! BRIC File name for the newly generated database LT32 * DX Grid offset in x direction m ! DY Grid offset in y direction m ! HMIN Minimum grid size m !"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            34
+        ],
+        "page_labels": [
+            "3-17"
+        ],
+        "type": "image",
+        "sections": [
+            "3 Input Description",
+            "3.13 SELP – Selection of the Plot Representation"
+        ],
+        "coordinates": [
+            [
+                645.6666666666665,
+                393.6943570222221
+            ],
+            [
+                2870.23974609375,
+                1678.1668544444447
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 3.2: (a) Original system (b) System of the newly generated database containing stresses and settlements at the nodes of the BRIC elements."
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            35
+        ],
+        "page_labels": [
+            "3-18"
+        ],
+        "type": "image",
+        "sections": [
+            "3 Input Description",
+            "3.13 SELP – Selection of the Plot Representation"
+        ],
+        "coordinates": [
+            [
+                897.6277777777777,
+                393.69483555555576
+            ],
+            [
+                2053.3271484375,
+                1707.459228515625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 3.3: BRIC GRID system"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            33,
+            34
+        ],
+        "page_labels": [
+            "3-16",
+            "3-17"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.13 SELP – Selection of the Plot Representation"
+        ],
+        "content": "See also: SELE\n SELP\n Application:\n With for example\n SELP ZR 5.0 LCST 1001\n the stresses are calculated in the halfspace at a depth of 5.0 m and stored as bedding stresses of the QUAD elements in the load case number 101. In a later WING-calculation, the values can then be represented as contour lines, for example (LC 101 ; CONT P ).\n With the input:\n SELP ZR (2 20 2) LCST (102 2) BRIC \"file\"\n a new file.cdb is generated in addition to the results for LCST. This file contains the BRIC ele- ments with stresses at the nodes. BRIC elements are obtained by extruding QUAD elements of the soil-structure interface (3.2a and b).\n If a record specifies only one LCST number without a depth Z, then the load case numbers are automatically incremented. So several LC load cases can be analyzed in one run, producing n_LC ∗ n_depth load cases.\n The file name for a BRIC output can also be given in a separate input line without a depth Z input.\n If in addition to BRIC filename, items DX, DY and HMIN are defined and larger than zero, then a new database containing BRIC elements with stresses and settlements at nodes is created. This BRIC GRID system is generated as follows (3.3):\n •\n bounding box for the soil-structure interface elements is found and extended by values DX and DY\n regular grid mesh at the surface of the half-space is created, with the consideration of the minimal mesh size HMIN\n •\n surface grid mesh is then extruded to generate BRIC elements",
+        "token_count": 358
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            36
+        ],
+        "page_labels": [
+            "3-19"
+        ],
+        "type": "table",
+        "sections": [
+            "3 Input Description",
+            "3.14 ECHO – Output Control"
+        ],
+        "coordinates": [
+            [
+                346.0201721191406,
+                809.8721313476562
+            ],
+            [
+                2941.8203125,
+                2966.67724609375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default OPT A literal from the following list: LT - PROF Soil profile value PILE Pile elements NODE Nodal values, load radii ELEM Elements STRE Stresses DISP Displacements HALF Halfspace characteristic values NPRO Profile values in the nodes LOAD Loads BEDD Saving of foundation stresses STAT Statistics, computing times FULL activates all options VAL Value of output option −/LT FULL OFF No calculation or output NO No output YES Regular output FULL Extensive output"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            36
+        ],
+        "page_labels": [
+            "3-19"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Input Description",
+            "3.14 ECHO – Output Control"
+        ],
+        "content": "ECHO\n EXTR Full output\n The default is NO for PROF, NODE, ELEM and LOAD, and YES for all others.\n The storage of the bedding stresses can be switched off with ECHO BEDD OFF. For test pur- poses, ECHO BEDD 77 causes the equivalent bedding modulus (beddingstress/deformation) to be stored as bedding - but then the title in the WINGRAF plot is wrong.\n This record must be preceded by its name ECHO to avoid confusion with similarly- named record arguments.",
+        "token_count": 109
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            38
+        ],
+        "page_labels": [
+            "4-1"
+        ],
+        "type": "text",
+        "sections": [
+            "4 Output Description",
+            "4.1 Check List for Bore Profiles"
+        ],
+        "content": "The profiles are output only if modifications occurred or output is requested with ECHO PROF. The table is identical to that of the program AQUA.\n The table of the bore profiles used in the calculation is also printed. The bore profiles selected with the record BORE appear here.\n Profile Number of the bore profile position X [m] Y [m] Position of the bore profile",
+        "token_count": 76
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            38
+        ],
+        "page_labels": [
+            "4-1"
+        ],
+        "type": "text",
+        "sections": [
+            "4 Output Description",
+            "4.2 Soil Parameters at the Nodes"
+        ],
+        "content": "Using TYPE QUAD or TYPE COOR in the record HALF, the averaged soil parameters at the nodes are printed. This can be switched off with ECHO NPRO NO.\n Node Nodes numbers depth [m] Start-depth z of this layer bottom End depth of the last layer K0, K1, K2, K3 [MPa] Stiffness moduli in MPa",
+        "token_count": 78
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            39
+        ],
+        "page_labels": [
+            "4-2"
+        ],
+        "type": "table",
+        "sections": [
+            "4 Output Description",
+            "4.3 Half-Space Parameters"
+        ],
+        "coordinates": [
+            [
+                452.3931884765625,
+                422.6508483886719
+            ],
+            [
+                2853.111083984375,
+                1514.8336181640625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "contact area [m2] Sum of all node areas total number nodes Contact nodes at the top of halfspace active quad nodes Number of QUAD nodes found at the surface of the halfspace active quad elements Number of QUAD elements found at the surface of the halfspace (used for determining the load ra- dius) active quad area [m2] Sum of all QUAD element areas beam nodes Number of nodes without QUAD element connec- tion Maximum bedding stress for non- Maximum bedding stress defined in the record linear analysis PLAS in kN/m2"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            38
+        ],
+        "page_labels": [
+            "4-1"
+        ],
+        "type": "text",
+        "sections": [
+            "4 Output Description",
+            "4.3 Half-Space Parameters"
+        ],
+        "content": "This table is output per default for each halfspace definition. It can be turned off with ECHO HALF NO.\n soil profile Soil profile number PROF from record HALF number of layers from BLAY (program AQUA) top-halfspace [m] Global Z coordinate min-load-radius [m] from record LOAR beam-load-radius [m] Default for beam nodes influence-radius [m] reduces bandwidth of stiffness matrix\n direction of the bedding (Factor) The value indicates the percentage of the total stiff- X, Y, Z ness stored in the X, Y or Z direction.",
+        "token_count": 117
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            39
+        ],
+        "page_labels": [
+            "4-2"
+        ],
+        "type": "text",
+        "sections": [
+            "4 Output Description",
+            "4.4 Pile Values"
+        ],
+        "content": "This list of pile values can be requested with ECHO PILE.\n P I L E\n Title Designation of the pile X [m] Pile coordinates in the building footprint Y [m] node [-] Node number D-pile [m] Pile diameter D-foot [m] Pile foot diameter Z-foot [m] Pile foot depth coordinate faku [o/o] at stiff ground) in % mant [o/o] Part of skin friction at the load transfer in % z-mant [m] effect P-mant [kN] Maximum load transferred by skin friction P-foot [kN/m] Maximum load transferred at pile foot\n Percentage of pile force that acts directly down-\n ward and does not produce tension upward (pile\n Z coordinate starting at which the skin friction takes",
+        "token_count": 162
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            39,
+            40
+        ],
+        "page_labels": [
+            "4-2",
+            "4-3"
+        ],
+        "type": "text",
+        "sections": [
+            "4 Output Description",
+            "4.5 Check List for Nodes"
+        ],
+        "content": "The node list is only output if load radii were input manually, or if output is requested with ECHO NODE.\n N O D E S\n Number X [m] Coordinate Y [m] Coordinate Z [m] Coordinate Load radius [m] r Area [m2] r2Pi Contact numbers of the substruc- ture\n Node number\n Node number",
+        "token_count": 75
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            40
+        ],
+        "page_labels": [
+            "4-3"
+        ],
+        "type": "text",
+        "sections": [
+            "4 Output Description",
+            "4.6 Check List for Loads"
+        ],
+        "content": "This list is output only for an independent settlement calculation. For the stress calculation with a load case > 0 it can be requested with ECHO LOAD FULL.\n Node P-Z [kN] Load value\n Node number",
+        "token_count": 44
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            40
+        ],
+        "page_labels": [
+            "4-3"
+        ],
+        "type": "text",
+        "sections": [
+            "4 Output Description",
+            "4.7 Results"
+        ],
+        "content": "The displacement printout can be switched off with ECHO DISP NO and the printout of the stresses with ECHO STRE NO.\n node Node number depth-z [m] global Z coordinate -sig [kN/m2] compressive stresses are positive (1 kpa = 1 kilo- Pascal = 1 kN/m2) setting [mm] settlements at the surface\n For a non-uniform soil distribution over the plan view of a building design, differences in settle- ment can occur relative to results produced by statics calculations, since in forming the stiffness matrix, the soil profile at point i affects the settlement at point k. In the post-processing stage, however, only the profile values of the node k are used for its settlement calculation.",
+        "token_count": 154
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            42
+        ],
+        "page_labels": [
+            "5-1"
+        ],
+        "type": "text",
+        "sections": [
+            "5 Examples"
+        ],
+        "content": "The input files which are explained here are to be found in the installation directory SOFiSTiK in the subdirectory hase.dat/english. Alternatively, you can find these examples in the TEDDY menu HELP > EXAMPLES sorted by program name and language.\n // For additional help like tutorials, tutorial movies and practical examples please // refer to the SOFiSTiK Infoportal (www.sofistik.com/Infoportal).",
+        "token_count": 86
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            43
+        ],
+        "page_labels": [
+            "5-2"
+        ],
+        "type": "image",
+        "sections": [
+            "5 Examples",
+            "5.1 Base Plate Calculated with Stiffness Coefficient Method"
+        ],
+        "coordinates": [
+            [
+                478.0154724121094,
+                818.0345458984375
+            ],
+            [
+                2121.428466796875,
+                2279.349365234375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 5.1: Baseplate with wall loads"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            45
+        ],
+        "page_labels": [
+            "5-4"
+        ],
+        "type": "image",
+        "sections": [
+            "5 Examples",
+            "5.1 Base Plate Calculated with Stiffness Coefficient Method"
+        ],
+        "coordinates": [
+            [
+                708.661111111111,
+                607.264195555555
+            ],
+            [
+                2040.25761,
+                1397.8382455555554
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 5.2: Displaced structure"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            45
+        ],
+        "page_labels": [
+            "5-4"
+        ],
+        "type": "image",
+        "sections": [
+            "5 Examples",
+            "5.1 Base Plate Calculated with Stiffness Coefficient Method"
+        ],
+        "coordinates": [
+            [
+                708.661111111111,
+                1538.2285785000001
+            ],
+            [
+                2031.7525634765625,
+                2801.11572265625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 5.3: Bending moments"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            46
+        ],
+        "page_labels": [
+            "5-5"
+        ],
+        "type": "image",
+        "sections": [
+            "5 Examples",
+            "5.1 Base Plate Calculated with Stiffness Coefficient Method"
+        ],
+        "coordinates": [
+            [
+                708.661111111111,
+                515.7044402666662
+            ],
+            [
+                2533.789794921875,
+                1774.77587890625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 5.4: Bedding stresses load case 1 - stiffness coefficient method"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            46
+        ],
+        "page_labels": [
+            "5-5"
+        ],
+        "type": "image",
+        "sections": [
+            "5 Examples",
+            "5.1 Base Plate Calculated with Stiffness Coefficient Method"
+        ],
+        "coordinates": [
+            [
+                708.661111111111,
+                2213.3166666666666
+            ],
+            [
+                2461.318493333334,
+                3477.2993566666664
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 5.5: Bedding stresses in cuts - stiffness coefficient method"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            47
+        ],
+        "page_labels": [
+            "5-6"
+        ],
+        "type": "image",
+        "sections": [
+            "5 Examples",
+            "5.1 Base Plate Calculated with Stiffness Coefficient Method"
+        ],
+        "coordinates": [
+            [
+                708.6611111111113,
+                393.7042222222222
+            ],
+            [
+                2463.810546875,
+                1660.3215788888892
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 5.6: Bedding stresses in cuts - stiffness coefficient method"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            43,
+            44
+        ],
+        "page_labels": [
+            "5-2",
+            "5-3"
+        ],
+        "type": "text",
+        "sections": [
+            "5 Examples",
+            "5.1 Base Plate Calculated with Stiffness Coefficient Method"
+        ],
+        "content": "A base plate with dimensions of 6m− 10m is given, with wall loads considered as untensioned loads. The base plate has a thickness of 30cm. Example - hase1_bottomslab.dat\n The system is calculated as a plate with the program ASE. The input reads:\n +PROG AQUA\n HEAD BASE PLATE - STIFFNESS COEFFICIENT METHOD NORM DC DIN NDC 1045-1 CONC 1 TYPE C FCN 25 BORE NO 1 BLAY S 0.0 ES 50000 BLAY S 1.2 ES 12000 BLAY S 3.2 ES 9000 BLAY S 5.2 ES 90000 BLAY S 10.0 ES 200000 BLAY S 999.0 ES 200000\n END\n +PROG SOFIMSHA\n HEAD BASE PLATE - STIFFNESS COEFFICIENT METHOD\n ...\n END\n +PROG HASE\n HEAD HALF TYPE CONS\n BORE 1\n END\n +PROG SOFILOAD\n HEAD\n LC 100\n LINE TYPE pzz P1 70 X1 0.1 Y1 0.1 Z1 0.0 P2 70 X2 9.9 Y2 0.1 Z2 0.0 LINE TYPE pzz P1 70 X1 9.9 Y1 0.1 Z1 0.0 P2 70 X2 9.9 Y2 5.9 Z2 0.0 LINE TYPE pzz P1 70 X1 0.1 Y1 5.9 Z1 0.0 P2 70 X2 9.9 Y2 5.9 Z2 0.0 LINE TYPE pzz P1 70 X1 0.1 Y1 0.1 Z1 0.0 P2 70 X2 0.1 Y2 5.9 Z2 0.0 END",
+        "token_count": 425
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            44,
+            45
+        ],
+        "page_labels": [
+            "5-3",
+            "5-4"
+        ],
+        "type": "text",
+        "sections": [
+            "5 Examples",
+            "5.1 Base Plate Calculated with Stiffness Coefficient Method"
+        ],
+        "content": "LINE TYPE pzz P1 70 X1 0.1 Y1 0.1 Z1 0.0 P2 70 X2 9.9 Y2 0.1 Z2 0.0 LINE TYPE pzz P1 70 X1 9.9 Y1 0.1 Z1 0.0 P2 70 X2 9.9 Y2 5.9 Z2 0.0 LINE TYPE pzz P1 70 X1 0.1 Y1 5.9 Z1 0.0 P2 70 X2 9.9 Y2 5.9 Z2 0.0 LINE TYPE pzz P1 70 X1 0.1 Y1 0.1 Z1 0.0 P2 70 X2 0.1 Y2 5.9 Z2 0.0 END.\n +PROG ASE\n HEAD STEX $(PROJECT) LC 1 LCC 100 END\n HEAD\n +PROG HASE HEAD STRESS ANALYSIS AT HALF SPACE LC 1 SELE - 0 END\n The first HASE run calculates and saves the stiffness of the halfspace based on the soil profile 1 defined earlier in AQUA. The text output of HASE is a table describing the characteristics of the halfspace:\n Used Boreprofiles\n Profile position X [m]\n Y [m]\n 1\n 0.000\n 0.000\n Halfspace\n Soil- number of top-half- min-load- beam-load influence- profil layers space[m] radius[m] radius[m] radius[m] 1 5 0.000 0.020 0.250 999.000 direction of the bedding total active active active (factor) number quad- quad- quad- X Y Z nodes nodes elements area[m2] 0.00 0.00 1.00 99 99 80 60.000 Halfspace-stiffness calculated\n In the following ASE calculation, the halfspace stiffness is read in with STEX. The wall loads are calculated in load case 1. The dead load of the base plate is not included, since its impact is similar to unloading. (A constant load produces a settlement with positive bending moments in the plate. Here, however, the point is to find the negative moments from the wall loads.)\n After the calculation with the program ASE, the deformations and bending moments can be plotted:\n In the following HASE calculation, the stresses in the halfspace are determined. Only the stresses on the surface of the halfspace are returned by SELE - 0. The output for the node series 600 is:\n 601 0.000 112.32 8.140 602 0.000 14.70 7.512 603 0.000 9.90 6.971 604 0.000 9.43 6.609 605 0.000 9.38 6.483 606 0.000 9.43 6.609 607 0.000 9.90 6.971 608 0.000 14.70 7.512 609 0.000 112.32 8.140",
+        "token_count": 689
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            47,
+            45,
+            46
+        ],
+        "page_labels": [
+            "5-6",
+            "5-4",
+            "5-5"
+        ],
+        "type": "text",
+        "sections": [
+            "5 Examples",
+            "5.1 Base Plate Calculated with Stiffness Coefficient Method"
+        ],
+        "content": "601 0.000 112.32 8.140 602 0.000 14.70 7.512 603 0.000 9.90 6.971 604 0.000 9.43 6.609 605 0.000 9.38 6.483 606 0.000 9.43 6.609 607 0.000 9.90 6.971 608 0.000 14.70 7.512 609 0.000 112.32 8.140.\n Stresses in the Halfspace Loadcase\n 1\n node\n depth-z[m] -sig[kN/m2] setting[mm]\n Per default, the bedding stresses were also written to the database, so that they can be repre- sented with the program WING. The stresses in elements centers of gravity can be requested\n with QUAD P :\n The cut representation with SECT P returns, for the perpendicular cut shown here, the informa- tion about maximum edge stress determined by HASE . The maximal value of 112.32kN/m2 (KN/m2 = kP = Kilo Pascal) occurs at node 601.\n For comparison, the plate was also calculated using the Winkler assumption with a constant bedding of 5000KN/m3. Because the resulting settlement is not a smooth curve, a higher soil pressure occurs in the center of the plate, and thus there are also higher bending moments. The distribution of the bedding stresses results in a maximum edge stress of only 33KN/m2 for the perpendicular cut. The soil pressure in the center of the plate increases from approximately 10KN/m2 (stiffness coefficient method) to 12KN/m2:\n For other loads, the effect can be the opposite: for example, when calculating the support loads under a column on the plate using the stiffness coefficient method, the plate bending moments\n actually increase due to the column weight. The moments resulting from the settlement then have the same sign as the positive moments under the column.",
+        "token_count": 435
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            48
+        ],
+        "page_labels": [
+            "5-7"
+        ],
+        "type": "image",
+        "sections": [
+            "5 Examples",
+            "5.2 Constant Soil Pofile - Three-dimensional Frame with a Plate"
+        ],
+        "coordinates": [
+            [
+                708.661111111111,
+                823.2525555555558
+            ],
+            [
+                2452.0767800000003,
+                2476.304912222222
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 5.7: Plan - Frame and girder system with the bottom plate"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            49
+        ],
+        "page_labels": [
+            "5-8"
+        ],
+        "type": "image",
+        "sections": [
+            "5 Examples",
+            "5.2 Constant Soil Pofile - Three-dimensional Frame with a Plate"
+        ],
+        "coordinates": [
+            [
+                708.6611111111113,
+                393.7054468611115
+            ],
+            [
+                2424.636962890625,
+                1959.3848876953125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 5.8: System bottom plate - beams and columns - slabs"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            51
+        ],
+        "page_labels": [
+            "5-10"
+        ],
+        "type": "image",
+        "sections": [
+            "5 Examples",
+            "5.2 Constant Soil Pofile - Three-dimensional Frame with a Plate"
+        ],
+        "coordinates": [
+            [
+                708.661111111111,
+                668.3368195166667
+            ],
+            [
+                2047.90478515625,
+                2255.978515625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 5.9: Deformed structure"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            48,
+            49
+        ],
+        "page_labels": [
+            "5-7",
+            "5-8"
+        ],
+        "type": "text",
+        "sections": [
+            "5 Examples",
+            "5.2 Constant Soil Pofile - Three-dimensional Frame with a Plate"
+        ],
+        "content": "Given a building which is idealized as a framework. The bottom plate lies on the ground, which is characterized by two soil layers each having a constant stiffness module. The soil parameters are constant over the plan view. Example - hase2_3d.dat\n The framework is composed of beams elements, and the bottom plate is entered as QUAD elements. Separate foundations are given at the nodes 1402 and 1406. Floor slabs are defined using QUAD elements to complete the load description and to represent the upper floor levels. (In this way the hidden line algorithm supplies more plastic pictures.)\n No fixities are specified in the input. The bottom plate lies at the level z = +2.00m (global Z coordinate).\n The soil profile is defined with the records BORE and BLAY and assigned soil profile number 3 (program AQUA). In the first layer from z = 2.00m to 4.80m, the stiffness modulus is set to 90Mp, and in the second layer only 30Mp. Beneath the global Z coordinate of 9.80m, it is assumed the ground is perfectly rigid. This ends the description of the soil profile.\n +PROG AQUA\n HEAD !... BORE 3 BLAY 2.00 ES 90000 BLAY 4.80 ES 30000 BLAY 9.80 ES 30000 !... END\n BORE 3\n The half space is now described in HASE:\n +PROG HASE\n HEAD FORMATION OF THE HALFSPACE STIFFNESS MATRIX HALF TYPE CONS PROF 3 Z 2.00 FAKX 1 FAKY 1 FAKZ 1 LOAR BEAM 0.70\n END\n The stiffness is stored in all three directions with FAKX 1 1 1. This precludes the necessity to later specify horizontal fixings. The horizontal loads are distributed over the bottom plate and thereby transferred to the building ground.",
+        "token_count": 411
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            49,
+            50
+        ],
+        "page_labels": [
+            "5-8",
+            "5-9"
+        ],
+        "type": "text",
+        "sections": [
+            "5 Examples",
+            "5.2 Constant Soil Pofile - Three-dimensional Frame with a Plate"
+        ],
+        "content": "HEAD FORMATION OF THE HALFSPACE STIFFNESS MATRIX HALF TYPE CONS PROF 3 Z 2.00 FAKX 1 FAKY 1 FAKZ 1 LOAR BEAM 0.70. END. The stiffness is stored in all three directions with FAKX 1 1 1. This precludes the necessity to later specify horizontal fixings. The horizontal loads are distributed over the bottom plate and thereby transferred to the building ground..\n The output of HASE is:\n Used Boreprofiles\n Profile\n position X [m]\n Y [m]\n 3\n 0.000\n 0.000\n Halfspace\n Soil- number of top-half- min-load- beam-load influence- profil layers space[m] radius[m] radius[m] radius[m] 3 2 2.000 0.020 0.700 999.000 direction of the bedding total active active active (factor) number quad- quad- quad- X Y Z nodes nodes elements area[m2] 1.00 1.00 1.00 227 225 192 300.000 Halfspace-stiffness calculated\n For the 192 QUAD elements of the bottom plate, HASE distributes the area of each element\n among its nodes. HASE labels the two free-standing nodes 1402 and 1406 as beam nodes (handled as free-standing foundation nodes). For these nodes, the input LOAR BEAM 0.70 means that the load radius is 70cm (see output example 2). The total area (QUAD elements + separate foundations at the beams nodes) is 303m2. The QUAD elements of the floor slabs are not used in HASE, since their Z coordinate is not at the level +2.00m.\n Now the overall system (frame + plate + halfspace) is calculated for the load case dead load with the program ASE:\n +PROG SOFILOAD! Loads\n HEAD LC 1 FACD 1 QUAD FROM GRP TO 0 TYPE PZZ P 20 END\n HEAD\n PROG ASE HEAD ECHO DISP,FORC,NOST NO CTRL PLAB 0 STEX LC 1 END\n The QUAD elements 2001-7999 are the floor slabs in the upper floors. They receive a constant uniformly-distributed load.\n The support reactions calculated by the program ASE represent the contact forces between the bottom plate and the halfspace. Apart from the vertical reactions, a horizontal bedding is also apparent. (The bottom plate and the soil can sustain horizontal forces from the framework.)",
+        "token_count": 536
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            50,
+            51
+        ],
+        "page_labels": [
+            "5-9",
+            "5-10"
+        ],
+        "type": "text",
+        "sections": [
+            "5 Examples",
+            "5.2 Constant Soil Pofile - Three-dimensional Frame with a Plate"
+        ],
+        "content": "The QUAD elements 2001-7999 are the floor slabs in the upper floors. They receive a constant uniformly-distributed load.. The support reactions calculated by the program ASE represent the contact forces between the bottom plate and the halfspace. Apart from the vertical reactions, a horizontal bedding is also apparent. (The bottom plate and the soil can sustain horizontal forces from the framework.).\n Nodal Reactions and Residual Forces\n Loadcase\n 1\n Node P-X P-Y P-Z M-X M-Y M-Z No [kN] [kN] [kN] [kNm] [kNm] [kNm] 101 -86.9 102 -144.1 103 -106.5 . . . 901 -127.1 902 -202.1 903 -148.6\n . . .\n The representation of the deformed structure (in Program WING with VISI HIDD LINE) shows the local deformations under the columns as well as the global settlement (deformation of the highest floor slab).\n Settlement in the separate foundations depends strongly on the load surface of the separate foundations, since the stress in the soil under the separate foundations results mainly from their\n own support load. Because of the relatively large separation between the separate foundation and the bottom plate, the impact of loads on the bottom plate on the settlement of the separate foundations is minimal.\n In a HASE-postprocessing run, the stress in the building ground can now be analysed:\n +PROG HASE\n HEAD STRESS ANALYSIS AT HALFSPACE\n LC 1 SELE 101,102,202 SELE 1402 3,4,5,6,7,8,9 END\n LC 1\n The stresses resulting from load case 1 are requested. For the nodes 101, 102 and 202, stresses at layer boundaries are requested. Under the node 1402, stresses are requested at other specific depths.\n 101 2.000 185.42 5.638 4.800 31.60 9.800 17.26 102 2.000 153.72 6.718 4.800 40.54 9.800 20.23 202 2.000 112.64 7.324 4.800 46.54 9.800 22.35 1402 3.000 163.78 7.346",
+        "token_count": 505
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            51,
+            52
+        ],
+        "page_labels": [
+            "5-10",
+            "5-11"
+        ],
+        "type": "text",
+        "sections": [
+            "5 Examples",
+            "5.2 Constant Soil Pofile - Three-dimensional Frame with a Plate"
+        ],
+        "content": "101 2.000 185.42 5.638 4.800 31.60 9.800 17.26 102 2.000 153.72 6.718 4.800 40.54 9.800 20.23 202 2.000 112.64 7.324 4.800 46.54 9.800 22.35 1402 3.000 163.78 7.346.\n Stresses in the Halfspace Loadcase\n node\n depth-z[m] -sig[kN/m2] setting[mm]\n 1\n 4.000 58.92 5.000 30.59 6.000 20.99 7.000 17.36 8.000 15.91 9.000 15.30\n The settlements on the surface of the halfspace which are determined here in HASE are in agreement with the nodal displacements u-z from the program ASE.\n However, this is not the case for soil parameters which vary over the plan view (this is explained in Chapter 4).",
+        "token_count": 240
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            53
+        ],
+        "page_labels": [
+            "5-12"
+        ],
+        "type": "image",
+        "sections": [
+            "5 Examples",
+            "5.3 Interpolation with Weight Factor"
+        ],
+        "coordinates": [
+            [
+                708.661111111111,
+                832.4846611777774
+            ],
+            [
+                2137.109619140625,
+                2882.63269
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 5.10: Bore locations in the plan"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            56
+        ],
+        "page_labels": [
+            "5-15"
+        ],
+        "type": "image",
+        "sections": [
+            "5 Examples",
+            "5.3 Interpolation with Weight Factor"
+        ],
+        "coordinates": [
+            [
+                708.661111111111,
+                1362.265744027778
+            ],
+            [
+                2454.044218888889,
+                2580.8798828125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 5.11: Deformed structure (condensed diagram factor 500)"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            56
+        ],
+        "page_labels": [
+            "5-15"
+        ],
+        "type": "image",
+        "sections": [
+            "5 Examples",
+            "5.3 Interpolation with Weight Factor"
+        ],
+        "coordinates": [
+            [
+                629.9222222222221,
+                2940.212222222222
+            ],
+            [
+                2149.337646484375,
+                4137.86279296875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 5.13: Principal normal stress n-I"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            57
+        ],
+        "page_labels": [
+            "5-16"
+        ],
+        "type": "image",
+        "sections": [
+            "5 Examples",
+            "5.3 Interpolation with Weight Factor"
+        ],
+        "coordinates": [
+            [
+                866.1444444444445,
+                393.7009056277778
+            ],
+            [
+                2282.906894444445,
+                2047.7535400390625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 5.12: Displacements u-z of the bottom plate"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            53,
+            54
+        ],
+        "page_labels": [
+            "5-12",
+            "5-13"
+        ],
+        "type": "text",
+        "sections": [
+            "5 Examples",
+            "5.3 Interpolation with Weight Factor"
+        ],
+        "content": "A variable soil profile distribution in the plan view can also be specified using coordinate inter- polation. For the foundation of a gas tank, the following bore locations were tested: Example - hase5_profil_interpolation.dat\n The soil profile with the coordinates of the bore location are input in the program AQUA and the system in program SOFIMSHA . The controls to the halfspace are defined with the program HASE.\n +PROG AQUA\n NORM DC DIN NDC 1045-1 CONC NO 1 CONC NO 2 BORE 4 0 0 BLAY 0.00 ES 14000 BLAY 2.80 ES 12000 BLAY 8.80 ES 12000 BORE 7 9 0 BLAY 0.00 ES 16000 BLAY 2.80 ES 9000\n HEAD INTERPOLATION WITH INFLUENCE-FACTOR - GAS TANK\n CONC NO 1\n BORE 4 0 0\n BORE 7 9 0\n BLAY 8.80 ES 9000\n BORE 11 9 8\n BLAY 0.00 ES 13000\n BLAY 2.80 ES 10000\n BLAY 10.5 ES 10000\n BORE 12 -1\n 6\n BORE 12 -1 6\n BLAY 0.00 ES 9000\n BLAY 4.00 ES 6000\n BLAY 10.5 ES 6000 BORE 13 -5 7 BLAY 0.00 ES 13000 BLAY 4.50 ES 9000 BLAY 10.5 ES 9000 BORE 15 -9 -1 BLAY 0.00 ES 15000 BLAY 2.80 ES 16000 BLAY 9.80 ES 16000 BORE 22 1 -9 BLAY 0.00 ES 14000 BLAY 2.80 ES 15000 BLAY 9.80 ES 15000",
+        "token_count": 442
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            55,
+            54
+        ],
+        "page_labels": [
+            "5-14",
+            "5-13"
+        ],
+        "type": "text",
+        "sections": [
+            "5 Examples",
+            "5.3 Interpolation with Weight Factor"
+        ],
+        "content": "BLAY 10.5 ES 6000 BORE 13 -5 7 BLAY 0.00 ES 13000 BLAY 4.50 ES 9000 BLAY 10.5 ES 9000 BORE 15 -9 -1 BLAY 0.00 ES 15000 BLAY 2.80 ES 16000 BLAY 9.80 ES 16000 BORE 22 1 -9 BLAY 0.00 ES 14000 BLAY 2.80 ES 15000 BLAY 9.80 ES 15000.\n END\n +PROG SOFIMSHA\n HEAD INTERPOLATION WITH INFLUENCE-FACTOR - GAS TANK\n ...\n END\n +PROG HASE\n HEAD CTRL INFL 4.0 HALF TYPE COOR EP 2 Z 0 FAKX 0.5 FAKY 0.5 FAKZ 1 END\n HEAD\n The interpolation is assigned a weight factor of EP=2, i.e. the node stiffness coefficient falls at a rate proportional to the square of the distance from the nodes and the bore profile. For example, a bore profile contributes nine times more to the stiffness coefficient of a node than another profile which is situated three times as far away. Layer depths are interpolated in the same way.\n The influence radius was defined as 4 m. Thus the band width of the halfspace stiffness matrix is limited to a nodal distance of 4 m. A nodal load ceases to influence the settlement of other nodes that are located further than 4 m away.\n The horizontal support of the tank is implemented simply by defining the horizontal stiffness of all nodes as 50 per cent of the vertical stiffness.\n This is the output of HASE:\n Used Boreprofiles\n Y [m] 4 0.000 0.000 7 9.000 0.000 11 9.000 8.000 12 -1.000 6.000 13 -5.000 7.000 15 -9.000 -1.000 22 1.000 -9.000\n Profile position X [m]\n Soilprofile - Interpolation\n with profilecoordinates X0 and Y0, influence-factor EP= 2\n Soil -\n Parameters in Nodes\n depth[m] bottom K0 K1 K2 0.000 13.90 0.00 0.00 0.00 2.972 9.333 11.57 0.00 0.00 0.00 0.000 13.87 0.00 0.00 0.00 2.973 9.261 11.34 0.00 0.00 0.00 0.000 13.82 0.00 0.00 0.00 2.976 9.219 11.21 0.00 0.00 0.00 0.000 13.73 0.00 0.00 0.00 2.995 9.226 11.07 0.00 0.00 0.00 0.000 13.56 0.00 0.00 0.00 3.044 9.300 10.81 0.00 0.00 0.00 0.000 13.28 0.00 0.00 0.00 3.127 9.439 10.42 0.00 0.00 0.00 0.000 12.88 0.00 0.00 0.00 3.234 9.615 9.92 0.00 0.00 0.00 0.000 13.83 0.00 0.00 0.00",
+        "token_count": 820
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            55,
+            56
+        ],
+        "page_labels": [
+            "5-14",
+            "5-15"
+        ],
+        "type": "text",
+        "sections": [
+            "5 Examples",
+            "5.3 Interpolation with Weight Factor"
+        ],
+        "content": "depth[m] bottom K0 K1 K2 0.000 13.90 0.00 0.00 0.00 2.972 9.333 11.57 0.00 0.00 0.00 0.000 13.87 0.00 0.00 0.00 2.973 9.261 11.34 0.00 0.00 0.00 0.000 13.82 0.00 0.00 0.00 2.976 9.219 11.21 0.00 0.00 0.00 0.000 13.73 0.00 0.00 0.00 2.995 9.226 11.07 0.00 0.00 0.00 0.000 13.56 0.00 0.00 0.00 3.044 9.300 10.81 0.00 0.00 0.00 0.000 13.28 0.00 0.00 0.00 3.127 9.439 10.42 0.00 0.00 0.00 0.000 12.88 0.00 0.00 0.00 3.234 9.615 9.92 0.00 0.00 0.00 0.000 13.83 0.00 0.00 0.00.\n Node\n 1101\n 1102\n 1103\n 1104\n 1105\n 1106\n 1107\n 1201\n K3[MPa]\n 2.962\n 9.293\n 11.76\n 0.00\n 0.00\n 0.00\n . . .\n Halfspace\n number of top-half- min-load- beam-load influence- layers space[m] radius[m] radius[m] radius[m] vari 2 0.000 0.020 0.250 4.000 total active active active (factor) number quad- quad- quad- X Y Z nodes nodes elements area[m2] 0.50 0.50 1.00 169 169 156 410.746\n Soil-\n profil\n direction of the bedding\n Halfspace-stiffness calculated\n The bottom plate has a radius of 11.50m. The difference of r2π (= 415.5m2) and the output contact area of 410.7m2 is due to the polygonal description of the bottom plate with QUAD elements.\n The calculation with the program ASE returns the deformations and the stresses for the case of a dead load plus the load of the tank contents on the bottom plate.\n +PROG SOFILOAD\n HEAD\n LC 1 FACD 1 QUAD FROM 1001 TO 5999 INC 1 TYPE PZP P 50 END\n +PROG ASE\n HEAD\n ECHO DISP,REAC,FORC,NOST NO\n STEX\n LC 1\n END\n The inclination of the tank due to the different soil parameters in the plan can be clearly seen (horizontal initial position). The normal stresses show the different loading effects in the radial direction due to the settlement differences.",
+        "token_count": 717
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            58
+        ],
+        "page_labels": [
+            "5-17"
+        ],
+        "type": "image",
+        "sections": [
+            "5 Examples",
+            "5.4 Stresses in the Halfspace"
+        ],
+        "coordinates": [
+            [
+                866.1388888888887,
+                393.70564586666694
+            ],
+            [
+                2405.1667100000004,
+                1717.7993566666669
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 5.14: Bottom plate and surrounding halfspace surface"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            58
+        ],
+        "page_labels": [
+            "5-17"
+        ],
+        "type": "image",
+        "sections": [
+            "5 Examples",
+            "5.4 Stresses in the Halfspace"
+        ],
+        "coordinates": [
+            [
+                708.6611111111109,
+                2393.3253713333334
+            ],
+            [
+                2189.815185546875,
+                3933.154541015625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 5.15: Stresses in the depth Z = 5 m"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            59
+        ],
+        "page_labels": [
+            "5-18"
+        ],
+        "type": "image",
+        "sections": [
+            "5 Examples",
+            "5.4 Stresses in the Halfspace"
+        ],
+        "coordinates": [
+            [
+                787.4000000000001,
+                393.69644350555603
+            ],
+            [
+                2110.1201171875,
+                1844.52197265625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 5.16: Stresses at depth 10 m"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            57,
+            58
+        ],
+        "page_labels": [
+            "5-16",
+            "5-17"
+        ],
+        "type": "text",
+        "sections": [
+            "5 Examples",
+            "5.4 Stresses in the Halfspace"
+        ],
+        "content": "In the following example, the settlement and the stresses are to be output under the bottom plate and also in the surrounding vacant area. In the deformed structure, the impression of the bottom plate in the halfspace can be seen: Example - hase8_intern_piles.dat\n In order to produce this result, the area surrounding the bottom plate must also be discretized with finite elements. In this case, the following points are important:\n • A gap must be present between the bottom plate and the surrounding display elements. Only then can the two nodes (bottom plate nodes and unloaded outer nodes) be treated and represented differently. In this example, there is a gap of 10 cm.\n • On either side of the gap, there should be thin elements to create a good graphical rep- resentation of the strong curvature of the halfspace surface (other than display, has no influence on the quality of the results).\n • Beyond the layer of thin elements, very large elements should be arranged in order not to increase the CPU time.\n • The surrounding representation elements are defined in the system input with GRP...STI 0 - i.e. they do not possess any stiffness and only their geometry is used.\n In a second HASE calculation, the user can request the stresses in the halfspace to be stored at specified larger depths. The stresses in the depth Z = 1 m are stored in the load case number 101 , the stresses in 2 m depth in the load case 102 etc.\n +PROG HASE\n HEAD\n ECHO STRE NO\n LC NO 1\n SELP Z (1 20 1) LCST (101 1) BRIC HASE8B ! STRESSES IN DEPTH Z=1-20m END\n The following cut diagram is produced with the program WING. The bottom plate is shown by the polygon. The stresses radiate beyond the bottom plate and into the surrounding area:\n In this example, four single piles were placed on the bottom plate under four highly loaded columns. In the following contour plot, the stress concentrations under the pile foot at a depth of 10 m can be seen clearly.",
+        "token_count": 440
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            60
+        ],
+        "page_labels": [
+            "5-19"
+        ],
+        "type": "image",
+        "sections": [
+            "5 Examples",
+            "5.5 Pile-Slab Foundation with Extended Piles"
+        ],
+        "coordinates": [
+            [
+                708.661111111111,
+                524.8378282611112
+            ],
+            [
+                2195.025634765625,
+                2273.118896484375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 5.17: Support Forces of Loadcase 1"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            60
+        ],
+        "page_labels": [
+            "5-19"
+        ],
+        "type": "image",
+        "sections": [
+            "5 Examples",
+            "5.5 Pile-Slab Foundation with Extended Piles"
+        ],
+        "coordinates": [
+            [
+                393.69999999999993,
+                2586.95
+            ],
+            [
+                2284.257824444445,
+                4144.404912222221
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 5.18: Axial Pile Bedding and Normal Forces"
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            59
+        ],
+        "page_labels": [
+            "5-18"
+        ],
+        "type": "text",
+        "sections": [
+            "5 Examples",
+            "5.5 Pile-Slab Foundation with Extended Piles"
+        ],
+        "content": "Piles are embedded in the halfspace and pile nodes interact via the halfspace. This means that if one pile introduces loading forces into the halfspace, this simultaneously has an impact on all other halfspace nodes, either by inducing settlements or horizontal deformations. Example\n - hase21_kpp_extended_piles.dat\n Loadcase 1 shows a linear calculation where the load is carried by the slab bedding as well as by the piles.\n The piles are embedded in the halfspace and, in the linear run, much of the load is transferred to the soil from the upper part of the pile, through skin friction.\n In the nonlinear run, the skin friction is limited by the values input in the bore profile definition, specifically the nonlinear contact parameters c0, PMA1, and PMA2. This reduces the skin friction in the upper part of the pile, causing the pile to sink into the halfspace slightly. The pile foot and bottom slab therefore carry more of the load.",
+        "token_count": 199
+    },
+    {
+        "document_name": "hase_1.pdf",
+        "page_indices": [
+            62
+        ],
+        "page_labels": [
+            "5-21"
+        ],
+        "type": "text",
+        "sections": [
+            "Bibliography"
+        ],
+        "content": "[1] J. Bellmann and B. Radmanovi´c. Nonlinear Half-Space Contact. Italy: Proceedings of Structural Engineering World Congress, 2011.\n [2] U. Smoltczyk. Grundbau Taschenbuch. Wilhelm Ernst & Sohn, 1980.\n [3] J.V. Boussinesq. Applications des potentials a l’étude de l’équilibre et de movement des solides elastiques. Paris: Gouthier-Villars, 1885.",
+        "token_count": 108
+    }
+]

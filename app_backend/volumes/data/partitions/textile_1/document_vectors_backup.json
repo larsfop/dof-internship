@@ -1,0 +1,927 @@
+[
+    {
+        "content": "The “Input Description” table (Section 3 of the TEXTILE manual) enumerates and briefly defines the ten core record types and subsections you must supply to drive the membrane‐cutting algorithm.  Each subsection corresponds to a keyword or record group in the TEXTILE input deck.  Below is a structured, detailed breakdown suitable for ingestion into a RAG‐enabled vector store:\n\n1.  Input Language (3.1)  \n    • Defines the overall syntax and grammar.  \n    • Specifies whether free‐format or fixed‐format record styles are used.  \n    • Establishes comment conventions, continuation rules, and case‐sensitivity.  \n\n2.  Input Records (3.2)  \n    • Describes the generic record structure shared by all modules.  \n    • Details field widths, delimiters, optional versus mandatory columns.  \n    • Explains error‐checking behavior and record‐type codes.  \n\n3.  CTRL – Control of the Analysis Method (3.3)  \n    • Top‐level control card for selecting the surface development approach (e.g. geodetic vs. minimal‐energy).  \n    • Flags for global parameters: prestress activation, iteration limits, convergence criteria.  \n    • References to material property sets and boundary conditions.  \n\n4.  PREP – Prepare Sofiplus/AutoCAD Cutting Lines (3.4)  \n    • Conversion and formatting of native CAD‐derived edge geometry.  \n    • Options for snapping, smoothing, and meshing the input lines before surface development.  \n    • Output directives for DXF, DWG or native Sofiplus formats.  \n\n5.  CUTT – Cutting Pattern (3.5)  \n    • Core command block that drives the actual flattening of the curved membrane.  \n    • Parameters for patch segmentation: max. element size, allowable shear distortion.  \n    • Options for automated or manual patch numbering and labeling.  \n\n6.  GRP – Group Control (3.6)  \n    • Defines logical collections of patches or assemblies (e.g. roof bays, sail segments).  \n    • Enables batch processing of identical patch groups.  \n    • Controls stacking order and seam‐matching rules across group boundaries.  \n\n7.  QUAD – QUAD Elements (3.7)  \n    • Specification of quadrilateral finite‐element mesh layout.  \n    • Input of node connectivity, aspect‐ratio constraints, and element orientation flags.  \n    • Toggles for mesh refinement, transition zones, and local grading factors.  \n\n8.  COMP – Compensation (3.8)  \n    • Material‐specific stretch compensation parameters.  \n    • Inputs: warp/weft modulus, Poisson’s ratios, pre‐tension levels.  \n    • Algorithmic options: isotropic vs. orthotropic compensation, iterative vs. direct.  \n\n9.  LINE – Cutting Lines (3.9)  \n    • Definition of final cut edges, seam allowances, overlap tolerances.  \n    • Offsetting commands: constant offset, variable offset based on curvature.  \n    • Labeling and annotation flags for CNC export or plotting.  \n\n10. ECHO – Output Extent (3.10)  \n    • Controls verbosity of the run‐time listing and input echoing.  \n    • Toggles detailed logging of meshing steps, compensation corrections, and error‐checks.  \n    • Options for selective echo by module or record‐type code.  \n\nBy indexing each of these subsections—along with their key parameters, flags, and expected input formats—your RAG‐powered retrieval system will be able to surface precise guidance and examples whenever a user query references a specific TEXTILE input record.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                2
+            ],
+            "page_labels": [
+                null
+            ],
+            "type": "table",
+            "sections": [
+                "Foreword"
+            ]
+        }
+    },
+    {
+        "content": "TEXTILE Cutting Pattern Membrane Structures\n TEXTILE Manual, Service Pack 2025-4 Build 146\n Copyright © 2025 by SOFiSTiK AG, Nuremberg, Germany.\n SOFiSTiK AG\n HQ Nuremberg Office Garching Flataustraße 14 Parkring 2 90411 Nürnberg 85748 Garching bei München Germany Germany T +49 (0)911 39901-0 T +49 (0)89 315878-0 F +49(0)911 397904 F +49 (0)89 315878-23 info@sofistik.com\n www.sofistik.com\n This manual is protected by copyright laws. No part of it may be translated, copied or reproduced, in any form or by any means, without written permission from SOFiSTiK AG. SOFiSTiK reserves the right to modify or to release new editions of this manual.\n The manual and the program have been thoroughly checked for errors. However, SOFiSTiK does not claim that either one is completely error free. Errors and omissions are corrected as soon as they are detected.\n The user of the program is solely responsible for the applications. We strongly encourage the user to test the correctness of all calculations at least by random sampling.\n Contents\n Contents\n 1\n 2\n 3\n 4\n i\n Bibliography\n 4-9\n Task Description\n 1\n TEXTILE calculates the development of a 3D-curved surface. It includes the compentation of the stressed membrane to obtain the cutting pattern areas.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                1,
+                2,
+                4
+            ],
+            "page_labels": [
+                null,
+                null,
+                "1-1"
+            ],
+            "type": "text",
+            "sections": "Foreword"
+        }
+    },
+    {
+        "content": "The image presents two side-by-side renderings of a membrane formfinding model, illustrating the transition from an initially folded input geometry (left) to the final prestressed equilibrium shape (right). Both views share the same boundary conditions, mesh topology and supporting geometry, but differ in their internal stress definitions and resulting surface form.\n\nLeft View (“Folded Input System”):\n- A six-cornered base outline sits on the ground plane, with each corner marked by a small red square denoting pinned supports.  \n- From these six supports, a light-blue, quadrilateral mesh rises toward a central elliptical ring at the top. The mesh is initially folded along straight lines, creating a faceted, almost conical tent-like shape with sharp ridges.  \n- The central ring is depicted in yellow and has an oval opening; four equally spaced stiffeners (vertical struts) connect it down to the mesh, but they carry no active tension or compression in this initial state.  \n- The mesh panels are flat between the fold lines, showing a uniform coloration of pale cyan. Grid lines emphasize the segmentation into rectangular patches, and the entire form appears largely governed by the input geometric constraints rather than any internal prestress.\n\nRight View (“Stressed Membrane”):\n- With a prestress definition applied, the mesh relaxes into a smooth, doubly curved surface. The color palette shifts subtly: areas of higher membrane tension near the ring appear in deeper blue, transitioning to lighter cyan down toward the supports.  \n- The previously sharp ridges have rounded out into gentle curvature, giving the form a more organic, minimal-surface character. The mesh still follows the same quadrilateral network, but each panel is now warped in three dimensions.  \n- The yellow ring and vertical struts are now visibly loaded: the ring maintains its geometric shape while the struts carry compression back down into the membrane.  \n- Each red support remains fixed, anchoring the edges of the membrane. The overall form is in static equilibrium, with internal tension balancing the boundary reactions and strut forces.\n\nContextual Note:\nThis side-by-side comparison encapsulates the critical “formfinding” step in tensile membrane design. By assigning different prestress levels (e.g., uniform surface tension or varying edge tensions), the initially folded geometry deforms into distinct equilibrium shapes. Such prestress definitions are essential preconditions for generating cutting patterns: without achieving this balanced, curved membrane form, downstream tasks like pattern flattening or fabrication layout cannot proceed accurately.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                6
+            ],
+            "page_labels": [
+                "2-1"
+            ],
+            "type": "image",
+            "sections": [
+                "2 Theoretical Principles",
+                "2.1 Introduction"
+            ]
+        }
+    },
+    {
+        "content": "Necessary precondition for a cutting pattern is the formfinding. The formfinding has to create a stressed system in equilibrium. In this step, different prestress definitions will produce different membrane forms.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                6
+            ],
+            "page_labels": [
+                "2-1"
+            ],
+            "type": "text",
+            "sections": "2.1 Introduction"
+        }
+    },
+    {
+        "content": "The image shows a three-dimensional view of a tensile membrane structure with its geodetic cutting lines superimposed. At the core of the membrane is a large circular opening (a “crown ring”), from which a family of red curves (the geodetic lines) radiate outward toward the membrane’s boundary. Those red lines represent the shortest paths on the curved surface between two points and are the prescribed cutting lines needed to produce flat textile panels.\n\nKey elements in the rendering:\n\n  • Membrane geometry  \n    – The surface is a single-layer shell, modeled with a network of quadrilateral elements (a quad mesh). Visually, the mesh is indicated only faintly, allowing the cutting lines to stand out.  \n    – The membrane has a saddle-like, anticlastic shape: it rises to the circular opening at its apex and then slopes downward in all directions to a closed perimeter.  \n\n  • Boundary and opening  \n    – The outer edge of the membrane is drawn in yellow dashed lines. This boundary is non-planar but appears projected onto a single plane for visual clarity.  \n    – The inner circular “vent” or opening at the apex is also outlined in yellow.  \n\n  • Geodetic cutting lines  \n    – The geodetic (shortest-path) curves are displayed in red. Each line begins at a point along the circular opening (marked in green) and proceeds along a uniquely computed geodesic to a corresponding point on the outer boundary.  \n    – The lines are essentially “ribs” dividing the surface into panels that, when cut and laid flat, will form textile segments with minimal distortion.  \n    – At certain key nodes (e.g. the start/end of each geodetic), green circular markers and small numeric labels indicate the node numbers or load-case identifiers used by the cutting-pattern software (WINGRAF).  \n\n  • Visualization conventions  \n    – Yellow: all fixed boundaries (inner and outer edges).  \n    – Red: computed geodesic cutting lines (TEX​TILE CUTT output).  \n    – Green: special markers denoting control points or group-limit activations in the WINGRAF editing menu.  \n    – The surface is lightly shaded (white to gray) so that the curvature is visible but the mesh lines remain unobtrusive.  \n\n  • Software context  \n    – This view is typical of the WINGRAF environment after executing the “Textile cutting analysis” step. It confirms that the .tex file was read successfully and that the geodetic lines are correctly projected onto the quad-element membrane.  \n    – In practice, one would export these red curves as DXF via ASE-STOR-SPEI-CUTT or the SOF_G_exportcuttinglines routine in SOFIPLUS-AutoCAD, then reimport the cutting areas back into SOFIPLUS for final panel generation.  \n\nOverall, the figure provides a clear 3D illustration of how geodetic lines subdivide a curved membrane into manufacturable, flat-pattern textile pieces. The color coding and node markers assist the engineer in verifying that the correct load case and group limits have been used to generate an accurate cutting pattern.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                7
+            ],
+            "page_labels": [
+                "2-2"
+            ],
+            "type": "image",
+            "sections": [
+                "2 Theoretical Principles",
+                "2.2 Geodetic Lines"
+            ]
+        }
+    },
+    {
+        "content": "The membrane shall be cut at so called geodetic lines. Geodetic lines are the shortest connec- tion of two points on a curved surface. Definition and analysis of these geodetic lines is done in the program WINGRAF.\n The definition of the cutting lines in the groundview can be done in 3 ways:\n 1. With an ASCII definition in PROG TEXTILE see example textile1_tennishall.dat\n 2. With WINGRAF\n - Start WINGRAF\n - Menue Edit - Cutting pattern - Create cutting pattern line\n - - - first select a loadcase to cut - stress relaxation\n - Menue Edit - Cutting pattern - Cutting pattern areas\n - - - klick : using group limits also - if necessary\n - Menue Edit - Cutting pattern - Execute Textile cutting analysis\n - in case of problems please open the created .tex file, then do:\n - - - right mouse klick -> Type of file -> SOFiSTiK input file\n - - - right mouse klick -> start program -> execute\n - Then view WINGRAF -> Systemvalues - Quad-elements - cutting pattern\n 3. Via SOFIPLUS-Autocad:\n - draw simple lines in SOFIPLUS, best in Layer ’cuttinglines’ and activate only this\n - then activate in SOFIPLUS : SOF_G_exportcuttinglines (commandline SOF... )\n - then start an SSD Task \"Prepare Autocad Lines for WING\"\n - with the following content: see textile1_tennishall.dat\n . . . PROG TEXTILE\n . . . HEAD Prepare Autocad Lines for WING\n . . . PREP\n . . . END\n - to check open WINGRAF -> cuttinglines must be visible\n - then run an SSD Task ’cutting analysis’\n - - - there just define the cutting loadcase in WING\n - - - and start TEXTILE CUTT see textile1_tennishall.dat\n - Then view WINGRAF -> Systemvalues - Quad-elements - cutting pattern",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                7,
+                6
+            ],
+            "page_labels": [
+                "2-2",
+                "2-1"
+            ],
+            "type": "text",
+            "sections": "2.2 Geodetic Lines"
+        }
+    },
+    {
+        "content": "- to check open WINGRAF -> cuttinglines must be visible. - then run an SSD Task ’cutting analysis’. - - - there just define the cutting loadcase in WING. - - - and start TEXTILE CUTT see textile1_tennishall.dat. - Then view WINGRAF -> Systemvalues - Quad-elements - cutting pattern.\n - bring cutting pattern to SOFIPLUS-Autocad : SOF_G_importcuttingareas\n - - - they are placed into a Layer TEXTILE... please use ZOOM boundaries\n - export mesh and Seamlines to Autocad : ASE-STOR-SPEI-CUTT or ACAD\n - example textile1_tennishall.dat creates such a .dxf file\n Please ask for example membrane_template.sofistik if necessary.\n On problems in creating cutting areas please notice:\n 1. Best define cuttinglines in the ground view\n 2. In case cuttinglines have a kink or attach other cuttinglines inside the membranne best use a polygon (the cuttinglines should be defined in a sequence one after the other and should not come unsorted)\n cuttinglines shall go a little bit over the boundary (define them a longer)",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                7
+            ],
+            "page_labels": [
+                "2-2"
+            ],
+            "type": "text",
+            "sections": "2.2 Geodetic Lines"
+        }
+    },
+    {
+        "content": "The image is a color‐coded 3D rendering of a thin membrane or shell with an oval central opening, viewed from a slightly elevated “ground” perspective.  It illustrates how a complex surface has been subdivided into discrete cutting areas by a network of so-called geodetic lines.  These cutting areas are each rendered in a unique hue so that their boundaries stand out clearly against one another, and within each area a fine triangular mesh is overlaid to emphasize the underlying finite-element discretization.  According to the accompanying caption (“Figure 2.3: 3D-cutting areas: shown in a ground view”), these subdivisions have been both defined and automatically numbered by a software package called WINGRAF.  \n\nOverall layout  \n• The outer shape is roughly a warped rectangle, whose four edges curve slightly in and out, giving the form a gentle saddle-like appearance.  \n• Cut out from the center of this surface is an approximately oval opening. The shape of the outer boundary and the central hole suggest a doubly‐curved shell, though only its “floor plan” projection is shown here.  \n• Radiating from the rim of the central opening toward the outer perimeter are a series of wedge-shaped sectors. These sectors vary in angular width but share the common characteristic that each is defined by two bordering geodetic curves.  \n\nColor and meshing  \n• The sectors are colored in a repeating palette of vivid primary and secondary colors—bright red, deep blue, forest green, golden yellow, teal, orange, light cyan, and lime green. Adjacent sectors never share the same color, ensuring each region is visually distinct.  \n• Within each colored zone, a fine triangular mesh is drawn in thin dark gray or black lines. The mesh triangles are not uniform in size: they become smaller and more concentrated near the inner boundary (around the oval cut-out) and coarser toward the outer perimeter. This reflects a typical adaptive meshing strategy where higher resolution is needed around curved or load-intensive features.  \n• The geodetic lines themselves—the boundaries between cutting areas—are highlighted by slightly thicker and darker segments of the mesh. These curves curve smoothly across the surface from the inner opening to the outer edge, following the shortest (geodesic) paths in the 3D shell geometry.  \n\nNumbering (not shown)  \n• Although the individual sectors are said to be numbered in the WINGRAF program, the figure as presented does not display explicit numeric labels. One can infer, however, that each colored wedge corresponds to a unique identifier used later in the software for toolpath generation, manufacturing sequencing, or stress analysis.  \n\nVisual impression and purpose  \n• The result is a visually striking “pie-chart” arrangement deformed to match the curvature of a 3D surface. It conveys at a glance how a complex doubly curved form can be partitioned into manageable sub-regions for downstream processing.  \n• The combination of clear color coding, smooth geodesic boundaries, and detailed triangular meshing makes it easy for an engineer or researcher to verify the layout of cutting zones, check mesh quality, or plan assembly and fabrication steps.  \n\nContextual note  \n• This type of visualization is typical in advanced CAD/FEM environments. By defining geodetic cut lines, one ensures that each panel or patch follows minimal‐strain paths, which is crucial when fabricating shells from composite materials or when programming automated machining centers.  \n• The image thus serves as both a design verification tool and a communication artifact, summarizing complex geometric and meshing information in a single, readily interpretable graphic.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                8
+            ],
+            "page_labels": [
+                "2-3"
+            ],
+            "type": "image",
+            "sections": [
+                "2 Theoretical Principles",
+                "2.3 Cutting Pattern Areas"
+            ]
+        }
+    },
+    {
+        "content": "The geodetic lines define the cutting areas in the 3D space. The cutting areas are determined and numbered in the program WINGRAF:",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                7
+            ],
+            "page_labels": [
+                "2-2"
+            ],
+            "type": "text",
+            "sections": "2.3 Cutting Pattern Areas"
+        }
+    },
+    {
+        "content": "This diagram presents an “exploded‐view” layout of flattened 2D cutting panels that have been generated by TEXTILE from an originally curved 3D surface. The panels have been moved radially outward—like slices of a pie—so that none overlap, and each is labeled with its panel number (“Nr = …”) in small blue text. A roughly square void remains at the center, emphasizing that these pieces once formed a continuous tubular or ring‐shaped 3D surface.\n\nKey visual elements:\n\n • Arrangement and count  \n   – There are about 27 individual panels, each oriented at a slightly different angle around the center.  \n   – The panels alternate around the full circle, giving a starburst or gear‐wheel impression.  \n\n • Shape and geometry  \n   – Each panel is a four-sided, slightly trapezoidal or quadrilateral shape whose width and taper vary from one piece to another.  \n   – The outer boundaries of all panels are drawn with fine dashed lines; these represent the “stressed,” ironed‐flat form, which exactly preserves the original 3D area.  \n   – Superimposed on each dashed outline is a filled, solid‐color version of the same panel—this is the “relaxed” form, after the material’s internal stresses have been released and the area shrinks slightly.  \n\n • Color coding  \n   – Panels are individually colored in a repeating palette (e.g. bright red, deep blue, cyan, lime green, yellow, teal).  \n   – The fill color matches the dashed‐line color, helping to link each relaxed shape back to its original stressed outline.  \n\n • Legend and caption  \n   – Although there is no formal legend box, the bottom of the figure carries a terse caption:  \n     “Plane 2D cutting areas, dashed = stressed form, filled region = relaxed form.”  \n   – This makes clear that the dashed and solid outlines refer to the two states of each panel.  \n\n • Purpose and context  \n   – In the TEXTILE workflow, curved patches defined by geodetic mesh lines are “ironed” into a 2D plane; the dashed outlines show that exact flattening, while the smaller filled polygons show how the textile relaxes once its shear stresses vanish.  \n   – By printing both areas (3D versus 2D ironed versus 2D relaxed), the software verifies that the ironed 2D panels carry the same total area as the original curved surface (and quantifies the drop in area upon relaxation).  \n   – The radial “explosion factor” is adjustable in the accompanying visualization tool (WINGRAF), so users can spread the pieces farther apart or draw them closer together as needed.  \n\nTaken together, the image provides an at‐a‐glance check that (1) all pieces have been flattened without overlap, (2) the area conservation between original and ironed forms holds, and (3) the expected shrinkage on relaxation is correctly captured for every panel.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                8
+            ],
+            "page_labels": [
+                "2-3"
+            ],
+            "type": "image",
+            "sections": [
+                "2 Theoretical Principles",
+                "2.4 Development of Surface"
+            ]
+        }
+    },
+    {
+        "content": "The illustration consists of two side-by-side 3D renderings of the same quadrilateral surface: on the left, the undeveloped “as-cut” shape in its original curved form; on the right, the same surface after being “ironed” or pressed into the plane (with a small explosion offset so individual elements do not overlap). Both views use a structured quadrilateral mesh with superimposed geodetic gridlines and show the location of boundary nodes.\n\nLeft half (original 3D cutting area)  \n• Shape: A four-sided curved “cap” or dome, gently bulging upward. From this oblique vantage the near edges appear horizontal, the far edges curve away from the viewer in depth and height.  \n• Color mapping: The surface is bi-colored down the mid-surface “seam.” The left-hand patch is rendered in a deep royal blue; the right-hand patch in a bright crimson red. Together they accentuate how the mesh transitions smoothly across the seam but remains topologically one continuous surface.  \n• Mesh: A regular grid of isoparametric lines (light gray or white) overlays the colored patches, dividing the surface into small quadrilateral “rhombi.” These represent the finite-element or textile mesh used for development.  \n• Boundary constraints: Along every edge of the surface small red markers (solid spheres) indicate fixed or supported nodes—points that will be held in place during the flattening process.\n\nRight half (flattened 2D development)  \n• Shape: The once-curved cap has been pressed nearly flat, yet retains slight elevation differences along one axis. Visually it splits into two horizontal “plates,” one set of elements remaining at a higher level, the adjacent set dropped to a lower level—creating a visible step. This reflects the relaxed (“membrane”) configuration under zero shear stiffness.  \n• Color mapping: The entire mesh is shown in a uniform light cyan or aqua, emphasizing that no color‐based data mapping is present here—only the mesh topology matters.  \n• Mesh and nodes: The quadrilateral grid remains intact, with mesh lines crisply overlaying each element. The same red boundary spheres mark the outer nodes, now lying in a single plane (aside from the step).  \n• Explosion plot: The two halves of the mesh have been slightly separated (“exploded”) so that individual elements are clearly visible and do not overlap in the projection. This makes it easy to compare element shapes before and after flattening.  \n\nOverall presentation  \n• Viewpoint: Both halves are rendered from the same camera angle—slightly above and to the left—so that one can visually track how each mesh quadrilateral distorts when the 3D surface is laid out in 2D.  \n• Purpose: The figure demonstrates TEXTILE’s ability to convert arbitrarily curved surfaces into developable 2D patches by exploiting the notion of geodetic lines and by controlling the mesh’s shear stiffness. It also visually validates that the ironed-out 2D area equals the original 3D surface area (no area change), even though a fully relaxed membrane area (not shown) would shrink.  \n• Annotation: Below the rendering, the caption “Figure 2.5: Pressing down the 3D area into plane (first left cutting area)” affirms that this is the first of possibly several cutting-area examples.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                9
+            ],
+            "page_labels": [
+                "2-4"
+            ],
+            "type": "image",
+            "sections": [
+                "2 Theoretical Principles",
+                "2.4 Development of Surface"
+            ]
+        }
+    },
+    {
+        "content": "Now the 3D cutting areas have to be developed into a 2D plane. This is the main task of TEXTILE. This ironing or polishing will cause additional strains and stresses in the material. These stresses depend on the shear stiffness of the textile material. Without shear stiffness nearly every 3D surface can be developed into plane by creating rhombus meshes. Now the sense of the geodetic lines appears: an area defined with geodetic lines can be developed as a rather straight area, although it appears like a curved banana in 3D (areas in the left lower region of the previous picture).\n In this picture the cutting areas are moved in plane as in an explosion plot to avoid overlapping. The explosion factor can be adjusted in WINGRAF.\n Zur Kontrolle der Abwicklung druckt TEXTILE in einer Textausgabe die Fläche der ur- sprünglichen 3-D- Zuschnittsflächen sowie die Flächen der glattgebügelten 2-D-Gebiete sowie der entspannten Membranfläche aus. Man erkennt, dass die 2D-Fläche genauso groß ist wie die ursprüngliche räumliche 3D-Fläche, die entspannte Fläche aber kleiner ist: TEXTILE prints the areas of the original 3D surface as well as the ironed 2D area and the relaxed cutting area. The ironed 2D must have the same area as the original 3D surface, the relaxed cutting area is smaller:\n ERGEBNISSE DER ZUSCHNITTSFLÄCHEN\n Nummer Mnr Fläche_3D Fläche_2D entspannt Kettrichtung ermittelt aus:\n [m2] [m2] [m2] Grad 1 1 21.438 21.438 19.423 -64.6 den Hauptachsen der Fläche 2 1 22.308 22.308 20.210 -46.9 den Hauptachsen der Fläche 3 1 21.887 21.887 19.737 -53.4 den Hauptachsen der Fläche 4 1 19.648 19.648 17.701 -51.3 den Hauptachsen der Fläche 29 1 16.662 16.662 14.971 59.77 den Hauptachsen der Fläche - 545.073 545.073 491.874",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                8,
+                9
+            ],
+            "page_labels": [
+                "2-3",
+                "2-4"
+            ],
+            "type": "text",
+            "sections": "2.4 Development of Surface"
+        }
+    },
+    {
+        "content": "[m2] [m2] [m2] Grad 1 1 21.438 21.438 19.423 -64.6 den Hauptachsen der Fläche 2 1 22.308 22.308 20.210 -46.9 den Hauptachsen der Fläche 3 1 21.887 21.887 19.737 -53.4 den Hauptachsen der Fläche 4 1 19.648 19.648 17.701 -51.3 den Hauptachsen der Fläche 29 1 16.662 16.662 14.971 59.77 den Hauptachsen der Fläche - 545.073 545.073 491.874.\n ...\n ----------------------------------------\n total\n With a test storage the pressing down of the 3D area into plane can be well animated, see example textile_animation.dat -> Animator loadcase 1001:",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                9
+            ],
+            "page_labels": [
+                "2-4"
+            ],
+            "type": "text",
+            "sections": "2.4 Development of Surface"
+        }
+    },
+    {
+        "content": "In the relaxation step, the material shrinks to a stressfree area. As a textile has a huge nonlin- ear material behaviour, different compensation methods are available in program TEXTILE:\n 1. Without further input the material shrinks according to the prestress and the linear material parameters.\n 2. Independant of the prestress a constant compensation strain can be defined in warp and fill direction.\n 3. 1+2: In addition to the linear material prestress strain an additive compensation strain can be defined.\n For the elastic prestress strain, separate material parameters can be set.\n 5. For stress relations N-warp/N-fill the compenstion matrix can be defined. According to the actual stress in the current finite element a warp/fill compenstion strain eps- warp/eps-fill can be computed. With these matrix input the nonlinear behaviour of the compensation can be solved exactly.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                9
+            ],
+            "page_labels": [
+                "2-4"
+            ],
+            "type": "text",
+            "sections": "2.5 Compensation"
+        }
+    },
+    {
+        "content": "The illustration is composed of two side-by-side schematic panels, each showing a flattened 2D cutting area of a tensile textile membrane. Both panels share the same basic rectangular footprint, a fine background grid of evenly spaced horizontal and vertical dashed lines, and two differently colored outlines: magenta for the stress-loaded (“stressed”) geometry and green for the shape after stress relief (“relaxed”).\n\nLeft Panel (without DECO)  \n• The outer boundary is traced in magenta, indicating the target shape when the membrane is tensioned in its final 3D form.  \n• Nested just inside the magenta line, a parallel green outline shows the projection of the same boundary after full relaxation (no added material). The green trace runs slightly inward from the magenta on most edges, reflecting the fabric’s elastic shrinkage once the tension is removed.  \n• Along the top and bottom edges, the magenta and green lines are almost parallel and straight. The bottom edge shows a minor downward slope left to right, mirrored by the relaxed outline.  \n• The left and right ends are squared off; the green line hugs slightly inside the magenta at each corner.  \n• Behind both outlines, a regular grid of black dashed lines marks seam-and-cable-attachment locations in the fill (horizontal) and warp (vertical) directions. This makes clear that deformations are not uniform across the surface.\n\nRight Panel (with DECO)  \n• Again, a magenta outer shape represents the stressed boundary. It remains almost identical to the left panel’s magenta outline.  \n• The green relaxed outline now includes a “DECO zone” at the downstream end (right-hand side). In this zone, the green line converges gradually toward the magenta, indicating that a linearly decreasing amount of compensation has been applied over the last few meters.  \n• A cross-hatched “X” of dotted lines spans the DECO region near the left end of the panel, highlighting the transition area where compensation tapers off.  \n• Vertical dashed seam lines remain visible, but the relaxed edge inside them is less offset from the stressed edge than in the non-DECO case.  \n• Caption beneath reads: “Figure 2.6: Magenta = stressed, green = relaxed. Left without DECO, right with DECO.”\n\nOverall, the figure demonstrates how introducing a controlled partial decompensation (DECO) in the fill direction on the final cutting segment reduces the mismatch between 3D tensioned and 2D flattened edges. The default edge-length control (EDGE = 0.50) ensures that once DECO is applied, the final relaxed outline more closely shares the stressed contour, minimizing excess material at seams and cable attachments.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                10
+            ],
+            "page_labels": [
+                "2-5"
+            ],
+            "type": "image",
+            "sections": [
+                "2 Theoretical Principles",
+                "2.6 Decompensation"
+            ]
+        }
+    },
+    {
+        "content": "Near the boundary cables and at the seam lines not the full compensation of the undistorted textile can be taken into account. One reason is, that in practice it is often not possible to stress the membrane tangetial to the stressed stiff boundary cable. Another reason is the higher stiffness at the seam lines.\n This effect called decompensation must be equalized by adding material at the end of the cloth width. This is the reason why always both the stressed and the stressfree 2D areas are plotted!\n With CUTT DECO... DECL... a linear decreasing relaxation in fill direction can be defined on the last DECL meters of the cutting areas. The region can be plotted in WINGRAF via ”structure of 2D-cutting areas”. Example: compare created areas with/without DECO in tex- tile4_cutting_via_elements.dat).\n But DECO has only little effect if EDGE>=0 is used. EDGE can control the edge length much more effective. Then DECO has only an effect on the inner membrane area (beside the edge).\n Default is EDGE 0.50. Then the flattened edge has just the same length as in the 3D system. After the compensation it gets a bit shorter due to the reduced compensation (factor 0.5).",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                10
+            ],
+            "page_labels": [
+                "2-5"
+            ],
+            "type": "text",
+            "sections": "2.6 Decompensation"
+        }
+    },
+    {
+        "content": "The image is a WINGRAF plot of a ring-shaped assembly of two-dimensional cutting areas, each rendered as a triangular‐meshed panel with an overlaid warp‐direction indicator. Taken together, the panels form a nearly complete annulus, with a circular void in the center. Each panel is a trapezoidal or wedge-shaped finite‐element patch, outlined in two colors: a solid green line marks the element boundaries and a dashed magenta line draws an offset “stress‐free” outline around each patch. Within every patch the underlying finite‐element mesh is shown in light gray, with straight-line segments connecting nodes to form triangular elements.\n\nSuperimposed upon the mesh of each patch are short red dashes, all parallel within the same patch, denoting the computed warp direction for that area (in this sample the program’s default principal‐axis method was used, so the red lines point along each patch’s longer geometric axis). These red line segments are evenly spaced throughout the interior of each patch, providing a clear visual cue to the local warp orientation.\n\nOverprinted in blue text near the midpoint of each wedge is a label of the form “Nr = X,” where X is an integer identifier (for example, panels labeled Nr = 8, Nr = 20, Nr = 2, Nr = 29, Nr = 18, Nr = 11, Nr = 28, Nr = 22, etc.). The sequence of these labels proceeds around the ring in ascending or descending order, indicating the numbering of cutting areas.\n\nThe entire arrangement is rendered against a plain white background. A caption below the plot reads “Figure 2.7: Warp direction in the 2D stressfree cutting areas.” Visually, the viewer’s eye is drawn first to the red warp‐direction lines, then to the regular triangular gray mesh, and finally to the colored outlines and blue labels that identify each wedge. The circular symmetry of the layout emphasizes that each patch has its own locally computed principal axis, even though all derive from the same global cutting geometry.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                11
+            ],
+            "page_labels": [
+                "2-6"
+            ],
+            "type": "image",
+            "sections": [
+                "2 Theoretical Principles",
+                "2.7 Warp Direction"
+            ]
+        }
+    },
+    {
+        "content": "For the development of surface and the compensation the definition of the warp direction is very important. For this reason different methods to describe warp direction are available in TEXTILE:\n 1. By default the program calculates the principal axis for the 2D cutting area and sets the warp direction into the longer axis.\n 2. If the 2D-area is ”compact” and no clear principal axis can be extracted, the program takes the average of the original finite element coordination systems. This averaged local x axis will then be taken as warp direction for all elements of this cutting area.\n For special purpose a fixed angle in X-Y space can be defined for each cutting area.\n In the current sample the default had been used. The warp direction can be plotted with a red line in WINGRAF:",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                10
+            ],
+            "page_labels": [
+                "2-5"
+            ],
+            "type": "text",
+            "sections": "2.7 Warp Direction"
+        }
+    },
+    {
+        "content": "With the ASE command SYST STOR CUTT the following .dxf files are created:\n - $(name)_cutting_areas_mm.dxf (and as _m.dxf in [m])\n - $(name)_3D_geodetic_lines_mm.dxf\n Then best move the file $(name)_cutting_areas_mm.dxf from the explorer into the Autocad Window\n With SYST STOR ACAD also a .dxf file of the complete 3D mesh lines can be created, e.g. also with columns and walls.\n - see example textile1_tennishall.dat",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                11
+            ],
+            "page_labels": [
+                "2-6"
+            ],
+            "type": "text",
+            "sections": "2.8 Import Export"
+        }
+    },
+    {
+        "content": "The input is made in the CADINP language (see general manual SOFiSTiK: ’FEA / STRUC- TURAL Installation and Basics’). Three categories of units are distinguished:\n mm Fixed unit. Input is always required in the specified unit.\n [mm] Explicit unit. Input defaults to the specified unit. Alternatively, an explicit as- signment of a related unit is possible (eg. 2.5[m] ).\n [mm]1011 Implicit unit. Implicit units are categorised semantically and denoted by a cor- responding identity number (shown in green). Valid categories referring to the unit ”length” are, for example, geodetic elevation, section length and thickness. The default unit for each category is defined by the currently active (design code specific) unit set. This input default can be overridden as described above. The specified unit in square brackets corresponds to the default for unit set 5 (Eu- rocodes, NORM UNIT 5).",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                12
+            ],
+            "page_labels": [
+                "3-1"
+            ],
+            "type": "text",
+            "sections": "3.1 Input Language"
+        }
+    },
+    {
+        "content": "Below is a detailed, RAG-ready description of the table you provided. It defines six SOFiSTiK input records (CUTT, GRP, QUAD, COMP, LINE and ECHO) and the fields (items) associated with each.  The records HEAD, END and PAGE are referenced in the general SOFiSTiK manual (“FEA/STRUCTURAL Installation and Basics”) and so are not repeated here.\n\n1. Record CUTT  \n   • Purpose: Defines a “cutting” or sectioning operation within a model, often used to extract or project internal data.  \n   • Items:  \n     – NO   : Identifier number of the cut operation  \n     – LC   : Load Case to which the cut refers  \n     – MNO  : Master element or reference number (e.g. plate or volume element)  \n     – LOCX : Local coordinate system number for projection  \n     – PROJ : Projection type code (e.g. normal, tangent)  \n     – EXPO : Export flag or format specifier  \n\n2. Record GRP  \n   • Purpose: Defines or modifies a group of elements, nodes or lines; used for organizing and selecting sets.  \n   • Items:  \n     – NO  : Group number (unique identifier)  \n     – VAL : Group value flag (e.g. ON=1/OFF=0 or a parameter setting)  \n\n3. Record QUAD  \n   • Purpose: Specifies a range of something (elements, time steps, etc.) in a “from–to–inc” format.  \n   • Items:  \n     – FROM : Starting index or value  \n     – TO   : Ending index or value  \n     – INC  : Increment step between successive values  \n\n4. Record COMP  \n   • Purpose: Defines a composite or combined definition, for example combining results or inputs from multiple components.  \n   • Items:  \n     – TYP  : Composite type code (e.g. SUM, MAX, USER‐DEFINED)  \n     – N    : Number of entries (count of W-fields used)  \n     – W1–W10: Weighting factors or references to component records; up to ten distinct entries  \n\n5. Record LINE  \n   • Purpose: Introduces a straight line in 3D space, typically used to define beam axes, cutting paths or graphic elements.  \n   • Items:  \n     – XA, YA, ZA : Coordinates of the line’s start point A in global system  \n     – XE, YE, ZE : Coordinates of the line’s end point E in global system  \n     – NX, NY, NZ : Optional direction cosines (unit vector components) of the line  \n     – GRP        : Optional group number to which the line belongs  \n\n6. Record ECHO  \n   • Purpose: Controls echoing (on‐screen or listing output) of specific parameter settings or data lines.  \n   • Items:  \n     – OPT : Echo option code (e.g. ALL, NONE, SELECTIVE)  \n     – VAL : Value or flag governing the echo (e.g. TRUE/FALSE or numeric level)  \n\nUsage Notes  \n• Each record begins in column 1 with the record name (e.g. “CUTT”) and may be continued over subsequent lines if more items are required.  \n• The order of items in each record must follow the sequence shown. Unused or optional fields can often be skipped or set to zero, depending on the record’s syntax rules in the SOFiSTiK manual.  \n• HEAD, END and PAGE records—used to initialize and finalize data blocks or to control pagination in listings—are detailed separately in the “FEA/STRUCTURAL Installation and Basics” manual and are not repeated here.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                12
+            ],
+            "page_labels": [
+                "3-1"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.2 Input Records"
+            ]
+        }
+    },
+    {
+        "content": "The following records are defined:\n The records HEAD, END and PAGE are described in the general manual SOFiSTiK: ’FEA / STRUCTURAL Installation and Basics’.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                12
+            ],
+            "page_labels": [
+                "3-1"
+            ],
+            "type": "text",
+            "sections": "3.2 Input Records"
+        }
+    },
+    {
+        "content": "The input table defines a very compact two‐row schema that exposes how to specify and parameterize a set of “control options” (OPT) and their corresponding values (VAL) for a cutting-and-flattening workflow. It is intended to be consumed by a calling program or script (e.g. via a Retrieval-Augmented Generation system or direct file parsing) to configure group selection, neighbor‐edge adjustment, and optional storage of animation load cases. Below is a breakdown of its structure and semantics:\n\n1. Table Structure  \n   • Columns  \n     – Item: The name of the parameter or keyword (OPT, VAL).  \n     – Description: A textual explanation of what that parameter controls or represents, including sub-options.  \n     – Unit: Indicates the expected data type or unit of measure. Here “LIT” means a literal keyword or string, whereas “—” means “not applicable” or “unitless.”  \n     – Default: The default setting, if no explicit value is provided. A hyphen (“–”) signals “no default.”  \n\n   • Rows  \n     – Row 1 (OPT): Introduces the control parameter name. Sub-entries in the Description cell explain available modes or flags that can be used once you specify OPT.  \n     – Row 2 (VAL): Specifies that VAL holds the actual argument or data for whichever OPT has been chosen.  \n\n2. OPT (Control option)  \n   Unit: LIT  \n   Default: – (no implicit default; you must specify both OPT and VAL to have an effect)  \n   The Description cell lists three distinct sub-options you can select as the keyword assigned to OPT:  \n     • GRP – Group selection option. When you choose CTRL GRP, you control which element groups get used or stored in the cutting analysis.  \n         · CTRL GRP 2: Only elements belonging to the groups defined by GRP are actually cut; the cutting areas (from the WING data source) are applied only to those elements.  \n         · CTRL GRP 3: All elements are cut (i.e. the same cutting areas are used on everything), but only those belonging to the selected GRP groups are kept in the flattened output. A canonical use case is trimming window openings in a roof plane.  \n         · Example invocation:  \n             CTRL GRP 3 GRP (200 225 1) cutt  \n     • ADJU – Edge adjustment. A toggle for whether to modify the shared edges between neighboring cut areas.  \n         · ADJU=0: Do not adjust edge boundaries (preserve original mesh connectivity).  \n         · ADJU=1: Apply an automatic smoothing/realignment to adjacent cut outlines. This is also the default for ADJU.  \n     • STOR – Storage of animation load cases. By specifying STOR and then setting VAL to “+8,” you instruct the system to include all animation load case data (e.g. from textile_animation.dat) in the flattened output.  \n\n3. VAL (Value of the option)  \n   Unit: —  \n   Default: –  \n   VAL holds the parameter or numeric/string value corresponding to whichever OPT keyword you have issued. Depending on the OPT choice, VAL may be:  \n     • An integer code (2 or 3 for GRP modes)  \n     • A tuple or list of group IDs (e.g. “(200 225 1)”)  \n     • A Boolean flag (0 or 1 for ADJU)  \n     • A bit mask or additive flag (e.g. “+8” for STOR)  \n\n4. Usage Pattern in a Configuration File or Command Sequence  \n   1. Specify a control keyword (OPT) followed by its option name (GRP, ADJU, or STOR).  \n   2. On the next line or same line (depending on parser rules), assign VAL to the required argument for that option.  \n   3. The program reads OPT to discover which sub-option to activate, then consumes VAL accordingly.  \n   4. If ADJU is not explicitly set, ADJU defaults to 1 (edge adjustment on). GRP and STOR have no defaults and must be provided explicitly if needed.\n\nBy structuring the table this way, the software’s configuration remains both extensible (new OPT keywords can be added as new rows) and self-documenting (unit and default columns call out expected data types and fallback behaviors). This concise schema facilitates automated ingestion into a RAG vector store, where each Item-Description-Unit-Default quadruple can be tokenized, embedded, and retrieved to support downstream schema-aware prompts and code generation.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                13
+            ],
+            "page_labels": [
+                "3-2"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.3 CTRL – Control of the Analysis Method"
+            ]
+        }
+    },
+    {
+        "content": "CTRL\n GRP New control CTRL GRP 2+3:\n With CTRL GRP 2 only the elements activated in the groupselection GRP are used for the cutting analysis, using the cutting areas from WING. With CTRL GRP 3 all elemente are used but only the groups definded in the groupselection GRP are stored (window openings in the roof). Example: CTRL GRP 3 GRP (200 225 1) cutt Adjust edges of neighbor areas\n ADJU Adjust edges of neighbor areas ADJU=0: do not adjust. Default ADJU=1",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                13
+            ],
+            "page_labels": [
+                "3-2"
+            ],
+            "type": "text",
+            "sections": "3.3 CTRL – Control of the Analysis Method"
+        }
+    },
+    {
+        "content": "See also: TheoreticalPrinciples\n PREP\n Item Description No Action: 1=default, 0=delete old lines Unit Default − -\n Usage see example textile1_tennishall.dat\n Remarks see also ’theoretical background’",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                14
+            ],
+            "page_labels": [
+                "3-3"
+            ],
+            "type": "text",
+            "sections": "3.4 PREP – Prepare Sofiplus/Autocad Cutting Lines"
+        }
+    },
+    {
+        "content": "The table shown defines the input fields available under the CUTT (cutting‐area) command in the TEXTILE module for fabric shape development and compensation cutting. Each row corresponds to one keyword (Item), explains its role (Description), and—where applicable—gives its unit and default value. Together, these parameters govern how two‐dimensional membrane patches (“cutting areas”) are extracted, oriented, compensated for material strain, and displayed. Below is a detailed, parameter-by-parameter account:\n\n1. NO  \n  • Description: Cutting‐area identifier. If cutting areas are imported directly from WINGRAF, specifying NO is optional. However, when multiple CUTT definitions are given, each may use a distinct NO to allow per‐area customization.  \n  • Unit: —  \n  • Default: “–” (no default; inherited from WINGRAF when omitted)\n\n2. LC  \n  • Description: Load case number used to compute compensation (elastic strain recovery) in warp/fill directions. Required only when cutting areas are defined manually via element groups (GRP). If WINGRAF supplies the areas, LC is set there.  \n  • Unit: —  \n  • Default: —\n\n3. MNO  \n  • Description: Material number for compensation. Use this to assign a separate material definition for linear compensation calculations (e.g. different elastic constants). If not specified, the primary membrane material is used.  \n  • Unit: —  \n  • Default: —\n\n4. LOCX  \n  • Description: Local warp (X) axis orientation in the 2D flattening plane. By default, the principal axis of each patch (longer dimension) becomes warp. For “compact” shapes without a clear principal axis, an average of the original finite‐element local x‐axes is used. You may override this with a fixed XY rotation.  \n  • Unit: —  \n  • Default: principal‐axis‐based\n\n5. PROJ  \n  • Description: Projection direction for surface development. If automatic projection fails (e.g. severely twisted patch), you can manually specify the direction with a literal triplet (XX, YY, ZZ) or oriented pairs (XYZ, XNYZ, etc.).  \n  • Unit: LIT (literal vector)  \n  • Default: automatic\n\n6. DECO  \n  • Description: Decompensation factor—reduces the relaxation allowance in the fill direction toward the patch ends. Generally has minor effect if EDGE≥0. Control edge compensation more effectively with EDGE.  \n  • Unit: —  \n  • Default: —\n\n7. DECL  \n  • Description: Length (in meters) of the “end zone” where fill‐direction decompensation (DECO) applies. See sample textile1_tennishall.dat for typical usage.  \n  • Unit: [m]  \n  • Default: —\n\n8. EDGE  \n  • Description: Boundary‐edge strain control factor:  \n    – EDGE = –1: edge‐length control off (outer edges expand freely)  \n    – EDGE = 0.0: no relaxation allowed—flattened edge length equals 3D length (no stress during assembly)  \n    – 0 < EDGE < 1: partial compensation—some assembly tension required (practical)  \n    – EDGE = 1.0: full compensation—flattened edge shortest (difficult to assemble)  \n    Default 0.5 typically models double‐layer hems or boundary cables restricting edge strain.  \n  • Unit: —  \n  • Default: 0.5\n\n9. EDGI  \n  • Description: Same concept as EDGE but applied to inner (hole or cut‐out) edges within a patch.  \n  • Unit: —  \n  • Default: 0.5\n\n10. EXPO  \n  • Description: “Explosion” factor for 2D plots. Offsets patches in the plane to prevent overlaps in graphical output. Can also be set in WINGRAF.  \n  • Unit: —  \n  • Default: 1.30\n\nNotes on Workflow Integration  \n- Mode 1 (WINGRAF-driven): Simply issue “CUTT” (no additional keywords) after WINGRAF export. All area definitions, LC and material references are inherited.  \n- Mode 2 (Manual): Precede the CUTT command with “GRP” specifying element‐group IDs. Then define LC, MNO, LOCX, etc., explicitly.  \n- To redefine or delete existing areas, use “CUTT NO –1,” which clears prior definitions so new numbering may be applied.  \n- LOCX, PROJ and EDGE settings allow fine control over fabric orientation and assembly stresses, ensuring that the flattened patterns will install as intended under real‐world boundary conditions.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                15
+            ],
+            "page_labels": [
+                "3-4"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.5 CUTT – Cutting Pattern"
+            ]
+        }
+    },
+    {
+        "content": "See also: TheoreticalPrinciples, GRP\n CUTT\n SEAM Seam addition at inner edges\n [m]1001\n -\n BOUN\n Addition at boundary edges\n [m]1001\n -\n Standard input using cutting area definition of WINGRAF:\n prog textile\n HEAD Cutting analysis - development of surface + compensation cutting $ Cutting analysis with cutting area definition of WINGRAF $ Realistic compensation added to elastic material strain in percent: COMP DE1 - 0.5 $ Percent additional strain in warp direction COMP DE2 - 1.5 $ Percent additional strain in fill direction END\n Two applications are possible:\n 1. Definition of the cutting areas in WINGRAF:\n Then in TEXTILE usually only the input CUTT is sufficient. The cutting areas as well as the load case for the compensation is taken from WINGRAF.\n Only if additional input for MNO, LOCX or PROJ shall be made, these parameters may be input using the number of the cutting area NO. The first CUTT input line is taken as default for all other areas.\n 2. Manual definition of the cutting areas via groups:\n If one ore more groups are activated via GRP, the cutting areas are not taken from WINGRAF. The compensation load case has to be defined.\n Sample:\n CUTT 3 LC 2\n GRP 3,4,5\n defines cutting area 3 consisting of membrane elements of groups 3,4 and 5.\n If no input is done for NO, the cutting area gets the number of the first activated group.\n The input CUTT NO -1 deletes all existing cutting areas in the database if the area numbering shall be changed.\n LOCX: By default the program calculates the principal axis for each 2D cutting area and sets the warp direction into the longer axis.\n If the 2D-area is \"compact\" and no clear principal axis can be extracted, the program takes the average of the original finite element coordination systems. This averaged local x axis will then be taken as warp direction for all elements of this cutting area.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                15,
+                16
+            ],
+            "page_labels": [
+                "3-4",
+                "3-5"
+            ],
+            "type": "text",
+            "sections": "3.5 CUTT – Cutting Pattern"
+        }
+    },
+    {
+        "content": "LOCX: By default the program calculates the principal axis for each 2D cutting area and sets the warp direction into the longer axis.. If the 2D-area is \"compact\" and no clear principal axis can be extracted, the program takes the average of the original finite element coordination systems. This averaged local x axis will then be taken as warp direction for all elements of this cutting area..\n For speccial purpose a fixed angle in X-Y space can be defined for each cutting area.\n PROJ: In extreme special cases the program cannot find a projection direction to flash all elements on the surface. Then a projection direction can be defined manually - please refer to sample m_eck3.dat.\n EDGE: If you take an orange slice and press it onto the table, the outer edges will expand and will get longer. The same happens in TEXTILE with EDGE=-1 on a double curved cutting area. But usually you want to attach the membrane to a boundary with a fixed length - so the edges shall not get longer. This you get with EDGE>=0. Then the edges keep their length but as\n an effect the flattened area gets a bit smaller as the edges must be compressed a bit (orange slice).\n With a factor between 0 and 1 you can control the compensation at the edge (from the stress). In most cases you have double material at the edge and/or a boundary cable that prohibits a strain in edge direction. With EDGE you can control this compensation at the edge. With EDGE=0.0 the relaxed length will be as long as the stressed length - it will be the length that you measure in the 3D system. With EDGE=1.0 the edge gets the full compensation and the relaxed length will be shorter. But then during the erection you must stress and elongate the edge what usually causes problems.\n Effect of EDGE see example textile7_edge.dat : EDGE=-1.0 cannot be installed - edge cannot be compressed EDGE=0.00 edge must not be stressed during montage EDGE=0.30 edge must be stressed a bit during montage = possible EDGE=1.00 edge must be stressed very high in the montage = problematic\n EXPO: To avoid an overlapping of the cutting areas in the graphical plots, the areas are moved horizontally in the 2D plane as in an explosion plot. The explosion factor can also be adjusted in WINGRAF.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                16,
+                17
+            ],
+            "page_labels": [
+                "3-5",
+                "3-6"
+            ],
+            "type": "text",
+            "sections": "3.5 CUTT – Cutting Pattern"
+        }
+    },
+    {
+        "content": "Below is a self-contained, RAG-ready description of the two-row parameter table you provided. It explains each field, its role, default, and how it ties into the broader cutting-area workflow (see also CUTT, QUAD, GRP and example TEXTILE3.dat).\n\n1. Table purpose and context  \n• This table defines two control items—NO and VAL—used when specifying group numbers for cutting areas.  \n• It is part of a workflow that can either rely on WINGRAF definitions or, alternatively, directly invoke GRP (group) and QUAD (quadrant) entries to delimit cutting regions.  \n• Typical usage appears in TEXTILE3.dat; if no WINGRAF blocks exist, GRP and QUAD sections in the same data file must supply the geometry.  \n\n2. Column definitions  \n• Item (string) – The mnemonic code identifying the parameter. Two codes are supported here: “NO” and “VAL.”  \n• Description (string) – A human-readable explanation of what the parameter controls. Multiline text is used for VAL to list its three permitted sub-values (YES, NO, FULL).  \n• Unit (string) – Always “–” (not applicable), since neither item takes a numeric or dimensional quantity.  \n• Default (string) – The value assumed when the parameter is omitted in the input. For NO, there is no default; for VAL, the default mode is FULL.  \n\n3. Row-by-row semantics  \n\nA. Item = NO  \n ‑ Group number  \n ‑ This entry announces or reserves the identifier for the current group of cutting areas.  \n ‑ Unit: none  \n ‑ Default: “–” (no implicit group number is assigned if you omit NO; you must supply it explicitly when grouping is required).  \n\nB. Item = VAL  \n ‑ Controls whether and how the group number defined by NO is applied during processing. It accepts exactly three keywords:  \n    • YES – Enable the use of the group number. Internally, downstream routines will recognize and apply the group identifier but will not generate any explicit textual output of the group number in the result file.  \n    • NO – Disable any grouping. The group number (if supplied via NO) is ignored, and no grouping logic is invoked.  \n    • FULL – Fully enable grouping: the system applies the group number during internal computations and also emits the group number in the output.  \n ‑ Unit: none  \n ‑ Default: FULL (if VAL is omitted, the system assumes that you want full grouping behavior, with both internal use and output of the group number).  \n\n4. How this ties into the broader cutting-area definitions  \n• In routines like CUTT and when defining polygonal areas via QUAD, one often wants to collect subsets of polygons under a single “group number.”  \n• By combining NO + VAL, you explicitly mark which polygons belong to which group and whether that grouping should propagate to the final output data set.  \n• If you have already defined regions via WINGRAF blocks, you may not need NO/VAL at all; GRP/QUAD are the fallback mechanism when WINGRAF is absent.  \n\n5. Example snippet (pseudocode from TEXTILE3.dat)  \n    NO  5  \n    VAL FULL  \n    QUAD … (coordinates of cutting polygon)  \n    QUAD … (further vertices)  \n    ENDQUAD  \n\nIn this example, group number 5 is declared, grouping is fully active (internal and output), and the following QUAD blocks define the geometric boundaries. When the file is processed, any object inside that polygon inherits group 5, and the output will explicitly list “5” alongside the processed shapes.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                18
+            ],
+            "page_labels": [
+                "3-7"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.6 GRP – Group Control"
+            ]
+        }
+    },
+    {
+        "content": "See also: CUTT, QUAD\n GRP\n Typical usage see example TEXTILE3.dat.\n If the cutting areas are not defined via WINGRAF they can also be defined directly via GRP and QUAD.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                18
+            ],
+            "page_labels": [
+                "3-7"
+            ],
+            "type": "text",
+            "sections": "3.6 GRP – Group Control"
+        }
+    },
+    {
+        "content": "The table below summarizes the three parameters used to define an element‐range for a QUAD (quadrilateral) group in TEDDY (often invoked via the “QUAD FROM” heading).  These parameters let you specify a contiguous block of element IDs by giving a start, an end, and a step size.  They are dimensionless integers, and each has a sensible default so that, if you only supply FROM, the command still works.\n\nTable structure  \n• Columns  \n  – Item:     the keyword you must enter (“FROM”, “TO”, or “INC”)  \n  – Description: what this keyword controls  \n  – Unit:     always “–” (dimensionless, since these are just element ID counters)  \n  – Default:  the value assumed if you omit this line  \n\n• Rows  \n  1. FROM  \n     – Description: Start element number.  \n     – Default: 1  \n     – Notes: This is the lowest element ID in your selection.  If you omit TO and INC, only element 1 will be selected.  \n\n  2. TO  \n     – Description: End element number.  \n     – Default: taken from the value you gave for FROM  \n     – Notes: Since TO defaults to the same value as FROM, a minimal “single‐element” selection (FROM=5, TO=5) requires only one line in your QUAD bloc.  \n\n  3. INC  \n     – Description: Increment (step size) between successive element IDs.  \n     – Default: 1  \n     – Notes: A step of 1 picks every element in the range.  If you set INC=2, you select every second element (e.g. 1, 3, 5, …).  \n\nTypical workflow in TEDDY with ANIMATOR  \n  1. In ANIMATOR, open the Reduce → Select Elements menu.  \n  2. Hold the CTRL key and click or drag to add individual elements or ranges interactively.  \n  3. Right-click and choose “Copy selection to clipboard.”  \n  4. Back in TEDDY, use “Include from clipboard” (or simply press CTRL-V) to paste the list of IDs.  \n  5. Prepend a single heading line:  \n       QUAD FROM  \n     This tells TEDDY you are starting a QUAD block with explicit FROM/TO/INC entries.  \n  6. Paste the three‐column table you prepared (or generated from ANIMATOR) immediately after that heading.  \n\nSee also:  \n  • GRP: for defining named groups of elements without specifying a continuous range.  \n  • QUAD: the general command under which FROM/TO/INC operate.  \n  • Example usage: see TEXTILE4.dat for a sample input file that combines GRP definitions with QUAD ranges.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                19
+            ],
+            "page_labels": [
+                "3-8"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.7 QUAD – QUAD Elements"
+            ]
+        }
+    },
+    {
+        "content": "See also: GRP\n QUAD\n Typical usage see example TEXTILE4.dat.\n In addition to the group definition GRP, elements for a cutting area can also be selected from FROM to TO in increments of INC. An element selection is also supported with the ANIMATOR:\n Animator - menu \"reduce\" - \"select elements\"\n - add elements with pressed CTRL key\n then rigth mouse click - copy selektion to clipboard\n then in TEDDY \"include from aus clipboard\" or CTRL-V\n - add a heading line \"QUAD FROM\" in front of the imported table.\n - ready",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                19
+            ],
+            "page_labels": [
+                "3-8"
+            ],
+            "type": "text",
+            "sections": "3.7 QUAD – QUAD Elements"
+        }
+    },
+    {
+        "content": "The input table defines the syntax and meaning of each keyword and numeric field used to prescribe compensation strains in a finite-element membrane model.  It has four columns—Item, Description, Unit and Default—and covers all six supported compensation methods: CE1, CE2, DE1, DE2, S1/S2 and E1/E2.  Below is a field-by-field breakdown with context from the underlying theoretical principles.  \n\n1.  TYPE  \n   • Description: Selects the compensation method.  \n     – CE1, CE2: impose a constant pre-defined strain (independent of prestress) in warp (CE1) or fill (CE2) direction.  \n     – DE1, DE2: add an extra strain on top of the linear prestress strain in warp (DE1) or fill (DE2) direction.  \n     – S1, S2 & E1, E2: specify a full nonlinear compensation matrix that relates actual in-plane stresses (warp/fill) to warp/fill compensation strains.  \n   • Unit: LIT (literal code)  \n   • Default: “!” (mandatory keyword)  \n\n2.  N  \n   • Description:  \n     – For matrix methods S1 and S2: total number of columns (for S1) or rows (for S2) in the compensation matrix.  These define the stress breakpoints at which the compensation strains are tabulated.  \n     – For matrix methods E1 and E2: the specific row index in the matrix to which the following W-values apply.  Rows correspond to discrete fill-direction stress levels.  \n   • Unit: none (integer count)  \n   • Default: “–” (no built-in default)  \n\n3.  W1  \n   • Description: varies by method:  \n     – DE1/DE2: the additional strain (%) to be added to the prestress strain in the warp (DE1) or fill (DE2) direction.  \n     – S1/S2: the stress value (in kN/m) that defines the first column (S1) or first row (S2) of the matrix.  These are the stress breakpoints at which strains will be computed.  \n     – E1/E2: the compensation strain (%) corresponding to the first column stress point of that row.  \n   • Unit: “*” indicates percent for strains or kN/m for stresses as appropriate.  \n   • Default: “–” (no default; must be supplied)  \n\n4.  W2 … W10  \n   • Description: Additional column entries following the same convention as W1.  In constant/additive methods these extra W-fields are unused.  In matrix methods they represent:  \n     – For S1/S2: further stress breakpoints (columns of S1 or rows of S2).  You may specify up to nine additional stress values, making up to ten columns/rows total.  \n     – For E1/E2: compensation strains corresponding to each successive stress breakpoint in that row.  Thus E1〈row〉 W1–W10 are the warp-direction strains at the defined column stresses; E2〈row〉 W1–W10 likewise for the fill direction.  \n   • Unit: same as W1 (“*”)  \n   • Default: “–”  \n\nHow this ties into the theoretical principles:  \n– Methods CE1/CE2 correspond to “case 2” in the theory: a constant compensation strain independent of prestress.  \n– Methods DE1/DE2 are “case 3,” adding a constant offset to the linear prestress strain.  \n– Methods S1/S2 combined with E1/E2 realize “case 4,” where a full nonlinear stress-to-strain compensation mapping is defined.  S1 and S2 declare the discrete warp and fill stress levels, and the E-tables give the warp/fill strain responses at each stress-pair grid point.  \n– During analysis, the algorithm locates the appropriate column (warp stress via S1) and row (fill stress via S2) and reads E1/E2 at that intersection.  If the actual element stresses fall between tabulated points, linear interpolation is used to compute the precise compensation strains.  \n\nNo field in this table carries an internal default; every entry must be provided to fully define the compensation behavior for the chosen TYPE.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                20
+            ],
+            "page_labels": [
+                "3-9"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.8 COMP – Compensation"
+            ]
+        }
+    },
+    {
+        "content": "Below is a self-contained, detailed description of the 4×4 “matrix compensation” table.  It associates a pair of compensation strains—warp‐direction (ε₁) and fill-direction (ε₂)—with discrete values of membrane force in the warp (columns) and fill (rows) directions.  This table corresponds to “mode 4” in the COMP definitions (COMP S1/S2 for selecting column/row indices and COMP E1/E2 for the actual strain values).\n\n1. Coordinate Axes  \n   – Columns (warp‐force index, selected by COMP S1):  \n     • Column 1 → N_warp = 0.0 kN/m  \n     • Column 2 → N_warp = 1.0 kN/m  \n     • Column 3 → N_warp = 4.0 kN/m  \n     • Column 4 → N_warp = 10.0 kN/m  \n   – Rows (fill‐force index, selected by COMP S2):  \n     • Line 1 → N_fill = 0.0 kN/m  \n     • Line 2 → N_fill = 1.0 kN/m  \n     • Line 3 → N_fill = 4.0 kN/m  \n     • Line 4 → N_fill = 10.0 kN/m  \n\n2. Cell Contents (ε₁=warp compensation, ε₂=fill compensation)  \n   – Row 1 (N_fill=0.0 kN/m):  \n     • Col 1 (N_warp=0.0):  ε₁=3.0 %, ε₂=3.0 %  \n     • Col 2 (N_warp=1.0):  ε₁=4.0 %, ε₂=2.0 %  \n     • Col 3 (N_warp=4.0):  ε₁=4.5 %, ε₂=1.0 %  \n     • Col 4 (N_warp=10.0): ε₁=5.0 %, ε₂=0.0 %  \n   – Row 2 (N_fill=1.0 kN/m):  \n     • Col 1:  ε₁=2.0 %, ε₂=4.0 %  \n     • Col 2:  ε₁=3.2 %, ε₂=3.2 %  \n     • Col 3:  ε₁=3.6 %, ε₂=2.0 %  \n     • Col 4:  ε₁=4.3 %, ε₂=1.0 %  \n   – Row 3 (N_fill=4.0 kN/m):  \n     • Col 1:  ε₁=1.0 %, ε₂=4.5 %  \n     • Col 2:  ε₁=2.0 %, ε₂=3.5 %  \n     • Col 3:  ε₁=2.8 %, ε₂=2.8 %  \n     • Col 4:  ε₁=3.6 %, ε₂=2.0 %  \n   – Row 4 (N_fill=10.0 kN/m):  \n     • Col 1:  ε₁=0.0 %, ε₂=5.0 %  \n     • Col 2:  ε₁=1.0 %, ε₂=4.3 %  \n     • Col 3:  ε₁=2.0 %, ε₂=3.6 %  \n     • Col 4:  ε₁=3.0 %, ε₂=3.0 %  \n\n3. Usage Example  \n   If at a given point the computed membrane forces are  \n     N_warp = 10 kN/m → selects Column 4  \n     N_fill = 4 kN/m → selects Line 3  \n   then the lookup yields  \n     ε₁ (warp) = 3.6 %  (from COMP E1 at row 3, col 4)  \n     ε₂ (fill) = 2.0 %  (from COMP E2 at row 3, col 4).  \n\n4. Interpolation  \n   – For intermediate force levels (not exactly on the tabulated grid), both ε₁ and ε₂ are obtained by bilinear interpolation across the nearest four cells.  \n\n5. Contextual Notes  \n   – This table implements non-linear compensation (mode 4), where the strain compensation adapts to the instantaneous membrane stress state.  \n   – COMP S1/S2 define the breakpoints in warp/fill force; COMP E1/E2 supply the corresponding compensation strains.  \n   – Modes 1–3 (not shown here) cover pure prestress shrinkage, constant strain, or additive constant strain; mode 4 is the fully matrix-based solution.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                21
+            ],
+            "page_labels": [
+                "3-10"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.8 COMP – Compensation"
+            ]
+        }
+    },
+    {
+        "content": "See also: TheoreticalPrinciples\n COMP\n There are different possibilities to describe the compensation:\n 1. Without an input COMP the material shrinks according to the prestress and the linear material parameters, perhaps with a material property which is input separately via CUTT-MNO.\n 2. Independant of the prestress a constant compensation strain can be defined in warp and fill direction.\n COMP CE1 - 2.0 $ 2 % constant strain in warp direction COMP CE2 - 5.0 $ 5 % constant strain in fill direction\n 3. 1+2: In addition to the linear material prestress strain an additive compensation strain can be defined.\n COMP DE1 - 2.0 $ 2 % additional strain in warp direction\n COMP DE2 - 5.0 $ 5 % additional strain in fill direction\n 4. For stress relations N-warp/N-fill the compenstion matrix can be defined. According to the actual stress in the current finite element a warp/fill compenstion strain eps- warp/eps-fill can be computed. With these matrix input the nonlinear behaviour of the compensation can be solved exactly:\n COMP S1 4 0.00 1.00 4.00 10.00 $ warp (warp direction) COMP S2 4 0.00 1.00 4.00 10.00 $ fill (fill direction)\n COMP E1 1 3.0 4.0 4.5 5.0 $ warp (warp direction) COMP E1 2 2.0 3.2 3.6 4.3\n COMP E1 3 1.0 2.0 2.8 3.6 COMP E1 4 0.0 1.0 2.0 3.0\n COMP E2 1 3.0 2.0 1.0 0.0 $ fill (fill direction)",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                20,
+                21
+            ],
+            "page_labels": [
+                "3-9",
+                "3-10"
+            ],
+            "type": "text",
+            "sections": "3.8 COMP – Compensation"
+        }
+    },
+    {
+        "content": "COMP E1 3 1.0 2.0 2.8 3.6 COMP E1 4 0.0 1.0 2.0 3.0. COMP E2 1 3.0 2.0 1.0 0.0 $ fill (fill direction).\n COMP E2 2 4.0 3.2 2.0 1.0\n COMP E2 3 4.5 3.5 2.8 2.0\n COMP E2 4 5.0 4.3 3.6 3.0\n This defines the following table:\n 10.0 kN/m\n eps-fill=5.0%\n eps-fill=4.3%\n eps-fill=3.6%\n eps-fill=3.0%\n If a point has a membrane force of 10 kN/m in warp direction and of 4 kN/m in fill direction, the compensation strain results as follows:\n Column=4 follows due to 10 kN/m warp force\n (because COMP S1...W4=10)\n Line=3 follows due to 4 kN/m fill force (because COMP S2...W3=4)\n Thus the compensation can be read off in line 3, column 4\n Compensation in warp direction= eps1= E1(3,4) = 3.6 %\n Compensation in fill direction= eps2= E2(3,4) = 2.0 %\n Intermediate values are interpolated linearly.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                21
+            ],
+            "page_labels": [
+                "3-10"
+            ],
+            "type": "text",
+            "sections": "3.8 COMP – Compensation"
+        }
+    },
+    {
+        "content": "This record, known as LINE, defines one individual cutting‐line segment for use by the WINGRAF/SOFIPLUS system.  In practice it appears in batch runs (for example in TEXTILE1.dat) or may be created interactively.  After LINE records are in place, a subsequent WINGRAF session will convert them into true geodetic (surface–shortest) or fixed (straight in plan) lines and then compute the full 3D cutting areas.  For reference to the mathematical underpinnings, see “TheoreticalPrinciples.”\n\n1. Coordinate Endpoints  \n   • XA, YA, ZA: Cartesian coordinates (in metres) of the segment’s start point.  No default values—each must be supplied.  \n   • XE, YE, ZE: Cartesian coordinates (in metres) of the segment’s end point.  Also mandatory, with no defaults.\n\n2. Projection Direction  \n   • NX, NY, NZ: A directional vector defining the projection orientation of this cutting line.  These components are dimensionless.  If not otherwise specified, the default direction is (0, 0, 1), meaning a projection straight down the Z‐axis.  You may alter one or more of these components to tilt the cutting plane in space.\n\n3. Group Mask  \n   • GRP: An optional “element group” filter.  If provided, the cutting operation acts only on the specified group.  If omitted or set to “–,” the line will apply to all geometry groups.  No numerical default is used by convention.\n\n4. Line Type  \n   • TYPE: A text flag that determines how the line is interpreted geodetically:  \n       – GEOD: The system will treat the segment as a true geodetic (shortest‐path) line on the surface.  Under the hood, WINGRAF adjusts the raw XY endpoints so the line follows terrain curvature, then extrudes the cutting plane accordingly.  \n       – FIX: The system treats the endpoints as fixed in the ground (plan) view.  No surface‐conforming adjustment is made; the cut remains straight in the XY plane.  \n     No default is assumed; you must explicitly choose either GEOD or FIX.\n\nUsage Notes  \n   – Typical datasets include multiple LINE records defining an entire cutting layout.  They may be pre‐defined in batch files or drawn interactively in the graphical modules of WINGRAF or SOFIPLUS.  \n   – After batch definition, simply launch WINGRAF on the same project: the software automatically reads all LINE records, computes the adjusted 3D geodetic or fixed lines, and generates the full 3D cutting areas for further processing or visualization.  \n   – For a complete walkthrough and mathematical justification (how GEOD lines follow shortest‐path solutions on complex surfaces versus FIX lines), see the section “Theoretical Background.”  \n   – Example files “TEXTILE1.dat,” “Example1,” and “Example2” illustrate simple and advanced usages of all LINE parameters.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                22
+            ],
+            "page_labels": [
+                "3-11"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.9 LINE – Cutting Lines"
+            ]
+        }
+    },
+    {
+        "content": "See also: TheoreticalPrinciples\n LINE\n Typical usage see example TEXTILE1.dat.\n Usually the cutting lines are defined interactively in WINGRAF or SOFIPLUS. But they can also be defined in a batch run with this record LINE. A following WINGRAF run takes these cutting lines, calculates the geodetic lines and computes the 3D-cutting areas. Please also refer to example 1+2.\n TYPE GEOD lines create a geodetic line with the shortest connnection on the surface, TYPE FIX linies are restraint lines and remain straight in the ground view.\n Remarks see also ’theoretical background’",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                22
+            ],
+            "page_labels": [
+                "3-11"
+            ],
+            "type": "text",
+            "sections": "3.9 LINE – Cutting Lines"
+        }
+    },
+    {
+        "content": "The table defines two related parameters—OPT and VAL—that together control how “cutting‐area” coordinates are emitted into an output file.  They appear in the context of an “ECHO LIST YES” command (or its post‐run equivalent) which instructs the system to produce a list of all cutting‐area coordinates.\n\n1. Item: OPT  \n   • Description: This field selects which “echo” option to invoke. It must be one of the literals in the supported list.  \n     – LIST: Request the coordinate list of all cutting areas.  \n   • Unit: LIT (i.e. a literal keyword)  \n   • Default: – (no default value; OPT must be explicitly provided)  \n\n   Explanation:  \n   OPT serves as the keyword that identifies the type of information you want echoed.  In the current implementation, only a single keyword—LIST—is valid.  When you set OPT to LIST, the system knows you are asking for the complete set of cutting‐area coordinates to be written out.\n\n2. Item: VAL  \n   • Description: Defines the verbosity or extent of the output once an option is activated.  The valid literal values are:  \n     – OFF: Completely deactivate the option (no echo, even if OPT is specified).  \n     – NO: Keep the option “on” but suppress all output (effectively a silent mode).  \n     – YES: Produce the standard, regular output.  \n     – FULL: Produce extensive output, including additional details beyond the standard set.  \n     – EXTR: Produce extreme output—i.e., maximal detail, potentially including debug-level or diagnostic information.  \n   • Unit: LIT (i.e. a literal keyword)  \n   • Default: FULL  \n\n   Explanation:  \n   VAL modulates how much information you actually receive once the option has been turned on.  Its default is FULL, meaning that if you issue “ECHO LIST” without explicitly specifying VAL, the system will generate extensive information about each cutting area.  If you want less or more detail, you can override it by appending NO, YES or EXTR.\n\nOverall Usage Example  \n  To request a standard list of all cutting‐area coordinates:  \n    ECHO LIST YES  \n\n  To suppress output completely (even though you requested the list):  \n    ECHO LIST OFF  \n\n  To get the most verbose, diagnostic‐level listing:  \n    ECHO LIST EXTR  \n\nPost-run Invocation  \n  The same command can be issued after the main run has completed, enclosed between HEAD and END markers:  \n    HEAD  \n    ECHO LIST YES  \n    END  \n\nThis table thus encapsulates both what you can ask for (OPT = LIST) and how much of it you actually get (VAL = OFF/NO/YES/FULL/EXTR), with sensible defaults to guarantee that, in the absence of a VAL setting, you still receive full output.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                23
+            ],
+            "page_labels": [
+                "3-12"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.10 ECHO – Output Extent"
+            ]
+        }
+    },
+    {
+        "content": "ECHO\n ECHO LIST YES writes a coordinate liste of alls cutting areas into the output file. This can also be requested with a post run:\n HEAD\n ECHO LIST YES\n END",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                23
+            ],
+            "page_labels": [
+                "3-12"
+            ],
+            "type": "text",
+            "sections": "3.10 ECHO – Output Extent"
+        }
+    },
+    {
+        "content": "The input files which are explained here are to be found in the installation directory SOFiSTiK in the subdirectory textile.dat\n english. Alternatively you will find these examples via the TEDDY menu HELP > EXAMPLES sorted by program name and language.\n For additional help like tutorials, tutorial movies and practical examples please refer to the SOFiSTiK Infoportal (www.sofistik.com/Infoportal).",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                24
+            ],
+            "page_labels": [
+                "4-1"
+            ],
+            "type": "text",
+            "sections": "4 Examples"
+        }
+    },
+    {
+        "content": "The illustration shows a three-dimensional wireframe representation of the “plane input system” used as the very first step in a membrane form-finding and cutting-pattern analysis. Rendered in a soft gray shading with bright red mesh lines, the model is a simple rectangular sheet discretized by a uniform quadrilateral grid. Key features of the image are:\n\n 1. Overall Geometry  \n    • A flat, nearly square/rectangular membrane panel extending in the horizontal plane.  \n    • The long edges run roughly left-to-right in the foreground and recede toward the upper right of the view.  \n    • The short edges run from front-left toward the back‐left of the view, then across the back edge to the back-right.\n\n 2. Mesh Discretization  \n    • Red grid lines delineate a regular mesh of quadrilateral elements, approximately 12–15 cells along each edge.  \n    • Grid spacing appears uniform, indicating a structured finite‐element mesh.  \n    • The mesh is overlaid on a translucent gray surface, making both faces of the membrane faintly visible.\n\n 3. Border and Element Edges  \n    • Boundary edges are highlighted by slightly thicker and darker lines, framing the mesh.  \n    • Corner nodes are visible as the intersections of the red lines, giving a clear sense of the element layout.\n\n 4. Viewpoint and Perspective  \n    • The view is an isometric/perspective projection, looking down from above and slightly to one side (upper right).  \n    • Vertical (z-axis) displacement is zero in this undeformed state—every node lies in the same plane.  \n    • Depth cues are provided by the foreshortening of the receding grid lines and the slight shading gradient on the surface.\n\n 5. Caption and Annotation  \n    • Centered below the image is the label “Figure 4.1: Plane input system.”  \n    • No axes or coordinate triad are shown, but from context one infers global X and Y axes lie in the plane, and Z is vertical.\n\nContextual Significance  \n  • This “plane input system” represents the initial undeformed mesh before any internal air‐pressure prestress or external loads are applied.  \n  • In the first load case, a vertical (z-direction) uniform pressure is later applied to this flat mesh to initiate the form-finding process—so this figure serves to document the purely geometric starting point.  \n  • After form finding with constant inner air pressure, the mesh will bulge and the nodal coordinates will be updated to a new equilibrium shape (load case 2), but those deformations are not yet present here.  \n  • Subsequent analysis steps (wind loading, cutting pattern generation in TEXTILE, compensation for fabric strains) all build upon this initial planar discretization.\n\nOverall, Figure 4.1 provides a clear, uncluttered view of the finite‐element mesh in its original, undeformed configuration, serving as the fundamental geometry from which prestress form-finding and later cutting pattern computations proceed.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                24
+            ],
+            "page_labels": [
+                "4-1"
+            ],
+            "type": "image",
+            "sections": [
+                "4 Examples",
+                "4.1 Tenniscourt with Inner Air Pressure"
+            ]
+        }
+    },
+    {
+        "content": "The image shows a three-dimensional, inflated membrane surface represented as a fine wireframe mesh. The original shape was a flat, rectangular planar grid; here it has been “blown up” under uniform internal pressure in the vertical (global Z) direction. Key visual elements and geometric details are as follows:\n\n1. Overall Geometry and Perspective  \n   – The camera is positioned near one of the lower corners of the rectangle, looking diagonally across the mesh toward the opposite corner.  \n   – As a result, two adjacent edges (front and left edges) appear foreshortened and form the “frame” of the scene.  \n   – The far corner (upper right of the view) rises to the highest elevation; the curvature slopes downward in all directions toward the nearer edges.\n\n2. Mesh and Grid  \n   – The surface is discretized into a regular grid of roughly square elements.  \n   – Mesh lines in one parametric direction are drawn in red; the orthogonal family of mesh lines appears in a slightly more magenta-pink hue.  \n   – Where these red and magenta lines intersect, the junctions denote the nodal points of the finite‐element discretization.  \n   – The grid density is uniform, suggesting a structured mesh, and the curvature induced by the pressure load deforms each originally straight segment into a smooth arc.\n\n3. Boundary and Supports  \n   – Along all four edges, the boundary nodes are highlighted by small symbols (tiny squares or triangles), indicating supports or prescribed constraints in the model.  \n   – The edges themselves are drawn with slightly heavier lines than the interior mesh, emphasizing the fixed perimeter from which the membrane is tensioned.  \n   – No asymmetrical distortions appear; the load application being purely vertical results in a symmetric rise of the membrane, although the peak point is slightly offset due to perspective.\n\n4. Deformation Characteristics  \n   – The inflated shape resembles a shallow “tent” or pillow, with gentle double curvature.  \n   – The curvature radius is greatest at the center and becomes less pronounced near the edges, reflecting the way the membrane stretches under uniform pressure.  \n   – The red and magenta wireframe lines remain smoothly spaced, confirming that element distortion is moderate and the solver has maintained mesh quality.\n\n5. Caption and Annotation  \n   – Below the image is the printed caption “Figure 4.2: Formfinding load case 1 (load direction global z).”  \n   – The caption identifies the image as the result of the first formfinding step under a purely vertical load in the global Z direction.  \n   – No additional axis ticks or numeric scales are shown; the coordinate system orientation is implied by the description rather than explicitly drawn.\n\n6. Visual Style and Rendering  \n   – The rendering is simple and schematic, with no shading or surface fill—only colored lines on a white background.  \n   – This style underlines that the graphic is intended for structural‐formfinding illustration rather than photorealistic presentation.  \n   – The red/magenta palette clearly distinguishes the two families of grid lines, aiding in visual inspection of surface deformation and element behavior.\n\nIn summary, the image is a wireframe depiction of a membrane structure after its first formfinding under uniform interior pressure. The uniform, upward‐directed load produces a smoothly curved, symmetrically tensioned surface, clamped at its rectangular boundary. Mesh lines in red and magenta map out the finite‐element grid, and the solid edges mark the fixed supports. Beneath the view, the caption “Figure 4.2: Formfinding load case 1 (load direction global z)” contextualizes this stage of the analysis.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                24
+            ],
+            "page_labels": [
+                "4-1"
+            ],
+            "type": "image",
+            "sections": [
+                "4 Examples",
+                "4.1 Tenniscourt with Inner Air Pressure"
+            ]
+        }
+    },
+    {
+        "content": "The image is a perspective, three-quarter view of a rectangular membrane structure that has been “blown up” into a saddle-like, pillow form under uniform internal pressure (formfinding load case 2). It is displayed as a regular quadrilateral mesh:  \n• Mesh geometry: The original flat input mesh (a roughly square domain) has been subdivided into a grid of quadrilateral elements (approximately 12–15 divisions per side). The grid lines are drawn in thin red, forming a smooth, doubly curved surface rising toward a central apex.  \n• Deformation: The surface bulges upward from its rectangular boundary, producing curved convex edges and a rounded ridge near the center. At the very top, the mesh lines converge slightly, indicating the highest point of the inflated form. The curvature varies smoothly, showing how the pressure load has redistributed tension across the membrane.  \n• Boundary conditions: Along the four edges of the rectangular footprint, slightly thicker lines (in black or dark gray) outline the fixed supports. At each boundary node, small magenta line segments or arrows can be seen, representing reaction forces or the direction of the applied pressure load projected on the deformed geometry.  \n• Load vectors: Near the summit of the membrane the arrows (in magenta) point outward and slightly upward—these illustrate the computed load vectors for load case 2, which are oriented normal to the already-deformed mesh obtained from load case 1. This emphasizes that the second formfinding iteration reorients the pressure arrows to remain perpendicular to the curved surface rather than the original flat plane.  \n• Caption: Centered beneath the graphic, in a serif font, reads “Figure 4.3: Formfinding load case 2 (air pressure on deformed shape LC 1).” This ties the visualization directly to the two-stage formfinding procedure described in the accompanying TEXTILE and SOFIPLUS input script.  \n\nOverall, the rendering highlights the critical importance of updating nodal coordinates and recomputing load vectors on the deformed mesh. By moving from the original plane (load case 1) to the curved, prestressed form (load case 2), the graphic makes it clear how inner air pressure is continuously aligned normal to the evolving surface. This set-up paves the way for subsequent real static load analyses (e.g., wind in x-direction) and ultimately for accurate cutting-pattern developments.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                25
+            ],
+            "page_labels": [
+                "4-2"
+            ],
+            "type": "image",
+            "sections": [
+                "4 Examples",
+                "4.1 Tenniscourt with Inner Air Pressure"
+            ]
+        }
+    },
+    {
+        "content": "The image presents a three-dimensional finite-element mesh of a rectangular membrane that has been form-found under constant internal air pressure and then updated so that its deformed shape becomes the new “undeformed” reference geometry.  Rendered in a wire-frame style, the mesh consists of a regular grid of quadrilateral (or triangular) elements delineated by thin blue lines.  The overall form is a shallow, cushion-like bulge: the central region has lifted upward in the positive z-direction, while the boundary nodes remain constrained near their original plane, producing a smooth, doubly curved surface.  \n\nAt each mesh node, a small local coordinate triad (depicted with short, colored arrows) illustrates the element’s new local x- and y-axes as well as its normal direction, all reoriented to follow the curvature of the form-found surface.  These local frames are uniformly distributed, so the viewer can see how the original planar orientations have rotated and tilted in three dimensions.  The coordinate arrows are all of equal length, emphasizing the uniformity of the prestress-induced deformation across the membrane.  \n\nIn the background, faint outlines of the original, undeformed boundary rectangle can be discerned, hinting at the plane from which this inflated shape evolved.  The image was generated as part of a two-step load-case procedure: first, the system was loaded only in the global z-direction to find an initial deformed shape (load case 1); next, the constant inner pressure was recalculated with respect to that deformed mesh (load case 2).  A coordinate‐update command (“syst PLC 2 STOR yes”) then moved all nodal coordinates to their load-case 2 positions, and the animator was restarted so that this form-found surface is treated as the new baseline.  \n\nBeneath the rendering, the caption reads:  \n“Figure 4.4: After the system update: new local coordinate systems”  \n\nThis depiction makes it immediately obvious how each element’s local coordinate system now lies nearly tangent to the curved membrane, a crucial step before any further static load cases (wind, cutting-pattern development, etc.) can be applied.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                25
+            ],
+            "page_labels": [
+                "4-2"
+            ],
+            "type": "image",
+            "sections": [
+                "4 Examples",
+                "4.1 Tenniscourt with Inner Air Pressure"
+            ]
+        }
+    },
+    {
+        "content": "The image presented (captioned “Figure 4.5: Deformation due to wind loading”) shows a wire-frame view of a thin, initially flat membrane or shell that has been prestressed and then subjected to a unidirectional wind load. Below is a detailed verbal description suitable for indexing in a RAG vector store:\n\nOverall Geometry and Mesh  \n• The structure is a rectangular membrane spanning horizontally along its base, subdivided into a regular grid of quadrilateral elements (approximately ten panels in the horizontal direction, seven in the vertical).  \n• The base edge remains straight and horizontal; support points along this edge are highlighted by small pink markers. At the left-most corner there is a fixed support symbol (“X”), indicating the boundary condition.  \n• Vertical ribs (initially straight grid lines) rise from each base support node up to the free edge, while horizontal “hoops” (the former flat membrane’s parallel lines) appear as curved arcs in the deformed shape.  \n\nDeformed Shape Characteristics  \n• Under the applied wind loading in the global X-direction, the membrane bulges outward, producing a smooth, convex arch along its central span.  \n• Deformation is greatest at mid-span and tapers toward the supports, giving the former flat panels an arched, shell-like appearance.  \n• The grid lines remain continuous and regular but curve in the direction of the applied pressure, clearly illustrating nodal displacements.  \n\nElement Coordinate Systems  \n• At selected nodes, tiny three-axis coordinate triads are drawn (in blue), showing the local element X- and Y-directions relative to the global system. These highlight how each element’s material orientation (warp and weft) may differ slightly from the global axes after deformation.  \n• The warning in the accompanying text about discrepancies between local material directions and computed warp directions is visually reinforced by the triads’ varied orientations.  \n\nLoad and Analysis Context (from TEXTILE/ASE input)  \n• Load case 2 was defined as primary in order to include formfinding prestress. After running “prog ase” with a coordinate update (PLC 2, STOR yes), the nodal coordinates were reset to their deformed (formfound) positions—so the mesh shown is the new “undeformed” reference for all subsequent static loads.  \n• The wind load itself was introduced in load case 11 under that primary setting, causing the deformation now plotted.  \n\nVisualization Details  \n• The mesh and supports are drawn in shades of blue and magenta on a white background, emphasizing both geometric continuity and boundary conditions.  \n• No shading or surface patches are applied—only line elements—so as to focus on structural form and element orientations.  \n• Beneath the drawing, the figure number and title are centered: “Figure 4.5: Deformation due to wind loading.”  \n\nIn sum, the image is a classic wire-frame plot from a membrane formfinding and static analysis package (TEXTILE/WINGRAF), showing how an initially flat, prestressed membrane deforms into a smooth, shell-like arch under a horizontal wind load.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                26
+            ],
+            "page_labels": [
+                "4-3"
+            ],
+            "type": "image",
+            "sections": [
+                "4 Examples",
+                "4.1 Tenniscourt with Inner Air Pressure"
+            ]
+        }
+    },
+    {
+        "content": "The image is a composite excerpt from SOFiSTiK documentation, showing two sequential figures (4.5 and 4.6) embedded in a page layout under the SOFiSTiK banner. Visually, the top of the page features the SOFiSTiK logo—a stylized blue, curved-surface icon composed of nine quadrilateral patches arranged in a 3×3 array, immediately followed by the text “SOFiSTiK” in uppercase gray letters.\n\nBelow the header, centered on the page, is Figure 4.5, titled “Deformation due to wind loading.” This is a side-view, single-span membrane or shell element mesh that has been form-found under internal air pressure and then subjected to a uniform wind load in the positive X-direction. The original planar mesh has been displaced, and the resulting deformed shape is drawn entirely with thin blue lines. The mesh consists of a regular grid of longitudinal and transverse lines; the longitudinal lines (running roughly along the span) curve upward toward the midspan, creating a smooth, cambered profile, while the transverse lines remain parallel in plan but are lifted at varying heights. At the base of the mesh, small magenta “x” markers indicate support or boundary‐condition nodes along the span, spaced at regular intervals on what was originally the horizontal plane. The base line itself remains straight, but each node’s vertical displacement produces a subtle arched outline.\n\nImmediately below Figure 4.5 is a block of body text in black serif font, introducing the cutting‐pattern analysis. It reads: “Now the cutting pattern analysis can be done. Usually the cutting lines are defined interactively in WINGRAF or SOFIPLUS. In this example they are defined in an extra TEXTILE batch run. A following WINGRAF run takes these cutting lines, calculates the geodetic lines and computes, stores and plots the 3D-cutting areas.”\n\nUnder that paragraph appears Figure 4.6, titled “geodetic lines in ground view.” This graphic is a plan (top) view of the pre-cut, form-found membrane, showing the mesh grid in its undeformed XY positions but overlaid with the computed geodetic curves. The base mesh is drawn in thin black lines, forming a near-rectangular lattice of quadrilateral elements. Along the entire boundary of this rectangular domain are small cyan squares, each marking a support or seam edge node, uniformly spaced around the perimeter. Superimposed on the black grid are a series of six smoothly curved, vertical-oriented red lines. These red lines represent the geodetic (shortest‐path) cutting contours, beginning near the left and right edges and bowing inward toward the center of the domain. They are approximately equidistant from one another, illustrating how the cutting pattern will be segmented across the surface.\n\nNeither figure shows axes tick marks or numerical scales; the emphasis is purely on qualitative geometry and mesh topology. The page background is white, and all annotations—titles and body text—are in black. The two figures are separated by text, but together they illustrate the workflow described in the surrounding context: first, applying wind loads to the form-found shell (Figure 4.5), then generating cutting lines based on geodetic calculations (Figure 4.6) in preparation for the pattern development step in the TEXTILE module.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                26
+            ],
+            "page_labels": [
+                "4-3"
+            ],
+            "type": "image",
+            "sections": [
+                "4 Examples",
+                "4.1 Tenniscourt with Inner Air Pressure"
+            ]
+        }
+    },
+    {
+        "content": "The image shows a three‐dimensional perspective of a rectangular membrane structure that has been inflated by a constant internal air pressure. What was originally a flat, orthogonal mesh has “bulged” into a smooth, double‐curved surface. The deformed membrane is rendered in a wireframe of thin black grid lines, each line tracing the edges of the finite‐elements that make up the surface. At the perimeter of the membrane, each mesh node is anchored to a small cube symbol—these cubes mark the fixed supports constraining the boundary in all three directions.\n\nSuperimposed on the black wireframe are two families of smoothly curving geodetic lines. One family is drawn in bright red; the other appears in a pale cyan (light blue). The red curves run roughly in one principal material direction across the inflated form, while the cyan curves run in the orthogonal direction. Together they form a quasi‐orthogonal network of geodesics on the curved surface. The spacings of these lines follow the deformed element shapes rather than the original flat grid, showing how each “strip” must be cut and later developed into a plane (XY) pattern without introducing unwanted stresses.\n\nVisually, the membrane peaks near its center—here the grid bows upward—and slopes down smoothly to the supported edges. You can see the curvature gradients best where the mesh elements are smallest (along the edges of the image), and the panels become larger as you move toward the central bulge. The red and cyan geodetic curves wrap continuously over the surface, bending gently to follow the natural stress lines generated by the internal pressure and the membrane’s boundary conditions.\n\nBeneath the drawing, a caption reads “Figure 4.7: Geodetic lines in a 3D plot,” indicating that this output comes from a post‐processing run (for example, in WINGRAF) that computes 3D cutting areas and geodesic lines based on the formfinding prestress state. The overall effect is a clear visual guide to how the membrane’s surface would be segmented along these geodesic paths in preparation for pattern development in a program like TEXTILE.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                27
+            ],
+            "page_labels": [
+                "4-4"
+            ],
+            "type": "image",
+            "sections": [
+                "4 Examples",
+                "4.1 Tenniscourt with Inner Air Pressure"
+            ]
+        }
+    },
+    {
+        "content": "The image is a schematic “ground‐view” rendering of a precomputed set of 3D cutting areas for a membrane structure, annotated as Figure 4.8.  Visually it shows a single rectangular domain (outlined in red) subdivided into five adjacent, slightly curved vertical strips, each rendered in a distinct solid color and overlaid with a fine triangular mesh:\n\n1. Bounding rectangle and mesh  \n   • The full assembly is contained within a thin red rectangular frame. Along the frame’s perimeter small red squares mark the nodal grid points of the original planar mesh.  \n   • Across the entire domain a white wireframe of equilateral triangles is visible—the original triangulation of the membrane surface before and after formfinding.  \n\n2. Colored cutting‐area strips  \n   • Five contiguous curved panels (or “strips”) run top to bottom.  From left to right their fill colors are:  \n     – Deep navy blue  \n     – Bright sunflower yellow  \n     – Pale aqua-cyan  \n     – Muted olive-green  \n     – Dark forest green  \n   • Each strip retains the underlying white triangular mesh, indicating that they are discrete mesh subregions extracted for cutting‐pattern generation.  \n   • The gentle convex curvature of each strip (bowing outward to the right) reflects how the cutting lines were traced along geodesic paths on the inflated membrane geometry.  \n\n3. Mesh nodes and markers  \n   • Within the yellow band a single orange‐red marker dot highlights a particular node or control point, suggesting a reference or anomaly flagged during processing.  \n   • All triangular elements show their local element coordinate axes (tiny white arrows), hinting at directional data used later in textile compensation and material orientation checks.  \n\n4. Contextual caption  \n   • Beneath the graphic reads:  \n     “Figure 4.8: 3D-cutting areas in ground view.”  \n   • This confirms that the view is a planar projection (XY plane) of the true 3D cutting surfaces that will be flattened and compensated in subsequent TEXTILE runs.  \n\nHow this fits into the workflow  \n- The strips are generated by WINGRAF after the formfinding prestress (load case 2) and wind‐load analysis (load case 11) have been applied to the inflated membrane.  \n- The mesh regions correspond to geodetic cutting boundaries, later transported into TEXTILE for development (flattening) and realistic compensation (COMP DE1, COMP DE2) to arrive at final stress‐free 2D cutting patterns.  \n- The color coding simply distinguishes each cutting area; in practice each will be treated as a separate panel when manufacturing the membrane.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                27
+            ],
+            "page_labels": [
+                "4-4"
+            ],
+            "type": "image",
+            "sections": [
+                "4 Examples",
+                "4.1 Tenniscourt with Inner Air Pressure"
+            ]
+        }
+    },
+    {
+        "content": "The image shows a perspective rendering of a doubly curved, triangular‐meshed shell structure that has been subdivided into seven longitudinal “cutting areas.” The shell has the appearance of a vault or inflated canopy resting on a line of equally spaced supports along its lower edge. Each support is depicted by a small red square beneath the mesh, arranged in a straight row on the plane.  \n\nThe surface itself is composed of a dense triangular finite‐element mesh, with the edges of each triangle rendered as thin white lines. Superimposed on the mesh is a series of seven colored stripes running from one free edge up toward the central ridge. From right to left (as seen by the viewer) the colored stripes proceed in the order:  \n 1. Bright red (outermost panel)  \n 2. Dark green  \n 3. Normal green  \n 4. Light turquoise  \n 5. Lemon yellow  \n 6. Pale green  \n 7. Dark blue (narrowest stripe adjacent to the ridge)  \n\nThese colored bands delineate the individual 3D‐cutting areas that will later be “unfolded” into planar textile patterns. The narrow dark blue stripe at the ridge indicates the final, apex‐side patch, and the broader colored areas toward the front represent panels of progressively larger width.  \n\nAbove the shell is a horizontal legend bar subdivided into color‐coded segments ranging from red through yellow and green to blue. Numeric labels below the legend indicate a scale from –7 up to +3 (no units shown), suggesting this bar may encode a scalar quantity such as stress, strain or deviation used during form‐finding or pattern compensation.  \n\nAlong the ridge of the shell, a fine magenta wireframe outline can be discerned, hinting at either an undeformed reference geometry or a guiding curve for panel boundaries. The entire assembly sits in a neutral, white background, and no coordinate axes are displayed.  \n\nBeneath the image is the caption:  \n“Figure 4.9: 3D‐cutting areas 3D plot.”  \n\nOverall, the plot communicates how the form‐found, prestressed shell has been partitioned into a series of longitudinal strips. These strips correspond to the geodetic cutting lines computed by the software (e.g., WINGRAF), enabling each colored patch to be extracted in its own 3D geometry before being flattened into 2D cutting patterns for fabrication.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                27
+            ],
+            "page_labels": [
+                "4-4"
+            ],
+            "type": "image",
+            "sections": [
+                "4 Examples",
+                "4.1 Tenniscourt with Inner Air Pressure"
+            ]
+        }
+    },
+    {
+        "content": "The image is a composite form-finding and cutting-pattern diagram for a tensioned membrane with an embedded oval opening. Key features and color-coded elements include:\n\n• Overall geometry  \n  – The membrane’s original, flat, quadrilateral outline (with subtly curved edges) is visible as a very light-grey mesh.  \n  – At each of the four corners sits a support node, marked by a small red “X.” These are the fixed boundary conditions for the form-finding run.\n\n• Form-found (prestressed) shape  \n  – Superimposed in bright green is the updated shell geometry after applying the constant inner air pressure and executing the second form-finding step (load case 2). This green outline represents the new, saddle-like equilibrium surface.  \n  – The central opening has morphed into an elongated ellipse, also drawn in green. Two green diagonals across this ellipse indicate principal element directions or stiffening lines within the perforation boundary.\n\n• Load‐vector directions and geodesic cutting lines  \n  – Radiating in red from the boundary toward the opening— and vice versa—are straight lines whose orientation is normal to the deformed surface. These either show the load vectors computed on the deformed mesh (as described in load case 2) or, equivalently, the geodetic “cutting lines” generated by WINGRAF for pattern development.  \n  – The red rays are regularly spaced around the opening, illustrating the subdivision into narrow 3D‐cutting strips that will later be developed into 2D panels.\n\n• Local element coordinate axes  \n  – Along the edge of the oval aperture appear many short black line segments (ticks). Each one denotes an element’s local x–y axes (warp and fill directions). Their orientation relative to the global system highlights areas where the material’s principal directions diverge from the computed geodesic lines—exactly the discrepancy the program warns about if local element axes aren’t rotated to align with the strip orientation.\n\n• Layering of results  \n  – By showing the original mesh, the green deformed form-found shape, the red load/geodesic lines, and the black local axes together, the figure conveys the full sequence:  \n    1. Start with a planar mesh under vertical z-direction loading.  \n    2. Compute the prestressed, form-found geometry via inner pressure (load case 2).  \n    3. Reapply the load vectors normal to that deformed shape.  \n    4. Extract geodesic lines for cutting‐pattern generation.  \n    5. Visualize local axes to verify material alignment.\n\nThis layered visualization is exactly what a TEXTILE + WINGRAF workflow produces: it confirms the form-found geometry, defines the true loading direction on the deformed surface, and lays out the geodesic cutting strips—ready for 2D development and compensation steps.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                28
+            ],
+            "page_labels": [
+                "4-5"
+            ],
+            "type": "image",
+            "sections": [
+                "4 Examples",
+                "4.1 Tenniscourt with Inner Air Pressure"
+            ]
+        }
+    },
+    {
+        "content": "In file textile1.dat a plane input system is blown up with a constant inner air pressure. The second formfinding step is very important for this example because the inner air pressure has to get the right load direction vertical to the deformed shape! The program computes the load on the system defined with the primary load case! So in load case 2 the loadvector is computed with the deformed mesh of primary load case 1! In the first step of load case 1 the load is applied only in vertical z direction of the original plane mesh! Thus the deformed mesh of load case 2 slightly varies from the deformed mesh of load case 1:\n For further analysis it is very comfortable to show new deformations starting at the formfinding position. Therefore it is necessary to make a system update:\n prog ase head Coordinate-Update syst PLC 2 STOR yes end\n prog ase\n With this run, the nodal coordinates are moved to the deformed position of load case 2. Staring the animator now, at once the formfinding geometry is shown as new undeformed system. A plot in WINGRAF shows the system with the new element coordinate systems:\n Now all real static load cases can be computed. It is important to define load case 2 as the primary load case because this load case includes the formfinding prestress of all elements. Furthermore all active elements must be taken into account with a group stiffness factor of 1.0. The following input shows a simplified input of a windloading:\n prog ase\n HEAD Wind with 1.0 stiffness syst prob th3 nmat yes PLC 2 lc 11 titl ’Wind in x’ LC 901,902 end\n Now the cutting pattern analysis can be done. Usually the cutting lines are defined interactively in WINGRAF or SOFIPLUS. In this example they are defined in an extra TEXTILE batch run. A following WINGRAF run takes these cutting lines, calculates the geodetic lines and computes, stores and plots the 3D-cutting areas.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                24,
+                25,
+                26
+            ],
+            "page_labels": [
+                "4-1",
+                "4-2",
+                "4-3"
+            ],
+            "type": "text",
+            "sections": "4.1 Tenniscourt with Inner Air Pressure"
+        }
+    },
+    {
+        "content": "Usually the cutting lines are defined interactively in WINGRAF or SOFIPLUS. In this example they are defined in an extra TEXTILE batch run. A following WINGRAF run takes these cutting lines, calculates the geodetic lines and computes, stores and plots the 3D-cutting areas..\n Now all necessary data is available for the cutting pattern in TEXTILE. At first the development of surface produces the stressed 2D-area in the XY-plane (plotted in dashed lines). The strips shrink due to the compensation method and lead to the final stressfree cutting pattern area - area after compensation (plotted in unbroken lines or filled area)\n prog textile\n head Cutting pattern analysis - Development of surface and compensation cutting $ takes 3D-cutting areas from WING $ Realistic Compensation added to load case-stress strain in Percent: COMP DE1 - 1.0 $ Percent additional strain in warp direction COMP DE2 - 2.0 $ Percent additional strain in fill direction end\n The output listing shows the 7 areas. The following warning appears because in the input system the local element x coordinates point to global X while the strips are oriented in global Y. You could avoid this by rotating the local x axis of the elements to global Y.\n +++++ warning no. 123 in program MAT\n In some areas a significant discrepance between the local element material direction and computed warp direction was detected. Please check the printed statistic and the warp directions.\n Further information about this sample can also be found in chapter 2: Theoretical principles.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                26,
+                28
+            ],
+            "page_labels": [
+                "4-3",
+                "4-5"
+            ],
+            "type": "text",
+            "sections": "4.1 Tenniscourt with Inner Air Pressure"
+        }
+    },
+    {
+        "content": "The image is a rendered finite‐element mesh of an L-shaped solid composed of three joined square panels (“quadrats”), each originally defined as a 10 m × 10 m area, for a total 3D surface area of 300 m². It appears as part of a workflow in which a 3D surface is “cut” and “relaxed” into an equivalent 2D pattern, with the goal of demonstrating that the area is preserved through the transformation.\n\nDescription of geometry and mesh  \n• Geometry: Two vertical walls meet at a right angle (forming an inside corner), and a horizontal slab caps them at the top, creating an inverted “U” or upside-down corner shape when viewed in perspective. Each of these three faces is a single quadrat, so that, in plan, one could imagine three adjacent 10 m × 10 m squares arranged in an L pattern.  \n• Mesh: Every face is subdivided into a regular grid of smaller square elements. On each quadrat, 10 divisions in one direction and 10 in the orthogonal direction yield 100 elements per quadrat, visible as a fine wireframe overlay. The mesh lines are drawn in dark gray, crisply dividing the panels into equal cells.  \n\nColor shading and lighting  \n• The two vertical walls are rendered in a deeper, more saturated blue tone, with subtle shading along the upper edges to suggest a light source positioned above and slightly to the front.  \n• The horizontal top panel transitions to a lighter blue, indicating either a change in surface orientation or the same light source striking it more directly.  \n• No legend is present, but the gradient likely serves purely aesthetic or to help distinguish faces, rather than encoding stress or displacement magnitude.  \n\nContextual annotations and caption  \n• Below the image, the caption reads “Figure 4.11: Area consisting of three quadrats.”  \n• In the accompanying text (not part of the image), it is noted that this area was used to test a “cutting pattern” procedure: the 3D area is stored under load case 1001 in a database and can be animated to show displacements. A tabulated result (“CUTTING PATTERN RESULTS”) confirms that the original 3D surface area of 300.000 m² matches the 2D relaxed area of 300.027 m².  \n\nOverall, the image clearly documents the starting geometry—a simple, mesh-discretized L-shaped surface composed of three square panels—prior to unfolding or pattern generation. Its crisp wireframe grid, uniform element sizing, and blue shading make it immediately clear that this is a preparatory step in a textile or skin‐patterning workflow, ensuring area preservation through the cut‐and‐relax process.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                29
+            ],
+            "page_labels": [
+                "4-6"
+            ],
+            "type": "image",
+            "sections": [
+                "4 Examples",
+                "4.2 Development of Surface of a Cube"
+            ]
+        }
+    },
+    {
+        "content": "The image (labelled “Figure 4.12: Development of surface in six virtual steps, 3D view”) is a 2-by-3 array of wire-frame mesh renderings, each showing the incremental unfolding of a three-quadrant, right-angled surface into a flat cutting pattern. All meshes are drawn in thin blue lines on a plain white background and are presented from a consistent, slightly elevated oblique viewpoint.\n\nLayout and sequence  \n• The six views are arranged in two columns and three rows.  \n• The left column illustrates development steps 1, 3 and 5; the right column shows steps 2, 4 and 6.  \n• Time (or step number) increases first down the left column, then continues down the right.\n\nMesh topology  \n• Each mesh is composed of uniform quadrilateral cells (grid lines), corresponding to a total original area of three 10 m × 10 m squares (300 m²).  \n• The original L-shaped surface is formed by two orthogonally hinged panels: one vertical and one horizontal, each subdivided into a regular grid.  \n• Adjacencies and edge connections remain constant throughout all steps.\n\nStep-by-step description  \n1. Step 1 (top left): The surface is in its original configuration. A flat horizontal panel (floor) is laid out in front, while a connected vertical panel (wall) rises sharply at a right angle from its back edge. The mesh lines form perfect squares aligned to principal horizontal and vertical axes.  \n2. Step 2 (top right): The vertical panel has begun to rotate downward about the hinge line, now tilting toward the viewer. The angle between panels is less than 90°, and the mesh squares on both panels remain undeformed but are viewed in perspective.  \n3. Step 3 (middle left): Further unfolding has occurred. The former wall panel swings below horizontal, creating a shallow obtuse angle with the original floor. The grid still shows crisp right angles at each quad, but two panels now lie in different but nearly coplanar planes.  \n4. Step 4 (middle right): The boundary between panels is almost flat. Only a slight kink remains at the former hinge. All quads continue to appear rectangular, though foreshortening in perspective hints at the last vestige of 3D curvature.  \n5. Step 5 (bottom left): Virtually all bending has been removed; the mesh looks almost entirely planar. A subtle bulge at what was originally the panel junction indicates residual strain, but topologically the surface is now a single contiguous patch.  \n6. Step 6 (bottom right): Fully developed state. The mesh has been relaxed into a flat, nearly perfect rectangle. The uniform quad pattern shows very minor stretching (area_2D = 300.027 m² vs. original 300.000 m²), demonstrating minimal distortion during flattening.\n\nOverall, this six-panel graphic succinctly visualizes how a compound, right-angled surface composed of three 10 × 10 m quadrats can be “unfolded” step by step into a single flat cutting pattern. The consistent wire-frame style emphasizes topology and area preservation—key data that underpin the TEXTILE module’s reported development results.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                29
+            ],
+            "page_labels": [
+                "4-6"
+            ],
+            "type": "image",
+            "sections": [
+                "4 Examples",
+                "4.2 Development of Surface of a Cube"
+            ]
+        }
+    },
+    {
+        "content": "The image (Figure 4.13) shows the flattened “cutting pattern” or ground‐view development of a doubly curved 3D surface. Rendered entirely in thin blue wireframe lines on a white background, it consists of a regular quadrilateral mesh that has been relaxed and laid out in the plane without appreciable area loss. Key visual elements and their meanings are:  \n\n1. Overall Shape  \n   • The outline is a single contiguous region shaped roughly like a tapered fan or teardrop:  \n     – A sharp “pivot” or tip at the left-hand side where three original 10 m × 10 m quadrats met.  \n     – Two smooth, gently curved long edges sweeping outward and to the right, forming a broad arc on the right.  \n     – Slight symmetry about a horizontal centerline, reflecting the original 3-quadrat arrangement.  \n\n2. Quadrilateral Mesh  \n   • The interior is filled with a grid of quadrilaterals, each originally a 10 × 10 m patch in 3D.  \n   • Lines radiate somewhat from the tip and also form near-concentric bands, indicating how the surface stretches and rotates as it is unrolled.  \n   • Near the center (left tip), quads are more regularly square; farther out toward the broad right edge they become slightly skewed and stretched, showing the material’s relaxation.  \n\n3. Boundary Behavior  \n   • The two long edges are not straight: each is a smooth curve whose curvature corresponds to the original surface’s curvature in 3D (one edge bending slightly concave, the other convex).  \n   • The outermost row of quads is marginally larger and less uniform, evidence of slight tensile adjustment in the development process.  \n\n4. Scale and Area Preservation  \n   • Despite small local distortions, the listing in the accompanying TEXTILE output confirms that the total 2D developed area is 300.027 m² versus the original 300.000 m² in 3D—an imperceptible 0.027 m² difference over three 10 × 10 m patches.  \n   • The uniform grid spacing (thin blue lines) visually reinforces that the mesh has been “relaxed” to minimize internal stresses.  \n\n5. Purpose and Context  \n   • This view is one of six frames in a sequence showing progressive flattening of a 3D area comprised of three quadrats.  \n   • Displacements from the original geometry are stored under load case 1001 and can be replayed in an animator to verify the cut pattern before actual textile or sheet‐metal fabrication.  \n\nIn sum, the image documents the successful planar development of a moderately curved, three-panel surface: a precise wireframe representation of how the original 300 m² 3D region becomes a single flat cutting pattern with minimal distortion, ready for downstream manufacturing or pattern‐cutting operations.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                30
+            ],
+            "page_labels": [
+                "4-7"
+            ],
+            "type": "image",
+            "sections": [
+                "4 Examples",
+                "4.2 Development of Surface of a Cube"
+            ]
+        }
+    },
+    {
+        "content": "For testing also an area consisting of three quadrats has been developed:\n The following sequence of six pictures show the process. As the displacements of the final area in relation to the original area are stored in the database as load case 1001 this can also be presented in the animator:\n The listing of TEXTILE shows that the area of the developed area is really the same as the original 3D area of 300 m2 (3 areas of 10m*10m)\n CUTTING PATTERN RESULTS\n Mno area_3D area_2D relaxed [m2] [m2] [m2] 1 1 300.000 300.027 300.027\n Number",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                28,
+                29,
+                30
+            ],
+            "page_labels": [
+                "4-5",
+                "4-6",
+                "4-7"
+            ],
+            "type": "text",
+            "sections": "4.2 Development of Surface of a Cube"
+        }
+    },
+    {
+        "content": "[1] J. Bellmann. Membrantragwerke und Seifenhaut - Unterschiede in der Formfindung. Bauingenieur 73, 118-123, 1998.\n [2] J. Bellmann. SOFiSTiK Seminarbeitrag 1996 - Membrantragwerke, Formfindung und statische Analyse. Balkema 10998 - ISBN 90 5410 9548, 1996.\n [3] K.-U. Bletzinger and R. Ziegler. Theoretische Grundlagen der numerischen Formfindung von Membrantragwerken und Minimalflächen. Betonkalender BK2 441-456, 2000.\n [4] J. Bellmann and J. Köppl. Die Überdachung des Rundmischbettes für ein Zementwerk in Harburg bei Donauwörth. Stahlbau 71, Heft 7, 2002.\n [5] J. Bellmann. Membranes Ã¢â‚¬âCœ From Formfinding to Cutting Pattern. Structural Membranes conference on textile composites and inflatable structures, 2003.\n [6] J. Bellmann. Dynamic behaviour of inflatable membranes for impact and wind loading. Structural Membranes conference on textile composites and inflatable structures, 2005.\n [7] J. Bellmann. Air volume elements for distribution of pressure in air cushion membranes. Structural Membranes conference on textile composites and inflatable structures, 2011.\n [8] J. Bellmann. Experience on the implementation of a nonlinear material model for mem- brane fabrics in a finite element program. Structural Membranes conference on textile composites and inflatable structures, 2013.\n [9] J. Bellmann. Active bending starting on curved architectural shape. Structural Membranes conference on textile composites and inflatable structures, 2017.",
+        "metadata": {
+            "document_name": "textile_1.pdf",
+            "page_indices": [
+                32
+            ],
+            "page_labels": [
+                "4-9"
+            ],
+            "type": "text",
+            "sections": "Bibliography"
+        }
+    }
+]

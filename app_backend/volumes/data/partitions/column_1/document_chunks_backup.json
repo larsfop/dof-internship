@@ -1,0 +1,1121 @@
+[
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            2
+        ],
+        "page_labels": [
+            null
+        ],
+        "type": "table",
+        "sections": [
+            "Foreword"
+        ],
+        "coordinates": [
+            [
+                469.6499938964844,
+                1126.3187255859375
+            ],
+            [
+                2973.89990234375,
+                4210.3095703125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Nominal Curvature 1-1 1.1 The Workflow . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1-3 1.2 Deviations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1-4 1.3 Imperfection . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1-4 1.4 Creep Effects . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1-5 1.5 The Slenderness Criterion . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1-5 1.6 Biaxial Bending . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1-5 1.7 Design of Reinforced Concrete . . . . . . . . . . . . . . . . . . . . . . . . . . . 1-5 1.8 Remark of the National Annex . . . . . . . . . . . . . . . . . . . . . . . . . . . 1-6 1.8.1 Design according to German Standard . . . . . . . . . . . . . . . 1-6 1.8.2 Design according to Austrian Standard . . . . . . . . . . . . . . . 1-6 1.8.3 Design according to British Standard . . . . . . . . . . . . . . . . 1-6 1.8.4 Design according to Italian Code . . . . . . . . . . . . . . . . . . . 1-6 1.8.5 Design according to French Standard . . . . . . . . . . . . . . . . 1-7 Description of Input 2-1 2.1 Input Language . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-1 2.2 Input Records . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-2 2.3 ECHO – Output Options . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-3 2.4 CTRL – Control calculation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-5 2.5 POS – Static position . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-7 2.6 DGRP – Design Group . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-8 2.7 COMB – Load Combinations . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-9 2.8 COPY – Loads and Factors . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-11 2.9 CINP – CADINP data for STAR2 . . . . . . . . . . . . . . . . . . . . . . . . . . 2-12 2.10 FIRE – Fire design . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-13 2.11 WARM – Flamed edges . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-14 2.12 L0FI – Effective length heat desgin . . . . . . . . . . . . . . . . . . . . . . . . 2-15 2.13 CREP – Creep . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-16 2.14 GEOM – Geometry for nominal curvature . . . . . . . . . . . . . . . . . . . . 2-17 2.15 IMP – Imperfection . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-18 2.16 BUCK – Buckling Boundaries . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-19 2.17 SLN – Structural Line . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-20 2.18 DSLN – Design Element . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-21 2.19 CDEL – Remove Design Groups . . . . . . . . . . . . . . . . . . . . . . . . . 2-22 2.20 SCHN – Internal Forces . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-23 2.21 RCPY – Copy of results between different databases . . . . . . . . . . . . 2-24"
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            1,
+            2,
+            4
+        ],
+        "page_labels": [
+            null,
+            null,
+            "1-1"
+        ],
+        "type": "text",
+        "sections": [
+            "Foreword"
+        ],
+        "content": "COLUMN Reinforced Concrete Column\n COLUMN Manual, Service Pack 2025-4 Build 146\n Copyright © 2025 by SOFiSTiK AG, Nuremberg, Germany.\n SOFiSTiK AG\n HQ Nuremberg Office Garching Flataustraße 14 Parkring 2 90411 Nürnberg 85748 Garching bei München Germany Germany T +49 (0)911 39901-0 T +49 (0)89 315878-0 F +49(0)911 397904 F +49 (0)89 315878-23 info@sofistik.com\n www.sofistik.com\n This manual is protected by copyright laws. No part of it may be translated, copied or reproduced, in any form or by any means, without written permission from SOFiSTiK AG. SOFiSTiK reserves the right to modify or to release new editions of this manual.\n The manual and the program have been thoroughly checked for errors. However, SOFiSTiK does not claim that either one is completely error free. Errors and omissions are corrected as soon as they are detected.\n The user of the program is solely responsible for the applications. We strongly encourage the user to test the correctness of all calculations at least by random sampling.\n Contents\n Contents\n 1\n 2\n i\n Nominal Curvature\n 1\n The SSD-Task \"Column Design\" provides the nominal curvature according to the standard EN 1992-1-1:2004, Ch. 5.8.8. It can be applied for a single column or a whole structure with a constant normal force distribution. The method is currently allowed in Germany, Austria, Italy, France and Great Britain and Northern Ireland according to the standard EN 1992-1-1:2004.\n The nominal curvature is a simplified method, which calculates the approximate bending moment with second order effects. Though, the approximation is based on the linearization of the dimensioning diagram. The necessity of second order effects will be checked with a slenderness criteria according to the standard EN 1992-1-1:2004, Ch. 5.8.3.1. However, the method will be always applied, also if the equation recommends no inverstigation of second order effects.",
+        "token_count": 482
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            4,
+            5
+        ],
+        "page_labels": [
+            "1-1",
+            "1-2"
+        ],
+        "type": "text",
+        "sections": [
+            "Foreword"
+        ],
+        "content": "The necessity of second order effects will be checked with a slenderness criteria according to the standard EN 1992-1-1:2004, Ch. 5.8.3.1. However, the method will be always applied, also if the equation recommends no inverstigation of second order effects..\n There are some restrictions and assumptions to apply the nominal curvature. Regarding cross section, the standard recommends symmetric geometry, constant reinforcement distri- bution, and the use of cross section like rectangle, circle or ellipse. The material and cross section are defined with the program AQUA. When there are realistic assumptions regarding the curvature distribution, the applicability on a whole structure is given. The resulting bending moment are used to check if an uniaxial or biaxial design can be applied according to EN 1992-1-1:2004, Ch. 5.8.9. If limits are not respected, then it will be always applied a biaxial design.\n • Define boundary conditions in each direction\n • Design of a reinforced concrete column with gross or net cross section.\n • Selection of a column or wall.\n • Curvature distribution cy,z = 10.0 according to EN 1992-1-1:2004, Ch. 5.8.8.2 (4).\n • Final creep factor φ(∞,t0) = 2.5\n • Associated columns, which have an impact on the decisive column\n m = 1.0 der Faktor @m = /0.5(1+1/m) according to EN 1992-1-1:2004, Ch. 5.2\n (5).\n The effects of creep are considered with the parameter infinity creep coefficient φ(∞,t0) and the proportional factor M0Eqp/M0Ed.\n The standard for the maximum of reinforcement can exceed the limit value. If the maxi- mum reinforcement is exceeded, then there will be a hint in the ouptut. If the cross section represents a wall, then it should be selected an uniaxial design in direction about the weak bending axis.",
+        "token_count": 447
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            6
+        ],
+        "page_labels": [
+            "1-3"
+        ],
+        "type": "image",
+        "sections": [
+            "Foreword",
+            "1.1 The Workflow"
+        ],
+        "coordinates": [
+            [
+                1110.98681640625,
+                2563.232666015625
+            ],
+            [
+                1902.7180433333333,
+                4270.904912222222
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 1.1: Iteration"
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            7,
+            6
+        ],
+        "page_labels": [
+            "1-4",
+            "1-3"
+        ],
+        "type": "text",
+        "sections": [
+            "Foreword",
+            "1.1 The Workflow"
+        ],
+        "content": "The general approach of the nominal curvature is listed as following steps:\n 1. Calculation of the imperfection e, slenderness λ and inner lever arm dy,z\n 2. Find the critical deflection e0, which depends on the current loadcase combination. Con- sider different endmoments according EN 1992-1-1:2004, Ch. 5.8.8.2 (2), Eq. 5.32\n 3. Start iteration of design moment MEd (Theory II. Order) for each direction. (The iteration will stopp, when the coefficient Kr achieved convergence.)\n (a) Calculate the coefficient Kr and the eccentricity e2\n (b) Calculate actual design moment MEd = NEd (e0 + e + e2)\n (c) Calculate required reinforcement with the program AQB\n 4. Evaluate equations 5.38a and 5.38b according to EN 1992-1-1:2004, Ch. 5.8.9 to decide if biaxial design is necessary.\n 5. Additional cross section design on top, middle and bottom of the column (without imperfection and theory II.O.)\n 6. Result: decisive design moment, required reinforcement, and utilisation factor\n The iteration approach for the design moment MEd is shown in the Figure 1.1. The variable Kr is a linear approximation in the normal moment interaction diagram, also kown as ω-table. In each step, a new required reinforcement will be performed.\n For each loadcase combination the result of nominal curvature will be compared with a cross section design on the upper and bottom part of a column (without imperfection and theory II. order).\n Depending on annex standards, a minimum eccentricity e0 might be considered according to the standard EN 1992-1-1:2004, Ch. 6.1 (4). The final step of the actual moment of second order or first order will be compared with the minimum moment in equation 1.1.",
+        "token_count": 422
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            7
+        ],
+        "page_labels": [
+            "1-4"
+        ],
+        "type": "text",
+        "sections": [
+            "Foreword",
+            "1.1 The Workflow"
+        ],
+        "content": "Depending on annex standards, a minimum eccentricity e0 might be considered according to the standard EN 1992-1-1:2004, Ch. 6.1 (4). The final step of the actual moment of second order or first order will be compared with the minimum moment in equation 1.1..\n MEd ≥ Mmn\n Mmn = NEd e0 (1.1) e0 = h/30 ≥ 20mm\n Mmn = NEd e0\n e0 = h/30 ≥ 20mm\n If the minimum moment is decisive in both directions, then the program AQB will perform a separate design in both directions. Otherwise it would always perform a biaxial design, due to these simplified equations 5.38b according EN 1992-1-1:2004, Ch. 5.8.9.",
+        "token_count": 182
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            7
+        ],
+        "page_labels": [
+            "1-4"
+        ],
+        "type": "text",
+        "sections": [
+            "Foreword",
+            "1.2 Deviations"
+        ],
+        "content": "The implementation has some minor deviations regarding the approach according to the stan- dard EN 1992-1-1:2004. The nominal curvature uses the real inner lever arm of the inner forces, instead of the simplification (z = 0.9 d). This variation allows a general use of several cross section shapes, which are more or less still symmetric. Also, it is possible to exceed the recommended maximum area of reinforcement. If it takes place, then there will be a footnote in the PLB output, that As,m is exceeded. The approximation of the interaction diagram is only used to determine the coefficient Kr. The following cross section design will be performed with the exact dimensioning diagram in the program AQB.\n The additional investigation of other cross section design will be applied without imperfection and theory II. order. If an additional design is decisive, then it will always calculate a biaxial design with the program AQB. In this case the equations according EN 1992-1-1:2004, Ch. 5.8.9 will be neglected. Though, the minimum eccentricity according EN 1992-1-1:2004, Ch. 6.1 will be checked and applied.",
+        "token_count": 253
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            7
+        ],
+        "page_labels": [
+            "1-4"
+        ],
+        "type": "text",
+        "sections": [
+            "Foreword",
+            "1.3 Imperfection"
+        ],
+        "content": "If there are no custom defined imperfection with the command IMP, then the imperfection is calculated according to the standard EN 1992-1-1:2004, Ch. 5.2. To take into account the impact of other column members, there is the parameter αm, which is a reduction factor for the number of columns (see EN 1992-1-1:2004, Ch. 5.2 (5), Eq. 5.1). The default value for αm is 1.0, which represents no impact of other columns. The imperfection will be applied with the following equations (1.2):\n e = θ 0/2 with θ = θ0 αh αm\n (1.2)",
+        "token_count": 160
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            8
+        ],
+        "page_labels": [
+            "1-5"
+        ],
+        "type": "text",
+        "sections": [
+            "Foreword",
+            "1.4 Creep Effects"
+        ],
+        "content": "There are some specific parameters, which are necessary in order to consider the effects of creep. This represents the proportion between M0Eqp (first order bending moment in quasi- permanent load combination (SLS)) and M0Ed (first order bending moment in design load combination (ULS)), which is different for each load case and direction. The infinity creep factor φ(∞,t0) has to be defined according to the standard EN 1992-1-1:2004, Ch. 5.8.4.\n φeƒ = φ(∞,t0) M0Eqp / M0Ed\n (1.3)\n The program COLUMN generates distinct creep combinations for each loadcase combination. This investigation determines the rate of the bending moment or normal forces and provides these proportion factors.",
+        "token_count": 168
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            7,
+            8
+        ],
+        "page_labels": [
+            "1-4",
+            "1-5"
+        ],
+        "type": "text",
+        "sections": [
+            "Foreword",
+            "1.5 The Slenderness Criterion"
+        ],
+        "content": "These second order effects depends on the column slenderness. If the current slenderness is below the limit of slenderess, then the analysis of second order can be neglected. The general definition of the limit slenderness λm is defined according to the standard EN 1992-1-1:2004, Ch. 5.8.3 (1), Eq. 5.13N. (1), Eq. 5.13N.\n $$It is not always a biaxial design, when there are moments in both directions. If these equations (1.5) according to the standard EN 1992-1-1:2004, Ch. 5.8.9 are respected, it might allows a separate cross-section design.$$\n λy/λz ≤ 2 nd λz/λy ≤ 2\n (1.5)\n The first condition checks both slenderness rate according to the standard EN 1992-1-1:2004, Ch. 5.8.9 (3), Eq. 5.38a. One of the equations 1.6, listed below, has to be satisfied to perform an uniaxial design.\n ey/heq\n ez/beq\n $$ez/beq <= 0.2 or ey/heq <= 0.2 (1.6)$$\n The standard also recommends to set imperfection only in one direction, in which it causes unfavourable effects.\n ey = M,z,Ed/NEd , ez = M,y,Ed/NEd\n (1.7)",
+        "token_count": 330
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            8,
+            9
+        ],
+        "page_labels": [
+            "1-5",
+            "1-6"
+        ],
+        "type": "text",
+        "sections": [
+            "Foreword",
+            "1.7 Design of Reinforced Concrete"
+        ],
+        "content": "The chapters 9.5, 9.6 and 9.7 according to the standard EN 1992-1-1:2004 are considered the minimum and maximum reinforcement area. If the customer has already set up a minimum area of reinforcement, then the custom defined area of reinforcement will be used. The max- imum reinforcement can be exceeded and in this case it will be marked by a footnote in the PLB output. In every national annex are a few variations regarding minimum and maximum\n reinforcement.",
+        "token_count": 105
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            8,
+            9
+        ],
+        "page_labels": [
+            "1-5",
+            "1-6"
+        ],
+        "type": "text",
+        "sections": [
+            "Foreword",
+            "1.8 Remark of the National Annex",
+            "1.8.1 Design according to German Standard"
+        ],
+        "content": "The German standard code has a lot of changes regarding to EN 1992-1-1:2004. Also the Heft 600 (DafStb) has a lot of recommendations, which are applied in the German standard. The implementation of the recommended rules results in more economical cross section design. The national annex allows a reduction of the eccentricity e2 with the factor K1 according to the standard DIN EN 1992-1-1:2011 (NA), Ch. 5.8.8.2, when the slenderness range is satisfied.\n e2 = K1 (1/r) 2 eƒƒ,y / cy\n (1.8)\n A different definition of limit slenderness is used in the German annex according to the standard DIN EN 1992-1-1:2011 (NA), Ch. 5.8.3.1, Eq. 5.13.a and 5.13.b.\n $$Alim = 25 for |n|=>0,41 | 1.9 Alim =16/V7n -- for|n| < 0,41 (1.9)$$\n A biaxial design has to be applied, when the equations are not satisfied in the section 5.8.9 according to the standard DIN EN 1992-1-1:2011. In Germany, there is also Heft 600 (DafStb), that recommends for the equations 5.38a and 5.38b to neglect the imperfection and eccentricity of second order. Heft 600 (DafStb) describes that it is sufficient to take moments of first order.\n $$e0,y = M.0.,z,Ed/NEd e0,z = M.0.,y,Ed/NEd (1.10)$$\n In conclusion a separate design is only allowed, if one of these equations Heft 600 (DafStb) are satisfied.",
+        "token_count": 415
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            8,
+            9
+        ],
+        "page_labels": [
+            "1-5",
+            "1-6"
+        ],
+        "type": "text",
+        "sections": [
+            "Foreword",
+            "1.8 Remark of the National Annex",
+            "1.8.1 Design according to German Standard"
+        ],
+        "content": "Heft 600 (DafStb) describes that it is sufficient to take moments of first order.. $$e0,y = M.0.,z,Ed/NEd e0,z = M.0.,y,Ed/NEd (1.10)$$. In conclusion a separate design is only allowed, if one of these equations Heft 600 (DafStb) are satisfied..\n $$e0,y/heq e0,z/beq <= 0.2 or e0,z/beq e0,y/heq <= 0.2 (1.11)$$",
+        "token_count": 120
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            9
+        ],
+        "page_labels": [
+            "1-6"
+        ],
+        "type": "text",
+        "sections": [
+            "Foreword",
+            "1.8 Remark of the National Annex",
+            "1.8.2 Design according to Austrian Standard"
+        ],
+        "content": "The OEN EN 1992-1-1:2007 is similar to the EN 1992-1-1:2004 and uses mostly the recom- mendations of EN 1992-1-1:2004. The minimum reinforcement has a different pre-factor for As,mn according to the standard OEN EN 1992-1-1:2007. Also the pre-factor for As,max is defined as 0.08. The minimum diameter is recommended to 12 mm.",
+        "token_count": 105
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            9
+        ],
+        "page_labels": [
+            "1-6"
+        ],
+        "type": "text",
+        "sections": [
+            "Foreword",
+            "1.8 Remark of the National Annex",
+            "1.8.3 Design according to British Standard"
+        ],
+        "content": "The definitions for the minimum and maximum reinforcement are the same as in the standard EN 1992-1-1:2004 described. The minimum diameter is recommended to 12 mm.",
+        "token_count": 38
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            9,
+            10
+        ],
+        "page_labels": [
+            "1-6",
+            "1-7"
+        ],
+        "type": "text",
+        "sections": [
+            "Foreword",
+            "1.8 Remark of the National Annex",
+            "1.8.4 Design according to Italian Code"
+        ],
+        "content": "Most of the recommendations according to EN 1992-1-1: 2004 are adopted. The following de- viations have been made regarding the standard NORME TECNICHE PER LE COSTRUZIONI\n no. 42 January 2018:\n The minimum reinforcement is determined using the equations As,mn = 0.1 NEd / ƒyd or 0.003 Ac, the larger value is decisive. The maximum reinforcement As,m is 0.04 Ac and the minimum reinforcement diameter is 12 mm.",
+        "token_count": 114
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            10
+        ],
+        "page_labels": [
+            "1-7"
+        ],
+        "type": "text",
+        "sections": [
+            "Foreword",
+            "1.8 Remark of the National Annex",
+            "1.8.5 Design according to French Standard"
+        ],
+        "content": "The National Annex NF EN 1992-1-1: 2016 uses most of the recommendations. If the cross section represents a wall, then the following deviation is recommended according to NF 1992- 1-1: 2016-03, Ch. 9.6.2 (1) regarding to the minimum reinforcement:\n As,mn = 0.0\n NEd ≤ NRd,b\n As,mn = 0.002 Ac NEd > NRd,b (1.12)\n Due to the decisive constructive reinforcement according to NF 1992-1-1:2016-03(NA), Ch. 9.6.2 (3), the minimum reinforcement As,mn = 0.002 Ac is never undercut.",
+        "token_count": 158
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            12
+        ],
+        "page_labels": [
+            "2-1"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Description of Input"
+        ],
+        "content": "COLUMN is a postprocessing program supplement to the SSD-Tasks.\n • Column System\n • Column Calculation\n • Column Fire Design\n • Column Design\n - Nominal curvature method\n - General method\n The main task is to create a compact view of results, generate specific input data, and to perform the simplified fire design according to the standard DIN EN 1992-1-2 with the Table 5.2a and Equation 5.7.",
+        "token_count": 92
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            12
+        ],
+        "page_labels": [
+            "2-1"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Description of Input",
+            "2.1 Input Language"
+        ],
+        "content": "The input is done in a free format with the CADINP input language (see the general manual SOFiSTiK: ’FEA / STRUCTURAL Installation and Basics’).\n Three categories of units are distinguished:\n mm Fixed unit. Input is always required in the specified unit.\n [mm] Explicit unit. Input defaults to the specified unit. Alternatively, an explicit as- signment of a related unit is possible (eg. 2.5[m] ).\n [mm]1011 Implicit unit. Implicit units are categorised semantically and denoted by a cor- responding identity number (shown in green). Valid categories referring to the unit ”length” are, for example, geodetic elevation, section length and thickness. The default unit for each category is defined by the currently active (design code specific) unit set. This input default can be overridden as described above. The specified unit in square brackets corresponds to the default for unit set 5 (Eu- rocodes, NORM UNIT 5).",
+        "token_count": 205
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            13
+        ],
+        "page_labels": [
+            "2-2"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Description of Input",
+            "2.2 Input Records"
+        ],
+        "coordinates": [
+            [
+                387.51544189453125,
+                707.589111328125
+            ],
+            [
+                2909.439697265625,
+                3031.88818359375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Record Items HEAD ECHO OPT VAL CTRL OPT VAL POS TITL PLAC TEXT DGRP NO TITL COMB LC TYPE TITL COPY ID FACT CINP XXXX FIRE R NACH ALCC FACE EPS ALPC ALPL KURV L0FI VON BIS L0 WARM QNR EXP1 EXP2 EXP3 ... EXP9 EXP0 CREP PHI LCXP LCXN LCYP LCYN GEOM L BETY BETZ CY CZ IMP EIXY EIXZ AMXY AMXZ BUCK FIX SLN NO AXIS LEV TITL DSLN NO AXIS LEV TITL CDEL DGRP SCHN N MY1 MZ1 MY2 MZ2 MY3 MZ3 RCPY TO MTYP ID DTYP END"
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            13
+        ],
+        "page_labels": [
+            "2-2"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Description of Input",
+            "2.2 Input Records"
+        ],
+        "content": "The following record names and keywords are defined:\n The records HEAD and END are described in the general manual SOFiSTiK: ’FEA / STRUC- TURAL Installation and Basics’.",
+        "token_count": 39
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            14
+        ],
+        "page_labels": [
+            "2-3"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Description of Input",
+            "2.3 ECHO – Output Options"
+        ],
+        "coordinates": [
+            [
+                2217.5499999999997,
+                4178.158203125
+            ],
+            [
+                2877.9751733333333,
+                4229.70166015625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Table continued on next page."
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            15
+        ],
+        "page_labels": [
+            "2-4"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Description of Input",
+            "2.3 ECHO – Output Options"
+        ],
+        "coordinates": [
+            [
+                345.5879821777344,
+                387.2093505859375
+            ],
+            [
+                2934.87646484375,
+                2311.712646484375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default YES Required reinforcement FULL Results of the decisive combina- tion EXTR Results of all combinations PICT Reinforcement sketch LT FULL YES Graphic with predefined reinforce- ment FULL Graphic with optimized and rec- ommended reinforcement TERM* Thermal properties for heat design LT YES DGRP Summary of Design Groups for NCM LT YES YES Only the decisive column in each group FULL All columns per group VALUE NO Abort the output LT YES Output of the decisive combination FULL Output of all combinations EXTR Parts of YES and FULL"
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            15,
+            14
+        ],
+        "page_labels": [
+            "2-4",
+            "2-3"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Description of Input",
+            "2.3 ECHO – Output Options"
+        ],
+        "content": "ECHO\n Item Description OPT MAT Materials SECT Cross section elements SYST System YES Results for the decisive column FULL Results for every column, which are representing one position. ACT Action LOAD Loading YES Table with characteristic loads FULL Graphic with characteristic loads EXTR Table + Graphic COMB Combination YES Decisive combination FULL Table of all combinations EXTR will have an effect by using REAC FULL/EXTR, that all support re- actions of the combinations are printed REAC* Support reactions YES Characteristic FULL Combinations (see also COMB) EXTR Characteristic + combinations SCHN Internal Forces YES Internal Forces of decisive combi- nations FULL Internal Forces of all examine combinations DEFO* Deformation YES Deformation of decisive combina- tion FULL Deformation of all combinations Unit Default LT YES LT YES LT YES LT YES LT EXTR LT FULL LT YES LT YES LT YES\n REIN Reinforcement or output of\n the method\n LT\n YES\n nominal curvature\n * not valid for nominal curvature method\n The option ECHO DGRP is valid only for Nominal Curvature Method and should be used in its own PROG COLUMN. An example is in the DGRP command available.",
+        "token_count": 239
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            16
+        ],
+        "page_labels": [
+            "2-5"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Description of Input",
+            "2.4 CTRL – Control calculation"
+        ],
+        "coordinates": [
+            [
+                363.4102783203125,
+                814.3789672851562
+            ],
+            [
+                2918.100341796875,
+                2508.374267578125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default OPT TH2 Calculation based on general method of a LT single or several columns, which are sum- marized in one position NCM Calculation based on nominal curvature for LT a single or several columns, which are sum- marized in one position COMB Generate a STAR2 data set with the deci- LT sive combination DESI Summary of design results LT DCNO Design case number for the required rein- − 1 forcement per column DGNO Design case number for the maximum rein- − 3 forcement per group NETT Design with net cross section LT WALL Design with wall LT EMIN* Minimum eccentricity −"
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            16,
+            17
+        ],
+        "page_labels": [
+            "2-5",
+            "2-6"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Description of Input",
+            "2.4 CTRL – Control calculation"
+        ],
+        "content": "CTRL\n CANT Define a cantilever in xy/xz-plane\n LT\n * not valid for the general method\n COLUMN is used for different tasks. The standard is, that a single column, which is stretched over several stories, runs always with the general method with second order theory. The basics are according to the standard EN 1992-1-1, Chapter 5.8.6.\n TH2/NCM Herewith you can summarize several columns to one position. It can not be proceed a design for several columns, which is stretched over several stories. The method is restricted to a single column, which represents either a pin-ended column or a cantilever.\n COMB COLUMN is generating a data set, which is based on all calculated combinations. It will filter the decisive combinations and applies the combination with the com- mand APPLY to the main data set. This option is enabled, when the task \"Column calculation\" has selected a detailed STAR2-Output for the decisive combination. In this context, there will be applied several CINP-commands to generate the STAR2 data set into the file NAME.KOM, which are embed into the main data set.\n DESI The results are summarized for several columns and also if there is defined an associated accidental loadcase(impact resp. eqrthquake), which represents the accidental and earthquake design, for ultimate limit state.\n EMIN The minimum eccentricity can be activated(1) or deactivated(0) for the nominal curvature method. If the minimum eccentricity must be considered, then it will be applied automatically according the National Annex.\n A cantilever can be defined with the literals XY and XZ in the related direction.\n DCNO/DGNO For the nominal curvature method, you can use this record to define a num- ber for the design case for the required reinforcement per column or for the max- imum reinforcement per group. The reinforcements are then saved with these numbers in the database and labeled accordingly in the output and in representa- tions. For the general method, the numbers of the design load case are assigned analogously to the combination. However, this input can be used in combination with RCPY for the general method to copy results from individual designs to the database of a main system.",
+        "token_count": 462
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            18
+        ],
+        "page_labels": [
+            "2-7"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Description of Input",
+            "2.5 POS – Static position"
+        ],
+        "coordinates": [
+            [
+                401.0563049316406,
+                811.71484375
+            ],
+            [
+                2935.048095703125,
+                1254.35888671875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default TITL Position name Lt PLAC Place of the position (z.B. title of the position) Lt TEXT Description text Lt"
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            18
+        ],
+        "page_labels": [
+            "2-7"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Description of Input",
+            "2.5 POS – Static position"
+        ],
+        "content": "POS\n If the following command POS will be used, then the position name will be printed as a headline. The idea is, that the member can be labelled with a static position number TITL and the exact position of the member with PLAC for example the axis of the building. With TEXT there can be given a short description.\n Example:\n +PROG COLUMN\n HEAD POS 'S1' LAGE 'A/1' TEXT 'concrete column b/h=300/300 mm' ... END\n HEAD\n END",
+        "token_count": 107
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            19
+        ],
+        "page_labels": [
+            "2-8"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Description of Input",
+            "2.6 DGRP – Design Group"
+        ],
+        "coordinates": [
+            [
+                406.3263244628906,
+                809.4674682617188
+            ],
+            [
+                2911.373779296875,
+                1151.063232421875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default NO Group Number Lt TITL Description text Lt32"
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            19
+        ],
+        "page_labels": [
+            "2-8"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Description of Input",
+            "2.6 DGRP – Design Group"
+        ],
+        "content": "DGRP\n The command DGRP groups multiple columns, which for example have identical cross- sections. This group will then be stored in the database as a secondary group by its iden- tification at NO and description at TITL. Example:\n +PROG COLUMN\n HEAD DGRP NO GRP1 TITL 'Concrete column b/h=300/300 mm' ... END\n HEAD\n +PROG COLUMN\n HEAD ! Calculation of additional design group DGRP NO GRP2 TITL 'Concrete column b/h=400/300 mm' ... END\n HEAD\n +PROG COLUMN\n HEAD ... ! Only to print out summary of Design Groups from calculations above ECHO DGRP FULL CTRL NCM ... END",
+        "token_count": 148
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            20
+        ],
+        "page_labels": [
+            "2-9"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Description of Input",
+            "2.7 COMB – Load Combinations"
+        ],
+        "coordinates": [
+            [
+                387.3385314941406,
+                816.8558959960938
+            ],
+            [
+                2919.882080078125,
+                1872.3077392578125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default LC Loadcase number - TYPE Type of action LT (D) (D) Ultimate limit state (A) Accidental design situation (E) Earthquake (AB) Fire action Type of input LT (D) TITL Title of loadcase combination LT"
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            22
+        ],
+        "page_labels": [
+            "2-11"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Description of Input",
+            "2.7 COMB – Load Combinations"
+        ],
+        "coordinates": [
+            [
+                393.9158630371094,
+                808.6910400390625
+            ],
+            [
+                2923.462646484375,
+                1200.514404296875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default NO Loadcase numbers - FACT Combination factor -"
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            20,
+            21,
+            22
+        ],
+        "page_labels": [
+            "2-9",
+            "2-10",
+            "2-11"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Description of Input",
+            "2.7 COMB – Load Combinations"
+        ],
+        "content": "COMB\n Use the COMB input either to define new combinations rules in COLUMN or to reference existing ones from the database. Only design combinations listed in the option TYPE are allowed.\n A new combination can be defined by copying already calculated load cases and giving their factors by subsequent COPY commands. Example:\n +PROG COLUMN\n HEAD ... COMB LC 1001 TYPE (D) TITL \"1.35G(1)+1.5Q(1+2)\" COPY NO 1 FACT 1.35 COPY NO 2 FACT 1.5\n HEAD\n COMB LC 1002 TYPE (D) TITL \"1.5G(1)\"\n COPY NO 1 FACT 1.5 ... END\n COPY NO 1 FACT 1.5\n END\n Combinations defined by other programs or tasks can be referenced by their numbers of load case LC from the database.\n Note: The combinations from the database are used as combination rules. This means that the load case numbers and the corresponding factors are taken over and the combination is calculated linearly. If the combination from the database has been calculated non-linearly, this can lead to deviations in the size of the internal forces.\n Example:\n +PROG SOFILOAD\n HEAD ... COMB LC 1001 TYPE (D) TITL \"1.35G(1)+1.5Q(1+2)\" COPY NO 1 FACT 1.35 COPY NO 2 FACT 1.5 ... END +PROG COLUMN HEAD ... COMB LC 1001 TYPE (D) COMB LC 1003 TYPE (D) TITL \"1.5G(1)\" COPY NO 1 FACT 1.5 ... END\n 2.8 COPY – Loads and Factors\n COPY\n The COPY command always follows a COMB command and is associated to that combination. It copies existing load cases from the database and assigns thier corresponding combination factors. The loadings have to be defined, for example by SOFiLOAD. The ammount of COPY commands per COMB input is limited to 256.",
+        "token_count": 430
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            22
+        ],
+        "page_labels": [
+            "2-11"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Description of Input",
+            "2.7 COMB – Load Combinations"
+        ],
+        "content": "COPY. The COPY command always follows a COMB command and is associated to that combination. It copies existing load cases from the database and assigns thier corresponding combination factors. The loadings have to be defined, for example by SOFiLOAD. The ammount of COPY commands per COMB input is limited to 256..\n +PROG COLUMN\n HEAD ... ! for combination rule '1.35G(1)+1.5Q(2+9)' COMB 1001 TYPE (D) COPY NO 1 FACT 1.35 COPY NO 2,9 FACT 1.5 ...\n HEAD\n END",
+        "token_count": 126
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            23
+        ],
+        "page_labels": [
+            "2-12"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Description of Input",
+            "2.9 CINP – CADINP data for STAR2"
+        ],
+        "coordinates": [
+            [
+                401.7808532714844,
+                810.6154174804688
+            ],
+            [
+                2926.139892578125,
+                1150.5689697265625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default TEXT CADINP-Input LT arbitrary number of lines"
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            24
+        ],
+        "page_labels": [
+            "2-13"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Description of Input",
+            "2.9 CINP – CADINP data for STAR2"
+        ],
+        "coordinates": [
+            [
+                352.1912536621094,
+                793.9970703125
+            ],
+            [
+                2854.94677734375,
+                3311.732666015625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description R Fire resistance class (apply flame in minutes) NACH simplified check - method A T52A Table 5.2A GL57 Equation 5.7 can be combined with + T54 Wall according to Table 5.4 ALCC Coefficient for considering long time reactions of the compressive strength FACE apply a flame to edge - general method Y+ left edge Y- right edge Z- top edge Z+ bottom edge with arbitrary combination of edges EPS Emission values for the surface on concrete ALPC convective heat-transfer coefficient ALPL heat-transfer coefficient air KURV Fire action ETK Unit temperature fire curve EXT External fire curve CARB Hydroncarbon fire curve ING Tunnel fire curve ZTV-ING Unit Default mn Lt 0.85 Lt 0.7 W/K/m2 25 W/K/m2 9 Lt ETK"
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            23,
+            24
+        ],
+        "page_labels": [
+            "2-12",
+            "2-13"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Description of Input",
+            "2.9 CINP – CADINP data for STAR2"
+        ],
+        "content": "CINP\n This input data is generated by SSD-Task \"Column Calculation\" and is used by CTRL COMB. The generated data set for STAR2 will be saved in the file NAME.KOM and applied in the main data set with the command APPLY. For looking up of the combination loadcase number it can be used the variable #LC, which is determined by COLUMN and saved in the database.\n Example:\n +PROG COLUMN\n HEAD Looking for decisive loadcases PAGE UNIO 0 ECHO FULL NO CTRL COMB COMB 1002 (D) '1.35G+1.5Q(2)+I(X+Y+)' COMB 1003 (D) '1.35G' TYPE CONT '+1.5Q(2)' CINP '+PROG STAR2' CINP 'HEAD Decisive loadcase in ultimate limit state' CINP 'PAGE UNIO 0' CINP 'ECHO DEFO extr' CINP 'CTRL II 100' CINP 'CTRL SVRF 1' CINP 'LC #LC ' CINP 'REIN BEAM SING LCR #LCR ' CINP 'IF #LCR==1 ' CINP 'DESI ulti SMOD yes AMAX 20' CINP 'NSTR bk1 FMAX 2.0' CINP 'ENDIF' CINP 'IF #LCR==2 ' CINP 'DESI acci SMOD yes AMAX 20' CINP 'NSTR ak1 FMAX 2.0' CINP 'ENDIF' CINP 'END' END\n 2.10 FIRE – Fire design\n FIRE\n USER user-defined",
+        "token_count": 363
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            25
+        ],
+        "page_labels": [
+            "2-14"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Description of Input",
+            "2.11 WARM – Flamed edges"
+        ],
+        "coordinates": [
+            [
+                397.265869140625,
+                806.7230834960938
+            ],
+            [
+                2903.251953125,
+                1499.686279296875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default QNR Cross section number EXP1 Title of edge LT EXP2 LT ... LT EXP0 maximum 10 edges LT"
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            26
+        ],
+        "page_labels": [
+            "2-15"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Description of Input",
+            "2.11 WARM – Flamed edges"
+        ],
+        "coordinates": [
+            [
+                390.43243408203125,
+                802.7017822265625
+            ],
+            [
+                2919.191162109375,
+                1296.29931640625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default VON from Beam-No BIS to Beam-No VON L0 Effective length m"
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            25,
+            26
+        ],
+        "page_labels": [
+            "2-14",
+            "2-15"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Description of Input",
+            "2.11 WARM – Flamed edges"
+        ],
+        "content": "WARM\n With the command WARM you can define for a general cross section the flamed edges.\n There are maximum 10 different edges supported.\n Example:\n +PROG COLUMN\n HEAD Result from heat design PAGE UNIO 0 ECHO MAT YES ECHO SECT YES ECHO ACT YES ECHO REAC YES ECHO FORC YES ECHO DEFO YES ECHO COMB FULL ECHO PICT YES ECHO REIN NO FIRE R 60 FACE 'Y+Z+Y+Z+' EPS 0.7 ALPC 25 ALPL 9 KURV 'ETK' ! General cross section with flmaed edges WARM QNR 3 LE RI TO BO ! e.g. left, right, top and bottom COMB 3001 (A) 'G(1)+I(Y+)' END\n 2.12 L0FI – Effective length heat desgin\n L0FI\n The definition of the effective length are applied with L0FI for single or several columns for the heat design according to the standard EN 1992-1-2, method A. Especially on a bracing system of a single column with the input of L0 = 0.5 · L it can be shown, that in case of fire the column is rigid connected to the upper and lower storey.\n Hint: If the system is well described with a cantilever, then it is forbidden to apply the method A.",
+        "token_count": 298
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            28
+        ],
+        "page_labels": [
+            "2-17"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Description of Input",
+            "2.13 CREP – Creep"
+        ],
+        "coordinates": [
+            [
+                372.2037658691406,
+                811.1710815429688
+            ],
+            [
+                2932.780029296875,
+                1611.8616943359375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default L column length, optional m - BETY effective length coefficient for buckling around 1.0 BETZ the local y- resp. z-axis 1.0 CY curvature coefficient in local y- and z-direction 10 CZ for the calculation of the additional deflection e2 with 10 second order effects"
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            27,
+            28
+        ],
+        "page_labels": [
+            "2-16",
+            "2-17"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Description of Input",
+            "2.13 CREP – Creep"
+        ],
+        "content": "CREP\n Item Description Unit Default PHI Creep coefficient -\n The definition of the final creep coefficient can be given with PHI according to EN 1992-1-1, Chapter 3.1.4.\n The nominal curvature is using the effective creep coefficient according to EN 1992-1-1, Chap- ter 5.8.4, which will be calculated for each loadcase combination.\n The general method in the ultimate limit state is applying for each loadcase combination a associated quasi-permanent loadcase combination, which will be calculated with second order effects. The resulting deformations will be applied as predeformation as result of creep effects and will be added to the imperfection in the ultimate limit state.\n GEOM – Geometry for nominal curvature\n GEOM\n With the optional input L, the column length for the design can be specified for all selected columns. This means, for example, that columns with different lengths can be designed with the decisive length or modelled column lengths can be changed. If the input L is not used, each column is designed with its individual geometric length. If at least one of the columns has a difference in length that is greater than 1 mm, an informative warning is printed.",
+        "token_count": 248
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            29
+        ],
+        "page_labels": [
+            "2-18"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Description of Input",
+            "2.15 IMP – Imperfection"
+        ],
+        "coordinates": [
+            [
+                385.47247314453125,
+                805.2975463867188
+            ],
+            [
+                2917.2666015625,
+                1396.329345703125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default EIXY Imperfection ei in local y-direction m EIXZ Imperfection ei in local z-direction m AMXY Count of vertical members, which are contributing to 1 AMXZ the stiffness of the building 1"
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            30
+        ],
+        "page_labels": [
+            "2-19"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Description of Input",
+            "2.15 IMP – Imperfection"
+        ],
+        "coordinates": [
+            [
+                393.2666015625,
+                807.5276489257812
+            ],
+            [
+                2929.10400390625,
+                1266.9183349609375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default FIX against buckling Lt XY in local xy-plane XZ in local xz-plane"
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            29,
+            30
+        ],
+        "page_labels": [
+            "2-18",
+            "2-19"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Description of Input",
+            "2.15 IMP – Imperfection"
+        ],
+        "content": "IMP\n If no user input exist, the imerfection will be used as ei = θi · L0/2 according to EN 1992-1-1, Equation 5.2. The inclination will be considered with Equation 5.1 given by θi:\n θi = θ0 · αh · αm\n with\n θ0 : is the basic value for an inclination: θ0 = 1/200\n Qr, : is the reduction factor for height: a, = 2/VL < 1.0\n Qm : is the reduction factor for number of members: am = /0.5(1 + 1/m)\n With members of a storey (pin-ended column) it should be always used AMXY/AMXZ to set up αm = 1.\n If columns with different column lengths are designed together, the imperfection is calcu- lated individually for each column. Unless GEOM has been used to define one length for all columns.\n 2.16 BUCK – Buckling Boundaries\n BUCK\n If the column is braced in a plane, then there will be no design against buckling in this direction.\n As standard it will be always applied a design in both direction, but if the input is using the command FIX it will only applied in one direction.",
+        "token_count": 283
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            31
+        ],
+        "page_labels": [
+            "2-20"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Description of Input",
+            "2.17 SLN – Structural Line"
+        ],
+        "coordinates": [
+            [
+                390.7342834472656,
+                816.5123901367188
+            ],
+            [
+                2929.218994140625,
+                1501.554443359375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default NO Structural line number Z0 Bottom elevation of the column, optional [m]1001 - AXIS Level of the column in the floorplan (title of axis) Lt LEV Level of column by a given cut (plane) Lt TITL Title of structural line Lt"
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            32
+        ],
+        "page_labels": [
+            "2-21"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Description of Input",
+            "2.17 SLN – Structural Line"
+        ],
+        "coordinates": [
+            [
+                389.9612121582031,
+                814.5889282226562
+            ],
+            [
+                2926.994873046875,
+                1502.0079345703125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default NO Design element number Z0 Bottom elevation of the column, optional [m]1001 - AXIS Level of the column in the floorplan (title of axis) Lt LEV Level of column by a given cut (plane) Lt TITL Title of structural line Lt"
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            31,
+            32
+        ],
+        "page_labels": [
+            "2-20",
+            "2-21"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Description of Input",
+            "2.17 SLN – Structural Line"
+        ],
+        "content": "SLN\n The SLN command defines the length, position coordinates, cross-section and characteristic forces of a column based on that of a structural line. The optional elevation input Z0 corre- sponds to the z-coordinate of lowest point on the column. If given, it will be used as the column elevation, instead of the elevation taken from the structural line.\n This command applies for both the simplified nominal curvature or the general method, which considers the second order effects.\n The options LEV and AXIS can be used to describe the member placement in the whole structure more accurately. The option TITL can be used for a general label of the column.\n Multiple definitions of it can follow one POS command, to gather several columns in one posi- tion or design group. Example:\n +PROG COLUMN\n HEAD ... DGRP NO S101 TITL \"X/8\" TITL \"Cantilever Columns\" SLN 1001 AXIS 'A/1' LEV '1. OG' TITL 'Concrete column b/h=300/300 mm' SLN 1002 AXIS 'A/2' LEV '1. OG' TITL 'Concrete column b/h=300/300 mm' ... END\n HEAD\n DGRP NO S101 TITL \"X/8” TITL \"Cantilever Columns”\n Depending on the used output options, results of the decisive one or all columns will be shown in the print out.\n 2.18 DSLN – Design Element\n DSLN\n Use DSLN command, similar to SLN, to define the length, position coordinates, cross-section and characteristic forces of a column based on that of a Design Element. The optional elevation input Z0 corresponds to the z-coordinate of lowest point on the column. If given, this given value will be used as the column elevation overriding that from the design element.\n DSLN can only be used for designs using the simplified Nominal Curvature Method.\n Using design elements offers the advantage of integrating forces from columns models different from beam elements. For example, when designing wall-like columns, forces can be integrated from a column modelled using quad elements. A simple model can be found in standard example column_ncm_2_dsln.",
+        "token_count": 460
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            32
+        ],
+        "page_labels": [
+            "2-21"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Description of Input",
+            "2.17 SLN – Structural Line"
+        ],
+        "content": "DSLN can only be used for designs using the simplified Nominal Curvature Method.. Using design elements offers the advantage of integrating forces from columns models different from beam elements. For example, when designing wall-like columns, forces can be integrated from a column modelled using quad elements. A simple model can be found in standard example column_ncm_2_dsln..\n Th rest of the properties are the same as that of SLN. Example:\n +PROG COLUMN HEAD ... DGRP NO S101 TITL \"X/8 - Cantilever Columns\" DSLN 1001 AXIS 'A/1' LEV '1. OG' TITL 'Concrete column b/h=300/300 mm' DSLN 1002 AXIS 'A/2' LEV '1. OG' TITL 'Concrete column b/h=300/300 mm' ... END\n +PROG COLUMN\n HEAD\n DGRP NO S101 TITL ”\"X/8 - Cantilever Columns”",
+        "token_count": 206
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            33
+        ],
+        "page_labels": [
+            "2-22"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Description of Input",
+            "2.19 CDEL – Remove Design Groups"
+        ],
+        "content": "CDEL\n Item Description OPT Option DGRP remove all Design Groups database from the Unit Lt Default",
+        "token_count": 19
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            34
+        ],
+        "page_labels": [
+            "2-23"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Description of Input",
+            "2.20 SCHN – Internal Forces"
+        ],
+        "coordinates": [
+            [
+                374.7203369140625,
+                812.3035278320312
+            ],
+            [
+                2927.837890625,
+                1793.220703125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default N Normal force kN MY1 Moment My/Mz at the column head kNm MZ1 kNm MY2 Moment My/Mz at the bottom column edge kNm MZ2 kNm MY3 Moment My/Mz in the middle third according to kNm MZ3 buckling bendline kNm"
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            35
+        ],
+        "page_labels": [
+            "2-24"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Description of Input",
+            "2.20 SCHN – Internal Forces"
+        ],
+        "coordinates": [
+            [
+                350.6720275878906,
+                814.96044921875
+            ],
+            [
+                2924.365234375,
+                2021.1666259765625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description TO Name of target Database MTYP Type of structural element SLN Structural line DSLN Design element ID Number of structural element ALL All structural elements will be copied DTYP Control of envelope ENV An envelope of the results will be created ALL Deactivate the envelope creation Unit LT LT Default SLN ENV"
+    },
+    {
+        "document_name": "column_1.pdf",
+        "page_indices": [
+            34,
+            35
+        ],
+        "page_labels": [
+            "2-23",
+            "2-24"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Description of Input",
+            "2.20 SCHN – Internal Forces"
+        ],
+        "content": "SCHN\n The given internal forces will be used for the design with the nominal curvature method. The input of SCHN needs a previous input with LC.\n The assumption is based on a constant normal (compressive) force. There will be applied a regular design for both moments at the end of the column. If the characteristic of the moments are linear, then there will be applied the equation 5.32 according to EN 1992-1-1 for the decisive moment. With the input of MY3 resp. MZ3 there can be defined explicit moments in the middle third of the buckling bendline (e.g. due to wind action).\n With the nominal curvature method, there will be calculated a simplified moment with second order effects, which uses simplified curvature assumptions. As long the constraints according to equation 5.38a and 5.38b are satisfied, there will be a separate design in each direction. If the condition is not fulfilled, then there will be always proceeded a biaxial design.\n RCPY – Copy of results between different databases\n RCPY",
+        "token_count": 223
+    }
+]

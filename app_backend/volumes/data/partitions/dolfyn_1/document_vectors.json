@@ -1,0 +1,1150 @@
+[
+    {
+        "content": "Below is a structured, field-by-field description of the “Contents” table as it appears in the DOLFYN Manual (Service Pack 2025-4, Build 146).  This description is suitable for ingestion into a RAG-style vector store, with each row captured as an individual record and metadata about the table as a whole.\n\nTable Metadata  \n• Source Manual: DOLFYN Fluid Dynamics powered by Cyclone Fluid Dynamics BV  \n• Publisher: SOFiSTiK AG, Nuremberg / Garching, Germany  \n• Version: Service Pack 2025-4 (Build 146)  \n• Copyright: © 2025 SOFiSTiK AG  \n• Language: English  \n• Table Purpose: High-level overview of all chapters, sections, subsections and their starting page numbers  \n\nColumn Definitions  \n1. section_id  \n   – String key representing the section numbering (e.g. “3.10”, “4.1.2”)  \n2. section_title  \n   – Short text title of the section  \n3. page_start  \n   – String or integer representing the first page on which the section appears (format “x-y”, e.g. “3-10”)  \n4. hierarchy_level  \n   – Integer depth:  \n     • 1 = major chapter (e.g. “1”, “2”, “3”, “4”)  \n     • 2 = first-level subsection (e.g. “2.2”, “3.7”)  \n     • 3 = second-level subsection (e.g. “2.2.1”, “4.1.3”)  \n\nRow Records  \n1. section_id: 1  \n   section_title: “Task Description”  \n   page_start: “1-1”  \n   hierarchy_level: 1\n\n2. section_id: 2  \n   section_title: “Theoretical abstract”  \n   page_start: “2-1”  \n   hierarchy_level: 1\n\n3. section_id: 2.1  \n   section_title: “Fluid Mechanics”  \n   page_start: “2-1”  \n   hierarchy_level: 2\n\n4. section_id: 2.2  \n   section_title: “Boundary conditions”  \n   page_start: “2-3”  \n   hierarchy_level: 2\n\n5. section_id: 2.2.1  \n   section_title: “Inlet and Outlet”  \n   page_start: “2-3”  \n   hierarchy_level: 3\n\n6. section_id: 2.2.2  \n   section_title: “Walls”  \n   page_start: “2-4”  \n   hierarchy_level: 3\n\n7. section_id: 2.3  \n   section_title: “Atmospheric boundary layers”  \n   page_start: “2-6”  \n   hierarchy_level: 2\n\n8. section_id: 2.4  \n   section_title: “Detachment of flow”  \n   page_start: “2-6”  \n   hierarchy_level: 2\n\n9. section_id: 2.5  \n   section_title: “Literature”  \n   page_start: “2-7”  \n   hierarchy_level: 2\n\n10. section_id: 3  \n    section_title: “Input Description”  \n    page_start: “3-1”  \n    hierarchy_level: 1\n\n11. section_id: 3.1  \n    section_title: “Mesh Generation and DOLFY N-Files”  \n    page_start: “3-1”  \n    hierarchy_level: 2\n\n12. section_id: 3.2  \n    section_title: “Input Language”  \n    page_start: “3-2”  \n    hierarchy_level: 2\n\n13. section_id: 3.3  \n    section_title: “Input Records”  \n    page_start: “3-2”  \n    hierarchy_level: 2\n\n14. section_id: 3.4  \n    section_title: “FLOW – Properties of the Fluid”  \n    page_start: “3-3”  \n    hierarchy_level: 2\n\n15. section_id: 3.5  \n    section_title: “WIND – Atmospheric Boundary Layer”  \n    page_start: “3-4”  \n    hierarchy_level: 2\n\n16. section_id: 3.6  \n    section_title: “CASE – Analysis case”  \n    page_start: “3-6”  \n    hierarchy_level: 2\n\n17. section_id: 3.7  \n    section_title: “IN – Inlet Conditions”  \n    page_start: “3-7”  \n    hierarchy_level: 2\n\n18. section_id: 3.8  \n    section_title: “OUT – Outlet Condition”  \n    page_start: “3-8”  \n    hierarchy_level: 2\n\n19. section_id: 3.9  \n    section_title: “INOU – In and Outlet Conditions”  \n    page_start: “3-9”  \n    hierarchy_level: 2\n\n20. section_id: 3.10  \n    section_title: “WALL – Wall conditions”  \n    page_start: “3-10”  \n    hierarchy_level: 2\n\n21. section_id: 3.11  \n    section_title: “DRAG – Dragforce evaluation”  \n    page_start: “3-12”  \n    hierarchy_level: 2\n\n22. section_id: 3.12  \n    section_title: “STEP – Transient Analysis”  \n    page_start: “3-14”  \n    hierarchy_level: 2\n\n23. section_id: 3.13  \n    section_title: “HIST – Transient Results”  \n    page_start: “3-15”  \n    hierarchy_level: 2\n\n24. section_id: 3.14  \n    section_title: “SOLV – Solver Controls”  \n    page_start: “3-16”  \n    hierarchy_level: 2\n\n25. section_id: 3.15  \n    section_title: “DOLF – Control Values for DOLFYN”  \n    page_start: “3-17”  \n    hierarchy_level: 2\n\n26. section_id: 4  \n    section_title: “Examples”  \n    page_start: “4-1”  \n    hierarchy_level: 1\n\n27. section_id: 4.1  \n    section_title: “Flow around a cylinder”  \n    page_start: “4-1”  \n    hierarchy_level: 2\n\n28. section_id: 4.1.1  \n    section_title: “Introduction”  \n    page_start: “4-1”  \n    hierarchy_level: 3\n\n29. section_id: 4.1.2  \n    section_title: “Classical Navier-Stokes Solutions”  \n    page_start: “4-1”  \n    hierarchy_level: 3\n\n30. section_id: 4.1.3  \n    section_title: “Turbulent Solutions”  \n    page_start: “4-2”  \n    hierarchy_level: 3\n\n31. section_id: 4.2  \n    section_title: “Bridge Section”  \n    page_start: “4-5”  \n    hierarchy_level: 2\n\n32. section_id: Bibliography  \n    section_title: “Bibliography”  \n    page_start: “4-11”  \n    hierarchy_level: 1\n\nUsage Notes for RAG Indexing  \n• Each record’s “section_title” provides a concise topic label.  \n• “section_id” and “hierarchy_level” allow reconstruction of the nested table-of-contents structure.  \n• “page_start” supports content retrieval (jump-to-page) when answering user queries.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                2
+            ],
+            "page_labels": [
+                null
+            ],
+            "type": "table",
+            "sections": [
+                "Foreword"
+            ]
+        }
+    },
+    {
+        "content": "DOLFYN Fluid Dynamics powered by Cyclone Fluid Dynamics BV\n DOLFYN Manual, Service Pack 2025-4 Build 146\n Copyright © 2025 by SOFiSTiK AG, Nuremberg, Germany.\n SOFiSTiK AG\n HQ Nuremberg Office Garching Flataustraße 14 Parkring 2 90411 Nürnberg 85748 Garching bei München Germany Germany T +49 (0)911 39901-0 T +49 (0)89 315878-0 F +49(0)911 397904 F +49 (0)89 315878-23 info@sofistik.com\n www.sofistik.com\n This manual is protected by copyright laws. No part of it may be translated, copied or reproduced, in any form or by any means, without written permission from SOFiSTiK AG. SOFiSTiK reserves the right to modify or to release new editions of this manual.\n The manual and the program have been thoroughly checked for errors. However, SOFiSTiK does not claim that either one is completely error free. Errors and omissions are corrected as soon as they are detected.\n The user of the program is solely responsible for the applications. We strongly encourage the user to test the correctness of all calculations at least by random sampling.\n Contents\n Contents\n Contents\n i\n 1\n 2\n 3\n 4\n Bibliography\n 4-11\n 1 Task Description\n DOLFYN has been developed by Henk Krüs from Cyclone Fluid Dynamics BV and is available as open-source-software (www.dolfyn.net). It is a program for the analysis of complex flow phenomena:\n • Fluid mechanic (Navier-Stokes equations)\n • Turbulence models for high Reynold numbers\n • Free Surfaces for Fluids\n • Heat Conduction and Convection\n The program is a general unstructured 3D Finite Volume solver. Although it is possible to use volumes of any shape, for Post and Preprocessing it is more common to have only tetrahedra, Hexahedra or wedges with a triangular base area. This allows an easy connection to other Finite Element codes.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                1,
+                2,
+                4
+            ],
+            "page_labels": [
+                null,
+                null,
+                "1-1"
+            ],
+            "type": "text",
+            "sections": "Foreword"
+        }
+    },
+    {
+        "content": "The program is a general unstructured 3D Finite Volume solver. Although it is possible to use volumes of any shape, for Post and Preprocessing it is more common to have only tetrahedra, Hexahedra or wedges with a triangular base area. This allows an easy connection to other Finite Element codes..\n However, SOFiSTiK provides also higher polyhedra cell types of the so called \"dual mesh\". The solution is then obtained for the nodes of the primary mesh, which has strong advantages for computing time and precision in 3D.\n DOLFYN has been adopted to the SOFiSTiK-environment by importing the mesh, material and boundary conditions from the data base and saving results for postprocessing into the data base. All Pre- and Postprocessing tools of SOFiSTiK may be used therefore.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                4
+            ],
+            "page_labels": [
+                "1-1"
+            ],
+            "type": "text",
+            "sections": "Foreword"
+        }
+    },
+    {
+        "content": "The image is a halftone, black-and-white rendering of a two-dimensional turbulent shear layer illustrating the concept of a “turbulent length scale” (Lt). It shows, from left to right, a sequence of coherent vortical structures (often called Kelvin–Helmholtz billows) developing along what appears to be the interface between two fluid streams. On the far left, the shear layer is just beginning to roll up, and the perturbations are small and barely distinguishable from the ambient fluid. As one follows the flow downstream (to the right), the instabilities grow in amplitude and roll up into discrete, mushroom-shaped vortices. These vortices then pair and merge, forming larger, more irregular swirling regions toward the right side of the frame.\n\nThe background behind the vortices is a uniform, light gray tone, providing contrast so that the darker, textured eddies stand out sharply. The individual eddies exhibit a mix of smooth curvature (at their outer rims) and more chaotic, filamentary substructures in their cores—typical of a transition from organized roll-ups to fully developed two-dimensional turbulence.\n\nBeneath the central portion of the vortex train, a bold, straight horizontal line has been overlaid. At each end of this line is a small, filled arrowhead pointing outward, indicating that this distance corresponds to the characteristic length scale Lt. Directly below this line, a dimension label “Lt” (with a capital “L” and subscript “t”) is printed, aligning with the arrowheads to mark the span of one representative eddy or mixing-layer cell. The bracket and label are drawn in a solid black stroke, clearly distinguishing them from the halftone‐dot texture of the fluid image.\n\nCentered under the entire illustration is the caption text “Figure 2.1: Turbulent length scale.” The typography is a clean, sans-serif font, with “Figure 2.1” in bold and the descriptor immediately following in regular weight. The overall composition emphasizes how the spatial periodicity of the vortices defines the scale Lt, which is used in turbulence models (e.g., Prandtl’s mixing‐length approach) to characterize the size of the dominant energy‐containing eddies in a shear‐driven flow.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                7
+            ],
+            "page_labels": [
+                "2-2"
+            ],
+            "type": "image",
+            "sections": [
+                "2 Theoretical abstract",
+                "2.1 Fluid Mechanics"
+            ]
+        }
+    },
+    {
+        "content": "The physics of a fluid flow follows rather simple conservation and material laws (mass, mo- mentum, energy). From the continuity equation for example we get the fact that in case of a reduction of the cross section, the velocity will increase. From the law of Bernoulli follows a loss of pressure, as the total energy is the sum of pressure, kinetic energy and geodetic height and a transient acceleration term:\n ρ\n p + 2 · 2 + ρ · g · z = const\n (2.1)\n For an incompressible flow two material constants, the density ρ and the viscosity ν or μ are sufficient. From conservation laws and equilibrium we have the basic Navier-Stokes-Equation:\n $$-- 1, ---- --_, 3 2 _~ j= \"(1.0 k= sui = 5 (um + uy uy + usu', = 5 (li Ui) (2.6)$$\n • A length scale Lt, which is the Prandtl mixing length and might be taken as the dimension of the largest eddy or a structural width:\n This value is correlated to the integral length scales, but there are 9 different values in the atmospheric boundary layer. Recommended values are the smallest dimensions of the body or the smallest (vertical) length scale. Near the ground, the distance to the ground multiplied with the Karman constant (0.4) is selected as upper limit in many cases.\n The additional turbulent viscosity is defined with an empirical constant as:\n Ut =p-Cy-Le-VkK ; Cy=0.09\n (2.7)\n In some cases it is sufficient to use a constant value, but more common are models with two additional equations for the turbulent energy and some dissipation rate.\n • The best known is the k-ε model with the rate of dissipation ε [m2/sec3], describing the\n energy conversion per time based on the Prandtl-Kolmogorov formula:",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                7,
+                8,
+                6
+            ],
+            "page_labels": [
+                "2-2",
+                "2-3",
+                "2-1"
+            ],
+            "type": "text",
+            "sections": "2.1 Fluid Mechanics"
+        }
+    },
+    {
+        "content": "In some cases it is sufficient to use a constant value, but more common are models with two additional equations for the turbulent energy and some dissipation rate.. • The best known is the k-ε model with the rate of dissipation ε [m2/sec3], describing the. energy conversion per time based on the Prandtl-Kolmogorov formula:.\n $$e  0.168 k3/2 Lt ; mt = r * Cm * k2 e (2.8)$$\n This model is rather robust, thus, the quasi standard in industrial applications. It is well suited for most 2D shear layers. Its weakness is relatively well known. It has problems with boundary layer separation (not very precise, often too short) and problems with curved stream lines, curved surfaces or sudden changes (rotating fluids) sometimes even with buoyancy. Excessive turbulence generation in stagnation points is a major concern. Thus enhanced models (e.g. RNG or RKE) have been developped, whioch are available in DOLFYN.\n • There is also the so called k-ω Model with some kind of frequency ω [ 1/sec].\n k1/2",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                7,
+                8
+            ],
+            "page_labels": [
+                "2-2",
+                "2-3"
+            ],
+            "type": "text",
+            "sections": "2.1 Fluid Mechanics"
+        }
+    },
+    {
+        "content": "The image is a clean, black-and-white line drawing labeled “Figure 2.2: Boundary layers.” It is divided into two side-by-side panels, each depicting how a fluid’s velocity profile develops above a flat, horizontal wall (represented by a thick black bar at the bottom of each panel). Both panels share the same coordinate reference: a vertical axis labeled “z” (with an arrowhead pointing upward) anchored at the wall surface.\n\nLeft Panel – Velocity‐Profile Shapes\n• Wall: a heavy horizontal line at the bottom, indicating the solid boundary where the fluid velocity is zero.  \n• Vertical Axis: a thin line rising from the wall’s left end, labeled “z →,” denoting distance normal to the wall.  \n• Laminar Curve: drawn closest to the wall as a smooth, gently convex curve that starts at zero velocity, then gradually bends upward and toward the right. The label “laminar” sits above this curve.  \n• Turbulent Curve: plotted to the right of the laminar one, this profile rises more steeply near the wall—indicating a higher local velocity gradient—then flattens out sooner as it approaches the free‐stream region. The word “turbulent” is placed alongside this thicker, fuller curve.  \n• Interpretation: the two curves illustrate that in laminar flow the velocity increases more gradually through the boundary layer, whereas in turbulent flow the near‐wall shear (and hence initial velocity rise) is higher, producing a fuller profile that reaches the free‐stream level over a somewhat thicker layer.\n\nRight Panel – Schematic Boundary‐Layer Thickness\n• Wall and z‐Axis: repeated as in the left panel—a bold horizontal base and a vertical arrowed axis.  \n• Laminar Block: immediately above the wall, a thin rectangular block extends up to a modest height, representing the laminar boundary‐layer thickness δ_lam.  \n• Turbulent Block: to the right of the thin block, a taller, thicker rectangular block reaches a greater height δ_turb, indicating the larger boundary‐layer thickness typical of turbulent flow under the same conditions.  \n• No Curve Details: this panel abstracts the complex velocity profiles into simple layer‐thickness indicators, emphasizing that turbulence tends to increase the overall thickness of the region where velocity transitions from zero at the wall to the free‐stream value.\n\nCaption and Context\n• Underneath both panels runs the caption “Figure 2.2: Boundary layers.”  \n• The figure appears in a fluid‐mechanics context where the no‐slip condition at a solid wall (u = 0) gives rise to a boundary layer whose shape depends on whether the flow remains laminar or becomes turbulent.  \n• Accompanying text (not drawn) discusses shear stress τ = μ ∂u/∂n, the concept of y+ scaling, and the use of logarithmic laws for turbulent flows over rough and smooth walls. This figure visually complements those ideas by contrasting the velocity‐vs.‐z behavior and the resulting layer thickness in the two regimes.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                9
+            ],
+            "page_labels": [
+                "2-4"
+            ],
+            "type": "image",
+            "sections": [
+                "2 Theoretical abstract",
+                "2.1 Fluid Mechanics",
+                "2.2.2 Walls"
+            ]
+        }
+    },
+    {
+        "content": "The image is a reproduction of Figure 2.3 from a SOFiSTiK document, entitled “Universal velocity profile, smooth and rough walls.” At the very top appears the SOFiSTiK logo in blue and gray; beneath it, the caption “in Fig 2.3.” The main content is a log–log style plot of the non­dimensional streamwise velocity u+ (plotted on the vertical axis from 0 to 40) versus the logarithm (base 10) of the non­dimensional wall distance y+ (horizontal axis from 0 to about 4.4, corresponding to y+ values from 1 to roughly 25,000).  \n\nA fine dotted grid subdivides the plot in both directions, aiding visual alignment. The vertical axis is labeled “u+” at the top left, while the horizontal axis carries the label “log10(y+) [–]” at its bottom right. Along the bottom center is the figure caption “Figure 2.3: Velocity profile at the wall.”\n\nFive distinct curves, each rendered in a unique line style, sweep upward from near the origin in an approximately straight diagonal fashion. These curves represent:\n\n • A solid black line labeled “Smooth (E = 9.0).”  \n • A dash-dot-dot line for roughness height k+ = 7.5.  \n • A dash-dash line for k+ = 12.5.  \n • A long-dash-dot line for k+ = 20.0.  \n • A long dashed line for k+ = 35.0.  \n\nThese styles appear in the legend, located in the upper left quadrant of the plotting area under the title “Universal velocity profile, smooth and rou[gh walls].”  \n\nTwo vertical dashed lines mark key transition points at y+ = 5 and y+ = 70. The lower one (y+ = 5) delineates the end of the laminar sublayer, where the relation u+ = y+ holds (u+ rises linearly with y+). Above y+ ≃ 5 a buffer region leads into the log‐law region beginning around y+ ≃ 70, extending up to approximately y+ = 500 or more.  \n\nAcross the family of rough‐wall curves there is a diagonal annotation reading “Region of transition from hydraulically smooth to rough,” indicating how each roughness case departs from the smooth‐wall profile as y+ and k+ increase. At the far right and top of the plot, another arrowed label “Fully rough” points to the asymptotic set of lines with the steepest slope, corresponding to large k+ values where the influence of molecular viscosity on the velocity defect becomes negligible.  \n\nOverall, this figure visualizes the universal inner‐scaled velocity distribution for turbulent boundary layers over a flat plate, illustrating (1) the linear viscous sublayer at very low y+; (2) the buffer/transition zone; (3) the logarithmic law region; and (4) the effect of surface roughness via a family of curves parameterized by k+. It underscores the classical Newtonian assumption of a linear stress–strain relationship in the near‐wall region and provides guidance on mesh resolution requirements (y+ targets) for accurate wall‐boundary‐layer modeling in CFD applications.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                10
+            ],
+            "page_labels": [
+                "2-5"
+            ],
+            "type": "image",
+            "sections": [
+                "2 Theoretical abstract",
+                "2.1 Fluid Mechanics",
+                "2.2.2 Walls"
+            ]
+        }
+    },
+    {
+        "content": "The most simple form of a wall is the symmetry condition, which is the natural boundary con- dition describing a flow parallel to the wall without any interaction with the wall itself.\n If the flow has friction, the fluid particles at a wall are fixed (sticky) and will have the velocity zero. Fluid particles in the vicinity will be decelerated by friction forces. For a Newtonian fluid we have a linear relation between stress and velocity gradient:\n certain distance from the wall the flow is described by a logarithmic law. This is defined for the relative velocity y+ dependant on the height and either an absolute sand roughness height ks according to Nikuradse or an atmospheric roughness parameter zo:\n τ\n in Fig 2.3.\n 40\n Universal velocity profile, smooth and rough walls\n +\n Fully rough\n 100000\n log10(y*) [-]\n For the lowest laminar part ( y+ < 5 ) we have u+= y+, then we have a transition zone and from ( y+= 70 ) we have the logarithmic law up to y+= 500.\n If the value y+ is within that region, it may be checked only after an analysis, when the velocities are calulated.\n For high precission requests the boundary layer itself should be modelled with a sufficient number of cells (approx. 10 over the height) on the other side the closest vertex must obey the rule ( y+ > 12.5 ). In [6] an optimal value of y+ ≈ 100 is recommended. However if the mesh size becomes very small it is recommendable to drop the wall boundary condition and to resolve the boundary layer with a mesh with y+ < 1.\n Based on a developement length L of a straight plate the thickness of the boundary layer may be estimated with:\n $$2 --l/7 u LU cf =2| --] =0.025Re~\"/7 = 0.025( ---- U x Vv (oe) (2.15)$$",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                9,
+                10
+            ],
+            "page_labels": [
+                "2-4",
+                "2-5"
+            ],
+            "type": "text",
+            "sections": "2.2.2 Walls"
+        }
+    },
+    {
+        "content": "Based on a developement length L of a straight plate the thickness of the boundary layer may be estimated with:. $$2 --l/7 u LU cf =2| --] =0.025Re~\"/7 = 0.025( ---- U x Vv (oe) (2.15)$$.\n The boundary layer thickness δ is established as reference mesh size for all elements at boundaries and saved into the CDB. Within the flow region a similar indicator may be estab- lished via:\n Then a definition of a desired y+value will allow an adaptive mesh generation.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                9,
+                10,
+                11
+            ],
+            "page_labels": [
+                "2-4",
+                "2-5",
+                "2-6"
+            ],
+            "type": "text",
+            "sections": "2.2.2 Walls"
+        }
+    },
+    {
+        "content": "The image is a schematic, black-and-white line drawing labeled “Figure 2.4: Roughness measure z₀.” It depicts two interrelated elements of the atmospheric boundary layer over a heterogeneous, vegetated surface:\n\n1. Velocity Profile (left side)  \n   - A vertical axis marked “z” represents height above ground.  \n   - A curved profile line, bowed outward to the right, illustrates the mean horizontal wind speed U(z) increasing with height.  \n   - Along that curve are small horizontal arrows pointing rightward; their length grows gradually from near zero at the surface up to a maximum at the top of the plotted region.  \n   - Next to the curve, the label “U(z)” appears at the upper end of one of these arrows.  \n   - Beneath the drawing, just above the ground line, an arrowed bracket indicates the roughness length z₀ – the vertical offset used in the modified logarithmic law.\n\n2. Rough Ground and Recirculation (right side)  \n   - The ground plane is drawn as a wavy line with alternating peaks and troughs; the soil below is cross-hatched at a 45° angle.  \n   - At the crest of some of these micro-topographic bumps stand stylized flowers, indicating surface vegetation contributing to aerodynamic roughness.  \n   - Within each trough, circular—vortex-shaped arrows illustrate separated eddies or recirculation zones just above the ground. These vortices highlight how surface irregularities induce localized flow reversal and nearly constant pressure pockets.  \n\nContextual equation (shown above the figure, though not part of the sketch itself) reads:  \n u = (uτ / κ) · log[(z + z₀)/z₀],  \nwhere uτ is the friction velocity and κ the von Kármán constant. By introducing z₀, the so-called roughness height, the logarithmic wind-profile law remains well-defined even extremely close to the surface (z → 0). This visual, together with the equation, emphasizes how small-scale terrain elements and vegetation modify shear-generated turbulence in the lowest atmospheric layer.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                11
+            ],
+            "page_labels": [
+                "2-6"
+            ],
+            "type": "image",
+            "sections": [
+                "2 Theoretical abstract",
+                "2.3 Atmospheric boundary layers"
+            ]
+        }
+    },
+    {
+        "content": "The image is a black-and-white schematic titled “Figure 2.5: Detachment of FLow.” It depicts a two-dimensional circular cylinder immersed in a uniform flow entering from the left. The key elements and annotations are as follows:\n\n1. Cylinder and Axes  \n   • A large circle centered on the page represents the cross section of a cylinder.  \n   • Two orthogonal straight lines intersect at the circle’s center: one horizontal (the free-stream flow direction) and one vertical. These serve as reference axes.\n\n2. Incoming Free-stream Flow  \n   • To the left of the cylinder, three parallel horizontal streamlines (thin lines with arrowheads) approach the cylinder from the left edge of the drawing.  \n   • The middle streamline carries a small right-pointing arrow indicating the direction of the uniform upstream flow field.\n\n3. Streamline Deflection Around the Cylinder  \n   • As the flow nears the cylinder’s leading face, the three main streamlines diverge smoothly around the obstacle: the top and bottom lines curve upward and downward, respectively, hugging the cylinder contour.  \n   • These curved lines skirt the cylinder’s surface, illustrating how the boundary layer wraps around the front half of the cylinder.\n\n4. Separation Zone with Recirculation  \n   • On the right (downstream) side of the cylinder, several short, stacked, slightly tilted line segments are drawn immediately adjacent to the cylinder’s surface above the horizontal axis. These indicate a region of swirling or recirculating flow.  \n   • The shading of these segments grows progressively denser toward the cylinder wall, symbolizing the eddy-filled, nearly constant-pressure recirculation bubble that forms just after flow detachment.\n\n5. Separation Point Annotation  \n   • A straight slanted arrow originates from the recirculating region and points to a specific location on the cylinder’s upper surface a little behind its vertical midline.  \n   • Near this arrow’s tip, the label “Separation Point” identifies the angular position where the boundary‐layer flow no longer adheres to the surface and begins to roll up into the wake.\n\n6. Downstream Streamline Reattachment  \n   • Beyond the recirculation zone, a single curved streamline is sketched rejoining the outer flow. This line, farther from the cylinder surface, illustrates the eventual recovery of flow direction in the wake.\n\n7. Overall Flow Behavior  \n   • The figure visually summarizes how an initially attached boundary layer around a bluff body (cylinder) will, under adverse pressure‐gradient conditions, separate at a distinct point.  \n   • It captures the classic detachment phenomenon that gives rise to a low‐pressure recirculation bubble on the downstream side, as occurs within the lowest layer of the atmospheric boundary layer when wind encounters obstacles.\n\n8. Relation to Boundary-Layer Theory  \n   • Although the drawing itself is a generic detachment diagram, in context it serves to illustrate how modified logarithmic wind profiles and turbulence models (as provided by SOFILOAD and DOLFYN) must account for the separation and constant‐pressure recirculation regions when simulating flow over objects near the ground.\n\nBy combining the smooth upstream deflection, the clearly marked separation point, and the shaded recirculation zone, the sketch conveys the fundamental process by which a turbulent boundary layer detaches and forms a wake behind a bluff body.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                12
+            ],
+            "page_labels": [
+                "2-7"
+            ],
+            "type": "image",
+            "sections": [
+                "2 Theoretical abstract",
+                "2.3 Atmospheric boundary layers"
+            ]
+        }
+    },
+    {
+        "content": "The boundary conditions of natural wind are governed by the fact that all important effects take place within that critical lowest layer of the atmospheric boundary layer. SOFILOAD has fea- tures available to calculate those wind profiles according to the design codes and provide them as constant or transient boundary conditions for DOLFYN. DOLFYN has also the possibility to define a theroretical solution of the turbulent flow in the atmospheric boundary layer.\n Within that subject a slightly modified form of the logarithmic law is used in general, yielding defined values also for small values of z:\n will have a recirculation zone with a rather constant pressure as it is represented in Fig 2.5.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                11,
+                12
+            ],
+            "page_labels": [
+                "2-6",
+                "2-7"
+            ],
+            "type": "text",
+            "sections": "2.3 Atmospheric boundary layers"
+        }
+    },
+    {
+        "content": "Ferziger and Peric [1], Spurk [2], Schlichting and Gersten [3], Ruscheweyh [4], Glück [5], Tucker and Mosquera [6], and Blocken, Stathopoulos, and Carmeliet [7]",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                12
+            ],
+            "page_labels": [
+                "2-7"
+            ],
+            "type": "text",
+            "sections": "2.5 Literature"
+        }
+    },
+    {
+        "content": "The diagram is a simple directed-graph flowchart entitled “Figure 3.1: Files for Dolfyn.” Its purpose is to show how the different file types and software components interconnect when setting up and running a DOLFYN analysis alongside the SOFiSTiK database (CDB).  \n\nLayout and Elements  \n1. Rectangular Nodes (Software Components)  \n   • TEDDY (upper left)  \n   • SOFIMSHA (lower left)  \n   • DOLFYN (center-right)  \n   • CDB (upper right of DOLFYN)  \n\n2. Oval Nodes (File Types)  \n   • .din (between TEDDY and DOLFYN, roughly mid-left)  \n   • .dge (between SOFIMSHA and DOLFYN, roughly lower-left)  \n\n3. Directed Arrows (Data Flows)  \n   a) TEDDY → .din  \n      – TEDDY exports a solver input file with extension .din.  \n   b) .din → DOLFYN  \n      – The .din file becomes one of the primary inputs to the DOLFYN solver.  \n   c) SOFIMSHA → .dge  \n      – SOFIMSHA exports the geometry description file (.dge), containing node, face, and volume definitions.  \n   d) .dge → DOLFYN  \n      – DOLFYN reads the .dge file to assemble its finite‐volume mesh.  \n   e) DOLFYN → CDB  \n      – Upon processing both the .din and .dge inputs, DOLFYN writes results or updates to the SOFiSTiK database (CDB).  \n   f) CDB → SOFIMSHA  \n      – The database may feed back to SOFIMSHA for subsequent mesh refinement or updates.  \n\nCaption  \n   Centered beneath the diagram is the label:  \n   “Figure 3.1: Files for Dolfyn”  \n\nContextual Notes (from the accompanying text)  \n- DOLFYN implements a Finite Volume Method and relies on an external geometry file (.dge) exported by SOFIMSHA.  \n- Two mesh variants are supported: the primary mesh (cells = original elements, solution at cell centers) and the dual mesh (Voronoi‐based, solution at nodes, resulting in polyhedral volumes).  \n- In planar systems SOFIMSHA converts QUAD elements into hexahedra of thickness 1.0, assigning patch and volume‐patch numbers based on original QUAD properties.  \n- Boundary conditions in DOLFYN are applied per region number, using the “primary group number” from the export step.  \n- The TEDDY module prepares general solver settings and writes them out in .din format.  \n- The SOFiSTiK Database (CDB) stores and manages model data; results from DOLFYN are streamed back into CDB, allowing iterative workflows with SOFIMSHA.  \n\nTogether, the flowchart and notes make clear how TEDDY, SOFIMSHA, DOLFYN, and the CDB interoperate via .din and .dge files to support preprocessing, solution, and postprocessing in a comprehensive Finite Volume analysis environment.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                14
+            ],
+            "page_labels": [
+                "3-1"
+            ],
+            "type": "image",
+            "sections": [
+                "3 Input Description",
+                "3.1 Mesh Generation and DOLFYN-Files"
+            ]
+        }
+    },
+    {
+        "content": "DOLFYN uses the Finite Volume Method with an own geometry format The geometric file (nodes, faces, volumes) with extension .dge is exported by SOFIMSHA. There are two principal variants:\n • The primary mesh uses the existing elements as cells. The solution is calculated for the centre of these cells. This is the standard procedure for the finite volume method.\n • The dual mesh is generated by a Voronoi-process based on the faces perpendicular on the element edges. The solution is then obtained for the nodes. The finite volumes are then polyhedra. This method has large benefits for the speed and precision for generated tetrahedra meshes in 3D.\n For spatial systems the BRIC-elements are taken directly. Surfaces have to be described via QUADs or structural areas.\n For planar systems SOFIMSHA will export for DOLFYN all QUAD-Elements as hexahedra with a thickenss of 1.0, the Volume-Patch number is generated from the properties of the QUAD. The edges of the QUAD become surfaces the patch numbers for those are taken from structural edges or boundary elements defined with SOFIMSHA.\n DOLFYN boundary conditions are given for a total surface or a volume only, adressed by a unique region number. When exporting the mesh the user the primary group number will be used for this region number.\n DOLFYN works beside the SOFiSTiK Database with some additional files:",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                14
+            ],
+            "page_labels": [
+                "3-1"
+            ],
+            "type": "text",
+            "sections": "3.1 Mesh Generation and DOLFYN-Files"
+        }
+    },
+    {
+        "content": "The input is made in the CADINP language (see general manual SOFiSTiK: ’FEA / STRUC- TURAL Installation and Basics’). A speciality of this software is that we do not supply only CADINP-Syntax, but that we allow also for the native DOLFYN commands.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                15
+            ],
+            "page_labels": [
+                "3-2"
+            ],
+            "type": "text",
+            "sections": "3.2 Input Language"
+        }
+    },
+    {
+        "content": "The table below summarizes all RAG input “records” currently defined (excluding the general‐purpose HEAD, END and PAGE records, which are documented in the SOFiSTiK FEA/STRUCTURAL manual).  Each record name represents a section in the input deck; the items listed under each record are the individual parameter keywords that can appear in that section.  Records DOLF and Origi are also defined here; detailed descriptions of each record follow in the subsequent sections of the manual.\n\n1. FLOW  \n   • TURB — turbulence model selector  \n   • TEMP — reference temperature  \n   • MAT — material property set  \n   • RHO — density  \n   • NUE — dynamic viscosity  \n   • TREF — temperature for viscosity reference  \n   • BET — expansion coefficient  \n   • COND — thermal conductivity  \n   • CP — specific heat capacity  \n   • K — thermal diffusivity  \n\n2. WIND  \n   • LC — load case identifier  \n   • V — wind velocity magnitude  \n   • HREF — reference height for wind profile  \n   • Z0 — surface roughness length  \n   • Z0M — momentum roughness length  \n   • DX, DY, DZ — offsets in the X, Y, Z directions  \n   • HG — terrain height  \n   • C1, C2 — profile shape coefficients  \n   • HMAX — maximum height for wind profile  \n\n3. CASE  \n   • LC — load case number  \n   • PLC — parent load case link  \n   • U, V, W — prescribed displacements in X, Y, Z  \n   • DEN — density override  \n   • K — stiffness factor  \n   • EPS — strain initialization  \n   • TEMP — temperature initialization  \n   • P — pressure initialization  \n   • PREF — reference pressure  \n   • PRFX, PRFY, PRFZ — directional pressure factors  \n   • TITL — title or comment string  \n\n4. IN  \n   • NO — input record number  \n   • LC — associated load case  \n   • U, V, W — displacement components  \n   • DEN — density  \n   • K — stiffness  \n   • EPS — initial strain  \n   • TEMP — initial temperature  \n\n5. OUT  \n   • NO — output record number  \n   • F — output flag or format specifier  \n\n6. INOU  \n   • NO — record number  \n   • LC — load case  \n   • P — pressure  \n   • DEN — density  \n   • K — stiffness  \n   • EPS — strain  \n   • TEMP — temperature  \n\n7. WALL  \n   • NO — wall record number  \n   • Z0 — roughness length at wall  \n   • U, V, W — velocity components at wall  \n   • TEMP — temperature at wall  \n   • R — thermal resistance  \n   • EPS — strain at wall  \n   • HFLX — heat flux  \n\n8. DRAG  \n   • VREF, HREF, AREF — reference velocity/height/area  \n   • AX, AY, AZ — drag coefficients in X, Y, Z  \n   • AXX, AYY, AZZ — additional tensor components  \n   • ALF — angle‐of‐attack  \n   • REFX, REFY, REFZ — reference directions  \n   • W, W1 … W15 — wind or weight entries (multiple parameters)  \n\n9. STEP  \n   • N — step number  \n   • T — total time or iteration count  \n   • TFAK — time factor  \n   • DTM — time increment  \n   • INT — integration type  \n   • TOL — tolerance  \n   • TORD — time order  \n\n10. HIST  \n   • TYPE — history type (e.g. output or load variation)  \n   • FROM, TO — start and end times or states  \n   • INC — increment size for history recording  \n\n11. SOLV  \n   • VAR — solver variable grouping  \n   • DIFF — differentiation scheme  \n   • BFAC — band‐factor for matrix storage  \n   • SLIM — solver limit or memory limit  \n   • WITH — optional solver flags  \n   • RELA — relaxation factor  \n\n12. DOLF  \n   • Origi — origin reference for DOLF record  \n\nNotes:  \n- HEAD, END and PAGE are global control records documented in the core manual.  \n- Each record’s items must appear in the prescribed order; unspecified items will assume default values.  \n- Detailed syntax rules, allowed value ranges and inter‐parameter dependencies are provided in the corresponding record sections that follow in the SOFiSTiK documentation.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                15
+            ],
+            "page_labels": [
+                "3-2"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.3 Input Records"
+            ]
+        }
+    },
+    {
+        "content": "The following records are defined:\n DOLF\n Origi\n The records HEAD, END and PAGE are described in the general manual SOFiSTiK: ’FEA / STRUCTURAL Installation and Basics’.\n A description of the individual records is given in the following sections.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                15
+            ],
+            "page_labels": [
+                "3-2"
+            ],
+            "type": "text",
+            "sections": "3.3 Input Records"
+        }
+    },
+    {
+        "content": "The table shown is a compact but comprehensive specification of all “FLOW”-group keywords you can include in your solver’s input deck to define the physical model of your fluid simulation. It is organized into four columns—Item, Description, Unit, Default—and two logical blocks: one for flow‐model activation parameters (TURB, TEMP) and one for material and thermophysical property definitions (MAT, RHO, NUE, TREF, BET, COND, CP, K).\n\n1. TURB  \n   • Purpose: selects whether and how turbulence is modeled.  \n   • Valid settings (literal strings):  \n      – NONE  → laminar, no turbulence model  \n      – KE    → standard k–ε turbulence  \n      – RNG   → RNG k–ε variant  \n      – RKE   → realizable k–ε variant  \n   • Unit: LIT (text literal)  \n   • Default: NONE  \n\n2. TEMP  \n   • Purpose: switches temperature‐coupling on or off, and chooses the unit system.  \n   • Valid settings (literal strings):  \n      – NONE  → no temperature field  \n      – KELV  → temperatures in Kelvin  \n      – C     → temperatures in °Celsius  \n      – FAHR  → temperatures in °Fahrenheit  \n   • Unit: LIT  \n   • Default: NONE  \n\n3. MAT  \n   • Purpose: choose a predefined fluid material or specify a material number.  \n   • Examples of built-in labels: AIR (1 bar, 20 °C), H2O (1 bar, 10 °C), CO2, O2, N2, AR, KR, XE, SF6, etc.  \n   • Unit: LIT  \n   • Default: “–” (no predefined material; user must supply property values)  \n\n4. RHO (Density)  \n   • Description: fluid density, ρ.  \n   • Unit: kg/m³  \n   • Default: * (required if not using MAT or if overriding MAT)  \n\n5. NUE (Kinematic Viscosity)  \n   • Description: ν, kinematic viscosity.  \n   • Unit: m²/s  \n   • Default: *  \n\n6. TREF (Reference/Initial Temperature)  \n   • Description: baseline temperature at which other properties are defined.  \n   • Unit: ° (in the unit system selected by TEMP)  \n   • Default: *  \n\n7. BET (Volumetric Thermal Expansion Factor)  \n   • Description: β, the coefficient in the Boussinesq approximation (1/°).  \n   • Unit: 1/°  \n   • Default: *  \n\n8. COND (Thermal Conductivity)  \n   • Description: k, conductivity.  \n   • Unit: W/(K·m)  \n   • Default: *  \n\n9. CP (Specific Heat Capacity)  \n   • Description: c_p, at constant pressure.  \n   • Unit: J/(kg·K)  \n   • Default: *  \n\n10. K (Compressibility Modulus)  \n   • Description: bulk modulus, inverse of compressibility.  \n   • Unit: MPa (×10⁹ Pa)  \n   • Default: *  \n\nNotes & Cross-References  \n- The “*” default means a value must be supplied if you are not inheriting from MAT.  \n- TURB and TEMP are the switches that activate extended flow physics—without them set to anything other than NONE, the solver assumes simple, isothermal laminar flow.  \n- If you select a MAT entry, the solver will automatically populate RHO, NUE, CP, etc., with standard values for that material; you may then override any individual property by supplying a non-default value in the corresponding row.  \n- See also the related groups and keywords: WIND (for free‐stream wind conditions), CASE (for time‐stepping and solver controls), IN/OUT (boundary conditions), WALL (wall treatments), STEP (time or iteration stepping), HIST (historical data initialization), CTRL (control variables).  \n- Usage pattern in your input file:  \n     FLOW  \n       TURB  KE  \n       TEMP  C  \n       MAT   AIR  \n       … (optional overrides)  \n\nThis table thus serves as both the master index of all flow‐related keywords and a quick reminder of units, default behaviors, and data dependencies—ideal for automated parsing into a RAG‐based vector store.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                16
+            ],
+            "page_labels": [
+                "3-3"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.4 FLOW – Properties of the Fluid"
+            ]
+        }
+    },
+    {
+        "content": "See also: FLOW, WIND, CASE, IN, OUT, INOU, WALL, STEP, HIST, CTRL\n FLOW\n K\n Compressibility modulus\n [MP]1090\n *\n TURB and TEMP are used to activate the extended flow properties.\n MAT may be used to preset fluid material constants for some materials, but can be overwritten individually:\n AIR Air (1 bar, 20 deg Celsius) H2O Water (1 bar, 10 deg. Celsius) CO2, O, N Carbondioxid, Oxygen, Nitrogen AR, KR, XE, SF6\n Argon, Krypton, Xenon, Sulfurhexafluorid",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                16
+            ],
+            "page_labels": [
+                "3-3"
+            ],
+            "type": "text",
+            "sections": "3.4 FLOW – Properties of the Fluid"
+        }
+    },
+    {
+        "content": "The input table defines all of the wind‐profile parameters that a user must supply when setting up an atmospheric‐boundary‐layer (ABL) inflow in SOFiLOAD.  At its core it links each parameter’s mnemonic (“Item”) to a concise human‐readable description, the engineering unit in which it must be specified, and a suggested default value.  Taken together, these entries control how the neutral‐equilibrium wind profile is generated at model inlet faces (steady or transient via WGEN), how roughness and measurement adjustments are handled, and how turbulence scaling is applied with height.  \n\nBelow is a detailed breakdown of every row in the table:\n\n1. LC  \n   • Description: Selects the type of wind definition or load case.  \n   • Permissible values:  \n     – TUNN  = wind‐tunnel profile with a ceiling (closed top)  \n     – ABL   = natural open‐air boundary layer (default)  \n     – lc    = user‐defined load case that contains its own wind settings  \n   • Unit: –/LIT (literature code)  \n   • Default: ABL  \n\n2. V  \n   • Description: Reference wind‐speed magnitude to be imposed on the inlet plane.  \n   • Unit: [m/sec]  \n   • Default: none (user must supply)  \n\n3. HREF  \n   • Description: Height above ground at which the reference wind speed V is measured.  \n   • Unit: [m] (1006 indicates standard meteorological height tag)  \n   • Default: 10.0  \n\n4. Z0  \n   • Description: Surface roughness length for the computational domain’s terrain.  This parameter controls the logarithmic wind‐speed profile near ground.  \n   • Unit: [m]  \n   • Default: 0.30  \n\n5. Z0M  \n   • Description: “Measured” roughness length.  Used when converting a measured wind profile from a nearby location with different terrain roughness Z0M via mass‐conservation at 300 m.  \n   • Unit: [m]  \n   • Default: Z0 (copy local roughness by default)  \n\n6. LSC  \n   • Description: Integral length‐scale factor, controlling the size of turbulent eddies in the vertical.  \n   • Unit: –  \n   • Default: 0.491  \n\n7. DX, DY, DZ  \n   • Description: Cartesian components of the wind‐vector direction.  Together they form a unit vector that orients the inflow.  \n   • Unit: –  \n   • Default: DX = 0.0, DY = 0.0, DZ = 0.0  (note: if you want purely x‐directed flow, set DX = 1.0, DY = 0, DZ = 0)  \n\n8. HG  \n   • Description: Terrain elevation or “height of ground” used to shift the wind profile vertically in domains with nonzero base elevation.  \n   • Unit: [m] (1006 tag)  \n   • Default: none (needs user input if terrain not at z = 0)  \n\n9. C1, C2  \n   • Description: Dimensionless scaling factors for the two‐layer turbulence‐gradient model (see equations 3.2 and 3.3).  C1 typically adjusts the low‐altitude decay, while C2 fine‐tunes the outer layer.  \n   • Unit: –  \n   • Default: C1 = 0.0, C2 = 1.0  \n\n10. HMAX  \n    • Description: Maximum height up to which the logarithmic wind profile is enforced.  Above this “top‐cell” the flow is usually held constant or linked to upper‐boundary conditions.  \n    • Unit: [m] (1006 tag)  \n    • Default: none (determined by mesh height or user)  \n\nAdditional contextual notes:  \n• When LC = ABL, the code constructs a neutral (zero‐buoyancy) atmospheric boundary layer using the standard log‐law (u(z) ≈ (u*/κ) ln((z+z0)/z0)) and the two turbulence‐scaling equations cited from Yang et al. (2009).  \n• For transient wind loading, the user invokes WGEN and assigns WIND_INFL to a single group; the same table parameters then seed the spectral turbulence generator.  \n• If field measurements come from a station over different terrain, Z0M lets you normalize that data back to your site’s Z0 by matching wind speeds at a reference “meso‐height” of 300 m.  \n\nBy capturing every variable, unit and default, this table acts as the single source of truth when storing and retrieving wind‐profile definitions from a Retrieval‐Augmented Generation (RAG) vector store or any engineering database.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                17
+            ],
+            "page_labels": [
+                "3-4"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.5 WIND – Atmospheric Boundary Layer"
+            ]
+        }
+    },
+    {
+        "content": "The image is a schematic, side-view illustration of a neutral atmospheric boundary layer wind profile over rough terrain. It is labeled “Figure 3.2: Atmospheric Boundary Layer” and carries the main title along the top:  \n   Z – MEAN VELOCITY PROFILE u AS A FUNCTION OF HEIGHT, Z  \n\nBelow is a detailed breakdown of its constituent elements:  \n\n1. Coordinate System and Ground Plane  \n   • A horizontal baseline represents the ground surface.  \n   • A vertical axis at the left end of the drawing, marked “Z” with an upward arrow, denotes height above ground.  \n\n2. Roughness Height (z₀)  \n   • Directly on the ground line, just right of the vertical axis, a small vertical segment is labeled “ROUGHNESS HEIGHT, z₀.”  \n   • This indicates the height of the surface irregularities (trees, buildings) that generate aerodynamic roughness.  \n\n3. Surface Features (Terrain Roughness)  \n   • Two stylized tree drawings sit on the ground plane: one taller on the left, one smaller toward the middle.  \n   • On the far right of the ground plane, a simple gabled-roof house with a single window is shown—suggesting a different type of roughness element.  \n\n4. Discretized Height Levels and Velocity Arrows  \n   • A series of thin horizontal lines, equally spaced upward, represent sampled height levels z = z₁, z₂, z₃, …  \n   • At each horizontal line, a right-pointing arrow indicates the local mean wind velocity vector u(z).  \n   • The arrows grow progressively longer with increasing height, visualizing how wind speed increases away from the surface.  \n\n5. Logarithmic‐Type Velocity Profile Curve  \n   • A smooth, concave‐up curve passes through the tips of the arrows, illustrating u as a continuous function of height z.  \n   • Immediately above z₀ the curve is very shallow (near zero velocity), then steepens before plateauing toward the top of the boundary layer.  \n   • Alongside this curve at roughly mid-height is the annotation “u = u(z).”  \n\n6. Boundary Layer Height (δ)  \n   • To the right of the velocity curve a tall bracket spans from the ground line up to the uppermost arrow tip/curve endpoint.  \n   • This bracket is labeled “BOUNDARY LAYER HEIGHT, δ,” indicating the thickness of the atmospheric layer influenced by surface friction.  \n\n7. Roughness‐to‐Domain‐Height Ratio  \n   • In the upper-right corner of the figure, there is a small notation:  \n       [ z₀ / H ] =  \n   • Although no numerical value is filled in, this expression emphasizes the dimensionless ratio between surface roughness height and a reference cell or domain height H.  \n\n8. Caption  \n   • Centered beneath the illustration is the caption “Figure 3.2: Atmospheric Boundary Layer.”  \n\nOverall, the diagram visually conveys how, in computational wind‐engineering modeling, the mean wind speed increases logarithmically with height above a rough surface. It highlights two key parameters—roughness height z₀ and boundary‐layer depth δ—and points toward the use of the nondimensional ratio z₀/H when prescribing inlet and initial conditions in CFD inflow-boundary definitions (e.g., in SOFiLOAD or WGEN).",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                17
+            ],
+            "page_labels": [
+                "3-4"
+            ],
+            "type": "image",
+            "sections": [
+                "3 Input Description",
+                "3.5 WIND – Atmospheric Boundary Layer"
+            ]
+        }
+    },
+    {
+        "content": "See also: FLOW, WIND, CASE, IN, OUT, INOU, WALL, STEP, HIST, CTRL\n WIND\n The atmospheric boundary layer is the lower part of the atmosphere, where the flow of the air is dominated by the viscosity (fluid friction) and the roughness of the terrain.\n The definition is either taken from SOFiLOAD where we have defined a complex wind profile or it is defined by two important parameters.\n • The reference wind speed measured at height HREF\n • The roughness height zo of the terrain\n • Two optional scaling parameters to adjust a turbulence gradient over the height\n τ\n Z+Zo\n $$u2 Z+zZ T O k= ; C1 In| exe > Cy=0.09 (3.2) / Cu Zo$$\n $$uz Z+zZ T O 6=--__t __. cxin| exe - k=0.419 (3.3) 0.415-[z+2Z)] O$$\n Lit: Yi Yang, Ming Gu, Suqin Chen, Xinyang Jin, New inflow boundary conditions for modelling the neutral equilibrium atmospheric boundary layer in computational wind engineering. Journal of Wind Engineering and Industrial Aerodynamics 97 (2009) 88-95.\n If the wind speed has been measured in another location in the vicinty with a different rough- ness, the profile may be converted by defining this value Z0M based on conservation of masses, which is based on a constant wind speed at a meso-height of 300 m.\n With the definition of an atmospheric boundary layer are prescribed: the initial conditions, the boundary conditions at the inlet and the flow in the top most cells in the fluid volume.\n The definition in SOFiLOAD may be defined as steady state with a load case containing a wind defintion or as transient wind generated with WGEN. For the latter, the inflow has to be done with a single group with the attribut WIND INFL.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                17,
+                18
+            ],
+            "page_labels": [
+                "3-4",
+                "3-5"
+            ],
+            "type": "text",
+            "sections": "3.5 WIND – Atmospheric Boundary Layer"
+        }
+    },
+    {
+        "content": "Below is a structured, detailed description of the input table, organized by logical groups. This explanation is suitable for indexing in a RAG (Retrieval-Augmented Generation) vector store and highlights each item’s purpose, units, defaults, and how it ties into the broader workflow (FLOW, WIND, CASE, IN, OUT, INOU, WALL, STEP, HIST, CTRL).\n\n1. Load-Case Definitions  \n   • LC (Load case for results)  \n     – Role: Specifies which result set to read or write.  \n     – Unit: n/a  \n     – Default: 1  \n   • PLC (Primary load case)  \n     – Role: Establishes the baseline case from which other initial conditions may inherit values (e.g. atmospheric boundary-layer profiles).  \n     – Unit: n/a  \n     – Default: none (must be provided or implied)  \n   • LCD (Load case increment for differences)  \n     – Role: When set, additional result cases are automatically generated. Each new case number = original LC + LCD, containing the difference between current velocities and those in PLC.  \n     – Unit: n/a  \n     – Default: none  \n\n2. Initial-Condition Variables  \n   Any of these may be:  \n     • Defined via PLC (inherit) or through an ABL profile,  \n     • Overwritten per element by a constant numeric value or by a coordinate-dependent formula string (using variables #X, #Y, #Z).  \n   • U, V, W (Initial velocity components)  \n     – Description: Velocity in X, Y, Z directions.  \n     – Unit: m/sec  \n     – Default: unset  \n   • DEN (Density)  \n     – Description: Initial mass density.  \n     – Unit: kg/m³  \n     – Default: unset  \n   • K (Turbulent energy or intensity)  \n     – Description: If entered as a percentage (e.g. “2[%]”), it is treated as turbulence intensity; otherwise as specific turbulent energy.  \n     – Unit: m²/sec²  \n     – Default: unset  \n   • EPS (Dissipation rate or length scale)  \n     – Description: Can be expressed as a dissipation rate (m³/sec²) or, alternately, as a length scale (e.g. “12.4[m]”).  \n     – Unit: m³/sec²  \n     – Default: unset  \n   • TEMP (Initial temperature)  \n     – Unit: degrees (°) – scale depends on convention (Celsius, Kelvin)  \n     – Default: unset  \n   • P (Initial static pressure)  \n     – Unit: bar  \n     – Default: unset  \n\n3. Pressure-Reference Settings  \n   To define a zero‐pressure datum internally, choose one of:  \n   • PREF (Reference nodal point)  \n     – Role: Node ID used as zero‐pressure reference.  \n     – Unit: n/a  \n     – Default: * (required if no explicit coordinates given)  \n   • PRFX, PRFY, PRFZ (Explicit coordinates)  \n     – Role: Use physical coordinates to mark the zero‐pressure point, bypassing node lookup.  \n     – Unit: meters [m] (system length unit)  \n     – Default: * (at least one method must be defined)  \n\n4. Miscellaneous  \n   • TITL (Result case designation)  \n     – Description: A free-form title (up to 32 characters) used to label the result set.  \n     – Data type: Lit32 (32-character literal)  \n     – Default: none  \n\nUsage Notes and Context  \n– Every variable may be inherited from PLC or fully customized per element.  \n– Coordinate placeholders (#X, #Y, #Z) allow field initialization via spatially varying formulas.  \n– Defining LCD automates creation of “delta” cases, streamlining post-processing of velocity changes.  \n– Pressure-reference entries ensure internal consistency when absolute pressures are of interest in post-processing.  \n– This table is called in the CASE section of the input deck, often following the INOU definitions and preceding solver STEP instructions.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                19
+            ],
+            "page_labels": [
+                "3-6"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.6 CASE – Analysis case"
+            ]
+        }
+    },
+    {
+        "content": "See also: FLOW, WIND, CASE, IN, OUT, INOU, WALL, STEP, HIST, CTRL\n CASE\n Any initial condition my be defined by a primary load case or the definition of an atmospheric boundary layer. Every individual variable may be overwritten by an explicit numerical value or by a formula string depending on the variables #X, #Y, #Z, which will be the coordinates of the element center.\n For the turbulent energy it is also possible to define the turbulence intensity (e.g. 2[%] ). For the dissipation rate an alternate definition is as length scale (e.g. 12.4[m] )\n With a definition of LCD additional result cases will be created with a number incremented by LCD containing the differences of the velocities to the initial values.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                19
+            ],
+            "page_labels": [
+                "3-6"
+            ],
+            "type": "text",
+            "sections": "3.6 CASE – Analysis case"
+        }
+    },
+    {
+        "content": "This table defines the set of inlet‐boundary parameters (or “items”) that a CFD control file can accept when prescribing boundary conditions at an inlet face.  Each row corresponds to one “Item” code, its semantic role under “Description,” the physical “Unit” in which it must be supplied, and the “Default” value the solver will assume if the item is omitted.  In practice, these entries may be inherited from a pre‐defined load case in the database (LC), or overwritten by explicit numeric values or even by spatial/time‐dependent formula strings that reference the coordinate symbols #X, #Y, #Z and/or time #T.  \n\n1. NO  \n   • Description: Region number of the boundary.  This integer labels which inlet region is being defined when multiple inlets exist.  \n   • Unit: none (solver‐internal index)  \n   • Default: 1  \n\n2. LC  \n   • Description: Load case in the database.  Instead of specifying individual quantities, the user can refer to a named load‐case record that carries preconfigured inlet data.  \n   • Unit: none  \n   • Default: “–” (no load case selected by default)  \n\n3. TYP  \n   • Description: Type of boundary condition (“Type der Randbedingung” in German).  Typical values include IN, OUT, WALL, STEP, HIST, etc., controlling how the solver treats the face.  \n   • Unit: enumeration (not a physical unit; often shown as LIT in documentation)  \n   • Default: IN  \n\n4. U, V, W  \n   • Descriptions: Velocity components of the incoming fluid in the global X, Y, and Z directions, respectively.  These define the vector inlet velocity field.  \n   • Unit: meters per second [m/sec]  \n   • Defaults: none (must be provided or inherited)  \n\n5. DEN  \n   • Description: Density of the incoming fluid.  If constant density is assumed, this single value applies everywhere on the inlet.  \n   • Unit: kilograms per cubic meter [kg/m³]  \n   • Default: none  \n\n6. K  \n   • Description: Turbulent energy or, alternatively, turbulence intensity specification.  When set as a single number, it may represent kinematic turbulent energy (½ u′²) or be derived from a percent intensity.  \n   • Unit: square meters per second squared [m²/sec²]  \n   • Default: none  \n\n7. EPS  \n   • Description: Turbulence dissipation rate ε, or—if the user prefers—the integral length scale of turbulence.  The solver interprets this entry according to downstream turbulence‐model settings.  \n   • Unit: cubic meters per second squared [m³/sec²]  \n   • Default: none  \n\n8. TEMP  \n   • Description: Temperature of the incoming fluid.  Defines the thermal inlet condition if energy equations are active.  \n   • Unit: degrees (absolute or relative, depending on the solver convention) [°]  \n   • Default: none  \n\nContextual notes:  \n- Any of U, V, W, DEN, K, EPS, TEMP can be assigned by a simple numeric literal (e.g., `U = 10.0`) or by a formula string such as  \n    IN 1 U ’=0.30*(1.-((#Y-0.005)/0.205)**2)’  \n  which builds a parabolic profile in Y.  \n- Similarly, K may be computed from a specified turbulence intensity (e.g., 2 %) and EPS from an integral length scale (e.g., 12.4 m) if those options are enabled.  \n- Omitted items default to “–” except NO (defaults to region 1) and TYP (defaults to IN), which ensures there is always at least one inlet region defined.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                20
+            ],
+            "page_labels": [
+                "3-7"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.7 IN – Inlet Conditions"
+            ]
+        }
+    },
+    {
+        "content": "See also: FLOW, WIND, CASE, IN, OUT, INOU, WALL, STEP, HIST,\n CTRL\n ; on\n Inlet conditions may be defined by a load case in the data base or the definition of an atmo- spheric boundary layer. Every individual variable may be overwritten by an explicit numerical value or by a formula string depending on the variables of the coordinates #X, #Y, #Z and the time #T.\n IN 1 U ’=0.30*(1.-((#Y-0.005)/0.205)**2)’\n For the turbulent energy it is also possible to define the turbulence intensity (e.g. 2 [%] ) for the dissipation rate an alternate definition is as Integral length scale (e.g. 12.4 [m] )",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                20
+            ],
+            "page_labels": [
+                "3-7"
+            ],
+            "type": "text",
+            "sections": "3.7 IN – Inlet Conditions"
+        }
+    },
+    {
+        "content": "The table shown is a concise specification for the “OUT” (outlet) boundary-condition block in a solver’s input deck. It defines exactly two parameters—NO and F—each occupying a single row. The four columns (Item, Description, Unit, Default) capture the key metadata you’d need to store in a vectorized index for fast lookup, semantic search, or prompt-based assembly of input files. Below is a breakdown of its structure and semantics, together with notes on how it relates to the broader set of boundary-condition keywords (FLOW, WIND, CASE, IN, OUT, INOU, WALL, STEP, HIST, CTRL).\n\n1. Column Definitions  \n   • Item  \n     – A short, all-caps token that uniquely identifies the input field.  \n     – In this table, the two valid tokens are “NO” and “F.”  \n     – Acts as the primary key when parsing or generating the corresponding line in the configuration file.  \n\n   • Description  \n     – A human-readable explanation of what the field controls.  \n     – Used in user documentation, GUI tooltips, or auto-generated schema validators.  \n\n   • Unit  \n     – The physical unit of the parameter, if applicable.  \n     – Here both entries have “—,” indicating that no dimensional unit applies.  \n\n   • Default  \n     – The value assigned if the user does not explicitly override it.  \n     – Serves as a fallback during input validation or when constructing a minimal input deck.  \n\n2. Row-by-Row Semantics  \n   • NO  \n     – Description: “Region number of the boundary”  \n     – Type: Integer index  \n     – Domain: Positive integers (1, 2, 3, …) corresponding to region IDs defined elsewhere  \n     – Default: 1  \n     – Role: Selects which mesh region or boundary patch is treated as the outlet.  \n\n   • F  \n     – Description: “Partial factor of outlet”  \n     – Type: Floating-point scalar  \n     – Domain: Typically in [0.0, 1.0] or higher depending on solver support (values >1 can amplify outflow)  \n     – Default: 1.0  \n     – Role: Scales or modulates the mass (or volume) flux through the outlet boundary. A value of 1.0 applies the full computed flux, whereas 0.5 would pass half of it, etc.  \n\n3. Usage Patterns & Cross-References  \n   – In a complete input deck you’ll see a block headed by “OUT” followed by lines like  \n        NO    1  \n        F     1.0  \n     or with customized values for multiple outlets.  \n   – See also:  \n     • IN   – for inlet boundary specifications (e.g. region number of the inlet, inlet profile)  \n     • WALL – for solid walls (e.g. no-slip region ID, roughness)  \n     • FLOW, WIND – for bulk flow or wind-loading conditions  \n     • HIST, CTRL – for time-dependent or control-loop entries  \n   – The “OUT” block is often paired with an “INOU” summary section in post-processing to report net flow balance.  \n\n4. Key Points for RAG Vector Storage  \n   – Store “Item” tokens (NO, F) as discrete embedding keys for exact-match retrieval.  \n   – Index “Description” text to allow natural-language search (e.g. “what controls outlet flux?”)  \n   – Include “Unit” and “Default” fields in metadata to support automated validation or GUI defaults.  \n   – Link each row to the parent keyword “OUT” and to related keywords like IN, WALL, etc., enabling context-aware completion or question answering.  \n\nOverall, this two-row table is minimal but essential: it tells the solver which region to treat as the outlet (NO) and how aggressively to apply the outflow condition (F), with sensible defaults that let many users run simulations without ever touching the OUT block.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                21
+            ],
+            "page_labels": [
+                "3-8"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.8 OUT – Outlet Condition"
+            ]
+        }
+    },
+    {
+        "content": "See also: FLOW, WIND, CASE, IN, OUT, INOU, WALL, STEP, HIST, CTRL\n OUT",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                21
+            ],
+            "page_labels": [
+                "3-8"
+            ],
+            "type": "text",
+            "sections": "3.8 OUT – Outlet Condition"
+        }
+    },
+    {
+        "content": "The table defines the set of input parameters required to prescribe a pressure‐based inflow/outflow (INOU) boundary condition in a CFD solver. Unlike a pure IN (velocity‐specified) boundary, here the pressure P is imposed and the resulting velocity field (inward or outward) arises from the local pressure gradient. For inflow regions, additional properties—density, turbulent quantities, and temperature—must be specified so that the solver can construct a physically consistent incoming state. Variables may be set to fixed numeric values or to spatial/temporal formulae based on coordinates (#X, #Y, #Z) and time (#T). Turbulence can be defined either via turbulent energy K and dissipation rate EPS or, alternately, through turbulence intensity and integral length scale.\n\nColumn-by-column overview  \n• Item: mnemonic code for each input field.  \n• Description: meaning of the field.  \n• Unit: physical units expected by the solver.  \n• Default: value used if none is provided.\n\nRow-by-row details  \n1. NO  \n   – Description: Region number identifying which boundary patch this condition applies to.  \n   – Unit: none.  \n   – Default: 1.\n\n2. LC  \n   – Description: Load case reference from the solver’s database. Allows reuse of preconfigured profiles.  \n   – Unit: none.  \n   – Default: “–” (no load case; user must supply values manually).\n\n3. TYPE  \n   – Description: Type of boundary condition. In this context, “IN” designates a pressure‐driven inflow/outflow patch.  \n   – Unit: literal (LIT).  \n   – Default: “IN”.\n\n4. P  \n   – Description: Static pressure value on the boundary. Positive gradients drive outflow; negative gradients cause inflow.  \n   – Unit: bar.  \n   – Default: none (must be specified or inherited from a load case).\n\n5. DEN  \n   – Description: Density of the incoming fluid, used only if the boundary acts as an inflow.  \n   – Unit: kg/m³.  \n   – Default: none.\n\n6. K  \n   – Description: Turbulent kinetic energy per unit mass (or, if desired, turbulence intensity can be converted internally to K).  \n   – Unit: m²/s².  \n   – Default: none.\n\n7. EPS  \n   – Description: Dissipation rate of turbulence (alternatively, an integral length scale may be supplied, from which EPS is derived).  \n   – Unit: m³/s².  \n   – Default: none.\n\n8. TEMP  \n   – Description: Temperature of the incoming fluid, required when mass enters the domain.  \n   – Unit: degrees (°).  \n   – Default: none.\n\nAdditional context  \n– Inlet conditions can be driven by a predefined atmospheric boundary‐layer profile or by custom expressions.  \n– Any of the fluid properties (DEN, K, EPS, TEMP) may be overridden individually.  \n– For turbulence: specifying a percentage turbulence intensity (e.g. “2[%]”) automatically sets K; defining an integral length scale (e.g. “12.4[m]”) automatically sets EPS.  \n– Time‐ or space‐dependent behavior is supported via formula strings referencing #X, #Y, #Z, #T.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                22
+            ],
+            "page_labels": [
+                "3-9"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.9 INOU – In and Outlet Conditions"
+            ]
+        }
+    },
+    {
+        "content": "See also: FLOW, WIND, CASE, IN, OUT, WALL, STEP, HIST, CTRL\n INOU\n Compared to the IN condition where we provide flow velocities, we have here a pressure P as boundary condition, i.e. depending on the gradient of the pressure a flow will occur inwards or outwards. Values for density, turbulence and temperature have to be specified and will become effective for an inflow situation.\n Inlet conditions may be defined by a load case in the data base or the definition of an atmo- spheric boundary layer. Every individual variable may be overwritten by an explicit numerical value or by a formula string depending on the variables #X, #Y, #Z and the time #T.\n For the turbulent energy it is also possible to define the turbulence intensity (e.g. 2[%] ) for the dissipation rate an alternate definition is as Integral length scale (e.g. 12.4[m] )",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                22
+            ],
+            "page_labels": [
+                "3-9"
+            ],
+            "type": "text",
+            "sections": "3.9 INOU – In and Outlet Conditions"
+        }
+    },
+    {
+        "content": "The table defines the input parameters for a “WALL” boundary region in a computational-fluid-dynamics (CFD) case.  Any boundary not explicitly tagged as IN (inlet) or OUT (outlet) defaults to WALL.  Below is a field-by-field breakdown, with units, defaults and physical meaning.  See also related keywords: FLOW, WIND, CASE, IN, OUT, INOU, STEP, HIST, CTRL.\n\n1. NO  \n   • Description: Index or region number of this wall boundary.  \n   • Unit: – (dimensionless integer)  \n   • Default: 1  \n   • Notes: Used to identify multiple wall patches when setting up boundary conditions.\n\n2. Z0  (Roughness of the Wall)  \n   • Description: Specifies how the wall interacts with turbulence and the near-wall velocity profile.  \n     – x.xx: explicit roughness height zo in meters, activating a logarithmic wall law (valid for y+ > 1.0).  \n     – SLIP: non-adherent, hydraulically smooth surface; enforces zero normal velocity while leaving tangential velocity unconstrained, and drives turbulence parameters k, ε to zero.  \n     – NOSL: adherent, hydraulically smooth wall (no slip, no-adherence of turbulence).  \n     – SYMP: natural (symmetry) boundary; fluid is forced parallel to the wall with no other interaction.  \n   • Unit: m (for numerical zo only)  \n   • Default: NOSL  \n   • Context: The explicit roughness model may refer to equivalent roughness from EC 1 part 2-4 (e.g. cast iron ≈0.2 m/30 ≈0.0067 m).  SLIP and NOSL offer simpler, idealized treatments; SYMP imposes a free-slip, zero-normal-flux condition.\n\n3. U, V, W  (Velocity Components)  \n   • Description: Prescribed wall-normal and tangential velocities:  \n     – U: X-direction  \n     – V: Y-direction  \n     – W: Z-direction  \n   • Unit: m/sec  \n   • Default: –  (not prescribed unless needed, implying zero normal velocity with SLIP/NOSL or free-slip under SYMP)\n\n4. TEMP  (Wall Temperature)  \n   • Description: Static temperature at the wall surface.  \n   • Unit: degrees (°)  \n   • Default: * (asterisk indicates inherited or case-wide default if not specified)\n\n5. R  (Linear Heat Conduction Resistance)  \n   • Description: Represents heat conduction through a solid wall layer as a linear thermal resistance.  Used in series with convective heat transfer to the fluid.  \n   • Unit: W / °C / m²  (interpreted as thermal resistance per unit area)  \n   • Default: 0.0  \n   • Notes: If neither R nor HFLX is provided, the wall is treated as adiabatic (no heat exchange).\n\n6. RADI  (Emissivity for Radiation Boundary)  \n   • Description: Surface emission coefficient for thermal radiation.  \n   • Unit: – (dimensionless, 0–1)  \n   • Default: 0.0  \n   • Notes: Governs radiative heat flux; 0=black body absorption/emission disabled.\n\n7. HFLX  (Prescribed Heat Flux)  \n   • Description: Imposed net heat flux at the wall.  Positive values correspond to heat input into the fluid domain.  \n   • Unit: W/m²  \n   • Default: 0.0  \n   • Notes: Overrides convective exchange if specified; combined with R and radiative effects for total wall energy balance.\n\nHow It All Fits Together  \n– Velocity BC: SLIP or NOSL enforce different tangential constraints; explicit Z0 triggers a log-law wall treatment if y+ > 1.  SYMP acts as a zero-normal gradient symmetry plane.  \n– Thermal BC:  \n   1. Convection to fluid (linked to turbulence model)  \n   2. Conduction through wall (via R)  \n   3. Radiation (via RADI)  \n   4. Direct flux specification (via HFLX)  \nIf R and HFLX are omitted, the wall defaults to adiabatic. This table encapsulates all necessary inputs to fully define both hydrodynamic and thermal behavior at wall boundaries in a CFD simulation.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                23
+            ],
+            "page_labels": [
+                "3-10"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.10 WALL – Wall conditions"
+            ]
+        }
+    },
+    {
+        "content": "The provided table is a catalogue of typical equivalent sand-grain roughness values (k) expressed in millimetres for a variety of engineering surfaces. These values serve as reference inputs for defining the “roughness” boundary condition in CFD simulations (when using a logarithmic wall‐law approach), provided the nondimensional wall‐distance y+ exceeds unity.  When an explicit k is specified, the solver enforces a no‐slip velocity condition at the wall while allowing turbulence quantities to adjust naturally according to the chosen wall‐law.  If a roughness height k is not given, many codes will treat the wall as hydraulically smooth (SLIP) or even adiabatic with no heat flux if no thermal resistance is defined.\n\nSummary of Surfaces and Their Roughness Values:\n  • Very Smooth Finishes (k on the order of 10⁻³ mm)\n    – Glass: 0.0015 mm  \n    – Polished metal: 0.002 mm  \n    – Smooth painting: 0.006 mm  \n\n  • Lightly Textured or Coated Surfaces (k on the order of 10⁻² mm)\n    – Spray painting: 0.02 mm  \n    – Blasted steel: 0.05 mm  \n\n  • Common Structural Metals (k on the order of 10⁻¹ mm)\n    – Cast iron: 0.20 mm  \n    – Galvanised steel: 0.20 mm  \n\n  • Concrete and Masonry (k from 10⁻¹ mm up to single‐digit mm)\n    – Spinning (trowelled) concrete: 0.20 mm  \n    – Cast-in-situ concrete: 1.0 mm  \n    – Rust (oxidised steel surfaces): 2.0 mm  \n    – Masonry (brick or blockwork faces): 3.0 mm  \n\nKey points for application:\n 1.  The explicit roughness value k replaces the default smooth‐wall assumption (SYMP or SLIP) and forces the turbulence model to adjust near‐wall eddy viscosity and turbulent kinetic energy dissipation accordingly.  \n 2.  When using the EC 1 part 2–4 guideline, one may estimate the equivalent roughness length zo by dividing k by approximately 30 (zo ≈ k/30), facilitating cross‐validation with wind-engineering standards.  \n 3.  In the absence of any user‐defined wall‐roughness (R) or imposed wall heat‐flux (HFLX), the wall is assumed adiabatic.  If wall thermal resistance is relevant, the solver will add a linear conduction resistance term based on wall material thickness and conductivity.  \n\nBy consulting this table, CFD practitioners can ensure that the wall‐boundary captures realistic frictional and turbulent effects for surfaces ranging from ultra-smooth glass to coarse masonry.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                23
+            ],
+            "page_labels": [
+                "3-10"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.10 WALL – Wall conditions"
+            ]
+        }
+    },
+    {
+        "content": "See also: FLOW, WIND, CASE, IN, OUT, INOU, WALL, STEP, HIST, CTRL\n WALL\n WALL sets the boundary condition for any wall or boundary region not belonging to IN or OUT.\n • The simplest case would be SYMP, for this natural boundary condition the fluid will become parallel to the boundary without any other interaction of the fluid with the wall.\n • SLIP / NOSL are simple boundary conditions for the fluid velocity (no adherence and fixed at a hydraulically smooth wall). Compared to SYMP a SLIP boundary will enforce the turbulence parameters k and ε to become zero.\n • A definition of the roughness by an explicit value is the most elaborated definition of the behavior at the wall by a logarithmic wall law. This law is only applicable if the value y+ is larger than 1.0.\n The equivalent roughness according to Table 10.8.1 of EC 1 part 2-4, may be introduced by zo ≈ k / 30 :\n cast iron\n 0.2\n For the heatflow at the wall we have the following components:\n • Transition from wall to the fluid\n Linear resistance of the wall by heat conduction\n •\n If neither R nor HFLX is defined, the wall is treated as adiabatic.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                23,
+                24
+            ],
+            "page_labels": [
+                "3-10",
+                "3-11"
+            ],
+            "type": "text",
+            "sections": "3.10 WALL – Wall conditions"
+        }
+    },
+    {
+        "content": "Below is a structured, field-by-field description of the “DRAG/WIND” input-table you provided. This description is written in a way that can be directly indexed in a RAG vector store and cross-referenced against related commands (e.g. FLOW, WIND, CASE, IN, OUT, WALL, HIST).\n\n1. Table Structure  \n   • Columns  \n     – Item: Short code for each input parameter  \n     – Description: Plain-language explanation of the parameter  \n     – Unit: SI unit (or literal type) in which the value must be given  \n     – Default: Value assumed if the parameter is omitted  \n\n2. Core Fluid and Geometric References  \n   • VREF  \n     – Description: Reference fluid (wind) velocity  \n     – Unit: m/sec  \n     – Default: (mandatory; no default)  \n   • HREF  \n     – Description: Height at which VREF applies in the vertical wind-profile  \n     – Unit: m  \n     – Default: (mandatory; no default)  \n   • AREF  \n     – Description: Method for defining the reference area used in drag-force computation  \n     – Unit: Literal (LIT)  \n     – Default: AREA  \n     – Options:  \n       • BOX – reference volume defined by three orthogonal lengths (AX, AY, AZ) in m  \n       • AREA – user explicitly supplies sectional areas in m² and volume in m³  \n\n3. Area and Moment References  \n   • AX, AY, AZ  \n     – Description: Reference areas perpendicular to the X, Y, Z axes (for cwx, cwy, cwz)  \n     – Unit: m²  \n     – Default: 1.0 each  \n   • AXX, AYY, AZZ  \n     – Description: Reference volumes/moments used for computing torsional coefficients (cmx, cmy, cmz)  \n     – Unit: m³  \n     – Default: 1.0 each  \n\n4. Orientation and Moment-Center Definitions  \n   • ALF  \n     – Description: Inclination angle of the body (–180° ≤ α ≤ 180°)  \n     – Unit: grad (degrees)  \n     – Default: 0  \n   • REFX, REFY, REFZ  \n     – Description: Coordinates of the moment-reference point in the global coordinate system  \n     – Unit: m  \n     – Default: 0.0, 0.0, 0.0  \n\n5. Boundary-Condition Group References (W-Group)  \n   • W  \n     – Description: Type of reference; currently only the literal “GRP” is allowed  \n     – Unit: Literal (LIT)  \n     – Default: GRP  \n   • W1 … W15  \n     – Description: Identification numbers of the wall boundary conditions included in the drag calculation  \n     – Unit: – (integer group IDs)  \n     – Default: (none; user must supply each ID)  \n     – Notes: Up to 15 separate wall groups can be combined in one DRAG command.  \n\n6. Usage Context for DRAG/WIND  \n   – For each DRAG command, the software computes force and moment coefficients for all “GRP”-defined wall groups listed under W1–W15.  \n   – The first group entered acts as an accumulator: the loads on all subsequent groups are summed into it.  \n   – Multiple DRAG commands may be issued to assemble per-group and total load cases, e.g.:  \n       DRAG … W GRP 10 11 12 13 14  \n       DRAG … W GRP 11 13  \n       DRAG … W GRP 12 14  \n   – The drag coefficients must be specified in a consistent angular sequence.  Literature conventions vary, so the user must ensure alignment between the chosen coordinate system, wind-tunnel reference, and the sign/orientation of the angle ALF.  \n\n7. Cross-References  \n   – See also: FLOW (general fluid-flow parameters), WIND (wind-loading commands), CASE/IN/OUT/INOU (load case management), WALL (boundary-condition definitions), HIST (time-history definitions).  \n\nThis description captures the semantic role of each table field, its unit requirements, default behavior, and how it ties into the overall DRAG/WIND workflow. It can be tokenized and embedded for efficient retrieval in a RAG application.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                25
+            ],
+            "page_labels": [
+                "3-12"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.11 DRAG – Dragforce evaluation"
+            ]
+        }
+    },
+    {
+        "content": "The provided illustration (Figure 3.3, “Wind coefficients according angle-of-attack”) is a schematic representation of a generic body (shown as a slightly trapezoidal “planform”) together with the local coordinate axes, the reference point for force and moment evaluation, and the sign conventions for aerodynamic coefficients as functions of the angle of attack (α). Below is a detailed breakdown of every element in the drawing:\n\n1. Central Body and Reference Point  \n   • The body is drawn as a flat, five-sided outline (trapezoidal shape) viewed “from above,” with a solid black dot near its geometric center.  \n   • That dot marks the reference point about which forces and moments (drag, lift, pitching moment) are computed by the analysis routine (e.g. the DRAG command in the input deck).  \n\n2. Coordinate Axes  \n   • A horizontal arrow pointing to the left is labeled “y,” indicating the positive y-axis direction.  \n   • A vertical arrow pointing downward is labeled “z,” indicating the positive z-axis direction (note that z points downward in the chosen sign convention).  \n   • A vertical arrow pointing upward out of the top face of the body is not part of the y–z plane but indicates the positive lift/coefficient direction for “cl” (lift coefficient) and “cwz” (force coefficient in z direction under wind action).  \n\n3. Angle-of-Attack Arrows  \n   • Three small arrows to the left of the body illustrate incoming flow directions at different angles of attack (α):  \n     – α < 0° (flow coming from above the horizontal line, arrow tilted downward)  \n     – α = 0° (purely horizontal arrow under the first)  \n     – α > 0° (flow coming from below the horizontal, arrow tilted upward)  \n   • Each arrow is labeled accordingly (“α < 0°,” “α = 0°,” “α > 0°”), emphasizing that all force coefficients must be tabulated over a sequence of α values (positive and negative) to capture wind-load behavior.  \n\n4. Force and Moment Coefficient Sign Conventions  \n   • From the top face of the body, a bold upward arrow is labeled “+ cl, cwz,” showing that a positive lift coefficient and positive aerodynamic force in the z-direction act upward in this coordinate system.  \n   • On the right side of the body outline, a curved clockwise arrow is labeled “+ cm,” denoting a positive pitching moment (nose-down rotation) about the reference point according to the chosen moment sign convention.  \n\n5. Caption and Context  \n   • The caption reads “Figure 3.3: Wind coefficients according angle of attack,” indicating that this schematic defines how normal force (lift), drag, and pitching‐moment coefficients are to be applied in the wind-load calculations.  \n   • In the broader RAG or finite‐element workflow, these coefficients are specified for each segment or group (via DRAG … W GRP commands) by supplying cD(α), cL(α), cM(α) tables. The software then resolves forces in the global y–z plane for every α in the sequence and sums them, group by group, about the given reference.  \n\n6. Relevance for Input Deck (DRAG/WIND Commands)  \n   • This illustration underpins why the input must list aerodynamic coefficients for a full range of α (negative through positive) rather than only in the nominal (α=0°) orientation.  \n   • Because literature and software vary in coefficient sign definitions and reference‐point conventions, Figure 3.3 serves as the ground truth: positive lift is upward, positive drag is in the flow direction (with drag coefficients usually tabulated separately), and positive pitching moment is nose-down (clockwise when viewed from the right).  \n\nIn summary, Figure 3.3 visually encodes the geometry, axis definitions, flow-angle nomenclature, and sign conventions needed to build the wind-load coefficient tables that the DRAG and WIND commands consume. It ensures consistency between user-supplied cD, cL, cM data and the solver’s global force/moment summation routines.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                26
+            ],
+            "page_labels": [
+                "3-13"
+            ],
+            "type": "image",
+            "sections": [
+                "3 Input Description",
+                "3.11 DRAG – Dragforce evaluation"
+            ]
+        }
+    },
+    {
+        "content": "The image (labelled “Figure 3.4: Wind coefficients for a rotated bridge deck”) is a schematic top-view of an asymmetrical, trapezoidal bridge-deck section together with its sign conventions for drag and lift coefficients when the deck is rotated by an angle of attack α. The figure is composed of three main parts:\n\n1. Left-hand side: two wire-frame outlines of the deck section, one above the other, each shown without axes.\n   – The upper outline is annotated “α > 0°,” indicating the deck has been rotated in the positive sense (leading edge pitched “up” into the flow).  \n   – The lower outline is annotated “α < 0°,” indicating the deck has been pitched “down” (negative angle of attack).  \n   – The two shapes are identical in planform geometry; only their orientation (rotation about the reference point) differs to illustrate positive and negative α.\n\n2. Right-hand side: a single outline of the same deck section, shown with a filled black circle at its planar centroid (this represents the reference point used in DRAG … W GRP commands). Three arrows define the local coordinate system and the positive sense of each aerodynamic coefficient:\n   – A straight arrow pointing upward (out of the page in physical terms but drawn vertically on the plane) is labelled “+ cwz.” This denotes the positive direction of the vertical drag coefficient cwz.  \n   – A straight arrow pointing left (labelled “y”) represents the positive y-axis in the unrotated coordinate system.  \n   – A straight arrow pointing downward (labelled “z”) represents the positive z-axis.  \n   – A curved, clockwise arrow wrapped around the top edge of the deck outline is labelled “+ cwt.” This arrow indicates the positive sense for the transverse (tangential or moment‐type) coefficient cwt, i.e., rotation about the reference point in the deck plane.\n\n3. Caption: “Figure 3.4: Wind coefficients for a rotated bridge deck.”\n\nContextual notes (from the surrounding text):  \n– The deck outline sits on a boundary condition numbered W15 (WALL).  \n– These coefficients (cwz, cwt) are required by the DRAG command in order to compute wind loads at various angles of attack α, referencing a fixed coordinate system.  \n– For each DRAG … W GRP instruction, forces and drag values are computed for selected element groups about the given reference point. When multiple DRAG commands use the same group, one can extract contributions for individual members as well as total sums.  \n– The figure underscores the need to adhere strictly to the sign conventions for α, cwz and cwt — especially in light of differing conventions found in the literature — so that wind loads are correctly resolved in both the wind‐directional and transverse planes.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                26
+            ],
+            "page_labels": [
+                "3-13"
+            ],
+            "type": "image",
+            "sections": [
+                "3 Input Description",
+                "3.11 DRAG – Dragforce evaluation"
+            ]
+        }
+    },
+    {
+        "content": "See also: FLOW, WIND, CASE, IN, OUT, INOU, WALL, HIST\n DRAG\n W15\n Number of a boundary condition (WALL)\n -\n The force coefficients are needed for the calculation of wind loads in dependence of the wind direction. These values have to be stipulated according to an angle sequence. It is especially important to consider the exact definition of the coefficients, because the literature often uses different conventions or references:\n • The best usage is for the section to consider the wind coming from different directions. The drag coefficients are then taken for the unrotated coordinate system depending on the angle of attack:\n • The alternate values are obtained in wind direction and transverse upwards as measured in a wind tunnel:\n For every DRAG-command the forces and drag values will be calculated for the selected groups based on the given reference point. For the first selected group a summation of all other groups in the drag will be done to the first group. A group may be selected multiple times in several DRAG commands. Thus the calculation for individual members and the total sum may be obtained by:\n WIND\n WIND ——)\n DRAG ... W GRP 10 11 12 13 14 DRAG ... W GRP 11 13 DRAG ... W GRP 12 14",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                25,
+                26
+            ],
+            "page_labels": [
+                "3-12",
+                "3-13"
+            ],
+            "type": "text",
+            "sections": "3.11 DRAG – Dragforce evaluation"
+        }
+    },
+    {
+        "content": "The table presented here defines the key control parameters for any transient (time-dependent) or iterative (steady-state) analysis in the solver.  Each row represents one input keyword, its role in defining time/iteration behaviour, the units expected, and the built-in default if you omit it.  Taken together, they allow you to control how the solver marches through time or iterates to convergence.\n\n1. N  – Number of time/iteration steps  \n   • Description: Specifies either the total count of time increments in a transient run or, if no transient time is given, the maximum number of nonlinear iteration loops in a steady-state solve.  \n   • Unit: dimensionless  \n   • Default: 500  \n\n   Usage notes:  \n     – If you intend a time-accurate transient simulation, set N ≥1 to fix exactly that many time steps.  \n     – If you omit the total analysis time (T), the solver assumes a steady-state problem and uses N as the iteration cap.\n\n2. T  – Time value of first step or total analysis time  \n   • Description: When N ≥1, T is taken as the duration of the first time step (from which subsequent steps can grow).  When N <1, T defines the full duration of the transient run and N is treated as a fraction of T for the first step.  \n   • Unit: seconds [sec]  \n   • Default: none (must be specified for transient analysis)\n\n   Usage notes:  \n     – N <1 (e.g. N=0.001) yields an initial step of N×T (one-thousandth of the total run time), then remains constant unless progression is applied.  \n     – If you do not define T at all, the solver switches to steady-state mode.\n\n3. TFAK  – Factor for time-step progression  \n   • Description: Multiplicative growth factor between successive time steps in a geometric progression.  If you choose to let your time-step size grow, each new step Δtₙ₊₁ = Δtₙ × TFAK.  \n   • Unit: dimensionless  \n   • Default: none\n\n   Usage notes:  \n     – Use with caution: large values of TFAK combined with large initial Δt can cause overly large time-steps.  \n     – Always double-check the resulting time-step sequence with a calculator or small test run.\n\n4. DTM  – Maximum time-step size limit  \n   • Description: Caps each time increment so it never exceeds this value, even if TFAK would produce a larger step.  \n   • Unit: seconds [sec]  \n   • Default: 1\n\n   Usage notes:  \n     – Helps maintain stability and resolution in rapidly changing flows by preventing runaway time-step growth.\n\n5. INT  – Interval for saving a result case  \n   • Description: Number of seconds (or fraction thereof) between write-outs of solution files.  \n   • Unit: seconds [sec]  \n   • Default: none\n\n   Usage notes:  \n     – If left blank, the solver may only write at the end of the run (or at every step if forced by other settings).\n\n6. TOL  – Tolerance for iterations  \n   • Description: Convergence criterion for inner nonlinear/linear solver loops.  Iterations continue until the residual norm drops below TOL.  \n   • Unit: dimensionless  \n   • Default: 1e-4\n\n   Usage notes:  \n     – Tight tolerances slow each time step but improve accuracy.  Looser tolerances speed progression but risk poor physical fidelity.\n\n7. TORD  – Time-integration scheme  \n   • Description: Chooses the algorithmic order or blend between first-order implicit Euler and second-order quadratic schemes.  \n     – LINE  = standard first-order implicit Euler  \n     – QUAD  = true second-order quadratic accurate in time  \n     – value = any number between 0.0 and 1.0 to blend LINE and QUAD schemes proportionally  \n   • Unit: dimensionless / flag “LIT”  \n   • Default: LINE\n\n   Usage notes:  \n     – LINE is more robust and unconditionally stable but more diffusive.  \n     – QUAD gives higher temporal accuracy but can require smaller Δt (or tighter TOL) to remain stable.  \n     – A blending factor (e.g. 0.5) can offer a compromise between stability and accuracy.\n\nAdditional context (see FLOW, WIND, CASE, IN/OUT, WALL, HIST, CTRL): These parameters sit within the overall solver input deck.  While FLOW, WIND, CASE, IN/OUT, WALL, and CTRL define geometry, boundary conditions, and control logic, these time controls (STEP) decide how the solver advances through simulation time or iterates to steady state.  Proper coordination of N, T, TFAK, DTM, INT, TOL, and TORD is critical for a stable, accurate, and efficient run.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                27
+            ],
+            "page_labels": [
+                "3-14"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.12 STEP – Transient Analysis"
+            ]
+        }
+    },
+    {
+        "content": "See also: FLOW, WIND, CASE, IN, OUT, INOU, WALL, STEP, HIST, CTRL\n STEP\n A transient analysis will be initiated by the specification of T. There are several possibilities to subdivide the analysis time.\n First there are different possibilities for the time step itself:\n • constant time step\n Definition of N and T defines the size of the time step.\n geometric progression with fixed values\n The size of the (n+1)th time step is established by multiplication of the nth time step with\n TFAC. For larger numbers of time steps it is advisable to check the given values with a pocket calculator, as the time steps can grow rather high if TFAC and DTM are chosen improper.\n On the other side one can define the total time of the analysis explicit or via the time steps.\n • With an input of N ≥ 1, N is the number of time steps. The total time is the sum of all time steps.\n • As an alternate definition T is considered to be the total analysis time if N is defined less than 1.0. N is then the factor for the first time step. (e.g. N 0.001 yields without a progres- sion a first time step of one/thousand of the total time T.)\n Without definition of T a steady state analysis is performed, N will then be the maximum number of iteration loops.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                27
+            ],
+            "page_labels": [
+                "3-14"
+            ],
+            "type": "text",
+            "sections": "3.12 STEP – Transient Analysis"
+        }
+    },
+    {
+        "content": "The table in question defines the minimal set of keywords and parameters you need to extract and store specific CFD or FEA results (forces, velocities, pressures, etc.) into a RAG-style vector database for later retrieval and post-processing.  It is organized into four columns—Item, Description, Unit and Default—and four rows—TYPE, FROM, TO and INC—each corresponding to one input parameter.  Below is a detailed breakdown:\n\n1. Item = TYPE  \n   • Description: Specifies the kind of result you want to query or save.  This is the key selector.  \n     – DRAG  \n        · “Resulting forces for a boundary”: Combines force components SPX, SPY, SPZ and moments SPXX, SPYY, SPZZ.  \n        · You can further append “:F” or “:C” to save only forces (F) or only coefficients (C).  \n        · If a reference pressure is given, DRAG will compute non-dimensional force coefficients and store them as well.  \n     – FLOW  \n        · “Velocities”: Extracts velocity components U, V and W at the specified elements or boundary regions.  \n     – TURB  \n        · “Turbulence parameters”: Returns TKP (turbulent kinetic energy) and TDN (dissipation).  \n     – PN  \n        · “Pressures”: Static pressure field values.  \n     – CP  \n        · “Pressure coefficients”: Non-dimensional pressure coefficients relative to reference conditions.  \n     – TEMP  \n        · “Temperatures”: Temperature field at nodes or integration points.  \n   • Unit: LIT (indicating a literal string token is expected, not a numeric value).  \n   • Default: “*” (asterisk)  \n     – If you omit TYPE or set it to “*”, the system will interpret it as “select all available result types.”  \n\n2. Item = FROM  \n   • Description: The starting index (ID number) of the element or boundary region you wish to include in the query.  \n     – Used to delineate the lower bound of your selection set.  \n   • Unit: none (this is an integer index rather than a physical unit).  \n   • Default: “!” (exclamation mark)  \n     – Conventionally means “start from the very first element or region defined in the model.”  \n\n3. Item = TO  \n   • Description: The ending index (ID) of your element or boundary‐region selection set.  \n     – Defines the upper bound.  \n   • Unit: none.  \n   • Default: “FROM”  \n     – If you do not specify TO explicitly, the system sets TO = FROM, effectively selecting exactly one ID.  \n\n4. Item = INC  \n   • Description: The increment step between indices, from FROM up to TO.  \n     – Allows you to sample every nth element or region.  \n   • Unit: none.  \n   • Default: 1  \n     – A value of 1 means “take every element/region in the range without skipping.”  \n\nAdditional Context (from the accompanying text):  \n– HIST: For time‐dependent (transient) analyses, you can either store full field snapshots at each time step (spread across different load cases) or pick up to 1,024 element or boundary results and log their time histories compactly. The DYNR postprocessor reads these histories; you can also import such data as a time‐series function via SOFILOAD.  \n– DRAG is highlighted because it combines multiple force and moment components, references them to a user‐defined point, and optionally non-dimensionalizes them.  \n– FLOW and TURB are specifically mentioned as shorthand for velocity fields (U, V, W) and turbulence metrics (TKP, TDN), respectively.  \n\nIn practice, you would build a RAG-style query block like:\n\n   TYPE = DRAG  \n   FROM = 101  \n   TO = 120  \n   INC = 2  \n\nThis would retrieve drag‐force data (with coefficients) for boundary regions 101, 103, 105, …, 119, prepare it for storage in your vector database, and allow you to run similarity or time-history analyses later using tools such as DYNR or custom vector‐based retrieval routines.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                28
+            ],
+            "page_labels": [
+                "3-15"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.13 HIST – Transient Results"
+            ]
+        }
+    },
+    {
+        "content": "See also: FLOW, WIND, CASE, IN, OUT, INOU, WALL, STEP, HIST, CTRL\n HIST\n For transient analysis there are either the method to save the complete results for intervals of time steps with different load case numbers or to select some important results of elements or boundary regions (max 1024) and to save their development in time in a compact form in the database. DYNR will then be used to show and evaluate these diagrams. An import as a function is possible with SOFILOAD.\n DRAG creates the sum of forces types SPX,SPY,SPZ and the moments SPXX,SPYY,SPZZ. First the leading group of the defined sets of groups with DRAG commands are searched. Theo forces are then referenced to the point defined with the DRAG command and if a reference pressure is given converted to force coefficients which will be saved as well. With an appended \":F\" or \":C\" only the forces or only the forces or coefficients will be saved. Second the boundary region numbers are searched, the forces are then relative to the origin of the global coordinate system.\n FLOW creates the velocities U, V and W. TURB creates the components TKP(Kinetic Energy) and TDN(Dissipation)",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                28
+            ],
+            "page_labels": [
+                "3-15"
+            ],
+            "type": "text",
+            "sections": "3.13 HIST – Transient Results"
+        }
+    },
+    {
+        "content": "The table presented defines the key parameters controlling how DOLFYN (or a similar CFD kernel) assembles and solves the discrete equations for various flow and scalar fields.  Each row (“Item”) names a parameter; the “Description” column explains its purpose and allowable codes; “Unit” indicates the expected data type (LIT for literal strings, “–” for dimensionless numbers); and “Default” gives the built-in value applied if the user does not override it.  Below is a detailed walk-through of every table entry, with context drawn from the accompanying documentation snippet.\n\n1. VAR (Name of Variable)  \n   • Unit: LIT  \n   • Default: “!” (i.e. must be specified)  \n   • Purpose: Selects which equation(s) the following solver parameters apply to.  Valid literals include:  \n     – ALL: all variables  \n     – U, V, W: individual velocity components  \n     – UVW: the full velocity vector system  \n     – P: pressure  \n     – K: turbulent kinetic energy  \n     – EPS: turbulent dissipation rate  \n     – KEPS: shorthand for both K and EPS (all turbulent-parameter equations)  \n     – T: temperature equation  \n     – SCAL: any other passive scalar  \n   • Notes:  No differencing scheme exists for pressure (P); the user must couple P with a solver (WITH) that handles an algebraic pressure correction.\n\n2. DIFF (Differencing Scheme)  \n   • Unit: LIT  \n   • Default: “*” (inherits from a parent block if unspecified)  \n   • Purpose: Chooses the spatial discretization scheme for convective and diffusive terms.  Options are:  \n     – OFF: skip solving this equation  \n     – ON: invoke the default internal solver  \n     – UD: Upwind Differencing (first-order, highly diffusive)  \n     – CD: Central Differencing (second- or third-order, CD2/CD3)  \n     – LUX: Linear Upwind with limiters (e.g. LUD, MIN)—balances stability and accuracy  \n     – GAM: Jasak’s blending of UD and CD1 (essentially a 0.5–0.75 hybrid)  \n   • Context:  LUX is the default for velocity and turbulent scalars on hexahedral meshes; GAM is default for temperature.\n\n3. BLEN (Blending Factor)  \n   • Unit: “–” (dimensionless)  \n   • Default: 1.0  \n   • Purpose: If DIFF=GAM, this factor weights UD vs. CD1.  A value of 1.0 means pure UD; lower values introduce more CD.\n\n4. SLOP (Slope Limiter Functionality)  \n   • Unit: LIT  \n   • Default: VNF  \n   • Purpose: When using LUX or other higher-order schemes, a limiter can be applied to suppress non-physical oscillations.  Options are:  \n     – VNF: Venkatakrishnan limiter at faces  \n     – P1F: Polynomial limiter adapted at face centers\n\n5. WITH (Solver for Variable)  \n   • Unit: LIT  \n   • Default: “*” (inherit)  \n   • Purpose: Determines which linear algebraic solver or preconditioner to use for the chosen equation.  Examples:  \n     – MKL: Intel MKL’s GMRES solver (pressure only)  \n     – (Other solvers such as BiCG, PISO, SIMPLE may be available depending on the code build.)  \n   • Parallelism: To run in parallel, the user can append a directive like “DOLF use cores 4.”\n\n6. RELA (Relaxation Factor)  \n   • Unit: “–” (dimensionless)  \n   • Default: “*”  \n   • Purpose: Under-relaxes the update to the solution in each outer iteration.  Typical values range from 0.3 to 1.0.  \n   • Notes:  Stronger under-relaxation (e.g. 0.3–0.5) can enhance stability, especially on skewed or tetrahedral meshes.\n\nAdditional Context from Documentation  \n• Initialization phase (via DOLF INIT STEPS nn) temporarily forces all WALL boundaries to symmetric (“SYMP”) and uses UD differencing for a few iterations to build a smooth initial field.  \n• A suggested startup strategy is to run a short transient with UD (blending 0.8–1.0) plus a slope limiter (VNF) before switching to higher-order schemes (LUX or GAM) for the steady solve.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                29
+            ],
+            "page_labels": [
+                "3-16"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.14 SOLV – Solver Controls"
+            ]
+        }
+    },
+    {
+        "content": "See also: FLOW, WIND, CASE, IN, OUT, WALL, STEP, HIST, CTRL\n SOLV\n RELA\n Relaxation factor\n −\n *\n This command defines the most important parameters for the solution of the equation system. The properties of the different methods may be seen in the document DOL- FYN_VERIFICATION.PDF. Not all parameters may be selected for all variables, e.g. there is no differencing scheme for the pressure.\n The default is LUX for UVW and KEPS as well as GAM for the temperature, which is suit- able for hexahedral meshes. Tetrahedral meshes are considerably worse than hexahedral or polyhedral. Thus schemes with a strong damping should be used.\n During an initialisation phase (DOLF INIT STEPS nn) all WALL-conditions will set to SYMP and the UD-scheme is used. Sometimes a transient analysis with the UD scheme and a blending factor between 0.8 and 1.0 and a SLOPE delimiter with VNF may be used to establish a better startup vector to be used for a restart with UD or LUX for the velocities.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                29
+            ],
+            "page_labels": [
+                "3-16"
+            ],
+            "type": "text",
+            "sections": "3.14 SOLV – Solver Controls"
+        }
+    },
+    {
+        "content": "The table in question defines how arbitrary DOLFYN input lines (“DOLF” commands) are captured and stored within the CADINP→DOLF interface. In short, any parameter or command that cannot be expressed through the standard CADINP keywords (FLOW, WIND, CASE, IN, OUT, WALL, STEP, HIST, CTRL, etc.) must be written into a “DOLF” block; this table governs the format of each entry in that block.\n\n1. Table Purpose  \n   •  Enables users to inject free-form DOLFYN directives at the end of every generated CADINP deck.  \n   •  Provides a minimal metadata schema so that each custom line can be passed verbatim (“literal”) to the DOLFYN solver.  \n   •  Ensures that CADINP’s parser treats these lines as opaque strings rather than attempting to interpret or validate them.\n\n2. Column-by-Column Breakdown  \n   1) Item  \n     – Acts as a user-defined tag or identifier for each DOLF line.  \n     – Typically left blank or set to a short mnemonic if one wants to refer back to it in higher-level scripts.  \n     – Not strictly required by the solver, but can aid in organizing multiple DOLF entries.  \n   2) Description  \n     – Contains the full text of the DOLFYN command or parameter set.  \n     – Before the CADINP file is passed to the DOLFYN executable, any placeholders or variables are replaced with their actual numeric or string values.  \n     – Examples:  \n         • “INIT STEP 0” (skips laminar initial iterations)  \n         • “restart” (restart from previous solution)  \n         • “restart initial” (use restart as the initial guess)  \n     – Any legal DOLFYN directive may be placed here; one simply types the exact command as if editing the .din file by hand.  \n   3) Unit  \n     – Always set to “Lit” (short for “literal”).  \n     – Indicates that the Description field is a free-form string, not a numeric value with physical units.  \n     – CADINP’s preprocessor will not attempt unit conversion or validation on these entries.  \n   4) Default  \n     – Left blank in the standard template, signaling that no default DOLF command is assumed.  \n     – If required, a site-wide or project-wide default could be supplied here (e.g. “INIT STEP 0”), but typically every entry is user-supplied.  \n\n3. How It Fits Into the Workflow  \n   – In the CADINP deck you would see a block labeled “DOLF” at the end of your keyword summary.  \n   – For each DOLF line you wish to include you append one row following this table schema.  \n   – When CADINP writes out the final .din file for DOLFYN, it concatenates all Description fields verbatim (in the same order) ahead of or after the main body.  \n   – To run DOLFYN directly on that .din file, you might call:  \n         dolfyn mycase.din –i  \n     Where “–i” tells DOLFYN to immediately enter interactive/testing mode.  \n\n4. Special Hints & Common Patterns  \n   – “DOLF INIT STEP 0” → forces DOLFYN to skip any automatic laminar‐flow initial iterations.  \n   – “DOLF restart”  → instructs DOLFYN to pull in a previously saved solution.  \n   – “DOLF restart initial” → similar to the above but uses the restart dataset as the starting guess for the nonlinear solver.  \n   – More advanced sequences (multi‐step restarts, parameter sweeps, custom solver controls) are documented in the Dolfyn Input Guide—these all live in this same table.  \n\nIn practice, you will typically define one or more “DOLF” entries whenever the stock CADINP keywords cannot express a new boundary condition, solver control parameter, or post-processing switch exposed by the latest DOLFYN releases. By centralizing them in this single “DOLF” table, downstream automation and RAG‐style retrieval can locate and manipulate custom solver directives without parsing the geometry or physics sections directly.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                30
+            ],
+            "page_labels": [
+                "3-17"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.15 DOLF – Control Values for DOLFYN"
+            ]
+        }
+    },
+    {
+        "content": "See also: FLOW, WIND, CASE, IN, OUT, WALL, STEP, HIST, CTRL\n DOLF\n Not all parameters for DOLFYN are definable with the CADINP interface. All those other pa- rameters may be specified with a line beginning with DOLF. Please refer to the Dolfyn INput guide for more details.\n Special Hints:\n DOLF INIT STEP 0 Do not perform the laminar initial iterations\n DOLF restart Restart the simulation\n DOLF restart initial Use Restart as initial guess\n If DOLFYN should run directly for tests with the .din file, this might be triggered with \"‘DOLFYN name.din -i\"’.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                30
+            ],
+            "page_labels": [
+                "3-17"
+            ],
+            "type": "text",
+            "sections": "3.15 DOLF – Control Values for DOLFYN"
+        }
+    },
+    {
+        "content": "The figure is a double‐logarithmic plot of the drag (or “wind”) coefficient w for a circular cylinder as a function of Reynolds number Re (= v·h/ν).  It combines measured data for nine different cylinder diameters (D = 0.05, 0.1, 0.3, 1.0, 3.0, 7.9, 42.0, 60.0, and 300.0 mm, each represented by a distinct marker size in the legend) with a dashed line showing theoretical predictions (labeled “Theory according to …”).  A fine, light grey grid of major and minor tic‐marks spans both axes, accentuating that both scales are logarithmic.\n\nAxes and Scales  \n• Horizontal axis (abscissa): Reynolds number, Re, runs from 10^–1 up to slightly beyond 10^4.  Major ticks are labeled at 10^–1, 1, 10, 10^2, 10^3, 10^4, with intermediate unlabeled subdivisions at each integer power.  \n• Vertical axis (ordinate): Drag coefficient w runs from 0.1 up to 100, again on a log scale.  Major labeled values appear at 0.1, 0.2, 0.4, 0.8, 1.6, 3.2, 6.4, 12.8, 25.6, 51.2 (rounded in the plot to 0.1, 0.2, 0.4, 0.8, 1, 2, 4, 8, 10, 20, 40, 80, 100).\n\nMeasured Data  \n• At very low Re (around 0.1 to 1), the drag coefficient is extremely high—on the order of 50 to 80.  This corresponds to the purely viscous laminar regime.  \n• Between Re ≈ 1 and Re ≈ 40, w falls steeply, reflecting the transition from creeping‐flow to moderate‐inertia behaviors.  \n• From Re ≈ 40 up to about Re ≈ 300–400, the data trace a more gradual decline from roughly w ≈ 10 down toward w ≈ 2.  This region corresponds to the onset of vortex shedding and the classical Kármán‐vortex‐street regime.  \n• Beyond Re ≈ 500 up to a few thousand, the measured points cluster almost horizontally around w ≈ 1.2.  This plateau marks the subcritical regime where separation remains fixed and the suction drag dominates.  (In the text’s terminology it extends from roughly Re = 1000 up to Re ≈ 3·10^5, though the plot itself terminates near Re = 10^4.)  \n\nTheoretical Curve  \n• A dashed line accompanies the measurements.  It starts above the measured points at the smallest Re, intersects the data in the transitional shedding region, and then tracks just below or through the cloud of points in the subcritical regime.  The legend entry reads “Theory according to …,” indicating a classic boundary‐layer/separation model (for example, Prandtl‐ or Whitmore‐type formulations).\n\nLegend and Markers  \n• The legend box at upper right lists D [mm] and shows nine bullet symbols of increasing marker size.  From smallest (Ø = 0.05 mm) to largest (Ø = 300 mm), these markers identify individual measurement series.  \n• All marker‐series collapse onto essentially one universal curve once nondimensionalized—evidence of Reynolds‐number similarity.\n\nCaption  \n• Below the plot is the caption “Figure 4.1: Wind coefficients for a cylinder,” tying the graphic back to a larger discussion of drag‐coefficient regimes in the accompanying text.\n\nOverall, the image succinctly demonstrates the complex, multi‐stage variation of cylinder drag with Reynolds number: a high‐drag laminar “creeping‐flow” region at Re < 1, a rapid drop into the vortex‐shedding regime up to Re ≈ 1000, and a long subcritical plateau thereafter.  Although only the lower end of the supercritical transition (Re ≈ 3·10^5) and beyond appears in the contextual description, the plotted data convincingly illustrate the first three canonical flow regimes and provide a direct experimental reference for each.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                32
+            ],
+            "page_labels": [
+                "4-1"
+            ],
+            "type": "image",
+            "sections": [
+                "4 Examples",
+                "4.1 Flow around a cylinder",
+                "4.1.1 Introduction"
+            ]
+        }
+    },
+    {
+        "content": "On a first glance a Cylinder might be a simple problem, however it is rather a complex one. If one has a look on the measurements for the drag coefficient depending on the Reynolds number one can distinguish several regions, to be treated in the following text:\n 100\n • A laminar region for Reynold numbers up to approximately 40, the selected case will have a number of 20.\n • A region with a slower descent of the drag coefficient up to reynolds number of 1000, within that region we will have vortex shedding according to Karman.\n • A region with a rather constant drag coefficient up to Reynolds numbers of approximately 300 000. This is called the subcritical region. As the suction at the rear is determining the drag coefficient, it has rather high values.\n • A super critical region from Re = 300 000 to 3 000 000, where the laminar boundary layer becomes turbulent and is now able to follow longer the circular geometry, the drag coeffi- cient drops significantly .\n • A transcrititical region from Re = 3 000 000 where the detachement point moves again to the front and the drag coefficient increases again.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                32
+            ],
+            "page_labels": [
+                "4-1"
+            ],
+            "type": "text",
+            "sections": "4.1.1 Introduction"
+        }
+    },
+    {
+        "content": "The image shows a two-dimensional rectangular channel of total length 2.20 m, containing a single circular cylinder of diameter D = 0.10 m (Figure 4.2). The cylinder is mounted inside the channel at an upstream distance of 0.15 m from the inlet plane and is offset slightly from the channel mid-height so that its center lies 0.16 m below the top wall and 0.15 m above the bottom wall (making the channel height 0.31 m).\n\nGeometry and dimensions\n- Channel length (streamwise): 2.20 m  \n- Channel height (normal to flow): 0.31 m (0.16 m above and 0.15 m below the cylinder center)  \n- Cylinder diameter: D = 0.10 m  \n- Distance from inlet to cylinder center: 0.15 m  \n- Vertical offset of cylinder center: 0.16 m from top, 0.15 m from bottom  \n\nBoundary conditions (all velocities in components u (streamwise) and v (cross-stream) in m/s)\n- Top wall: u = 0, v = 0 (no-slip)  \n- Bottom wall: u = 0, v = 0 (no-slip)  \n- Cylinder surface: u = 0, v = 0 (no-slip)  \n- Inflow (left boundary): typically prescribed parabolic velocity profile (not shown explicitly in the sketch) with maximum velocity Um  \n- Outflow (right boundary): often taken as zero‐pressure (∂u/∂x = 0) or do-nothing condition in CFD setups  \n\nAnnotations in the figure\n- A small circle at 0.15 m from the inlet marks the cylinder; next to it is the text “u = 0, v = 0, D = 0.1” indicating the no-slip condition on the cylinder surface and its diameter.  \n- Immediately above and below the circle, short horizontal lines are labeled “0.16” (top) and “0.15” (bottom), denoting the vertical clearances.  \n- To the left of the circle a horizontal line of length 0.15 m is drawn, labeling the upstream distance from inlet to cylinder.  \n- The top boundary is labeled along its length with “u = 0, v = 0,” and similarly for the bottom boundary.  \n- Beneath the entire channel, the overall length “2.20” is indicated.  \n- The figure caption reads: “Figure 4.2: System for channel flow with cylinder.”\n\nContextual summary\nThis configuration is a classical benchmark setup for studying flow past a cylinder in confined channel flow at low to moderate Reynolds numbers (Re = 20 and Re = 100 in the accompanying numerical studies). The no-slip walls and cylinder surface ensure that viscous boundary layers develop, while the rectangular outlet allows wake structures (steady or vortex shedding, depending on Re and mesh resolution) to form downstream. The precise positioning and dimensions permit direct comparison with reference data from the DFG Benchmarks (http://www.featflow.de/bench_all/node2.html), where quantities such as drag and lift coefficients, recirculation length, pressure drop, and Strouhal number are measured and validated.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                33
+            ],
+            "page_labels": [
+                "4-2"
+            ],
+            "type": "image",
+            "sections": [
+                "4 Examples",
+                "4.1 Flow around a cylinder",
+                "4.1.2 Classical Navier-Stokes Solutions"
+            ]
+        }
+    },
+    {
+        "content": "The table summarizes a mesh‐refinement study for the classic steady 2D flow around a circular cylinder at Reynolds number Re = 20 (ρ = 1.0 kg/m³, ν = 1e−3 m²/s, inlet maximum velocity Um = 0.3 m/s). Five resolution “levels” are compared against the published reference solution (from the DFG FEATFLOW benchmark dol‐fyn dataset). At each level the domain is discretized into an increasing number of control volumes (“Volumes”), and five key output quantities are reported:\n\n  • Cd  – the drag coefficient on the cylinder  \n  • Cl  – the lift coefficient (should nominally be zero in a perfectly symmetric steady case)  \n  • Δ-p – the pressure difference between front and rear stagnation points  \n  • CPU – the normalized computational effort (in arbitrary CPU‐seconds or solver‐units)  \n\nRow-by-row breakdown:  \nLevel 2 (coarsest mesh,  552 volumes)  \n  – Cd = 6.47 (≈16 % above reference 5.58)  \n  – Cl = 0.016 (small asymmetry)  \n  – Δ-p = 0.1258 (≈7 % above reference 0.1174)  \n  – CPU = 0.6  \n\nLevel 3 (2 208 volumes)  \n  – Cd = 5.98 (7 % high)  \n  – Cl = 0.012  \n  – Δ-p = 0.1251 (6.6 % above ref)  \n  – CPU = 5.5  \n\nLevel 4 (8 832 volumes)  \n  – Cd = 5.79 (3.8 % above)  \n  – Cl = 0.011  \n  – Δ-p = 0.1245 (6.1 % high)  \n  – CPU = 59  \n\nLevel 5 (35 328 volumes)  \n  – Cd = 5.57 (0.2 % below reference)  \n  – Cl = 2.20* (likely a transcription anomaly; expectation ≈0.011)  \n  – Δ-p = 0.1195 (1.8 % above ref)  \n  – CPU = 212  \n\nReference solution (benchmark)  \n  – Cd = 5.58  \n  – Cl = 0.011  \n  – Δ-p = 0.1174  \n\nKey observations:  \n 1. Convergence: Drag and pressure‐drop values steadily approach the reference as mesh density grows. By Level 5 the drag error falls below 0.5 %, and the pressure difference within 2 %.  \n 2. Symmetry enforcement: Lift coefficients shrink from 0.016 at Level 2 down to ≈0.011 by Level 4, matching the ideal symmetric steady flow.  \n 3. Computational cost: CPU time scales super‐linearly with problem size. Increasing volumes by a factor of 4 (from Level 2→3, 3→4) yields roughly 9–10× CPU cost, while the final refinement (Level 4→5) shows a ≈3.6× rise. This reflects solver complexity and memory effects.  \n 4. Mesh trade-off: A very coarse mesh (Level 2) produces large errors in both force and pressure metrics. Levels 4 and 5, however, give high‐fidelity results at substantially higher cost.  \n\nContextually, these runs use a parabolic inflow (mean velocity 2/3 Um), hydraulic smooth cylinder surface, and no added turbulence. They illustrate the classic compromise in CFD between resolution (and accuracy) versus computational expense, validating that for low‐Re steady flows even modest grids can reproduce benchmark drag values, whereas achieving accurate pressure drops and fully symmetric lift demands finer meshes.  \n\n*Note: The anomalous Cl = 2.20 at Level 5 likely stems from a data‐entry or formatting issue; all other columns and the reference prescribe Cl on the order of 0.01.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                33
+            ],
+            "page_labels": [
+                "4-2"
+            ],
+            "type": "table",
+            "sections": [
+                "4 Examples",
+                "4.1 Flow around a cylinder",
+                "4.1.2 Classical Navier-Stokes Solutions"
+            ]
+        }
+    },
+    {
+        "content": "The table presents a systematic convergence study for the unsteady two-dimensional cylinder flow at Reynolds number Re = 100. It collates five computational runs at three mesh‐refinement “levels,” each differing by the total number of control volumes and the number of time‐steps over which the vortex shedding process was sampled. A final “reference” line gives target values taken from the DFG Benchmark data set.\n\n1. Columns and meaning  \n   • Level: an integer mesh‐refinement index (2, 3 or 4). Higher levels correspond to progressively finer spatial resolutions.  \n   • Volumes: the number of finite‐volume cells used in the domain. Level 2 uses only 552 cells, level 3 uses 2 208 cells, and level 4 uses 8 832 cells.  \n   • Time-steps: the number of discrete time‐levels over which the lift and drag signals were recorded—essentially the length and temporal resolution of the shedding cycle.  \n   • Cd (drag coefficient): mean drag on the cylinder, averaged over the sampled time history.  \n   • Cl (lift coefficient amplitude): half the peak-to-peak oscillation of lift, a direct measure of vortex‐shedding strength.  \n   • St (Strouhal number): the dimensionless shedding frequency fD/U, where D is cylinder diameter and U the mean inflow speed. A dash (“–”) indicates that no clear periodic shedding was captured.  \n   • CPU: total computational cost on a single processing unit (in arbitrary “CPU‐time” units).\n\n2. Row-by-row synopsis  \n   • Level 2, 552 vols, 500 steps: Cd = 3.18 is within 2 % of the reference 3.23, but Cl = 0.040 is essentially zero—no sustained vortex shedding develops. Accordingly, St cannot be defined. CPU cost is minimal (24).  \n   • Level 3, 2 208 vols, 500 steps: Cd rises slightly to 3.36 (+4 % error), Cl = 0.392 begins to reflect some vortex shedding, and St = 0.250 is about 17 % below the reference 0.300. CPU time increases to 174.  \n   • Level 4, 8 832 vols, 1 000 steps: best approximation of the shedding process. Cd = 3.27 (–1 % error), Cl = 0.694 (still ~37 % below the reference Cl = 1.10), and St = 0.275 (–8 % error). CPU cost jumps to 1 516.  \n   • Level 4, 8 832 vols, 500 steps: same spatial resolution but half the temporal sampling. Cd returns to 3.18, Cl = 0.558, St = 0.267 (–11 %), and CPU drops to 1 171. Reduced time‐history impairs both the mean force prediction and shedding amplitude.  \n   • Level 4, 8 832 vols, 200 steps: coarse temporal sampling again kills the vortex‐shedding signal (Cl = 0.083, St undefined), although drag remains near 3.09. CPU is 590.  \n\n3. Comparison to reference  \n   The published benchmark values are Cd = 3.23, Cl = 1.10, and St = 0.300. Even at the finest mesh (level 4) and longest run (1 000 steps), the lift amplitude is underpredicted by ~37 % and shedding frequency by ~8 %.  \n\n4. Key observations  \n   – Spatial refinement alone (going from level 2 to level 3) is not sufficient to capture vortex shedding; temporal resolution must also be adequate.  \n   – At the finest mesh, doubling the number of time-steps from 500 to 1 000 measurably improves both Cl and St but at a steep CPU‐time penalty (≈30 % more cost).  \n   – Coarse time sampling on any mesh suppresses shedding altogether, illustrating the coupled importance of mesh density and time‐step count in resolving the Kármán vortex street.  \n\n5. Contextual note  \n   These runs assume a hydraulically smooth cylinder, 5 % inlet‐turbulence intensity, and turbulence length scale equal to the cylinder diameter. The table demonstrates that even with millions of unknowns available in the full DFG benchmark, moderate meshes and time‐resolutions can yield reasonable drag predictions but struggle to reproduce lift and shedding frequency accurately without careful meshing and sufficiently long transient sampling.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                33
+            ],
+            "page_labels": [
+                "4-2"
+            ],
+            "type": "table",
+            "sections": [
+                "4 Examples",
+                "4.1 Flow around a cylinder",
+                "4.1.2 Classical Navier-Stokes Solutions"
+            ]
+        }
+    },
+    {
+        "content": "The image is a two‐curve time‐series plot of the non‐dimensional force coefficients—drag (cD) and lift (cL)—for flow around a circular cylinder in the Re = 100 benchmark.  Although the overlaid axis labels in the screenshot read “spring forces SPX group [N]” and “spring forces SPY group [N],” the bottom of the image clearly indicates it is “Coefficient in Time for c-d and c-l.”  Key features of the plot are:\n\n1. Axes  \n   • Horizontal (x-) axis: time, running from 0.0 to 8.0 nondimensional time units, with tick marks at 2.0, 4.0, 6.0 and 8.0.  \n   • Vertical (y-) axis: coefficient magnitude, spanning –60.0 at the bottom to +180.0 at the top.  Major grid‐line labels are shown at every 20 units (–60, –40, –20, 0, 20, … up to 180).  \n   • The origin (t = 0, c = 0) is emphasized by heavier lines, and arrowheads indicate the positive t‐ and c-directions.\n\n2. Early‐time transient (t = 0 to ~1.5)  \n   • Both curves begin essentially at zero.  \n   • Small, irregular perturbations appear almost immediately, reflecting the startup of the parabolic inflow (Um = 1.5 m/s).  \n   • No clear periodicity or bias is established in either coefficient.\n\n3. Onset of vortex shedding (t ≈ 1.5–2.5)  \n   • Around t ≈ 1.8 the first discernible periodic oscillations emerge, indicating the formation of a Kármán vortex street behind the cylinder.  \n   • The oscillations are modest in amplitude (±5–10 units) and nearly sinusoidal in both curves, but still somewhat noisy as the flow “locks in.”\n\n4. Fully developed periodic regime (t ≈ 3.0 onward)  \n   • Beyond t ≈ 3 the two curves settle into a stable alternating‐peak pattern.  \n   • Drag coefficient (cD), shown as the curve that fluctuates around a positive mean, gradually grows from near zero to oscillations between roughly +10 and +30 at t=3–5, then reaching peaks up to +40 by t ≈ 8.  \n   • Lift coefficient (cL), the zero‐mean oscillatory curve, swings symmetrically about zero.  Its amplitude increases from ±5 at t ≈ 3 to nearly ±20 by t ≈ 8.  \n   • The two signals are roughly 90° out of phase: when drag is rising through its mean, lift crosses zero from negative to positive, consistent with alternating vortex shedding direction.\n\n5. Quantitative markers visible in the plot  \n   • Peak drag coefficient cDm occurs around the very end of the time series at a value just under +40.  \n   • Peak lift coefficient cLm is about +20 (and –20 on the negative side).  \n   • The oscillation period may be read geometrically—approximately one cycle every ≈1.2 time units—corresponding to a Strouhal number St = f·D/U in the expected range for Re=100.\n\n6. Contextual interpretation  \n   • The initial transient demonstrates why a coarse time‐step or insufficient spatial resolution would miss the emergence of periodic vortex shedding.  \n   • After t ≈ 2, the clear, growing amplitude of both coefficients confirms that the benchmark’s high‐resolution solution captures the unsteady wake dynamics.  \n   • The steadily increasing mean drag and growing lift oscillations illustrate the cylinder’s wake reaching full instability, in close agreement with published DFG Benchmark data.\n\nOverall, this figure succinctly visualizes the evolution from a steady startup flow to a fully periodic Kármán vortex street at Reynolds number 100, showing both the drag and lift coefficients as they settle into their characteristic oscillatory patterns.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                34
+            ],
+            "page_labels": [
+                "4-3"
+            ],
+            "type": "image",
+            "sections": [
+                "4 Examples",
+                "4.1 Flow around a cylinder",
+                "4.1.2 Classical Navier-Stokes Solutions"
+            ]
+        }
+    },
+    {
+        "content": "Figure description  \n• General layout  \n  – A two-dimensional Cartesian plot of pressure coefficient (cₚ) versus angular position (φ) around a circular cylinder.  \n  – The vertical axis (ordinate) is labeled “cₚ” and spans from +1 at the top down to –3 at the bottom, with a horizontal zero line marked.  \n  – The horizontal axis (abscissa) is labeled “φ” (in degrees), with major ticks at 0°, 30°, 60°, 90°, and 120°.  \n  – At the bottom center of the image is the caption “Figure 4.4: Cylinder crisis.”  \n\n• Curves and legend  \n  Three distinct curves illustrate the surface pressure distribution at three different Reynolds-number regimes around the cylinder:  \n  1. Re = 1.86·10⁵ (unterkritisch, subcritical) – drawn as a medium-weight dashed line (“– – –”).  \n  2. Re = 6.7·10⁵ (überkritisch, supercritical) – drawn as a dash-dot line (“–·–·–”).  \n  3. Re = 1.14·10⁷ (transkritisch, transcritical) – drawn as a solid line.  \n  A small inset legend in the upper right quadrant identifies each line style with its Reynolds number and flow regime in German terminology.  \n\n• Curve behavior  \n  – All three curves begin at φ = 0° (the front stagnation point) at cₚ ≈ +1, indicating stagnation pressure.  \n  – As φ increases from 0° toward 30°, each curve drops sharply as the flow accelerates around the cylinder shoulder.  \n  – Subcritical (dashed):  \n    • Drops moderately to cₚ ≈ –0.5 by φ ≈ 30°.  \n    • Declines more slowly beyond 30°, crossing the zero line just before φ ≈ 60°, then flattening out above cₚ ≈ –1.0 all the way toward φ = 120°.  \n    • Indicates early separation and wider wake.  \n  – Supercritical (dash-dot):  \n    • Falls more steeply, reaching a minimum around cₚ ≈ –2.5 at φ ≈ 60°.  \n    • After this deepest trough, the curve rises gradually, crossing back above cₚ ≈ –1.0 near φ ≈ 100° and trending toward zero by φ = 120°.  \n    • Reflects delayed separation and a much narrower wake (the “drag crisis” regime).  \n  – Transcritical (solid):  \n    • Exhibits an intermediate drop, bottoming out at cₚ ≈ –1.8 around φ ≈ 55°.  \n    • Shows a secondary inflection (a small hump) around φ ≈ 85° where cₚ briefly climbs toward –1.0, then dips slightly again before slowly rising to about –0.5 at φ = 120°.  \n    • Represents behaviour just beyond the critical regime, blending features of both sub- and supercritical flows.  \n\n• Physical interpretation  \n  – The graph demonstrates the “cylinder crisis” or drag-crisis phenomenon: at subcritical Reynolds numbers, early boundary-layer separation produces a relatively high drag (flatter cₚ curve, less suction). As Re increases into the supercritical range, the boundary layer remains attached much farther around the cylinder, causing a much deeper suction peak (lower minimum cₚ) and reduced drag. By transcritical Reynolds numbers, the flow transitions again, with multiple inflection points indicating intermittent separation and reattachment.  \n  – Angles φ correspond to positions measured along the cylinder surface from the front stagnation point in the flow direction. Deep minima in cₚ correspond to regions of highest local velocity and lowest pressure. Variation among the three curves illustrates how surface pressure distribution—and thus drag and lift—changes dramatically across the drag-crisis Reynolds-number window.  \n\n• Context note  \n  Although the surrounding text discusses low-Re (20 and 100) CFD benchmarks for 2D cylinder flows, this figure specifically concerns high-Re experiments (10⁵–10⁷) in the so-called “critical” and “transcritical” regimes, where turbulent transition in the boundary layer produces a sudden drop in drag.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                34
+            ],
+            "page_labels": [
+                "4-3"
+            ],
+            "type": "image",
+            "sections": [
+                "4 Examples",
+                "4.1 Flow around a cylinder",
+                "4.1.2 Classical Navier-Stokes Solutions"
+            ]
+        }
+    },
+    {
+        "content": "Table overview  \nThe table presents computed force and pressure coefficients from steady and turbulent CFD simulations of flow around a circular cylinder at three high Reynolds numbers (Re ≈ 1.86×10^5, 6.70×10^5, and 1.14×10^6). Results are given for three turbulence‐model approaches—standard k–ε (abbreviated “KE”), the RNG k–ε variant (“RNG”), and an experimental correlation labeled “EC 1.2‐4 (10.8.2)”—each evaluated with two inlet‐turbulence conditions: the default (hydraulically smooth cylinder with 5 % turbulence intensity and integral length scale equal to the cylinder diameter) and with an additional 0.5 % imposed turbulence (“same, 0.5 % Turb.I.”).\n\nColumn structure  \n• Model / Case: Identifies the turbulence‐model (KE, RNG, EC 1.2‐4) and associated Reynolds number in parentheses. Rows immediately following each model entry show results for the same model with 0.5 % inlet turbulence.  \n• drag c_d: Overall drag coefficient (dimensionless), integrated over the cylinder surface.  \n• pressure c_p: Mean pressure coefficient (dimensionless), representing the average surface pressure normalized by dynamic pressure.  \n• p.–suction c_s: Pressure‐suction coefficient (dimensionless), likely indicating the peak pressure difference between the stagnation region and suction side.  \n• tail‐suct. c_t: Tail‐suction coefficient (dimensionless), characterizing pressure recovery or suction in the wake region behind the cylinder.\n\nRow groups and key values  \n1. Re = 186 000  \n  - KE (standard k–ε): c_d = 0.475, c_p = –1.185, c_s = 2.206, c_t = 0.365  \n  - KE with 0.5 % Turb.I.: c_d = 0.421, c_p = –1.007, c_s = 2.188, c_t = 0.534  \n  - RNG k–ε: c_d = 0.410, c_p = –1.090, c_s = 2.076, c_t = 0.438  \n  - RNG with 0.5 % Turb.I.: c_d = 0.464, c_p = –1.092, c_s = 1.979, c_t = 0.378  \n  - EC 1.2‐4 (10.8.2): c_d = 1.20, c_p = –1.000 (no p.–suction or tail‐suction reported)\n\n2. Re = 670 000  \n  - KE: c_d = 0.446, c_p = –1.188, c_s = 2.251, c_t = 0.314  \n  - KE, 0.5 % Turb.I.: c_d = 0.366, c_p = –1.004, c_s = 2.330, c_t = 0.487  \n  - RNG: c_d = 0.341, c_p = –1.094, c_s = 2.205, c_t = 0.376  \n  - RNG, 0.5 % Turb.I.: c_d = 0.618, c_p = –1.100, c_s = 2.448, c_t = 1.010  \n  - EC 1.2‐4 (10.8.2): c_d = 0.30, c_p = –1.000, c_s = 2.20, c_t = 0.40\n\n3. Re = 1 140 000  \n  - KE: c_d = 0.391, c_p = –1.183, c_s = 2.483, c_t = 0.233  \n  - KE, 0.5 % Turb.I.: c_d = 0.266, c_p = –1.057, c_s = 2.453, c_t = 1.057  \n  - RNG: c_d = 0.281, c_p = –1.085, c_s = 2.494, c_t = 0.317  \n  - RNG, 0.5 % Turb.I.: c_d = 0.637, c_p = –1.097, c_s = 2.287, c_t = 1.218  \n  - EC 1.2‐4 (10.8.2): c_d = 0.68, c_p = –1.000, c_s = 1.50, c_t = 0.80\n\nInterpretation notes  \n- Drag coefficient c_d tends to decrease with increased inlet turbulence for the KE model but shows non‐monotonic behavior in RNG results.  \n- Pressure coefficient c_p remains close to –1 across models, indicating consistent stagnation pressure recovery.  \n- Suction‐related coefficients (c_s and c_t) increase with Reynolds number, reflecting a stronger wake suction effect.  \n- The simple experimental correlation EC 1.2‐4 yields markedly different drag levels (higher at Re = 186 000, lower at larger Re), suggesting limited applicability outside its calibration range.  \n- The data can support benchmarking of mesh-density sensitivity, turbulence‐model performance, and inlet‐condition effects on cylinder flow predictions at high Reynolds numbers.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                35
+            ],
+            "page_labels": [
+                "4-4"
+            ],
+            "type": "table",
+            "sections": [
+                "4 Examples",
+                "4.1 Flow around a cylinder",
+                "4.1.2 Classical Navier-Stokes Solutions"
+            ]
+        }
+    },
+    {
+        "content": "For Reynolds numbers 20 and 100 there are extensive numerical examples available obtained with a Benchmarks of the DFG. (http://www.featflow.de/bench_all/node2.html) (directory dol- fyn.dat/cfd_cyl/dfg.dat) The fluid properties have been defined as: ρ = 1.0 kg/m3, ν = 10−3 m2/sec. The inflow condition is a parabolic distribution with a maximum value of Um, thus a\n mean velocity of 2/3 Um. The Benchmark contains solutions with several Million unknowns on supercomputers.\n The first test case is a steady 2D example with Um = 0.3 m/sec, yielding the Reynolds number Re=20. The following quantities should be computed: drag coefficient cD, lift coefficient cL, length of recirculation zone L and pressure difference ΔP.\n The pictures of the flow agree quite well with the published reference.\n The second test case within that benchmark is a transient 2D example with Um = 1.5 m/sec, yielding the Reynolds number Re=100. The following quantities should be computed: drag co- efficient cD, lift coefficient cL as functions of time, maximum drag coefficient cDm, maximum lift coefficient cLm, Strouhal number St = f•D/U.\n Here it is clearly to be seen, that a coarse solution either in time or in space does not show the effect of Karman vortex shedding.\n 180.\n 160.\n 140.\n 120.\n 100.\n spring forces SPX group [N]\n spring forces SPY group [N]\n For the model there are \"only\" three values to choose: The mesh density, the roughness and the inflow boundary conditions. With a hydraulic smooth cylinder, an input turbulence of 5 % and a length scale equal to the cylinder diameter, the following results have been obtained:\n Thus the use of CFD for this type of analysis yields satisfactory results only for small and very high Reynolds numbers. The effects of the critical flow can not be reproduced. The application for those problems needs taking great care.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                32,
+                33,
+                34,
+                35
+            ],
+            "page_labels": [
+                "4-1",
+                "4-2",
+                "4-3",
+                "4-4"
+            ],
+            "type": "text",
+            "sections": "4.1.2 Classical Navier-Stokes Solutions"
+        }
+    },
+    {
+        "content": "The image is a two-dimensional schematic of the Millau-bridge deck cross-section as used for both wind-tunnel and CFD drag-coefficient evaluations.  Although simplified, it faithfully reproduces the main geometric features of the real-world section (width 27.75 m, height 4.20 m) and is presented here at its “zero-angle” orientation (later in the study the entire profile is rotated to ±6° of attack).  \n\n1. Overall Silhouette  \n   • The topmost element is a broad, flat horizontal slab representing the bridge deck itself (spanwise width = 27.75 m).  Mounted on this deck are three thin vertical plates: one large central “wind-shield” plate (modelled in the wind tunnel by a 50%-permeability perforated plate) and two smaller end plates or parapet elements.  \n   • From the deck edges, two nearly vertical webs drop down a short distance before flaring outward along straight, inclined panels.  These side slopes angle at roughly 15–20° to the vertical and taper until they meet the horizontal bottom flange.  \n   • The bottom flange is another long horizontal member—slightly narrower than the top deck in visual proportion—that closes out the box-girder profile.  Near each end of this bottom plate, small jogs or projections mark structural stiffeners before the plate returns to a uniform width for its central span.  \n\n2. Relative Dimensions and Domain Extents  \n   • Section height from top deck to bottom flange is drawn to scale at 4.20 m.  \n   • The computational or wind-tunnel confinement was set so that above and below the deck the clearance equals one deck width (i.e. ~27.75 m, for a blocking ratio of about 6 %).  \n   • Upstream of the leading edge, the domain extends 2.5 × deck width (≈ 69 m) to ensure flow fully develops.  \n   • Downstream of the trailing edge, the wake region is stretched by a factor of 9.5 × deck width (≈ 263 m) to allow vortices to dissipate before the outlet boundary.  \n\n3. Mesh and Modeling Annotations (implicit in the drawing)  \n   • Around the solid geometry, the local mesh cell size is approximately 0.12 m, guaranteeing adequate resolution of boundary-layer pressure peaks (Cp,max ≃1.0 is used as a mesh-quality check).  \n   • In the far field, cell sizes grow to about 2 m to reduce element count without compromising the large-scale flow features.  \n   • No explicit coordinate axes are shown, but all force and moment outputs from both CFD and wind tunnel are transformed back into the same sectional coordinate system.  \n\n4. Purpose in Study  \n   • This section serves as the baseline geometry for comparing stationary wind-drag coefficients obtained under low-turbulence (dominantly bridge-generated eddies) versus high-turbulence (inflow-dominated) conditions.  \n   • It also underpins the ±6° angle-of-attack variants whose velocity‐magnitude, pressure‐coefficient and turbulent‐viscosity fields are discussed in subsequent figures.  \n\nIn sum, Figure 4.5 encapsulates the essential 2D structural outline, domain-blocking strategy and relative scales employed in both wind-tunnel tests and 2D CFD simulations of the Millau bridge deck.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                36
+            ],
+            "page_labels": [
+                "4-5"
+            ],
+            "type": "image",
+            "sections": [
+                "4 Examples",
+                "4.2 Bridge Section"
+            ]
+        }
+    },
+    {
+        "content": "The image is a 2-D CFD result (Figure 4.6) showing the distribution of fluid velocities around a section of the Millau Viaduct deck at an incidence angle of roughly –6°. The bridge section is drawn in white, sketched to its real dimensions (27.75 m wide × 4.20 m tall), and is centered horizontally in a rectangular flow domain. Around it, a smooth, multi-colored contour map depicts the magnitude of the air velocity field computed with a steady k-ε turbulence model under 9.4 % turbulence intensity and a long integral length scale (81 m).\n\nKey features of the flow field include:\n\n • Leading-edge stagnation and acceleration: Immediately upstream of the deck’s sharp windward corner (left side of the white shape), the uniform inflow (visible as mid-green) decelerates to near zero at the stagnation point. From there, the flow splits—some skimming over the top surface, some diving beneath the deck’s lower edge.  \n\n • High-velocity regions and shear layers: On the underside (lower right of the section), a concentrated “jet” of accelerated flow is shown in yellow through orange and even into bright red tones, indicating velocities well above the free-stream reference. This corresponds to the cavity formed by the downward-tilted deck, where the flow contracts and accelerates. A thinner high-speed streak also runs over the upper surface, though it remains closer to green and light blue, signifying more moderate acceleration.  \n\n • Recirculation and wake formation: Behind the trailing edge (far right), a pronounced recirculation bubble appears on the underside: an orange-to-red toroidal zone directly aft of the deck’s lower lip. Above the deck’s top trailing edge, a smaller, cooler (greenish-blue) vortex indicates separation in the suction zone. These wakes gradually transition back to the free-stream velocity further downstream, as shown by the return to uniform green.  \n\n • Domain boundaries and mesh blocking: Though not explicitly drawn, the flow domain extends by approximately one deck height above and below (producing about 6 % blockage) and by factors of ~2.5 chord lengths upstream and ~9.5 chord lengths downstream. Near the deck, the CFD mesh was refined to about 0.12 m, coarsening to roughly 2 m in the far field—choices that ensure adequate capture of shear layers and recirculation zones without undue computational cost.  \n\n • Color legend (implicit): Blue/teal hues denote velocities below the free-stream baseline; green marks velocities near free stream; yellow through red highlight regions of acceleration beyond the reference speed, with the brightest red pinpointing the peak local velocity (e.g., in the underside jet and in the heart of the recirculation bubble).  \n\nOverall, this contour plot visualizes how, at a slight negative angle of attack, the bridge deck generates strong lower-surface acceleration, a substantial wake and separation bubble beneath the deck, and smaller suction-driven vortices above—information crucial for understanding loading, drag coefficient evaluation, and comparison with wind-tunnel results under similar turbulence intensities.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                37
+            ],
+            "page_labels": [
+                "4-6"
+            ],
+            "type": "image",
+            "sections": [
+                "4 Examples",
+                "4.2 Bridge Section"
+            ]
+        }
+    },
+    {
+        "content": "The image (labeled “Figure 4.7: Pressure distribution”) presents a two-dimensional side view of a bridge-deck cross section (taken from the Millau Viaduct, France) under a steady wind with an angle of attack of –6°. The deck geometry spans horizontally from left (leading edge) to right (trailing edge) and is approximately drawn to represent the real-world dimensions (width 27.75 m, height 4.20 m). Superimposed on the profile are discrete pressure-coefficient (Cp) values along both the upper and the lower surfaces, plotted in two contrasting styles:\n\n1. Upper Surface (windward side)  \n   - Rendered in solid blue: a segmented polyline traces the deck’s top contour.  \n   - At each vertex of this polyline a blue numeric label gives the local pressure coefficient.  \n   - Near the very front (at the small vertical rise at the leading edge) the Cp reaches about –0.840, indicating a strong suction peak immediately downstream of the corner.  \n   - Moving aft along the flat top face, Cp climbs gradually toward mild positive values in the range +0.27 to +0.35. Just before the small upturned trailing lip, values settle around +0.30.  \n   - The discrete points are spaced roughly every 0.5 –1 m of chord length, showing the gradual recovery of pressure toward the trailing edge.\n\n2. Lower Surface (leeward side)  \n   - Shaded with red diagonal hatching: this fill highlights the region beneath the deck profile.  \n   - Overlaid on the shading are red Cp annotations at matching chordwise stations.  \n   - Immediately downstream of the leading-edge corner on the underside, Cp values also show a suction peak (around –1.06), slightly stronger than on the top.  \n   - Along the sloping bottom face, Cp remains strongly negative (between –0.60 and –0.80) as the flow accelerates under the deck.  \n   - Approaching the trailing edge, the suction gradually weakens to about –0.13 before the small downward protrusion at the aft corner.\n\nKey geometric and plot features • The deck cross section begins with a short vertical rise at the windward face, followed by a long nearly horizontal top slab, a small upward lip near the trailing edge, then a downward-sloping underside back toward the trailing corner. • The reference baseline (zero Cp) is implied midway between the two curves; positive Cp on the top implies local overpressure, negative Cp on both surfaces indicates suction relative to freestream. • The two color-coded distributions (blue above, red below) allow direct comparison of suction and pressure magnitudes at corresponding stations. • Given the context (CFD study vs. wind-tunnel test at –6° AoA), these curves represent the stationary mean pressure coefficients used to compute sectional drag coefficients for validation against wind-tunnel data.\n\nOverall, the figure vividly conveys how, at a slight negative angle of attack, the bridge deck experiences strong suction peaks at sharp corners and sustained under-deck suction, with a smoother recovery of pressure on the top surface, directly informing the aerodynamic drag and the validation of CFD against experimental values.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                37
+            ],
+            "page_labels": [
+                "4-6"
+            ],
+            "type": "image",
+            "sections": [
+                "4 Examples",
+                "4.2 Bridge Section"
+            ]
+        }
+    },
+    {
+        "content": "The input table summarizes the results of three computational fluid-dynamics (CFD) simulations of a single bridge-deck section from the Millau Viaduct, all evaluated at an angle of attack α = –6.0°. Each simulation differs in its prescribed turbulence intensity I and integral length scale L, and the table reports three nondimensional aerodynamic coefficients for each case: the drag coefficient cₙ (sometimes denoted c_d), the lift coefficient cₗ, and the moment coefficient cₘ, taken about the section’s centroid.\n\nTable structure and header  \n• A single header row indicates the constant angle of attack (α = –6.0°) applying to every data row.  \n• Three subsequent rows each characterize one CFD configuration by its turbulence intensity I (percent) and integral length scale L (meters), followed by the three coefficient values.\n\nRow-by-row breakdown  \n1. CFD case with I = 9.4% and L = 81 m  \n   - cₙ (drag coefficient): 0.197  \n   - cₗ (lift coefficient): –1.097  \n   - cₘ (moment coefficient): –0.096  \n   This first case uses a high turbulence intensity (9.4 %) representative of realistic atmospheric conditions estimated at 200 m height over terrain roughness of 0.30 m. The large integral length scale (81 m) mimics the natural eddy size in undisturbed flow. The highest drag coefficient and the most strongly negative lift coefficient magnitude are observed here.  \n\n2. CFD case with I = 9.4% and L = 4.60 m  \n   - cₙ: 0.129  \n   - cₗ: –1.017  \n   - cₘ: –0.112  \n   This second variant retains the same turbulence intensity as case 1, but uses a much smaller length scale (4.60 m), corresponding to conditions closer to those in a 1:75 wind-tunnel model. The drag coefficient drops by roughly one-third compared to the full-scale length-scale case, indicating that smaller eddies reduce average form drag. The lift coefficient remains strongly negative but slightly reduced in magnitude. The moment coefficient grows slightly more negative, implying a moderate shift in the pressure-center location under those flow structures.  \n\n3. CFD case with I = 0.5% and L = 0.25 m  \n   - cₙ: 0.052  \n   - cₗ: –0.983  \n   - cₘ: –0.142  \n   The final row represents a very low-turbulence, very small-scale inflow condition (0.5 % turbulence intensity and 0.25 m length scale), approximating an idealized smooth flow. Under such laminar-leaning conditions, the drag coefficient is minimal—about one-quarter of the high-turbulence case—while the lift coefficient magnitude decreases only modestly. The most negative moment coefficient is recorded here (–0.142), suggesting that with less turbulent mixing, the separation point shifts further aft, increasing the pitching moment.\n\nKey observations and trends  \n• Drag coefficient cₙ decreases steadily as the length scale and turbulence intensity are reduced, from 0.197 (largest L and I) down to 0.052 (smallest L and I).  \n• Lift coefficient cₗ remains negative in all cases (consistent with α = –6°), but its magnitude is slightly smaller in lower-turbulence, smaller-scale flows (–0.983 vs. –1.097).  \n• Moment coefficient cₘ becomes progressively more negative as turbulence diminishes, reflecting a systematic rearward shift of the center of pressure in less chaotic inflow.\n\nOverall, this table highlights how both turbulence intensity and eddy size can substantially influence aerodynamic coefficients on bluff bodies such as bridge decks. In practical bridge-design terms, it shows that wind-tunnel tests (smaller L) and field conditions (larger L) can yield significantly different drag and moment predictions, underlining the importance of matching inflow characteristics or applying appropriate correction factors when extrapolating between scale and full-scale experiments.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                37
+            ],
+            "page_labels": [
+                "4-6"
+            ],
+            "type": "table",
+            "sections": [
+                "4 Examples",
+                "4.2 Bridge Section"
+            ]
+        }
+    },
+    {
+        "content": "The table summarizes wind‐tunnel–derived, stationary aerodynamic coefficients for a 2D section of the Millau Bridge deck (27.75 m wide × 4.20 m high) at a constant angle of attack α = –6.0°. Both test cases were derived from wind‐tunnel models without wind shields (real‐scale geometry), but with different incoming turbulence intensities. The integral length scale L of the inlet turbulence was not reported (“L = ?”) in the wind‐tunnel report. All coefficients are non‐dimensional and mean values obtained after sufficient iterations with a standard k–ε turbulence model in the CFD context and averaged over steady‐state wind‐tunnel data.\n\nDetailed breakdown of table structure and content:\n\n1. Common test conditions  \n   • Angle of attack (α): –6.0° (section rotated within the test section; forces transformed to section‐fixed axes).  \n   • Geometry: real‐scale deck dimensions, 2D slice, with blockage ~6 % (vertical extension equal to deck width) and upstream/downstream mesh extents of 2.5×/9.5× bridge chord in CFD.  \n   • Turbulence integral length scale L: unspecified in report (noted as “L = ?”).  \n\n2. Rows (two wind‐tunnel inflow cases)  \n   • Case 1: Turbulence intensity I = 9.0 % (derived from scale model tests; corresponds to ~9.4 % at prototype height of 200 m, using roughness z₀ = 0.30 m).  \n   • Case 2: Turbulence intensity I = 0.5 % (second wind‐tunnel measurement condition).\n\n3. Columns (mean, stationary coefficients)  \n   • Cd (drag coefficient): dimensionless axial force coefficient referenced to dynamic pressure and deck frontal area.  \n   • Cl (lift coefficient): dimensionless normal force coefficient (positive downward for negative α).  \n   • Cm (moment coefficient): dimensionless pitching moment about the section centroid (positive nose‐up).  \n\n4. Numerical values  \n   – At I = 9.0 % turbulence:  \n     • Cd = 0.064 (slightly higher drag due to turbulence‐induced separation).  \n     • Cl = –1.002 (moderate downward lift, consistent with negative incidence).  \n     • Cm = –0.162 (nose‐down pitching moment).  \n   – At I = 0.5 % turbulence:  \n     • Cd = 0.058 (reduced drag under low‐turbulence inflow).  \n     • Cl = –1.083 (slightly increased downward lift, sharper separation).  \n     • Cm = –0.175 (more pronounced nose‐down moment).  \n\n5. Key observations and context  \n   • Lower turbulence intensity leads to smaller wake eddies and a thinner separation bubble, reducing Cd but intensifying Cl and Cm magnitudes.  \n   • Unknown L prevents direct scaling of turbulent structures; values should be interpreted as conditional on the wind‐tunnel setup.  \n   • These coefficients serve as benchmarks for validating CFD models of bridge decks under varying inflow turbulence levels.  \n\nThis detailed description can be indexed in a RAG vector store to support queries about:  \n– Effect of turbulence intensity on aerodynamic coefficients.  \n– Comparative performance of bridge deck sections at α = –6°.  \n– Wind‐tunnel data uncertainty due to unspecified integral length scale.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                38
+            ],
+            "page_labels": [
+                "4-7"
+            ],
+            "type": "table",
+            "sections": [
+                "4 Examples",
+                "4.2 Bridge Section"
+            ]
+        }
+    },
+    {
+        "content": "The table under discussion summarizes the stationary aerodynamic coefficients (drag, lift and pitching moment) measured or computed for a 2D section of the Millau bridge deck at a fixed angle of attack α = +6.0°.  Five different test cases are listed, covering both CFD simulations and wind-tunnel experiments.  Each row identifies the test type, the inflow turbulence intensity (I) and, where known, the integral length scale (L), followed by the resulting coefficients:  \n• Cd – drag coefficient (pressure drag plus friction, normalized by dynamic pressure and deck frontal area)  \n• Cl – lift coefficient (positive defined upward)  \n• Cm – moment coefficient about the section’s aerodynamic center or selected reference point (positive nose-up)  \n\nDetailed breakdown of each entry:  \n1. “CFD I = 9.4 %, L = 81 m”  \n   - Computed with a prescribed turbulence intensity of 9.4% and a very large integral length scale (81 m), approximating atmospheric inflow at real-scale bridge height.  \n   - Cd = 0.302  \n   - Cl = 0.089  \n   - Cm = 0.145  \n\n2. “CFD I = 9.4 %, L = 4.60 m”  \n   - Same turbulence intensity (9.4%) but a much smaller inlet length scale (4.60 m), representing a less coherent eddy field.  \n   - Cd = 0.213  \n   - Cl = 0.136  \n   - Cm = 0.113  \n\n3. “CFD I = 0.5 %, L = 0.25 m”  \n   - Low-turbulence case (0.5%) with a small length scale (0.25 m), akin to wind-tunnel model conditions if scaled directly.  \n   - Cd = 0.153  \n   - Cl = 0.045  \n   - Cm = 0.075  \n\n4. “Wind tunnel I = 9.0 %, L = ?”  \n   - Physical model tests in the wind tunnel at roughly 9% turbulence intensity (reported by the tunnel operators). The integral length scale was not specified in the published report.  \n   - Cd = 0.173  \n   - Cl = –0.139  (indicating a net downward force at +6° in the test configuration)  \n   - Cm = 0.089  \n\n5. “Wind tunnel I = 0.5 %, L = ?”  \n   - Wind-tunnel setup with an implied low turbulence level (0.5%), intended to isolate the section behavior with minimal external disturbance. Length scale again not documented.  \n   - Cd = 0.166  \n   - Cl = –0.116  \n   - Cm = 0.096  \n\nKey observations drawn from the table and its context:  \n• The highest drag coefficient (Cd = 0.302) occurs in the CFD case with large eddy scale and high turbulence (I = 9.4 %, L = 81 m). Reducing L to 4.6 m nearly halves the drag in the CFD results.  \n• At high turbulence intensity, CFD predicts a small positive lift (Cl≈+0.09 to +0.14), whereas the wind tunnel shows a small negative lift for both reported intensities.  \n• Moment coefficients are all positive, suggesting a nose-up pitch tendency at +6°; CFD values are somewhat larger than wind-tunnel results.  \n• Differences between CFD and wind-tunnel coefficients reflect scale effects, inflow characterization (turbulence intensity and length scale), and the modeling of wind-shield perforations in the tunnel.  \n• The variation in L (unknown in the tunnel tests) and differences in boundary-blockage, mesh resolution and turbulence models explain much of the numerical versus experimental deviation.  \n\nOverall, the tabulated Cd, Cl and Cm at α = 6° highlight the sensitivity of aerodynamic performance metrics to both inflow turbulence properties and modeling approach, underpinning the necessity of matching integral length scales and turbulence levels when comparing CFD with wind-tunnel data.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                38
+            ],
+            "page_labels": [
+                "4-7"
+            ],
+            "type": "table",
+            "sections": [
+                "4 Examples",
+                "4.2 Bridge Section"
+            ]
+        }
+    },
+    {
+        "content": "The image is a two-dimensional computational fluid dynamics (CFD) contour plot of turbulent viscosity around a bridge deck cross section under low-turbulence inflow conditions. At the center left of the frame sits the white silhouette of the bridge deck section, corresponding to a full-scale Millau-bridge profile (width 27.75 m, height 4.20 m). Small protuberances along its upper surface hint at the service-stage wind shields as modeled by perforated plates in the wind-tunnel tests. \n\nFlow comes in from the left. Far upstream of the deck, the background is rendered in deep blue, indicating minimal turbulent viscosity in the undisturbed approaching flow (turbulence intensity ≈ 9.4 %, integral length scale ≈ 81 m). As the incoming stream impinges on the deck’s leading edge, a narrow band of light green appears along the lower and upper surfaces, marking the onset of shear-layer development. The color scale progresses from dark blue (lowest viscosity) through light blue and green into yellow, orange, and finally bright red, which identifies regions of peak turbulent viscosity.\n\nImmediately downstream of the trailing edge, a pronounced wake forms. A crimson-red core of elevated turbulent viscosity emerges close to the deck, stretching horizontally for several deck widths to the right of the section. This high-viscosity wake corresponds to large coherent eddies and shear-layer roll-ups generated by flow separation at the sharp trailing edge. Surrounding this core are bands of orange and yellow that gradually fade into green and blue as the vortices break down and dissipate energy farther downstream. The wake remains coherent over a long distance—on the order of 10–15 times the deck chord, in agreement with the recommended computational domain extension for properly capturing vortex shedding and mean pressure distributions.\n\nVertically, the domain extends roughly one deck width above and below the profile, resulting in a blocking ratio near 6 % of the total flow area. The mesh sizing reflected in the plot suggests a fine resolution of approximately 0.12 m around the deck, coarsening to 2.0 m in the far field. This gradation ensures accurate boundary-layer and wake representation while controlling overall cell count.\n\nThe caption “Figure 4.8: Turbulent viscosity for low input turbulence” confirms that this simulation corresponds to the CFD variant with low inflow turbulence, in contrast to a high-turbulence scenario where upstream eddies would precondition the flow and suppress large wake structures. The vivid red and orange regions downstream of the deck underscore how, in this low-turbulence case, the bridge section itself is the dominant source of turbulence generation, producing large-scale eddies and a long, high-viscosity wake that would directly influence drag coefficient calculations and pressure distributions.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                39
+            ],
+            "page_labels": [
+                "4-8"
+            ],
+            "type": "image",
+            "sections": [
+                "4 Examples",
+                "4.2 Bridge Section"
+            ]
+        }
+    },
+    {
+        "content": "The image presents a two-dimensional CFD contour of the turbulent viscosity field (“eddy viscosity”) around a prototypical cross-section of the Millau Bridge deck under standard input turbulence (≈9.4 % turbulence intensity). The deck section itself is rendered as a small white polygon toward the left side of the domain. Flow impinges from the left, sweeps over the deck, and convects downstream, carrying the turbulence field in its wake.\n\nGeometry and Domain  \n• The deck cross-section is about 27.75 m wide by 4.2 m high in full-scale dimensions. Here it sits roughly centered vertically, with free-stream boundaries one deck width above and below (≈6 % blocking).  \n• Upstream of the deck there is an inflow region extending about 2.5 times the chord length; downstream the outflow extends roughly 9.5 times the chord length, allowing vortex structures and turbulence decay to develop without artificial confinement.  \n\nColor Contours  \n• A continuous rainbow-style colormap is used to represent local turbulent viscosity: high values in red shades, moderate values through yellow and green, low values in light blue down to deep navy. No discrete contour lines are drawn, rather a smoothly varying field highlights gradients.  \n• Far upstream and in the far-field outer regions (both above and below the deck) the field sits at its maximum eddy-viscosity level (bright red), representing the undisturbed inflow turbulence of about 9.4 % intensity. This uniform red band spans the entire top and bottom boundaries.  \n\nLeading Edge and Horseshoe Region  \n• Immediately ahead of the deck’s stagnation point a horseshoe-shaped “bump” of elevated turbulent viscosity appears (still red–orange), wrapping around the very front of the deck. This is characteristic of flow deceleration and boundary-layer thickening at the nose.  \n\nSide-Flow and Shedding Zones  \n• As the flow moves over the top and bottom surfaces, the near-surface eddy viscosity drops through orange → yellow → green, indicating partial smoothing of the incoming turbulence by the high-viscosity k-ε model.  \n• Right at the edges of the deck, localized peaks of moderate turbulence (yellow/green tongues) mark the detachment lines where shear layers roll up.  \n\nWake Region  \n• Directly downstream of the deck, a long, narrow wake of low turbulent viscosity (deep blue at its core, transitioning through lighter blues toward its edges) stretches well beyond the deck length. This “shadow” indicates that the large incoming eddies have been largely dissipated or stripped away by the deck, and only smaller eddies persist.  \n• The wake maintains a roughly elliptical cross-section and gradually broadens and diffuses as it convects downstream, blending into the ambient green-yellow field.  \n\nSymmetry and Model Assumptions  \n• The contour is nearly symmetric about the horizontal centerline, suggesting a zero or small negative angle of attack (≈ –6° was noted in the accompanying text) and confirming a 2D, steady-state k-ε solution.  \n• No fine-scale vortex shedding is visible in this stationary mean field—only the time-averaged eddy viscosity is shown.  \n\nOverall, the figure vividly illustrates how a bridge deck section under moderate free-stream turbulence shapes and modulates the turbulent viscosity: a concentrated horseshoe region of high viscosity at the nose, rapid decay through the shear layers, and a thin, low-viscosity wake extending many chord lengths downstream. This pattern underpins the calculation of sectional drag coefficients and is directly comparable to wind-tunnel pressure-based experiments for validating the CFD approach.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                39
+            ],
+            "page_labels": [
+                "4-8"
+            ],
+            "type": "image",
+            "sections": [
+                "4 Examples",
+                "4.2 Bridge Section"
+            ]
+        }
+    },
+    {
+        "content": "The image is a two-dimensional CFD visualization of airflow around a single cross-section of the Millau bridge deck, displayed at an angle of attack of –6° under “standard input turbulence” conditions. The bridge section itself is drawn in solid white as a trapezoidal box approximately 27.75 m wide and 4.20 m tall. It sits slightly pitched downward to the right, so the left face is the leading edge and the right face is the trailing edge.\n\nSurrounding the white deck cross-section is a smooth gradient of colors representing the magnitude of the fluid velocity field in the domain:\n\n- In the far field ahead of and around the section, the uniform freestream appears in medium-green, indicating the nominal inflow speed.  \n- Immediately upstream of the leading edge (left side), a circular halo of lighter green to pale yellow shows the beginning of flow deceleration and local pressure rise as the air approaches the sharp corner.  \n- Just above the top surface of the deck, a thin band of deep blue hugs the contour—this indicates a boundary-layer region of reduced velocity where the flow slows as it negotiates the deck’s upper incline.  \n- Beyond the trailing edge on the top side, the blue wake region extends horizontally into the right half of the domain; its uniform shade of dark navy blue signals a persistent, low-velocity recirculation zone in the deck’s wake.  \n- On the bottom (leeward) face of the deck, immediately downstream of the leading edge, a concentrated red patch marks the highest velocity magnitude in the field—this corresponds to an acceleration over the lower surface because of the negative angle of attack.  \n- Surrounding the red hotspot is a gradient through yellow and green as the accelerated flow diffuses back toward the ambient freestream speed.  \n- Further downstream beneath the deck, the wake on the lower side is less pronounced than the upper wake, transitioning quickly from yellow–green back to medium-green as the flow reattaches and mixes.\n\nNo explicit contour legend is shown, but the sequence green → yellow → red denotes increasing velocity magnitude, while green → blue indicates deceleration or recirculation. The domain boundaries extend roughly one deck width above and below, with a longer tail extending nine or ten chord lengths to the outlet (right) and about two to three chord lengths to the inlet (left). The caption at the bottom reads: “Figure 4.10: Fluid velocities for standard input turbulence.”\n\nOverall, the image clearly illustrates the asymmetric wake and velocity distribution caused by pitching the deck nose-down by 6°. It highlights a strong high-speed region under the deck, a thick low-speed wake above it, and the reshaping of boundary layers and separation zones under “standard” turbulence intensity.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                40
+            ],
+            "page_labels": [
+                "4-9"
+            ],
+            "type": "image",
+            "sections": [
+                "4 Examples",
+                "4.2 Bridge Section"
+            ]
+        }
+    },
+    {
+        "content": "The image presents a two-dimensional CFD result for a section of the Millau Bridge deck subjected to a low-turbulence inflow at an angle of attack of –6°. It is labeled “Figure 4.11: Fluid velocities for low input turbulence.” At its center sits the white, trapezoidal outline of the bridge deck cross-section (width 27.75 m, height 4.20 m), edged in yellow to distinguish the solid geometry from the surrounding flow field. The deck is pitched slightly downward to the left by 6°, so that the incoming flow impinges on its upper left corner.\n\nSurrounding the deck is a smoothly varying colored contour plot of velocity magnitude, spanning from cool greens and blues (higher speeds) to warmer yellows and reds (lower speeds). The flow enters from the left boundary, where a roughly circular, light-green region marks the upstream stagnation zone just ahead of the deck’s leading edge. From there the flow accelerates rapidly over the top surface of the deck, turning into a long, narrow blue streak that hugs the upper contour and extends far downstream. This indicates that in the low-turbulence case the boundary layer remains attached over much of the top surface, producing a high-speed, low-pressure region.\n\nBelow the deck, a pronounced separation bubble forms immediately behind the lower trailing edge, visible as a concentrated red-orange region signifying markedly reduced velocities (recirculation). Concentric bands of yellow and green radiate outward from this wake eddy, dissipating slowly into the free-stream. The wake on the bottom side is considerably shorter and thicker than the slender, high-speed wake above, reflecting the asymmetric flow caused by the negative angle of attack.\n\nThe background domain extends by roughly 1.5 deck widths upstream and about 9.5 deck chords downstream, as per the recommended mesh extension. The top and bottom boundaries are set at one deck width away, producing roughly 6 % blockage. Although no mesh lines are shown, the smooth transition of contour lines indicates a graded grid, with finer cells clustering near the deck surface to resolve pressure gradients and coarser cells farther away.\n\nScattered cyan markers outline control points along the deck’s upper and lower surfaces—likely numerical monitoring locations used to extract pressure coefficients and forces. No velocity vectors or streamlines are drawn; instead the color contours alone visualize the magnitude distribution. The nearly uniform blue band above the deck suggests that turbulence generated by the geometry is small compared to the laminar-like inflow, and that any eddies detach well downstream, resulting in a slender, persistent shear layer.\n\nOverall, this figure illustrates how, under low incoming turbulence intensity (about 9 %), the bridge deck produces a strong attached flow over its top face, a compact separated wake beneath, and a marked asymmetry in velocity distribution. These results feed directly into the calculation of stationary wind drag coefficients, to be compared against wind-tunnel data for validation of the CFD setup.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                40
+            ],
+            "page_labels": [
+                "4-9"
+            ],
+            "type": "image",
+            "sections": [
+                "4 Examples",
+                "4.2 Bridge Section"
+            ]
+        }
+    },
+    {
+        "content": "The image is a two-dimensional line chart titled “Figure 4.12: Wind force coefficients.” Its purpose is to compare several series of nondimensional force coefficients plotted against a range of section incidence angles (angle of attack), from –6° up to +6°. The chart area is set on a light-gray background with faint horizontal gridlines at intervals of 0.2 on the vertical axis.  \n\nAxes  \n• The horizontal (x) axis is labeled “incidence” and runs from –6 on the left to +6 on the right, with major ticks at –6, –4, –2, 0, 2, 4, 6.  \n• The vertical (y) axis is labeled “Coefficient” and spans from –1.2 at the bottom to +0.4 at the top, with major gridlines drawn at –1.0, –0.8, –0.6, –0.4, –0.2, 0.0, 0.2, and 0.4.  \n\nData Series  \nSix distinct series are overlaid. Although no legend is shown in the snippet, each series is distinguished by its marker shape and color. All of them exhibit a more or less linear trend over the incidence range.  \n\n1. Magenta squares  \n   – Plotted in the lower portion of the chart, these points begin at about –1.0 when incidence = –6°, and rise steadily to roughly –0.2 at +6°.  \n   – The markers are connected by a thin magenta line.  \n\n2. Purple ×-marks  \n   – Also in the lower region, nearly coincident with the magenta squares but offset slightly, these crosses start around –1.05 at –6° and end near –0.25 at +6°.  \n   – They too are linked by a slender purple line.  \n\n3. Red circles  \n   – Centered around zero on the y-axis, the red-filled circles begin slightly below zero (≈ –0.1 at –6°) and climb to about +0.06 at +6°.  \n   – A fine red line traces these markers, showing a consistent upward slope.  \n\n4. Yellow triangles  \n   – Open or filled in bright yellow, these triangular markers run almost exactly atop the red circles. They start near –0.15 at –6° and reach around +0.05 at +6°, connected by a thin yellow line.  \n\n5. Blue diamonds  \n   – Occupying the upper portion of the plot, these solid blue diamond-shaped markers lie just above the topmost gridline of 0.0, beginning at about +0.07 when incidence = –6° and increasing to roughly +0.16 at +6°.  \n   – A delicate blue line joins them.  \n\n6. Cyan ×-marks  \n   – Also near the top, these light-blue crosses overlay but sit slightly above the blue diamonds. They range from about +0.10 at –6° to nearly +0.20 at +6°, again linked by a thin cyan line.  \n\nGeneral Observations  \n• All six series show a clear, nearly linear increase in coefficient with increasing incidence angle.  \n• The three “upper” series (blue diamonds and cyan ×’s) have small positive coefficients throughout.  \n• The middle series (red circles and yellow triangles) straddle zero, crossing it at roughly 0° incidence.  \n• The bottom two series (magenta squares and purple ×’s) maintain negative coefficients, rising from about –1.0 to –0.2 over the ±6° range.  \n• Differences between paired curves (for example, magenta vs. purple or blue vs. cyan) represent the variance between two methods or conditions—presumably CFD versus wind-tunnel results or low- versus high-turbulence inflow. Their close but distinct spacing quantifies the agreement (and remaining deviation) across the experimental and numerical approaches.  \n\nTaken together, the chart succinctly visualizes how wind-force coefficients on the bridge section evolve with incidence angle and highlights the small but systematic differences between each pair of test or simulation methods.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                41
+            ],
+            "page_labels": [
+                "4-10"
+            ],
+            "type": "image",
+            "sections": [
+                "4 Examples",
+                "4.2 Bridge Section"
+            ]
+        }
+    },
+    {
+        "content": "This example (millau.dat) shows the evaluation of the stationary wind drag coefficients for a section of a bridge depending on the angle of attack. The section is taken from the Millau bridge in France (Width 27.75, Height 4.20 m), where results of a wind tunnel test are available for the construction stage and the final stage.\n The first difficulty is given by the selection of the inflow conditions for the wind. For the original project extended CFD studies for the terrain have been performed, for the CFD and wind tunnel we have to generalize the inflow. The wind tunnel report gave a turbulence intensity of 9-10 %. Assuming a roughness of 0.30 m and a height of the bridge deck of 200 m, we get a turbulence intensity of 9.4 %. The integral length scale is 81.0 m.\n For the service state wind shields have been added, which have been modelled in the wind tunnel with perforated plates with 50 % permeability. A perfect match of results should not be anticipated therefore.\n An other question is if one should model the wind tunnel model (scale 1:75) or the real struc- ture. In that case we used the real world dimensions, which is recommended by us in general.\n In that case a 2D-Analysis is performed. To select the analysis model properly one should take care of the parameters for some fundamental questions:\n • Distance of the section to the boundaries above and below. If one selects to small dis- tances, the blocking effect will disturb the pressures obtained considerably. It is recom- mended to block at most 4 % of the flow area, better is 1 to 2 %.\n Length of the area behind and the mesh density. If the mesh behind the section has a coarse mesh or is not long enough, vortices may not be modelled properly and the variation in time may not be obtained at all. Stationary mean values of the pressures may be obtained however in most cases with the k-ε-Turbulence model. The recommendation is to use an extension of 10 to 15 times the bridge width.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                36
+            ],
+            "page_labels": [
+                "4-5"
+            ],
+            "type": "text",
+            "sections": "4.2 Bridge Section"
+        }
+    },
+    {
+        "content": "If the mesh behind the section has a coarse mesh or is not long enough, vortices may not be modelled properly and the variation in time may not be obtained at all. Stationary mean values of the pressures may be obtained however in most cases with the k-ε-Turbulence model. The recommendation is to use an extension of 10 to 15 times the bridge width..\n •\n Length of area before and the mesh density In the incoming undisturbed flow a distance of 1.5 times the deck width is sometimes sufficient, but in this case the high viscosity of the inflow which will be disturbed by the bridge, creates an import zone of some extension before the bridge. The recommendation is to extend the mesh until a nearly constant inflow pressure is obtained. The mesh density is influencing the generated pressures. As the maximum pressure coefficient is 1.0 this is a good control measure of the mesh quality.\n •\n The mesh has been created with a mesh size of 0.12 m at the bridge and 2.0 m in the free filed, extending above and below by the deck width (6 % blocking), and in the direction of the inlet by a factor of 2.5 and for the outlet by a factor of 9.5 of the bridge chord.\n For variant angles of attack the section is rotated within the model. Thus the program has to transform the resulting forces to the sectional coordinate system which is also the case for the results of the wind tunnel experiment.\n For an angle of attack of -6 degree the wind velocities and pressure distributions are given in the next picture.\n The different flow properties become evident if we have a look at the turbulent viscosity. While for the low turbulence the bridge is dominating the generation, the high turbulent inflow will be dissolved in front of the bridge not allowing the large eddies. All wakes created by a detache- ment of the flow are considerably smaller.\n The drag coefficients of the two methods are different for the wind tunnel and the CFD analysis:\n The deviations are greater for the case of +6.0◦ degree (Pictures of velocity magnitude for large and small turbulence) :\n Considering all those imponderabilities for the wind tunnel as well as for the analysis, the match of the values is considered to be acceptable after a sufficient number of iterations:",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                36,
+                37,
+                38
+            ],
+            "page_labels": [
+                "4-5",
+                "4-6",
+                "4-7"
+            ],
+            "type": "text",
+            "sections": "4.2 Bridge Section"
+        }
+    },
+    {
+        "content": "[1] Joel H. Ferziger and Milovan Peric. Computational Methos for Fluid Dynamics. Springer Verlag, Berlin, 1999.\n [2] J.H. Spurk. Strömungslehre - Eine Einführung in die Theorie der Strömungen. Springer Verlag Berlin, 2003.\n [3] H. Schlichting and K. Gersten. Boundary Layer Theory. Springer Verlag Berlin, 2000.\n [4] H. Ruscheweyh. Dynamische Windwirkung an Bauwerken. Wiesbaden/Berlin: Bauverlag, 1982.\n [5] Markus Glück. Ein Beitrag zur numerischen Simulation von Fluid-Struktur-Interaktionen Grundlagenuntersuchungen und Anwendung auf Membrantragwerke. Shaker Verlag, Aachen, 2002.\n [6] Paul Tucker and Anthony Mosquera. NAFEMS - Introduction to Grid and Mesh Generation for CFD. www.nafems.org, 9999.\n [7] B. Blocken, T. Stathopoulos, and J. Carmeliet. CFD simulation of the atmospheric bound- ary layer - wall function problems. Atmospheric Environment, 41(2), 238-252., 2007.",
+        "metadata": {
+            "document_name": "dolfyn_1.pdf",
+            "page_indices": [
+                42
+            ],
+            "page_labels": [
+                "4-11"
+            ],
+            "type": "text",
+            "sections": "Bibliography"
+        }
+    }
+]

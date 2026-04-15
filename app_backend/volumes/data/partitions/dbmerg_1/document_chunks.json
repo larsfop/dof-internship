@@ -1,0 +1,694 @@
+[
+    {
+        "document_name": "dbmerg_1.pdf",
+        "page_indices": [
+            2
+        ],
+        "page_labels": [
+            null
+        ],
+        "type": "table",
+        "sections": [
+            "Foreword"
+        ],
+        "coordinates": [
+            [
+                453.40826416015625,
+                1118.9154052734375
+            ],
+            [
+                2918.738525390625,
+                2891.966064453125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Task Description 1-1 Input Description 2-1 2.1 Input Language . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-1 2.2 Input Records . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-1 2.3 CDB – Selection of a database . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-2 2.4 CTRL – Control options . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-3 2.4.1 REST Restart-Steuerung . . . . . . . . . . . . . . . . . . . . . . . . 2-3 2.5 LC – Load Cases . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-4 2.6 GRP – Group Assignment . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-5 2.7 NODE – Nodal Values . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-7 2.8 BEAM – Beam Elements . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-8 2.9 TRUS – Truss Elements . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-9 2.10 CABL – Cable Elements . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-10 2.11 SPRI – Spring Elements . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-11 2.12 QUAD – Plane Elements . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-12 2.13 BRIC – 3D Continua Elements . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-13 2.14 EXTR – Data mapping 2D-3D . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-14 2.15 ECHO – Volume of Output . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-15 Example 3-1"
+    },
+    {
+        "document_name": "dbmerg_1.pdf",
+        "page_indices": [
+            1,
+            2,
+            4
+        ],
+        "page_labels": [
+            null,
+            null,
+            "1-1"
+        ],
+        "type": "text",
+        "sections": [
+            "Foreword"
+        ],
+        "content": "DBMERG Database Manipulator\n DBMERG Manual, Service Pack 2025-4 Build 146\n Copyright © 2025 by SOFiSTiK AG, Nuremberg, Germany.\n SOFiSTiK AG\n HQ Nuremberg Office Garching Flataustraße 14 Parkring 2 90411 Nürnberg 85748 Garching bei München Germany Germany T +49 (0)911 39901-0 T +49 (0)89 315878-0 F +49(0)911 397904 F +49 (0)89 315878-23 info@sofistik.com\n www.sofistik.com\n This manual is protected by copyright laws. No part of it may be translated, copied or reproduced, in any form or by any means, without written permission from SOFiSTiK AG. SOFiSTiK reserves the right to modify or to release new editions of this manual.\n The manual and the program have been thoroughly checked for errors. However, SOFiSTiK does not claim that either one is completely error free. Errors and omissions are corrected as soon as they are detected.\n The user of the program is solely responsible for the applications. We strongly encourage the user to test the correctness of all calculations at least by random sampling.\n Contents\n Contents\n 1\n 2\n i\n 3\n 3.1\n Example . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .\n 3-1\n 1 Task Description\n Program DBMERG allows the modification or transfer of data within a data base or between data bases of the SOFiSTiK-Software. The program may be used for merging results from different tasks, the treatment of multiple used parts or the transfer of primary load states.\n The program has functions as follows:\n Import of loads or results\n - Distribution or results or properties of elements",
+        "token_count": 421
+    },
+    {
+        "document_name": "dbmerg_1.pdf",
+        "page_indices": [
+            4
+        ],
+        "page_labels": [
+            "1-1"
+        ],
+        "type": "text",
+        "sections": [
+            "Foreword"
+        ],
+        "content": "Program DBMERG allows the modification or transfer of data within a data base or between data bases of the SOFiSTiK-Software. The program may be used for merging results from different tasks, the treatment of multiple used parts or the transfer of primary load states.. The program has functions as follows:. Import of loads or results. - Distribution or results or properties of elements.\n - Changing results with factors\n These functions require a special responsability of the user, because the check of those results may become extremely difficult.\n DBMERG uses one or two SOFiSTiK-databases, each of them needs a static system. When calling the program a second data base will be opened with the name of the input file. This will be the source, while the project data base is the target.\n Elements and nodes of the project data base will be assigned to those in the source data base via groups and load cases. Grouping within DBMERG extends beyond the general SOFiSTiK group mechanisms.\n DBMERG will copy all results from the source to the target and will replace load cases and or element or node numbers.",
+        "token_count": 229
+    },
+    {
+        "document_name": "dbmerg_1.pdf",
+        "page_indices": [
+            6
+        ],
+        "page_labels": [
+            "2-1"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Input Description",
+            "2.1 Input Language"
+        ],
+        "content": "The input occurs in a free format with the CADINP input language (see the general manual SOFiSTiK: ’FEA / STRUCTURAL Installation and Basics’).",
+        "token_count": 36
+    },
+    {
+        "document_name": "dbmerg_1.pdf",
+        "page_indices": [
+            6
+        ],
+        "page_labels": [
+            "2-1"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Input Description",
+            "2.2 Input Records"
+        ],
+        "coordinates": [
+            [
+                400.30902099609375,
+                1265.9959716796875
+            ],
+            [
+                2872.47412109375,
+                2947.362060546875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Record Items CDB FROM PASS MAT FROM TO INC BY SECT FROM TO INC BY LC NO NOS GRP NO NOS NODE TYPE FX FY FZ FXX FYY FZZ BEAM TYPE FN FVY FVZ FMT FMY FMZ FMB TRUS TYPE FN CABL TYPE FN SPRI TYPE FN QUAD TYPE FMX FMY FMXY FVX FVY FNX FNY FNXY BRIC TYPE FSX FSY FSZ FTAU ECHO OPT VAL"
+    },
+    {
+        "document_name": "dbmerg_1.pdf",
+        "page_indices": [
+            6
+        ],
+        "page_labels": [
+            "2-1"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Input Description",
+            "2.2 Input Records"
+        ],
+        "content": "The following records are defined:\n Input is organized in blocks. Every block ends with the record END. An empty block (END/END) will terminate the program. Within every Block a single external database may be used.\n The records HEAD, END and PAGE are described in the general manual SOFiSTiK: ’FEA / STRUCTURAL Installation and Basics’.\n It follows the description of the records:",
+        "token_count": 82
+    },
+    {
+        "document_name": "dbmerg_1.pdf",
+        "page_indices": [
+            7
+        ],
+        "page_labels": [
+            "2-2"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Input Description",
+            "2.3 CDB – Selection of a database"
+        ],
+        "coordinates": [
+            [
+                401.74249267578125,
+                815.0120239257812
+            ],
+            [
+                2927.27099609375,
+                1158.0654296875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default FROM File name of a database Lt256 ! PASS optional password for protected database Lt16 -"
+    },
+    {
+        "document_name": "dbmerg_1.pdf",
+        "page_indices": [
+            7
+        ],
+        "page_labels": [
+            "2-2"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Input Description",
+            "2.3 CDB – Selection of a database"
+        ],
+        "content": "CDB\n For the merging this command selects a database to be used as source for any import. If the record name is given only, the master project will be used again. A definition is only possible once in every input block.",
+        "token_count": 47
+    },
+    {
+        "document_name": "dbmerg_1.pdf",
+        "page_indices": [
+            8
+        ],
+        "page_labels": [
+            "2-3"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Input Description",
+            "2.4 CTRL – Control options"
+        ],
+        "content": "CTRL\n Item Description Unit Default OPT One of the following options: LT - REST restart control",
+        "token_count": 18
+    },
+    {
+        "document_name": "dbmerg_1.pdf",
+        "page_indices": [
+            8
+        ],
+        "page_labels": [
+            "2-3"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Input Description",
+            "2.4 CTRL – Control options",
+            "2.4.1 REST Restart-Steuerung"
+        ],
+        "content": "By defualt, possibly existing results of the target load case are deleted pior to copying.\n The restart option CTRL REST 1 suppresses deletion of load case dependent data (results) for the target load case. This allows, e.g., to realize different mapping rules (GRP ...) for nodal results and elemental results in subsequent DBMERG runs.",
+        "token_count": 72
+    },
+    {
+        "document_name": "dbmerg_1.pdf",
+        "page_indices": [
+            9
+        ],
+        "page_labels": [
+            "2-4"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Input Description",
+            "2.5 LC – Load Cases"
+        ],
+        "coordinates": [
+            [
+                395.8222351074219,
+                813.8441772460938
+            ],
+            [
+                2939.435791015625,
+                1262.1717529296875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default NO New load case number − * NOS Old load case number − NO"
+    },
+    {
+        "document_name": "dbmerg_1.pdf",
+        "page_indices": [
+            10
+        ],
+        "page_labels": [
+            "2-5"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Input Description",
+            "2.5 LC – Load Cases"
+        ],
+        "coordinates": [
+            [
+                389.0762023925781,
+                814.8405151367188
+            ],
+            [
+                2942.91552734375,
+                1361.982421875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default NO Group number source data − ! NOS Group number target data − NO NDIV Group divisor − *"
+    },
+    {
+        "document_name": "dbmerg_1.pdf",
+        "page_indices": [
+            9,
+            10
+        ],
+        "page_labels": [
+            "2-4",
+            "2-5"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Input Description",
+            "2.5 LC – Load Cases"
+        ],
+        "content": "LC\n Any action of DBMERG will use the selected load cases only. With input of NOS you may copy results to other load case numbers.\n In combination with the grouping of the elements you may assign in different blocks results of different elments of the same load case to different load cases of the same element. The default NO=NOS is only posssible, if you have two data bases open.\n 2.6 GRP – Group Assignment\n GRP\n For the transfer of data elements of the project base will be assigned to elements of the source database. Without any input a 1 to 1 assignement is in effect.\n The group number is given as division of the node or elementnumber by NDIV. Two elements will be assigned to each other if the modulus will be the same and the group numbers follow the specified assignment. In DBMERG you may define completely other groups than those which are defined in the database.\n Beam elements, however, will be assigned to each other only if the beam length is also identi- cal.\n If the node numbers do not follow the same rules as the elements, you have to use to seperate blocks with different assignements.\n This feature can be used to multiply the properties of prefabricated parts.\n Example:\n In the project data base are the elements 1001, 1002, 1003 as well as 1101, 1102, 1103 and 2001, 2002, 2003 defined. In the additional data base are the Elements 101, 102, 103 defined. Input of\n +PROG DBMERG HEAD GRP NO 9999 NOS 0 END\n defines the assignments:\n 1101 := 101 , 1102 := 102 and 1103 := 103\n Elements 1001 to 1003 resp. 2001 to 2003 are without assignment. The results of elments 101 to 103 will be assigned to the elements 1101 to 1103.",
+        "token_count": 414
+    },
+    {
+        "document_name": "dbmerg_1.pdf",
+        "page_indices": [
+            10,
+            11
+        ],
+        "page_labels": [
+            "2-5",
+            "2-6"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Input Description",
+            "2.5 LC – Load Cases"
+        ],
+        "content": "1101 := 101 , 1102 := 102 and 1103 := 103. Elements 1001 to 1003 resp. 2001 to 2003 are without assignment. The results of elments 101 to 103 will be assigned to the elements 1101 to 1103..\n Input of:\n +PROG DBMERG HEAD GRP NO 10 NOS 1 NDIV 100 GRP NO 11 NOS 1 NDIV 100 END\n defines the assignments:\n 1001 < = 101 , 1002 < = 102 und 1003 < = 103\n 1101 < = 101 , 1102 < = 102 und 1103 < = 103\n and will thus copy the results multiple to the elements. And finally\n +PROG DBMERG HEAD GRP NO 9999 NOS 1 NDIV 100 END\n will assign:\n 1001 < = 101 , 1002 < = 102 und 1003 < = 103\n 1101 < = 101 , 1102 < = 102 und 1103 < = 103\n 2001 < = 101 , 2002 < = 102 und 2003 < = 103\n For the data transfer the first valid assignment is used, multiple assignements are not checked, which allows to define a general default as last assignment, while more specific ones are defined first.",
+        "token_count": 304
+    },
+    {
+        "document_name": "dbmerg_1.pdf",
+        "page_indices": [
+            12
+        ],
+        "page_labels": [
+            "2-7"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Input Description",
+            "2.7 NODE – Nodal Values"
+        ],
+        "coordinates": [
+            [
+                365.8748474121094,
+                811.2103271484375
+            ],
+            [
+                2900.20654296875,
+                2377.1943359375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description TYPE Type of results to work on NONE deactivated all values ALL selected all values LINK Forces of kinematic constraint LOAD Nodal loads DISP Nodal diesplacements REAC Support reactions VELO Nodal velocities ACCE Nodal accelerations MPHY Multiphysics results FX Factor for displacements/forces in X FY Factor for displacements/forces in Y FZ Factor for displacements/forces in Z FXX Factor for rotations/moments in X FYY Factor for rotations/moments in Y FZZ Factor for rotations/moments in Z Unit Default LT ALL − 1.0 − FX − FY − FZ − FXX − FYY"
+    },
+    {
+        "document_name": "dbmerg_1.pdf",
+        "page_indices": [
+            12
+        ],
+        "page_labels": [
+            "2-7"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Input Description",
+            "2.7 NODE – Nodal Values"
+        ],
+        "content": "NODE\n For the selected load cases and groups the results will be copied.",
+        "token_count": 15
+    },
+    {
+        "document_name": "dbmerg_1.pdf",
+        "page_indices": [
+            13
+        ],
+        "page_labels": [
+            "2-8"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Input Description",
+            "2.8 BEAM – Beam Elements"
+        ],
+        "coordinates": [
+            [
+                362.1513671875,
+                807.56103515625
+            ],
+            [
+                2896.22216796875,
+                2568.9267578125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description TYPE Type of results to work on NONE deactivated all values ALL selected all values LOAD Loading FORC Internal forces and moments STIF Stiffnesses EIGE Secondary forces and moments STRE Stresses REIN Reinforcements TEND Tendons FN Factor for normal forces FVY Factor for shear forces in y FVZ Factor for shear forces in z FMT Factor for torsional moments FMY Factor for bending moments in y FMZ Factor for bending moments in z FMB Factor for warping moments Unit LT − − − − − − − Default ALL 1.0 FN FVY FVZ FMT FMY FMZ"
+    },
+    {
+        "document_name": "dbmerg_1.pdf",
+        "page_indices": [
+            13
+        ],
+        "page_labels": [
+            "2-8"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Input Description",
+            "2.8 BEAM – Beam Elements"
+        ],
+        "content": "BEAM\n For the selected load cases and groups the results will be copied.",
+        "token_count": 16
+    },
+    {
+        "document_name": "dbmerg_1.pdf",
+        "page_indices": [
+            14
+        ],
+        "page_labels": [
+            "2-9"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Input Description",
+            "2.9 TRUS – Truss Elements"
+        ],
+        "coordinates": [
+            [
+                368.6681823730469,
+                815.89453125
+            ],
+            [
+                2936.16796875,
+                1660.840576171875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description TYPE Type of results to work on NONE deactivated all values ALL selected all values LOAD Loading FORC Internal forces and moments STRE Design stresses FN Factor for normal forces Unit Default LT ALL − 1.0"
+    },
+    {
+        "document_name": "dbmerg_1.pdf",
+        "page_indices": [
+            14
+        ],
+        "page_labels": [
+            "2-9"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Input Description",
+            "2.9 TRUS – Truss Elements"
+        ],
+        "content": "TRUS",
+        "token_count": 2
+    },
+    {
+        "document_name": "dbmerg_1.pdf",
+        "page_indices": [
+            15
+        ],
+        "page_labels": [
+            "2-10"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Input Description",
+            "2.10 CABL – Cable Elements"
+        ],
+        "coordinates": [
+            [
+                367.145751953125,
+                815.5296630859375
+            ],
+            [
+                2936.7294921875,
+                1660.7899169921875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description TYPE Type of results to work on NONE deactivated all values ALL selected all values LOAD Loading FORC Internal forces and moments STRE Design stresses FN Factor for normal forces Unit LT − Default ALL 1.0"
+    },
+    {
+        "document_name": "dbmerg_1.pdf",
+        "page_indices": [
+            15
+        ],
+        "page_labels": [
+            "2-10"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Input Description",
+            "2.10 CABL – Cable Elements"
+        ],
+        "content": "CABL",
+        "token_count": 2
+    },
+    {
+        "document_name": "dbmerg_1.pdf",
+        "page_indices": [
+            16
+        ],
+        "page_labels": [
+            "2-11"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Input Description",
+            "2.11 SPRI – Spring Elements"
+        ],
+        "coordinates": [
+            [
+                362.4313049316406,
+                818.402099609375
+            ],
+            [
+                2937.700439453125,
+                1580.0201416015625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description TYPE Type of results to work on NONE deactivated all values ALL selected all values LOAD Loading FORC Internal forces and moments FN Factor for normal forces Unit Default LT ALL − 1.0"
+    },
+    {
+        "document_name": "dbmerg_1.pdf",
+        "page_indices": [
+            16
+        ],
+        "page_labels": [
+            "2-11"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Input Description",
+            "2.11 SPRI – Spring Elements"
+        ],
+        "content": "SPRI",
+        "token_count": 2
+    },
+    {
+        "document_name": "dbmerg_1.pdf",
+        "page_indices": [
+            17
+        ],
+        "page_labels": [
+            "2-12"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Input Description",
+            "2.12 QUAD – Plane Elements"
+        ],
+        "coordinates": [
+            [
+                364.3406066894531,
+                764.1088256835938
+            ],
+            [
+                2956.04541015625,
+                3323.12060546875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default TYPE Type of results to work on LT ALL NONE deactivated all values ALL selected all values BLOA Free loads FLOA Element loading FORC Internal forces and moments NFOR Forces in nodes ERRO Error estimator BEDD Foundation stresses CRAC Crack orientations YIEL Nonlinear shell stress parameters STRE Stresses in elements NSTR Stresses in nodes ERRS Error estimator from stresses DESI Design stresses NDES Design stresses in nodes REIN Reinforcements NREI Reinforcements in nodes TEND Tendons FMX Factor for bending moment m-xx − 1.0 FMY Factor for bending moment m-yy − FMX FMXY Factor for torsional moment m-xy − FMY FVX Factor for shear force q-x − FMXY FVY Factor for shear force q-y − FVX FNX Factor for membrane force n-x − FVY FNY Factor for memebrane force n-y − FNX FNXY Factor for membrane shear force n-xy − FNY"
+    },
+    {
+        "document_name": "dbmerg_1.pdf",
+        "page_indices": [
+            17
+        ],
+        "page_labels": [
+            "2-12"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Input Description",
+            "2.12 QUAD – Plane Elements"
+        ],
+        "content": "QUAD\n For the selected load cases and groups the results will be copied. Factors should not be missused to supress torsional moments.",
+        "token_count": 29
+    },
+    {
+        "document_name": "dbmerg_1.pdf",
+        "page_indices": [
+            18
+        ],
+        "page_labels": [
+            "2-13"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Input Description",
+            "2.13 BRIC – 3D Continua Elements"
+        ],
+        "coordinates": [
+            [
+                364.22418212890625,
+                820.3297119140625
+            ],
+            [
+                2919.54296875,
+                2072.638427734375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description TYPE Type of results to work on NONE deactivated all values ALL selected all values LOAD Loading STRE Stresses in elements NSTR Stresses in nodes ERRS Error estimator from stresses MPHY Multiphysics results FSX Factor for normal stresses sig-x FSY Factor for normal stresses sig-y FSZ Factor for normal stresses sig-z FTAU Factor for shear stresses Unit Default LT ALL − 1.0 − FSX − FSY − FSZ"
+    },
+    {
+        "document_name": "dbmerg_1.pdf",
+        "page_indices": [
+            18
+        ],
+        "page_labels": [
+            "2-13"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Input Description",
+            "2.13 BRIC – 3D Continua Elements"
+        ],
+        "content": "BRIC\n For the selected load cases and groups the results will be copied.",
+        "token_count": 16
+    },
+    {
+        "document_name": "dbmerg_1.pdf",
+        "page_indices": [
+            19
+        ],
+        "page_labels": [
+            "2-14"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Input Description",
+            "2.14 EXTR – Data mapping 2D-3D"
+        ],
+        "coordinates": [
+            [
+                388.7671203613281,
+                805.2133178710938
+            ],
+            [
+                2926.498046875,
+                1451.721435546875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description TYPE Type of extrusion PCA cyclic permutation of coordinate axes STYP Subtype TREF Reference depth for sectional forces at 2D-system Unit LT [−] [m] Default PCA 1.0 1.0"
+    },
+    {
+        "document_name": "dbmerg_1.pdf",
+        "page_indices": [
+            19
+        ],
+        "page_labels": [
+            "2-14"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Input Description",
+            "2.14 EXTR – Data mapping 2D-3D"
+        ],
+        "content": "EXTR",
+        "token_count": 2
+    },
+    {
+        "document_name": "dbmerg_1.pdf",
+        "page_indices": [
+            20
+        ],
+        "page_labels": [
+            "2-15"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Input Description",
+            "2.15 ECHO – Volume of Output"
+        ],
+        "coordinates": [
+            [
+                368.7122497558594,
+                815.8728637695312
+            ],
+            [
+                2934.7978515625,
+                1693.7835693359375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default OPT Select an option LT FULL FULL All options LC Selected load cases GRP Selected groups VAL Value of option LT YES NO no output YES normal output FULL extended output"
+    },
+    {
+        "document_name": "dbmerg_1.pdf",
+        "page_indices": [
+            20
+        ],
+        "page_labels": [
+            "2-15"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Input Description",
+            "2.15 ECHO – Volume of Output"
+        ],
+        "content": "ECHO\n Output of the program is a protocol of the transfered or assigned data volume. The content is controlled by the record ECHO.",
+        "token_count": 29
+    },
+    {
+        "document_name": "dbmerg_1.pdf",
+        "page_indices": [
+            22,
+            23,
+            24
+        ],
+        "page_labels": [
+            "3-1",
+            "3-2",
+            "3-3"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Example",
+            "3.1 Example"
+        ],
+        "content": "A bridge with identical prefabricated girders in longitudinal and transverse direction and an in situ concrete plate is analyzed. As the prestress is the same in all girders, first a system with just one girder is defined and prestress and all design for the transport and handling in the factory are performed. This girder should consist of six beam elements with the numbers 102, 103 to 107. The name of this database should be SINGLE.\n First we create an intermediate system for the longitudinal system, as there are no effects in transverse direction from dead load, prestress or creep. Numbers of those beamelements of the data base SYSTEML have numbers 1102 to 1107 in the first span and 5102 to 5107 in the fifth span. To copy the tendons from SINGLE to SYSTEML is done via\n +PROG DBMERG\n HEAD COPY THE TENDONS TO FULL SPAN SYSTEM CDB \"single.cdb\" ECHO OPT GRP BEAM TYPE TEND GRP NO NOS NDIV 11 1 100 21 2 100 31 2 100 41 2 100 51 5 100\n END\n Output is as follows:\n LOADCASES\n 0 COPIED FROM 1\n GROUPING\n DIVISOR 11 100 1 21 100 2 31 100 2 41 100 2 51 100 5\n PROJECT\n SOURCE\n TRANSFERED ELEMENTDATA\n BEAM 1102 TRANSFERED FROM 102\n BEAM 1103 TRANSFERED FROM 103\n BEAM 1104 TRANSFERED FROM 104\n BEAM 1105 TRANSFERED FROM 105\n BEAM 1106 TRANSFERED FROM 106\n BEAM 1107 TRANSFERED FROM 107\n BEAM 2102 TRANSFERED FROM 202 BEAM 2103 TRANSFERED FROM 203 BEAM 2104 TRANSFERED FROM 204 BEAM 2105 TRANSFERED FROM 205 BEAM 2106 TRANSFERED FROM 206 BEAM 2107 TRANSFERED FROM 207 BEAM 3102 TRANSFERED FROM 202 BEAM 3103 TRANSFERED FROM 203 BEAM 3104 TRANSFERED FROM 204 BEAM 3105 TRANSFERED FROM 205 BEAM 3106 TRANSFERED FROM 206 BEAM 3107 TRANSFERED FROM 207 BEAM 4102 TRANSFERED FROM 202 BEAM 4103 TRANSFERED FROM 203 BEAM 4104 TRANSFERED FROM 204 BEAM 4105 TRANSFERED FROM 205 BEAM 4106 TRANSFERED FROM 206 BEAM 4107 TRANSFERED FROM 207 BEAM 5102 TRANSFERED FROM 502 BEAM 5103 TRANSFERED FROM 503 BEAM 5104 TRANSFERED FROM 504 BEAM 5105 TRANSFERED FROM 505 BEAM 5106 TRANSFERED FROM 506 BEAM 5107 TRANSFERED FROM 507\n Now all beams have the same prestress from one span. Then all analysis is done which acounts for construction stages and other effects which are the same for all longitudinal girder systems.\n In the mean time a database SYSTEMG has been created with the total system. Beam ele- ments of the different longitudinal girders have numbers which change in the 100-digit column. Beam1201 is therefore between 1101 and 1301. Transverse girders have numbers greater than 10000. With this system live loads and other have been analyzed.\n To copy the results from that system to a single longitudinal girder is no done in such a way, that results from different girders are copied as different load cases of the same girder system. Then a superposition with MAXIMA or AQB can be done in system SYSTEML.\n +PROG DBMERG\n HEAD GET LIVELOAD FROM GLOBAL SYSTEM CDB \"systemg.cdb\" ! LOAD CASE 3 DEAD LOAD G2 (OUTER GIRDERS) ! LOAD CASE 81 TO 86 LIVELOAD ! LOAD CASE 31 TO 35 CONSTRUCTION SPAN 1 ! LOAD CASE 51 TO 56 CONSTRUCTION SPAN 3 LC NO 3 NOS 3 LC (181 186 1) (81 1) LC (191 196 1) (91 1) LC (131 135 1) (31 1)\n LC (151 156 1) (51 1) GRP (11 61 10) (11 10) 100 BEAM TYPE FORC END LC (281 286 1) (81 1) LC (291 296 1) (91 1) LC (231 235 1) (31 1) LC (251 256 1) (51 1) GRP (11 61 10) (12 10) 100 BEAM TYPE FORC END LC (381 386 1) (81 1) LC (391 396 1) (91 1) LC (331 335 1) (31 1) LC (351 356 1) (51 1) GRP (11 61 10) (13 10) 100 BEAM TYPE FORC END END\n Now the design can be done on the simpler system. It would be also possible to go back to the system SINGLE. In this case however due to a rather complicated creep stress ditribution this is not of a great benefit.",
+        "token_count": 1182
+    }
+]

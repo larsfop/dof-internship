@@ -1,0 +1,585 @@
+[
+    {
+        "content": "The fragment you’ve provided is the Contents‐page of the SIR sectional‐results manual (Service Pack 2025-4 Build 146). Section 3 (“Input Description”) defines the commands and data blocks the user must supply to drive the SIR program. Below is a structured, granular breakdown of that table—suitable for ingestion into a RAG (Retrieval-Augmented Generation) vector store—with each record “chunked” into a self-contained snippet containing its name, purpose, and location in the manual.\n\n1. 3.1 Input Language  \n   • Name: Input Language  \n   • Purpose: Specifies the syntax rules, keyword conventions, numeric formats, and record delimiters that SIR expects. Establishes the overall grammar for all subsequent input records.  \n   • Location: p. 3-1  \n\n2. 3.2 Input Records  \n   • Name: Input Records  \n   • Purpose: Outlines the structure of each record line (field positions, types, mandatory/optional flags). Describes how free‐form and fixed‐format records are handled.  \n   • Location: p. 3-2  \n\n3. 3.3 CTRL – Control Parameter  \n   • Name: CTRL (Control Parameter)  \n   • Purpose: Global switches controlling SIR behavior: e.g. overall activation, numerical precision, iteration limits, and error‐handling modes.  \n   • Location: p. 3-3  \n\n4. 3.4 SIZE – Size and Scale of the Representation  \n   • Name: SIZE  \n   • Purpose: Defines plotting scales, drawing window dimensions, axis limits, and resolution factors used in any graphical output of the section.  \n   • Location: p. 3-6  \n\n5. 3.5 SCHH – Text Size  \n   • Name: SCHH  \n   • Purpose: Sets character heights, font selections, and label-position offsets for annotation in graphical representations.  \n   • Location: p. 3-8  \n\n6. 3.6 COLO – Selection of Colours and Line Types  \n   • Name: COLO  \n   • Purpose: Assigns colour indices, line‐style codes (solid, dashed, dotted), and pen‐widths to different element categories and result plots (forces, moments, section boundaries).  \n   • Location: p. 3-9  \n\n7. 3.7 GRP – Group Selection  \n   • Name: GRP  \n   • Purpose: Allows the user to include/exclude finite‐element groups (e.g. TRUS, BEAM, QUAD sets) from the sectional cut. Defines filtering criteria by group IDs.  \n   • Location: p. 3-10  \n\n8. 3.8 LC – Load Cases  \n   • Name: LC  \n   • Purpose: Specifies which load cases or combination names to process. Can reference individual cases, linear combinations, or envelope definitions for multi‐case output.  \n   • Location: p. 3-11  \n\n9. 3.9 SECT – Geometry of the Section Plane  \n   • Name: SECT  \n   • Purpose: Defines the 3D cutting plane: point coordinates, normal vector, local axes orientation. May include multiple section definitions in one run.  \n   • Location: p. 3-12  \n\n10. 3.10 ECHO – Output Control  \n   • Name: ECHO  \n   • Purpose: Toggles the echoing of input cards to the listing file. Fine-tunes verbosity: full echo, keywords only, or suppressed echo.  \n   • Location: p. 3-16  \n\nHow these “Input” sections fit into SIR’s workflow  \n• By first defining CTRL, SIZE, SCHH, COLO, the user establishes the global environment for analysis and plotting.  \n• GRP and LC let you scope the finite‐element model subset and load cases of interest.  \n• SECT pins down the exact cutting plane geometry to extract internal forces and section geometry.  \n• ECHO controls how much of this information is mirrored back in the program’s listing output, aiding debugging and auditability.  \n\nThis structured map of Section 3 will help you target ingestion of each keyword block into a RAG pipeline, so that retrieval queries like “how to define section plane orientation in SIR” or “which card sets load cases” can pinpoint the exact manual page and parameter descriptions.",
+        "metadata": {
+            "document_name": "sir_1.pdf",
+            "page_indices": [
+                2
+            ],
+            "page_labels": [
+                null
+            ],
+            "type": "table",
+            "sections": [
+                "Foreword"
+            ]
+        }
+    },
+    {
+        "content": "SIR Sectional Results\n SIR Manual, Service Pack 2025-4 Build 146\n Copyright © 2025 by SOFiSTiK AG, Nuremberg, Germany.\n SOFiSTiK AG\n HQ Nuremberg Office Garching Flataustraße 14 Parkring 2 90411 Nürnberg 85748 Garching bei München Germany Germany T +49 (0)911 39901-0 T +49 (0)89 315878-0 F +49(0)911 397904 F +49 (0)89 315878-23 info@sofistik.com\n www.sofistik.com\n This manual is protected by copyright laws. No part of it may be translated, copied or reproduced, in any form or by any means, without written permission from SOFiSTiK AG. SOFiSTiK reserves the right to modify or to release new editions of this manual.\n The manual and the program have been thoroughly checked for errors. However, SOFiSTiK does not claim that either one is completely error free. Errors and omissions are corrected as soon as they are detected.\n The user of the program is solely responsible for the applications. We strongly encourage the user to test the correctness of all calculations at least by random sampling.\n Contents\n Contents\n 1\n 2\n 3\n 4\n i\n 1-1\n 2-1\n 3-1\n 3-1\n 3-2\n 3-3\n 3-6\n 3-8\n 3-9\n 3-10\n 3-11\n 3-12\n 3-16\n 4-1\n 4-1\n 4-1\n 4-2\n 4-2\n 4.5\n Graphical Representations . . . . . . . . . . . . . . . . . . . . . . . . . . . . .\n 4-2\n Task Description\n 1\n The program SIR allows the definition of three-dimensional sections through an arbitrary struc- ture. Then the following tasks are performed in this section:",
+        "metadata": {
+            "document_name": "sir_1.pdf",
+            "page_indices": [
+                1,
+                2,
+                4
+            ],
+            "page_labels": [
+                null,
+                null,
+                "1-1"
+            ],
+            "type": "text",
+            "sections": "Foreword"
+        }
+    },
+    {
+        "content": "3-16. 4-1. 4-1. 4-1. 4-2. 4-2. 4.5. Graphical Representations . . . . . . . . . . . . . . . . . . . . . . . . . . . . .. 4-2. Task Description. 1. The program SIR allows the definition of three-dimensional sections through an arbitrary struc- ture. Then the following tasks are performed in this section:.\n • Representation of the intersected elements (TRUS, BEAM, CABL, QUAD, BRIC, SPRI) and the graphical representation of their results\n • Calculation of the resultant forces and moments including the support reactions\n • Output of a data record for the dimensioning of the section with the program AQB consisting of:\n – thin-walled cross section parts (from QUAD elements)\n – thick-walled cross section parts (fom QUAD and BRIC elements)\n – tendons\n – internal forces and moments\n Thus SIR may be used for the check of FE calculations concerning the global equilibrium and for the visualisation of the results.\n On the other side SIR is an important link for the design of FE structures in the ultimate limit state. The standard FE design codes treat every element individually and do not fulfill the global compatibility of those strain states. This may lead to uneconomical or unsure results dependently on the problem.\n A consistent analysis with the limit load theory requests a considerable CPU time. If the user does not want to consider this, SIR allows to apply a classic beam design also for plane struc- tures by excising of reasonable subsystems. In this case a global ultimate limit state can be verified.\n SIR generates cross sections and internal forces and moments which can be used directly by the programs AQUA and AQB or AQBS.",
+        "metadata": {
+            "document_name": "sir_1.pdf",
+            "page_indices": [
+                2,
+                4
+            ],
+            "page_labels": [
+                null,
+                "1-1"
+            ],
+            "type": "text",
+            "sections": "Foreword"
+        }
+    },
+    {
+        "content": "First the section plane is defined. This contains a local coordinate system which corresponds to a beam coordiante system. A \"‘beam\"’ number and an abscissa X are used for the designation of the plane.\n First SIR determines the elements which are intersected by the defined section plane. In this case the limits at which it is possible to intersect are considered in the local coordinate system of the section.\n Then the stress state at the intersection area element - section plane is determined for the intersected elements. In this case a linear stress distribution in the element based at the results in the Gauss points is placed as a basis. The internal forces and moments of the element at the intersection area are calculated from the stress state via an integration.\n Forces of axial symmetric systems are calculated per m circumference (=QUAD thickness). SIR integrates at a circle sector. The QUAD thickness increases in radial direction. The thick- ness at cuts reference point is 1 m.\n The internal forces and moments at the intersection point beam - plane are determined with a cubic interpolation for the intersected beam and truss elements.\n SIR calculates the resultant forces and moments around the reference point after the transfor- mation of the internal forces into the local coordinate system.\n SIR is saving all forces in the database directly. Maybe the reference point is not equal to the centre of gravity of the new generated cross section. In this case additional moments are calculated due to normal force * lever arm (= distance between reference point and centre of gravity of the cross section). The reference point position should be checked therefore before further processing, e.g. a design calculation with program AQB. Perhaps the calculation has to be repeated with an adapted reference point. With the program WinGRAF it is possible to perform this iterative step interactively. Otherwise the generated input file (.SR) should be running, so that AQB may transforme all forces into the centre of gravity of cross section.\n Tendon forces lead to a stress level in the whole area element. But the tendon forces are missed during the integration of forces and moments if the cut do not hit the tendon. This could lead to unexpected results (jumps). SIR displays a warning in this case.",
+        "metadata": {
+            "document_name": "sir_1.pdf",
+            "page_indices": [
+                6
+            ],
+            "page_labels": [
+                "2-1"
+            ],
+            "type": "text",
+            "sections": "2 Theoretical Principles"
+        }
+    },
+    {
+        "content": "Otherwise the generated input file (.SR) should be running, so that AQB may transforme all forces into the centre of gravity of cross section.. Tendon forces lead to a stress level in the whole area element. But the tendon forces are missed during the integration of forces and moments if the cut do not hit the tendon. This could lead to unexpected results (jumps). SIR displays a warning in this case..\n As an further option SIR adds all support reactions in a box which is defined via a section plane and an area in front of that and behind that. All nodes and elastic bedded elements within this area, depending on the control with ECHO REAC, are used for this purpose.",
+        "metadata": {
+            "document_name": "sir_1.pdf",
+            "page_indices": [
+                6
+            ],
+            "page_labels": [
+                "2-1"
+            ],
+            "type": "text",
+            "sections": "2 Theoretical Principles"
+        }
+    },
+    {
+        "content": "The input occurs in a free format with the CADINP input language (see the general manual SOFiSTiK: ’Basics’).\n Three categories of units are distinguished:\n mm Fixed unit. Input is always required in the specified unit.\n [mm] Explicit unit. Input defaults to the specified unit. Alternatively, an explicit as- signment of a related unit is possible (eg. 2.5[m] ).\n [mm]1011 Implicit unit. Implicit units are categorised semantically and denoted by a cor- responding identity number (shown in green). Valid categories referring to the unit ”length” are, for example, geodetic elevation, section length and thickness. The default unit for each category is defined by the currently active (design code specific) unit set. This input default can be overridden as described above. The specified unit in square brackets corresponds to the default for unit set 5 (Eu- rocodes, NORM UNIT 5).",
+        "metadata": {
+            "document_name": "sir_1.pdf",
+            "page_indices": [
+                8
+            ],
+            "page_labels": [
+                "3-1"
+            ],
+            "type": "text",
+            "sections": "3.1 Input Language"
+        }
+    },
+    {
+        "content": "The table defines the set of available “record”‐types for a block of input data (a block always ends with the record END).  Each record prescribes a fixed list of “items” (fields) that you may supply.  In SOFiSTiK’s RAG vector‐store context you will want to recognize each record name, parse out its items (including their data types and optional/required status), and enforce any ordering or uniqueness constraints described below.  Here is a breakdown of the individual records and their associated items:\n\n1. CTRL  (Control Record)  \n   • OPT    – Option keyword (string)  \n   • VAL    – Value (numeric or string as prescribed)  \n   • KIND   – Kind of control (often integer code)  \n   • TEXT   – Free‐form text (up to the defined length)  \n\n2. SIZE  (Size‐Annotation Record)  \n   • TYPE   – Sizing type code (e.g. “ABS”, “REL”)  \n   • SC     – Scaling factor  \n   • W, H   – Width and Height (numeric)  \n   • MARG   – Margin (numeric)  \n   • FORM   – Format specifier (string)  \n   • SPLI   – Split indicator (boolean or code)  \n   • X, Y, Z– Coordinates or offsets in 3D space  \n   • OPT    – Optional parameter (varies by TYPE)  \n\n3. SCHH  (Section‐Height Definitions)  \n   • H1, H2, H3, H4, H5, H6  – Section heights at designated stations  \n   • HE                       – Extreme height  \n   • HL, HF                  – Height limits (lower, upper)  \n   • ND                       – Number of discrete divisions  \n\n4. COLO  (Color‐Definition Record)  \n   • C1, C2, C3, C4, C5, C6  – Color indices or RGB‐like components  \n\n5. GRP   (Group Definition)  \n   • NO     – Group number (identifier)  \n   • OPT    – Option flags (string or code)  \n   • LAY    – Layer number (where this group is drawn)  \n   • ETYP   – Element‐type code (e.g. BEAM, PLATE)  \n\n6. LC    (Load Case Record)  \n   • NO     – Load‐case number  \n   • CSMI   – Combination‐sm1 index  \n   • CSMA   – Combination‐sm2 index  \n\n7. SECT  (Section‐Definition Record)  \n   Note: Multiple SECT records can appear in one block, but they must be sorted “monotonically”  \n   with respect to their beam‐identifier (NO) and their X‐coordinate values.  This ordering lets  \n   the parser know when one section’s definition ends and the next begins.  \n   • NO     – Section number (identifier)  \n   • XS, XM, YM, ZM – Section centroid coordinates  \n   • NX, NY, NZ     – Normal‐vector components  \n   • NR             – Reference length or radius  \n   • XMIN, XMAX, YMIN, YMAX, ZMIN, ZMAX  \n                    – Section extents in each axis direction  \n   • REF            – Reference point index (for connectivity)  \n   • SNO, MNO       – Start‐node and mid‐node numbers  \n   • SX, SY, SZ     – Section local‐axes orientation vectors  \n   • SPEC           – Special‐section flag or code  \n   • TYPM, TYPT     – Material type (major, minor)  \n   • YSC, ZSC       – Y‐ and Z‐scale factors  \n\n8. ECHO  (Echo‐Back Record)  \n   • OPT    – Option flag for controlling echo behavior (e.g. ON/OFF)  \n   • VAL    – Echo value or message  \n\nGeneral Parsing Notes:  \n- Records HEAD, PAGE, and END are described elsewhere (FEA / STRUCTURAL Installation and Basics manual); you simply detect them to delimit blocks.  \n- CTRL and GRP may be repeated as often as needed in any order within a block.  \n- SECT records must follow a strict monotonic sequence: first by NO, then by ascending X (or primary coordinate).  This prevents ambiguity in multi‐section definitions.  \n- Items marked “OPT” are generally optional, but their presence may trigger mode‐changes or additional processing in the solver.  \n- All numeric fields (X, Y, Z, H*, NX, etc.) should be parsed as floats, while indices (NO, SNO, MNO) are integers.  \n- Strings (OPT, TEXT, FORM) should be trimmed and case‐normalized if necessary.  \n\nBy extracting each record’s name, validating its items against this schema, and preserving the block and record ordering constraints, you will be able to build a robust RAG‐vector store representation for subsequent retrieval and query.",
+        "metadata": {
+            "document_name": "sir_1.pdf",
+            "page_indices": [
+                9
+            ],
+            "page_labels": [
+                "3-2"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.2 Input Records"
+            ]
+        }
+    },
+    {
+        "content": "The following records and items are defined:\n The input consists of blocks ending with the record END. Within a block the controls CTRL or groups GRP are adjustable at will. It is also possible to define so many sections SECT as the user wants. But these sections have to be input in a pure monotonic way with respect to the identifying beam numbers and X values.\n The records HEAD, END and PAGE are described in the general manual SOFiSTiK: ’FEA / STRUCTURAL Installation and Basics’.\n It follows the description of the individual records.",
+        "metadata": {
+            "document_name": "sir_1.pdf",
+            "page_indices": [
+                9
+            ],
+            "page_labels": [
+                "3-2"
+            ],
+            "type": "text",
+            "sections": "3.2 Input Records"
+        }
+    },
+    {
+        "content": "The table is a fragment of the SIR “CTRL AQUA” input‐card specification.  In a RAG/vector‐store context, you would index each parameter (“Item”) as a distinct control key, together with its allowed values, semantic meaning and default setting.  Below is a breakdown of the columns and each parameter’s details from the snippet you provided:\n\n1.  Column Definitions  \n    –  Item: the keyword (literal) to be used on the CTRL AQUA card.  \n    –  Description: human‐readable explanation of what the keyword does and, where applicable, the list of permitted sub‐options or numeric codes.  Nested bullets or indented lines represent choices under that keyword.  \n    –  Unit: any physical unit or data type annotation (for most of these control flags it is “–”, meaning dimensionless or a simple integer/literal).  \n    –  Default: the value assumed by SIR if the keyword is omitted or set to a special placeholder.  An asterisk (*) indicates a context‐dependent default (see text).\n\n2.  Parameter “OPT” (literally “OPT”)  \n    –  Purpose: Selects creation of an AQUA input file and controls its format.  \n    –  Allowed literals/sub‐options (integers):  \n       0 = do not create the file.  \n       1 = thin‐walled sections only.  \n       2 = thick‐walled with minimum polygon points.  \n       3 = thick‐walled, condensed element edges.  \n       4 = thick‐walled, each element as a single polygon.  \n       6 = as “2”, but also create special SREC cross‐section if possible.  \n       14 = as “6”, but ignore differing material numbers in section parts.  \n    –  Unit: LIT (a literal enumeration)  \n    –  Default: FULL (*)  \n      *FULL means “choose an AQUA input option automatically” based on the first cut:  \n         • if BRIC elements exist or the section is thick‐walled → CTRL AQUA 2  \n         • if only beams/trusses/cables → CTRL AQUA 1  \n         • if only QUAD elements → CTRL AQUA 2  \n         • curved structures with QUAD‐QUAD intersections are best served by CTRL AQUA 1.\n\n3.  Parameter “SCUT”  \n    –  Purpose: Control shear‐cut generation in the AQUA program.  \n    –  Sub‐options (integer):  \n       < 0 = use AQUA’s internal default (no override)  \n       0  = suppress shear cuts altogether  \n       > 0 = follow instructions in the AQUA manual  \n    –  Unit: – (dimensionless)  \n    –  Default: –1\n\n4.  Parameter “SPT”  \n    –  Purpose: Request additional stress points in the AQUA output.  \n    –  Sub‐options:  \n       0 = do not create extra points  \n       1 = generate them  \n    –  Unit: –  \n    –  Default: * (*)  \n      *If CTRL AQUA decides the section is thick‐walled, then Z– and Z+ stress points are produced by default.\n\n5.  Parameter “SMIN”  \n    –  Purpose: Define the starting integer for cross‐section numbering in AQUA, instead of explicitly using SECT for each.  \n    –  Sub‐options:  \n       < 0 = delete any existing SIR cross‐sections from the database first (only if CTRL AQUA > 0).  \n       0  = search for the lowest unused section number (no deletions).  \n       > 0 = start numbering from that positive integer, without deleting.  \n       –10000 = behave like 0 but delete old sections first.  \n    –  Unit: –  \n    –  Default: 0\n\n6.  Parameter “AQBS” (not fully shown but begins in your snippet)  \n    –  Purpose: Control creation of an AQBS (“beam‐shell”) input file following a very similar pattern:  \n       0 = do not create it  \n       1 = create file with default format  \n       etc.  \n    –  Unit/Default: analogous to OPT/SPT conventions.\n\nContextual notes from the accompanying text:  \n–  CTRL TOLG / TOLP control geometric tolerances on cuts (tolerances can be a factor of system dimensions or an explicit length in meters).  Their defaults are delicate because overly large tolerances can erase tiny polygon edges.  \n–  CTRL LCR (> 0) in combination with ECHO REIN YES/FULL will cause SIR to sum QUAD reinforcements determined by BEMESS.  \n\nIn a RAG/vector‐store you would treat each “Item” as a document with the following indexed fields:  \n–  key = “OPT” (or SCUT, SPT, SMIN, etc.)  \n–  description = full multiline text under “Description”  \n–  allowed_values = list of codes and sub‐meanings  \n–  unit = “–” or “LIT”  \n–  default = numeric or symbolic default plus any context‐dependent note.",
+        "metadata": {
+            "document_name": "sir_1.pdf",
+            "page_indices": [
+                10
+            ],
+            "page_labels": [
+                "3-3"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.3 CTRL – Control Parameter"
+            ]
+        }
+    },
+    {
+        "content": "The input table defines a collection of “CTRL” options that govern how SIR (Section Intersection Routine) produces internal‐force and cross‐section data for downstream programs (AQUA, AQB).  Every row of the table has four columns:  \n• Item (the keyword to be supplied)  \n• Description (what the keyword controls)  \n• Unit (physical units or “–” if unitless)  \n• Default (value assumed if the keyword is omitted)  \n\nBelow is a detailed breakdown of each CTRL option and its operational context:\n\n1. file with internal forces  \n   Description: Name or index of the file in which the internal‐force results will be written.  \n   Unit: –  \n   Default: 2  \n\n2. file with cuts and internal forces (V2MT)  \n   Description:  \n     • If set to 0: Do not add plate‐shear contributions to torsional moments; however, the m-xy part of QUAD elements is added twice.  \n     • If set to 1: Add plate shear to torsion and include the m-xy part of QUAD elements once.  \n   Unit: –  \n   Default: 1  \n\n3. TOLG (Geometric tolerance for cutting)  \n   Description: Maximum allowed deviation when computing cut surfaces.  \n   Unit: meters (m) or, if negative, a factor of the default tolerance.  \n   Default: –1.0  \n\n4. TOLP (Geometric tolerance for polygon generation)  \n   Description: Maximum edge length in the polygonal approximation of the cross‐section.  \n   Unit: meters (m) or, if negative, a factor of the default.  \n   Default: –1.0  \n\n5. LCR (Design case number for QUAD reinforcements)  \n   Description: If > 0, use reinforcement areas from BEMESS; if –1, do not include QUAD reinforcements.  \n   Unit: –  \n   Default: –1  \n\n6. BRIC (Control of volume‐element integration)  \n   Description:  \n     • 0: Extrapolate nodal values from Gauss points.  \n     • 1: Use the element’s midpoint value as representative for the entire element.  \n   Unit: –  \n   Default: 0  \n\n7. TEND (Control of QUAD‐tendon integration)  \n   Description:  \n     • 0: Skip tendon forces.  \n     • 1: Integrate tendon forces into the section result.  \n   Unit: –  \n   Default: 1  \n\n8. VAL  \n   Description: A generic numeric value whose meaning depends on the context of its use by other CTRLs.  \n   Unit: –  \n   Default: –  \n\n9. FULL  \n   Description: Keyword modifier governing the verbosity or completeness of output.  \n   Unit: –  \n   Default: (none)  \n\n10. KIND  \n    Description: Specifies the “OPT” type for further processing.  \n    Unit: –  \n    Default: (none)  \n\n11. SPT (Stress points on cross-section)  \n    Description:  \n      • Z–: point at minimum Z (mid-X,Y).  \n      • Z+: point at maximum Z (mid-X,Y).  \n      • Y–, Y+: analogous in Y‐direction.  \n    Unit: –  \n    Default: Z– and Z+ for thick‐walled sections  \n\n12. CTRL AQUA / CTRL AQB (Construction stage and file format for AQUA/AQB)  \n    Description:  \n      • Stage number (–1 means read stage from load cases).  \n      • If omitted, defaults depend on the presence of BRIC elements, element types, and whether the cut is thick‐walled or involves only QUADs.  In curved‐quad intersections, CTRL AQUA 1 is recommended.\n\nTextual notes at the end of the table elaborate:  \n• How CTRL AQUA/AQB options determine which cross‐section data SIR writes for traditional beam‐design programs.  \n• Why default tolerances (TOLG/TOLP) are system‐sensitive and may require manual adjustment for small elements or curved geometries.  \n• The ability to define monotonic section numbers with CTRL SMIN (not shown in the main table).  \n• That the sum of QUAD reinforcement from BEMESS is included when LCR > 0 and ECHO REIN YES/FULL is active.  \n\nOverall, this table is a compact reference that lets users tailor the intersection, integration, tolerance, and output formatting behavior of SIR before passing results into AQUA or AQB for classical beam and plate design.",
+        "metadata": {
+            "document_name": "sir_1.pdf",
+            "page_indices": [
+                10
+            ],
+            "page_labels": [
+                "3-3"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.3 CTRL – Control Parameter"
+            ]
+        }
+    },
+    {
+        "content": "See also: GRP\n CTRL\n 1\n file with internal forces\n Item Description Unit Default 2 file with cuts and internal forces V2MT does add the parts from the plate shear − 1 force to the torsional moments 0 does not add, but the m-xy part of QUAD elements is added twice 1 add, the m-xy part of QUAD elements is added once TOLG Geometric tolerance for cutting m/− -1.0 <0 factor of the default >0 in m TOLP Geometric tolerance for generating the m/− -1.0 polygon <0 factor of the default >0 in m LCR design case number of QUAD reinforce- − -1 ments -1 don’t use reinforcements BRIC control of integration of volume elements − 0 0 extrapolation of node values from Gauss points 1 use value of element middle for whole element TEND control of integration of QUAD tendons − 1 0 no integration of tendons 1 perform integration of tendons VAL Value of the option − FULL KIND Kind of OPT SPT LT - Z- Point at min.Z, middle Z+ Point at max.Z, middle Y+ Point at max.Y, middle Y- Point at min.Y, middle\n Construction stage of cross section of OPT AQUA\n −\n -1\n with ’-1’ the construction stage is read from the given\n load cases\n TEXT\n Input to CTRL AQUA and CTRL AQB\n −\n -\n The results of SIR can be stored in an input file for the programs AQUA and AQB for the use\n of a classical beam design. The kind and the extent of these dates are described with the corresponding CTRL options.\n If nothing is input for CTRL AQUA, CTRL AQUA 2 is used as default if BRIC elements were found in database. The same default is set if the first cut beam cross section is thick-walled. Otherwise CTRL AQUA 1 is used as default for sections with beams, trusses or cables. The default of sections which intersect only QUAD elements is CTRL AQUA 2. In the case of curved structures the QUAD elements can be intersected each other. Because such intersection is unrepresentable for solid elements in AQUA, it is recommended to use CTRL AQUA 1.",
+        "metadata": {
+            "document_name": "sir_1.pdf",
+            "page_indices": [
+                10,
+                11,
+                12
+            ],
+            "page_labels": [
+                "3-3",
+                "3-4",
+                "3-5"
+            ],
+            "type": "text",
+            "sections": "3.3 CTRL – Control Parameter"
+        }
+    },
+    {
+        "content": "Otherwise CTRL AQUA 1 is used as default for sections with beams, trusses or cables. The default of sections which intersect only QUAD elements is CTRL AQUA 2. In the case of curved structures the QUAD elements can be intersected each other. Because such intersection is unrepresentable for solid elements in AQUA, it is recommended to use CTRL AQUA 1..\n The stress points ’Z-’ and ’Z+’ are generated as default of CTRL SPT for thickwalled cross sections.\n For SIR, it is relatively difficult to find a suitable default of CTRL TOLG / TOLP for any system. Unfortunately, the oriention to the system dimensions is not possible, because even in a large system there can be areas with very small elements that are to be cut. This leads to very short polygonal edges. A too large CTRL TOLP (= maximum length of polygon edges in the gener- ated cross-section) causes these edges to disappear completely, which can lead to unusable cross-sections. Therefore it is sometimes more useful to set the geometrical tolerance of the cuts with CTRL TOLG more wide / finer. Then the decision for one of the two found QUAD elements is more clearly when cutting nearby QUAD edges.\n Instead of an input with SECT in the program AQUA for every section the cross section num- bers can be defined also in a pure monotonic way with respect to this number via CTRL SMIN.\n SIR calculates the sum of a QUAD reinforcement determined by BEMESS with CTRL LCR > 0 and ECHO REIN YES/FULL.",
+        "metadata": {
+            "document_name": "sir_1.pdf",
+            "page_indices": [
+                12
+            ],
+            "page_labels": [
+                "3-5"
+            ],
+            "type": "text",
+            "sections": "3.3 CTRL – Control Parameter"
+        }
+    },
+    {
+        "content": "The table defines a series of parameters controlling page‐setup, borders, scaling, axis orientation and the layout of graphical representations when generating technical drawings or reports. It is organized into four columns—Item, Description, Unit and Default—and can be read as follows:\n\n1. Paper format and scaling  \n   • TYPE  \n     – Paper size selection. A positive integer denotes a landscape sheet, a negative integer denotes portrait.  \n     – Unit: none (integer code).  \n     – Default: –4 (portrait format).  \n   • SC (Scale)  \n     – 0 → “format filling”: the drawing is maximized to fill the chosen sheet.  \n     – * → “engineering scale”: selects the largest standard scale (1 :1, 1 :2, 1 :5 or multiples) that best fills the page.  \n     – An explicit numeric scale SC may also be supplied if feasible. SC = 0 always overrides scale to maximize size.  \n     – Unit: none.  \n     – Default: * (auto-scale).  \n   • W (Width)  \n     – Explicit paper width in centimeters (cm).  \n     – If W or H is set to zero, the program automatically chooses the corresponding paper dimension based on TYPE or the nonzero dimension.  \n     – Default: inherits dimension from TYPE.  \n   • H (Height)  \n     – Explicit paper height in centimeters (cm).  \n     – Same auto-selection behavior as W.  \n     – Default: inherits dimension from TYPE.\n\n2. Border and frame options  \n   • MARG (Margin/border drawing)  \n     – NO → Draws an inner border only; W and H then define the actual drawing area (for single-sheet plotters/laserprinters).  \n     – YES → Draws a free (outer) border around the drawing; 2 cm margin by default (0.5 cm if unspecified).  \n     – FULL → Draws an additional crop border at the paper’s outer limits (for drum-type plotters).  \n     – Unit: literal code.  \n     – Default: FULL.  \n   • FORM (Frame style)  \n     – STAN → Standard title-block frame.  \n     – ZTVK → ZTVK-88 standard frame.  \n     – URS → Uses Report Browser’s custom definition.  \n     – Unit: literal code.  \n     – Default: * (auto-select or inherit).  \n   • SPLI (Partitioning)  \n     – Defines how many sheets the drawing is split into, specified as HxW (rows × columns).  \n     – Unit: literal code.  \n     – Default: 1×1 (single sheet).\n\n3. Axis orientation  \n   • X, Y, Z  \n     – Specify the angle (in degrees) of each axis relative to the horizontal line on the sheet.  \n     – Typical defaults provided to suit standard isometric views:  \n         • X = 330°  \n         • Y = 180°  \n         • Z = 270°.  \n     – Unit: degrees.  \n     – Defaults: X = 330, Y = 180, Z = 270.\n\n4. Graphical representation option  \n   • OPT  \n     – Selects how engineering data or component views are arranged within the drawing.  \n     – Unit: none.  \n     – Default: 1.  \n     – (See also “SIZE” in related documentation—values 1 through 4 cover sorting by load case or component, with options for compact layouts—and refer to SCHH, COLO for color and hatch pattern parameters.)\n\nOverall, this table provides a concise yet flexible means to control paper size, scaling behavior, border framing, sheet partitioning, axis orientation for isometric or custom views, and high-level plot layout options. Values may be set explicitly or left at defaults to let the program choose the best combinations.",
+        "metadata": {
+            "document_name": "sir_1.pdf",
+            "page_indices": [
+                13
+            ],
+            "page_labels": [
+                "3-6"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.4 SIZE – Size and Scale of the Representation"
+            ]
+        }
+    },
+    {
+        "content": "See also: SCHH, COLO\n SIZE\n 1\n sorted according to load cases\n 2\n sorted according to components\n 3,4\n as 1,2 but more compact\n • The user selects the paper format either implicitly using TYPE or explicitly by the width W and the height H. The program can set the scale itself by picking the largest possible scale with the common values of 1:1, 1:2 and 1:5 or their multiples. An explicit setting of the scale SC will be used, if technically feasible. Setting SC to 0 results in the largest possible drawing regardless of the scale.\n • The user specifies the scale and by setting W and/or H to zero the appropriate paper size is automatically chosen. If only one of the two values is set to zero, then the drawing size will be automatically calculated to fit in the second direction, the scale does not need to be defined in this case.\n When using TYPE you can also specify the American formats or the special format for Hewlett- Packard Plotters instead of the DIN sizes. A preceeding minus sign selects the portrait orien- tation:\n URS,-URS The maximum picture size usable within Report Browser\n A,-A ANSI Paper A (11 x 8.5 inch)\n B,-B ANSI Paper B (17 x 11 inch)\n C,-C ANSI Paper C (22 x 17 inch)\n D,-D ANSI Paper D (34 x 22 inch)\n HPA,-HPA Hewlett Packard Paper A (259 x 199 mm)\n HPB,-HPB Hewlett Packard Paper B (416 x 259 mm)\n HPC,-HPC Hewlett Packard Paper C (529 x 378 mm)\n HPD,-HPD Hewlett Packard Paper D (809 x 528 mm)\n HP4,-HP4 Hewlett Packard Paper 4 (276 x 193 mm)\n SN\n HP3,-HP3 Hewlett Packard Paper 3 (404 x 276 mm)",
+        "metadata": {
+            "document_name": "sir_1.pdf",
+            "page_indices": [
+                13,
+                14
+            ],
+            "page_labels": [
+                "3-6",
+                "3-7"
+            ],
+            "type": "text",
+            "sections": "3.4 SIZE – Size and Scale of the Representation"
+        }
+    },
+    {
+        "content": "HPC,-HPC Hewlett Packard Paper C (529 x 378 mm). HPD,-HPD Hewlett Packard Paper D (809 x 528 mm). HP4,-HP4 Hewlett Packard Paper 4 (276 x 193 mm). SN. HP3,-HP3 Hewlett Packard Paper 3 (404 x 276 mm).\n HP2,-HP2 Hewlett Packard Paper 2 (564 x 366 mm)\n —(\n ri\n HP1,-HP1 Hewlett Packard Paper 1 (787 x 564 mm)\n MP,-MP Matrix-printers with 8 x 12 inch (200 x 287 mm)\n LP,-LP Laserprinters with A4 paper (198.4 x 280 mm)\n MPW Wider Matrix-printers 14 x 12 inch paper For these formats the default is MARG NO.\n If some representations are desired at the sheet, this may be defined with SIZE SPLI. In this case a new sheet is used for every section, for OPT 1 and 2 also for every change of an important criteria (load case or component).",
+        "metadata": {
+            "document_name": "sir_1.pdf",
+            "page_indices": [
+                14
+            ],
+            "page_labels": [
+                "3-7"
+            ],
+            "type": "text",
+            "sections": "3.4 SIZE – Size and Scale of the Representation"
+        }
+    },
+    {
+        "content": "The provided table is a concise specification of text‐size and force‐representation parameters (items H1–H6, HE, HL, HF, ND) used in a graphical output or report, together with their measurement units and default values. In practice, these settings are typically invoked alongside other formatting records such as SIZE, COLO or SCHH. Below is a structured breakdown suitable for indexing in a RAG-style vector store:\n\n1. General Text‐Size Items (H1 through H6)  \n   • Purpose: Control sizes of various text elements (legends, labels, stress annotations, scales, etc.) in the output.  \n   • Units: All H-items use centimeters (cm) as the measurement unit.  \n   • Defaults and Relationships:  \n     – H1 (“Legend”): Base text size for the legend. Default is “according to the paper size,” meaning that it adapts automatically to the chosen output medium. Represented by an asterisk in the Default column.  \n     – H2 (“Element numbers”): Default size equals H1. Element number labels will match the legend height unless overridden.  \n     – H3 (“Stresses”): Default size is 0.7 × H2. Stress labels are slightly smaller than element numbers.  \n     – H4: Not used in this context; reserved for future or custom definitions.  \n     – H5 (“Scales”): Default size equals H3, making scale annotations match stress‐annotation text.  \n     – H6: Also not used; left available for extensions.  \n   • Special Note: If any H‐value is set to zero, that particular text element is effectively disabled (no designation occurs).\n\n2. Pre-Defined Force‐Representation Sizes (HE, HL, HF)  \n   • Purpose: Define maximum symbol‐sizes for graphical force illustrations.  \n     – HE: Maximum size for single (point) forces.  \n     – HL: Maximum size for line (distributed) forces.  \n     – HF: Maximum size for area forces.  \n   • Units: Centimeters (cm).  \n   • Default Values (preset “a little bit smaller” for multi-representation consistency):  \n     – HE = 4.0 cm  \n     – HL = 3.0 cm  \n     – HF = 2.0 cm  \n   • Contextual Link: When a SIZE record with the SPLI option is used to generate multiple output scales, HE, HL and HF retain these default proportions automatically.\n\n3. Number of Decimal Places (ND)  \n   • Purpose: Specifies the numeric precision for all floating‐point quantities (e.g., coordinates, stresses) displayed in the output.  \n   • Units: Unitless integer value.  \n   • Default Behavior: If left undefined (dash “–”), the system falls back to the standard precision associated with the current SOFiSTiK unit system.\n\nAdditional Context Notes for Implementation  \n• Re-Initialization: Every time a SIZE record is issued, all H-item text sizes are re‐initialized. You must re-specify any custom H1–H6 values after each SIZE input.  \n• Zero‐Value Behavior: A zero in any H‐column suppresses that annotation category entirely.  \n• Interplay with COLO and SCHH:  \n  – COLO governs color assignments for text and force symbols; SCHH may control line‐type or hatch patterns. These records often accompany H-item and force‐size settings to produce fully formatted graphical outputs.\n\nBy indexing each of these parameters (item codes, descriptive labels, units, default formulas or fixed values), a RAG retrieval system can quickly match user queries—such as “what’s the default size for stress labels?” or “how do I disable legend text?”—to the precise table entry and related context.",
+        "metadata": {
+            "document_name": "sir_1.pdf",
+            "page_indices": [
+                15
+            ],
+            "page_labels": [
+                "3-8"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.5 SCHH – Text Size"
+            ]
+        }
+    },
+    {
+        "content": "See also: SIZE, COLO\n SCHH\n The text sizes are re-initialized for every input of the record SIZE. If a text size is defined with zero, no designation occurs.\n The values HE to HF are preset in a little bit smaller way for multiple representations (SIZE SPLI).",
+        "metadata": {
+            "document_name": "sir_1.pdf",
+            "page_indices": [
+                15
+            ],
+            "page_labels": [
+                "3-8"
+            ],
+            "type": "text",
+            "sections": "3.5 SCHH – Text Size"
+        }
+    },
+    {
+        "content": "The table defines six configurable “C-parameters” (C1 through C6) that control the line types used in various parts of a SOFiSTiK finite-element graphic output.  Each row associates a parameter name (Item) with (1) a human-readable Description, (2) the physical or logical Unit (all shown as “–” since line types are dimensionless codes), and (3) a Default value (a four-digit integer).  The codes themselves follow the general SOFiSTiK convention (see “FEA / STRUCTURAL Installation and Basics”):\n\n  • A four-digit number nnnn encodes:\n    – First digit = pen or colour index\n    – Last digit = line‐style selector  \n  • Colour (first digit) mapping:\n    1 = black/white  \n    2 = red  \n    3 = green  \n    4 = blue  \n    5 = yellow  \n    6 = magenta  \n    7 = cyan  \n    8 = brown  \n  • Line‐style (last digit) mapping:\n    1 = solid  \n    2 = dashed  \n    3 = dotted  \n    4 = dots-and-dashes  \n    5 = tight dashes  \n    6 = tight dots  \n    7 = tight dots-and-dashes  \n    8 = spaced dashes  \n    9 = spaced dots  \n   10 = spaced dots-and-dashes  \n\nDetailed row-by-row breakdown:\n\n1. C1 “Line type of the legend”  \n   - Unit: –  \n   - Default: 1001  \n     • Pen 1 = black, Style 1 = solid → black solid line for legend frames, handles, or keys.\n\n2. C2 “Line type of the intersection lines”  \n   - Unit: –  \n   - Default: 1001  \n     • Identical to C1: black solid.  Typically used to draw grid or auxiliary intersection lines in stress plots.\n\n3. C3 “Line type of the positive stresses”  \n   - Unit: –  \n   - Default: 4001  \n     • Pen 4 = blue, Style 1 = solid → solid blue line denotes regions or isolines of tensile (positive) stress.\n\n4. C4 “Line type of the negative stresses”  \n   - Unit: –  \n   - Default: 2001  \n     • Pen 2 = red, Style 1 = solid → solid red line denotes regions or isolines of compressive (negative) stress.\n\n5. C5 “reserved for further line type”  \n   - Unit: –  \n   - Default: (none)  \n     • Placeholder for additional custom line‐type assignment.\n\n6. C6 “reserved for further line type”  \n   - Unit: –  \n   - Default: (none)  \n     • Another placeholder for future extension.\n\nContextual cross-references:  \n- “See also: SIZE, SCHH, COLO”—these are other parameter tables controlling text size, hatch spacing, and colour definitions.  \n- All line-type parameters support the full SOFiSTiK pen/colour and dash pattern scheme, enabling consistent styling across structural, stress, and detail graphics.  \n- Users may override the default four-digit codes to change colours (first digit) or line styles (last digit) according to project standards or personal preference.",
+        "metadata": {
+            "document_name": "sir_1.pdf",
+            "page_indices": [
+                16
+            ],
+            "page_labels": [
+                "3-9"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.6 COLO – Selection of Colours and Line Types"
+            ]
+        }
+    },
+    {
+        "content": "See also: SIZE, SCHH\n COLO\n A four-digit number nnnn can be defined for the line type. The meaning is described in detail in the general manual SOFiSTiK: ’FEA / STRUCTURAL Installation and Basics’. The last digit means e.g.:\n 1 = solid 6 = tight dots 2 = dashed 7 = tight dots and dashes 3 = dotted 8 = spaced dashes 4 = dots and dashes 9 = spaced dots 5 = tight dashes\n 4 = dots and dashes 9 = spaced dots\n 10 = spaced dots and dashes\n The first digit describes the pen number. For example the line type 3003 draws a dotted line with the third pen (green). Default of the colours:\n 1 = black or white 5 = yellow 2 = red 3 = green 7 = cyan 4 = blue 8 = brown\n 6 = magenta",
+        "metadata": {
+            "document_name": "sir_1.pdf",
+            "page_indices": [
+                16
+            ],
+            "page_labels": [
+                "3-9"
+            ],
+            "type": "text",
+            "sections": "3.6 COLO – Selection of Colours and Line Types"
+        }
+    },
+    {
+        "content": "The table shown defines the parameters of a “GRP” record used in SOFiMSHA (and related modules such as CTRL or SECT) to control which element groups are included when integrating internal stresses and moments. By selecting specific group numbers and element types, the user can focus post-processing only on parts of the model that are of interest. Below is a detailed description of each column and row in that table, along with how they interact and what the default behaviours are.\n\n1. Columns Overview  \n   • Item – the keyword or code used in the input file (e.g. NO, OPT, LAY, ETYP).  \n   • Description – a brief explanation of what the parameter controls.  \n   • Unit – the expected data type or unit of the field; “–” means no unit, while “LIT” indicates a literal string.  \n   • Default – the value assumed if the parameter is omitted.  \n\n2. Context & Defaults  \n   • If no GRP records are given, all elements (all group numbers) are included by default.  \n   • As soon as the first GRP record appears, groups without an explicit “YES” or “FULL” option are excluded (default NO).  \n   • Group number assignment: element group = element number ÷ group divisor (see SOFiMSHA program manual).  \n   • When LAY is specified, TRUSS and QUAD elements may be treated as reinforcement layers in cross-section descriptions.  \n\n3. Detailed Parameter Breakdown  \n   a) NO (Group number)  \n     – Description: Identifies the integer group ID to which subsequent options apply.  \n     – Unit: none.  \n     – Default: “*” (an asterisk) denotes all group numbers. Thus “NO *” without any OPT overrides includes every element group.  \n     – Usage note: If specific group divisors are in effect, compute the correct group number before listing it here.  \n\n   b) OPT (Option)  \n     – Description: Determines inclusion and printing behaviour for the specified group.  \n     – Unit: LIT (one of the literal tokens OFF, YES, FULL).  \n     – Default: FULL.  \n     – Valid settings:  \n         • OFF – do not include this group in stress/moment integration.  \n         • YES – include the group, but do not print out member-by-member results.  \n         • FULL – include the group and output detailed results for each member.  \n\n   c) LAY (Layer of the reinforcement)  \n     – Description: Assigns a reinforcement layer index. When defined, TRUSS and QUAD elements in this group will be treated as reinforcement in cross-section definitions.  \n     – Unit: none.  \n     – Default: “–” (unspecified).  \n     – If omitted, the group is treated as non-layered structural elements.  \n\n   d) ETYP (Element type)  \n     – Description: Restricts processing to particular element types within the group.  \n     – Unit: LIT.  \n     – Default: “–” (all types).  \n     – Available literals:  \n         • –  All element types  \n         • BEAM Beam elements only  \n         • TRUS Truss elements only  \n         • CABL Cable elements only  \n         • QUAD Quadrilateral shell elements and their tendons  \n         • BRIC Volume (brick) elements  \n         • SPRI Coupling spring elements  \n\n4. Typical Usage Scenario  \n   Suppose you only want to integrate and print stresses for beam and truss elements in groups 2 and 5, treating group 5 as reinforcement. You might write two GRP records:  \n     1) NO 2  OPT FULL  ETYP BEAM  \n     2) NO 5  OPT YES   LAY 1   ETYP TRUS  \n\n   This setup will  \n     – Fully include and print beam results for group 2,  \n     – Include (but not print) truss results for group 5, marking them as layer 1 reinforcement.  \n\nBy carefully combining NO, OPT, LAY, and ETYP, you gain precise control over which parts of your finite-element model are processed and how the output is formatted.",
+        "metadata": {
+            "document_name": "sir_1.pdf",
+            "page_indices": [
+                17
+            ],
+            "page_labels": [
+                "3-10"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.7 GRP – Group Selection"
+            ]
+        }
+    },
+    {
+        "content": "See also: CTRL, SECT\n GRP\n Only the elements with the selected group numbers are considered for the integration of the internal stresses and moments. The default is the use of all group numbers. The default NO is set for all groups with the input of the first record GRP.\n If LAY is defined, the TRUSS and QUAD reinforcements are used as reinforcement with this layer for the cross section descriptions.\n The group number of an element is equal to the element number divided by the group divisor (see program SOFiMSHA).",
+        "metadata": {
+            "document_name": "sir_1.pdf",
+            "page_indices": [
+                17
+            ],
+            "page_labels": [
+                "3-10"
+            ],
+            "type": "text",
+            "sections": "3.7 GRP – Group Selection"
+        }
+    },
+    {
+        "content": "The table shown is a concise specification of the three input keywords you must supply when defining a “difference load case” (e.g. creep+shrinkage difference cases) in the ASE/SIR workflow. In a retrieval-augmented-generation (RAG) system you would index each row as a distinct parameter definition, together with its semantics, allowed values and default behavior.  \n\n1. Item: NO  \n   • Description: “Load case number.” This parameter identifies the numeric ID of the load case you are defining. In the ASE environment, every construction-stage or difference load case is referenced by a unique integer (e.g. 4015 for the sum case of creep+shrinkage, 5015 for the corresponding difference case).  \n   • Unit: none (—).  \n   • Default: “!” (mandatory). You must always supply a value for NO; there is no implicit default.\n\n2. Item: CSMI  \n   • Description: “Addition of the statically determinate parts of the prestress for the tendons with the construction stages CSMI and CSMA.”  \n     – In statically determinate analysis, the portion of tendon prestress that can be computed directly from equilibrium (no indeterminacy) is added to the internal forces and bending moments of the section.  \n     – When CSMI is switched on, ASE will include those determinate components from all tendons whose construction-stage flags are marked as CSMI or CSMA.  \n   • Unit: none (—).  \n   • Default: “–” (off). By default, ASE does not inject these statically determinate prestress parts; you must explicitly enable CSMI if you need them in the resultant forces.\n\n3. Item: CSMA  \n   • Description: same as for CSMI (it refers to the same mechanism of adding statically determinate prestress parts). Both CSMI and CSMA tags on tendons will be used if this option is active.  \n   • Unit: none (—).  \n   • Default: “CSMI.” This means that, unless you explicitly override it, CSMA will follow the on/off state of CSMI. In practice, turning on CSMI automatically activates CSMA, and vice versa, so you only need to supply one of them unless you require different settings.\n\nHow these parameters fit into the larger ASE→SIR→AQB workflow:  \n- ASE first computes “sum load cases” for creep and shrinkage (e.g. LC 4015).  \n- You then use ASE’s built-in LC DIFF control to generate the corresponding “difference load cases” (e.g. LC 5015).  \n- When exporting to SIR, you tell the program “only process the difference cases” (CSMI/CSMA flags) so that SIR ignores the prestressing-steel portion and outputs only the concrete creep+shrinkage losses.  \n- Those concrete-only results feed into AQB without requiring a fresh creep calculation.  \n\nBy indexing each table row with its keyword, description, units and default behavior, a RAG system can rapidly answer questions such as “What does CSMI do?” or “Is NO optional?” and guide the user through setting up and exporting the correct load cases.",
+        "metadata": {
+            "document_name": "sir_1.pdf",
+            "page_indices": [
+                18
+            ],
+            "page_labels": [
+                "3-11"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.8 LC – Load Cases"
+            ]
+        }
+    },
+    {
+        "content": "See also: SECT\n LC\n The integration of the stresses and moments is performed in every following defined section for every selected load case.\n The statically determinate parts of the prestress are determined from the selected tendons with CSMI and CSMA. These parts are added to the resultant internal forces and moments. Without this option the prestress is the inherent stress state. It means that only the statically indeterminate parts of the prestress remain in the resultant internal forces and moments.\n Creep+shrinkage for QUAD tendons:\n In program ASE it is possible to calculate difference load cases from the sum load cases (CTRL DIFF ...).\n The losts due to creep and shrinkage (without prestressing steel) of these difference load cases are necessary for the design with program AQB. They should be calculated therefore with the program SIR in order to prevent a new creep calculation in AQB.\n In the program ASE the results of these difference load cases are saved in a special way in order to consider only the concrete part. Thus SIR ignores the part of the prestressing steel.\n The SIR results of the difference load cases are therefore not equal to the simple difference of the initial (sum) load cases (because the part of the prestressing steel is not available).\n You can find an example for that with more hints in program TEDDY at csm4_quad_singlespan.dat\n Example:\n In program ASE the construction stage creep and shrinkage 15 (CS 15) is stored in load case 4015 (LC 4015) (=sum load case for creep and shrinkage).\n Then in ASE the difference load case 5015 (=difference load case creep and shrinkage) is created by using the control LC DIFF 1000 (an automatic procedure in program CSM).\n Now in SIR only the difference load cases (LC 5015) should be used for calculation. Note that the construction stages input (LC CSMI) has to be used for load cases with prestress.",
+        "metadata": {
+            "document_name": "sir_1.pdf",
+            "page_indices": [
+                18
+            ],
+            "page_labels": [
+                "3-11"
+            ],
+            "type": "text",
+            "sections": "3.8 LC – Load Cases"
+        }
+    },
+    {
+        "content": "The table below specifies the input record SECT, which defines and evaluates beam cross-sections for all defined load cases (LC) and groups (GRP). Each row is one “field” (Item), accompanied by its meaning (Description), the expected unit (Unit) and a default value (Default). SECT records drive how sections are inserted into the database, how they are grouped into beams, and how their geometry and internal forces are computed.\n\n1. NO  \n   • Section number  \n   • Unit: –  \n   • Default: 1  \n   • Monotonic identifier. All sections sharing the same NO belong to one beam and are plotted together.  \n\n2. XS  \n   • Beam ordinate (distance along beam)  \n   • Unit: m  \n   • Default: 0.0  \n   • If omitted, XS is computed as the difference from the last reference point (XM,YM,ZM).  \n\n3. XM, YM, ZM  \n   • Global coordinates of the section’s reference point (origin of cross-section plane)  \n   • Unit: m  \n   • Default: 0.0 each  \n\n4. NX, NY, NZ  \n   • Components of the section‐plane normal vector  \n   • Unit: –  \n   • Default: 0.0 each  \n\n5. NR  \n   • Literal reference axis for orientation of the local coordinate system (local y-axis)  \n   • Unit: LIT (literal)  \n   • Default: * (none)  \n   • If omitted (and SX,SY,SZ also omitted), local z-axis aligns with gravity. If the “cut” normal is vertical (column), the local y-axis is then parallel to the global XY plane.  \n   • Valid literals: XX, YY, ZZ, NEGX, NEGY, NEGZ – local y-axis lies in the plane defined by the section normal and the chosen global axis.  \n\n6. XMIN, XMAX  \n   • Active range (depth) of the “section box” for support‐reaction extraction  \n   • Unit: m  \n   • Default: XMIN=–0.001, XMAX=+0.001  \n\n7. YMIN, YMAX, ZMIN, ZMAX  \n   • Clipping window in the local section plane (relative to reference point)  \n   • Unit: m  \n   • Default: YMIN=–99, YMAX=+99, ZMIN=–99, ZMAX=+99  \n\n8. REF  \n   • Reference type or node for locating the section origin  \n   • Unit: LIT/–  \n   • Default: – (none)  \n   • If REF=QUAD, the origin is placed at the center of the specified QUAD element REF= NREF; the element’s local coordinate system is adopted by default.  \n\n9. SNO  \n   • Cross‐section profile number (in the AQUA database)  \n   • Unit: –  \n   • Default: * (first intersected element’s profile if absent)  \n\n10. MNO  \n    • Material number for this section, encoded as “concrete‐material no.” + 1000 × “reinforcement‐material no.”  \n    • Unit: –  \n    • Default: * (uses the first intersected element’s material if unspecified)  \n\n11. SX, SY, SZ  \n    • Explicit vector to define the local y-axis (components in global coords)  \n    • Unit: –  \n    • Default: 0.0 each  \n    • If supplied, takes precedence over NR. Local y-axis lies in the plane defined by the section normal and this vector.  \n\n12. SPEC  \n    • Special options controlling section behavior  \n    • Unit: Lit4 (4-character literal)  \n    • Default: – (none)  \n    • A – related to start of beam  \n    • E – related to end of beam  \n\nAdditional Notes:  \n• Invoking SECT without prior definitions clears all existing sections and their results from the database.  \n• Warping moments Mb from QUAD elements are computed only when shear‐centre coordinates (YSC, ZSC) are supplied.  \n• If a section exactly overlaps a QUAD edge, only the element lying “behind” the plane in the normal direction is used.  \n• If no SECT record is provided, previously saved sections in the WINGRAF database are employed by default.",
+        "metadata": {
+            "document_name": "sir_1.pdf",
+            "page_indices": [
+                19
+            ],
+            "page_labels": [
+                "3-12"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.9 SECT – Geometry of the Section Plane"
+            ]
+        }
+    },
+    {
+        "content": "The input “SECT” table is the master definition of all cross‐section planes to be extracted from your finite‐element model for beam‐section evaluation.  It controls geometry, local coordinate systems, clipping, support ranges and reference definitions for every section.  Below is a field‐by‐field description of the table’s structure and behavior, together with default rules and special options.  (See also the related input blocks GRP and LC.)  \n\n1. Record type  \n   • SECT  \n     – If this is the very first SECT record in a deck, it clears any previously stored sections and their results from the database.  \n     – Subsequent SECT records are appended, provided they obey the monotonic ordering rules (see NO and XS below).  \n\n2. Section grouping and ordering  \n   • NO (integer)  \n     – Section “beam” number.  All sections having the same NO belong to one beam and will be plotted or post‐processed as a contiguous set.  \n     – Default: If omitted, the previous NO is reused; the very first NO defaults to 1.  \n   • XS (real)  \n     – Longitudinal ordinate of the section along the beam axis.  \n     – If omitted, XS is computed as the distance from the last reference point (XM, YM, ZM).  \n     – Must increase (or decrease, if negative spacing) monotonically for each NO.  \n\n3. Section‐plane geometry  \n   • XM, YM, ZM (reals)  \n     – Coordinates of the section’s reference point (origin of the cross‐section plane).  \n\n4. Local coordinate system orientation  \n   You must define how the section‐plane axes (x, y, z) are oriented.  The “area normal” always becomes the local x-axis; the local y-axis may be chosen in one of three ways:  \n   a) No NR, SX, SY, SZ input  \n      – Local z-axis aligned with global vertical (gravity).  \n      – If the cut‐plane normal is also vertical (i.e. a column), then the local y-axis defaults to lie in the global XY plane.  \n   b) NR literal input  \n      – Provide one of the tokens: XX, YY, ZZ, NEGX, NEGY, NEGZ.  \n      – This pins the local y-axis into the plane defined by the area-normal and that global axis direction.  \n      – Same gravity‐parallel exception applies if the normal is vertical.  \n   c) Vector input (SX, SY, SZ)  \n      – A custom 3D vector defines the plane in which the local y-axis must lie, together with the area normal.  \n\n5. Clipping window  \n   • YMIN, YMAX, ZMIN, ZMAX (reals)  \n     – Defines a rectangular window in local (y,z) coordinates.  Only section geometry within these bounds is retained for output.  \n\n6. Active‐range for support reactions  \n   • XMIN, XMAX (reals)  \n     – Specifies the longitudinal region (in local x/XS) over which support forces or stiffnesses are accumulated.  \n\n7. Reference‐point linkage  \n   • REF (keyword) and NREF (integer or QUAD)  \n     – If a REF node is given, the (XM,YM,ZM) point is placed relative to that structural node.  \n     – If REF QUAD is specified, the reference comes from the centroid of the QUAD element NREF, and the section’s default coordinate frame is inherited from that element.  \n\n8. Material association  \n   – If you do not explicitly name a reference material or element, AQUA will pick the first crossed finite element it encounters.  \n   – For sections exactly coincident with a QUAD edge, only the element lying “behind” the plane in the normal‐direction is used.  \n\n9. Shear-centre and warping  \n   • YSC, ZSC (reals)  \n     – Coordinates of the shear centre in the local section frame.  \n     – Required if you wish to compute the warping moment Mb from QUAD elements.  \n\n10. Persistence and post‐processing  \n   – All valid SECT definitions are stored in the database and may be visualized or edited later using WINGRAF.  \n   – If you omit SECT entirely in a run, the program will use any sections still residing in the database (as defined previously via WINGRAF or a prior job).  \n\nBy obeying these fields and defaults, you ensure that each beam’s cross sections are defined unambiguously, grouped correctly, and oriented consistently for internal‐force extraction under all load cases (LC) and groups (GRP).",
+        "metadata": {
+            "document_name": "sir_1.pdf",
+            "page_indices": [
+                19
+            ],
+            "page_labels": [
+                "3-12"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.9 SECT – Geometry of the Section Plane"
+            ]
+        }
+    },
+    {
+        "content": "The table defines the key keywords and parameters you use inside a SECT input block to establish and control the definition of beam‐section cuts, their orientation, support ranges and special “flags” for how they are treated in the post‐processing.  Every record has four columns—Item, Description, Unit and Default—and the table breaks down into four logical groups:\n\n1.   Flags for section‐force enforcement  \n     •   B  – “enforce bending member”  \n     •   C  – “enforce compression member”  \n     These one‐letter flags, if specified on a SECT record, tell the solver to treat that section cut as a pure bending or pure compression control section for design checks.\n\n2.   TYP­M / TYP­T : Section types for bending checks  \n     – Item names: TYPM (main bending) and TYPT (transverse bending)  \n     – Unit: LIT (literal text)  \n     – Default: “SECT”  \n     – Allowed literals and their meaning:  \n         • SECT  – regular cross‐section cut  \n         • FACE  – face of a clamped support  \n         • HFAC  – face of a support with articulated (masonry) connection  \n         • IFAC  – section at the face of an indirect support  \n         • SHEA  – critical section for shear design  \n     Use TYPM to indicate which type of section geometry and element intersections should be considered when evaluating main‐bending internal forces, and TYPT for the orthogonal bending direction (shear‐plane bending).\n\n3.   YSC / ZSC : Shear‐centre offsets  \n     – Item names: YSC, ZSC  \n     – Description: coordinates of the shear centre in the local section coordinate system  \n     – Unit: m  \n     – Default: none (interpreted as zero offset unless specified)  \n     If you supply both YSC and ZSC, AQUA will compute the warping moment Mb from QUAD elements about the shear centre; otherwise it omits warping checks.\n\n4.   NREF : Reference element for REF  \n     – Item name: NREF  \n     – Description: “Reference element to REF”  \n     – Unit: —  \n     – Default: none  \n     When combined with a REF record, NREF lets you tie the section’s reference point back to a structural node or QUAD element:  \n         • REF <node-ID>  – uses a specific node’s coordinates as the origin of the cut plane  \n         • REF QUAD      – uses the centroid of the specified QUAD element (NREF) and inherits that element’s local axes if no NR/SX,SY,SZ is given  \n\nHow this ties into the overall SECT processing:  \n– When you first invoke a SECT record, all previously stored section definitions and results are cleared. Subsequent SECT records must be monotonic in their section number (NO) and in the abscissa (XS) along the beam. Sections sharing the same NO value are treated as parts of the same beam and can be plotted together in WinGraf.  \n– If you omit XS, it is computed from the difference between the current and the last reference point (XM,YM,ZM).  \n– The local coordinate system of each cut plane is always based on the area‐normal vector (local x) and a user-controlled local y axis. You select the y-axis orientation either by a literal NR (XX, YY, ZZ, NEGX, NEGY, NEGZ) or by supplying a custom vector (SX, SY, SZ). If neither is given, z defaults to gravity direction and y is chosen to lie parallel to the global XY-plane whenever possible.  \n– If you do not define any SECT records in the input deck, previously saved sections in the AQUA database (which you can create or edit via WinGraf) will be used by default. All new or updated section records are also persisted in that database for future runs.",
+        "metadata": {
+            "document_name": "sir_1.pdf",
+            "page_indices": [
+                20
+            ],
+            "page_labels": [
+                "3-13"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.9 SECT – Geometry of the Section Plane"
+            ]
+        }
+    },
+    {
+        "content": "The image is a three-dimensional, axonometric sketch illustrating how a planar “section” cuts through a mesh or slab element in a global coordinate system. At the bottom right is the caption “Figure 3.1: Section plane.” Key features include:\n\n1. Mesh Geometry  \n   • A rectangular grid or slab made up of uniformly spaced lines in two directions (forming square panels) is shown from an elevated, isometric viewpoint.  \n   • Only the top surface of the mesh is explicitly drawn; the bottom face is implied by the thickness of a few edge members on the front and left sides.  \n\n2. Global Coordinate Triad  \n   • A three-axis coordinate symbol is positioned in the lower-left corner, labeled “GLOBAL.”  \n   • The X-axis points diagonally toward the upper right, the Y-axis points horizontally toward the right, and the Z-axis points straight downward.  \n\n3. Sectional Plane  \n   • A vertical, dashed-line plane cuts through the mesh near its right edge; this plane is labeled “Sectional plane.”  \n   • The plane is oriented roughly parallel to the Y–Z global plane, indicating a cut normal to the global X-direction.  \n   • Only one edge of the mesh actually intersects the cutting plane, hinting at where internal forces or geometry would be extracted.  \n\n4. Local Section Coordinates and Limits  \n   • On the right edge of the mesh, a heavy arrow labeled “Ys” (likely denoting the local y-ordinate of the section or shear centre coordinate) extends from the surface down to the level of the cutting plane.  \n   • Along the base of the dashed plane is a thick, horizontal arrow pointing left, labeled “YMAX,” marking the maximum extent of the local section coordinate in the y-direction (within the defined clipping window YMIN–YMAX).  \n\n5. Contextual Purpose (from Additional Text)  \n   • This drawing visualizes how SECT records in a structural analysis input define cross-section planes. Each section is indexed by a beam number and an ordinate (XS), measured from a reference point.  \n   • The local coordinate system of each section (axes y and z) is oriented by either gravity, a literal direction (XX, YY, etc.), or a user-supplied vector (SX, SY, SZ).  \n   • The clipping window (YMIN, YMAX, ZMIN, ZMAX) confines which part of the section is evaluated, and the active support range (XMIN, XMAX) determines where on the beam the cut applies.  \n\nOverall, Figure 3.1 conveys:  \n– How a section plane is positioned relative to a finite-element mesh.  \n– The global versus local axes.  \n– Annotations for the local section ordinate and clipping limits.  \n– The conceptual link between the graphical cut and the underlying SECT input records in programs like AQUA and WinGraf.",
+        "metadata": {
+            "document_name": "sir_1.pdf",
+            "page_indices": [
+                21
+            ],
+            "page_labels": [
+                "3-14"
+            ],
+            "type": "image",
+            "sections": [
+                "3 Input Description",
+                "3.9 SECT – Geometry of the Section Plane"
+            ]
+        }
+    },
+    {
+        "content": "See also: GRP, LC\n SECT\n E\n related to end of beam\n In each case a section is defined with SECT. An evaluation of the geometry and the internal forces occurs for all sections within an input block for all the defined load cases and groups.\n The first input for SECT is deleting all stored sections in the database and in addition all results of the sections.\n The sections have to be defined in a pure monotonic way with respect to NO and the XS value. Sections are belong together as one \"beam\" if they have the same number. So they can be displayed graphically with program WinGraf. SIR will maintain as default the last defined NO, the very first NO default to 1. The distance XS will be calculated from the difference to the last reference point (XM,YM,ZM) if a value for XS isnot given.\n Every section is identified like a beam section with a number and an ordinate XS. The geometry of a section plane is described via:\n the reference point of the plane (corresponds to the origin of the cross section)\n 1.\n 2. a local coordinate system of the section normal vector of area = local x axis direction for the orientation of the y axis\n a clipping window within the local coordinate system YMIN, YMAX, ZMIN, ZMAX\n 3.\n an active range for the supports (XMIN, XMAX)\n The user defines the orientation of the local y axis with the item NR or the definition of the vector with the items SX, SY and SZ .\n There are three possibilities:\n • no input for NR, SX, SY and SZ: The local z axis is aligned in the direction of gravity. If the normal of cut is parallel to the direction of gravity (column) the local y axis of the section\n plane coordinate system is oriented parallelly to the global XY plane.\n Literal XX, YY, ZZ, NEGX, NEGY, NEGZ as input to NR:\n The local y axis lies in a plane which is defined through the area normal and the global coordinate axis according to the above literal.",
+        "metadata": {
+            "document_name": "sir_1.pdf",
+            "page_indices": [
+                19,
+                20,
+                21
+            ],
+            "page_labels": [
+                "3-12",
+                "3-13",
+                "3-14"
+            ],
+            "type": "text",
+            "sections": "3.9 SECT – Geometry of the Section Plane"
+        }
+    },
+    {
+        "content": "If the normal of cut is parallel to the direction of gravity (column) the local y axis of the section. plane coordinate system is oriented parallelly to the global XY plane.. Literal XX, YY, ZZ, NEGX, NEGY, NEGZ as input to NR:. The local y axis lies in a plane which is defined through the area normal and the global coordinate axis according to the above literal..\n Input to SX, SY and SZ:\n The local y axis lies in a plane which is defined through the area normal and the vector.\n With the specification of an reference node at REF the reference point may be defined relatively to a structural node. With an input REF QUAD the reference point is defined relatively to the centre of the QUAD element NREF. Then the default for the local coordinate system is taken from the element itself.\n If no reference material is input for the definition of the cross section in the input for the program AQUA, that one of the first intersected element is used.\n If a section lies exactly along a QUAD element edge, the section will find then two QUAD elements. Only the element which lies behind the plane in the normal direction of the section plane is used then.\n The warping moment Mb from QUAD elements is calculated only if the coordinates of the shear centre are input at YSC and ZSC.\n if no record SECT is defined, the sections saved in the database are used, which can be defined with the program WINGRAF.\n All sections are saved in the database. They can be checked and changed with the program WINGRAF.",
+        "metadata": {
+            "document_name": "sir_1.pdf",
+            "page_indices": [
+                20,
+                21,
+                22
+            ],
+            "page_labels": [
+                "3-13",
+                "3-14",
+                "3-15"
+            ],
+            "type": "text",
+            "sections": "3.9 SECT – Geometry of the Section Plane"
+        }
+    },
+    {
+        "content": "The input table defines two command‐line parameters—OPT and VAL—used to control the output of the SIR section‐analysis routine via the ECHO facility.  Both parameters share the same four columns:\n\n• Item  \n  – The name of the parameter.  \n• Description  \n  – A short description of what the parameter does or which values it can take.  \n• Unit  \n  – The data type expected; here always “LIT” (literal string).  \n• Default  \n  – The default setting if the parameter is omitted.\n\n1. OPT (Output Options)  \n   Description: “A literal from the following list” of flags and suboptions that determine which parts of the section report are generated.  Its default settings enable most of the geometry and force‐output options, while support reactions are off by default.  \n\n   Suboptions and their meanings:  \n   • FULL  \n     – Equivalent to selecting all of the available options in one go.  \n   • GEO  \n     – Print geometry of the section and of all intersected elements.  \n     • Default: YES  \n   • REAC  \n     – Include support reaction forces and moments in the section.  \n     • Default: NO  \n   • REIN  \n     – Add QUAD‐element reinforcement zones to the output.  \n     • Default: YES  \n   • FORC  \n     – Internal forces and moments:  \n       • YES for only total resultant forces,  \n       • FULL for all individual component results (Nx, Vy, etc.),  \n       • EXTR for full details including component coordinates.  \n     • Default: YES  \n   • LC  \n     – Specify which load cases to consider in the report.  \n     • Default: YES  \n\n   Graphic‐plotting suboptions (collectively enabled by PLOT or selectable individually):  \n   • PLOT  \n     – Turns on all graphic options (“*” in default column indicates that, if PLOT is set, the individual flags follow defaults).  \n   • NX (normal force), VY and VZ (shear forces), MX (torsional moment), MY and MZ (bending moments), V (resultant shear), M (resultant moment), W (warping contributions).  \n     • Default for each of these is YES.\n\n2. VAL (Value of Output Option)  \n   Description: Determines what kind of numeric results should be printed once OPT has been set.  Typical choices are:  \n   • NO  \n     – Do not print this item.  \n   • YES  \n     – Print all available output.  \n   • SUM  \n     – Print only the sums or resultant values.  \n   • MIN, MAX  \n     – Report minimum or maximum values encountered in the section.  \n   • ALL  \n     – Provide a full listing of every component and load case without aggregation.  \n   Unit: LIT  \n   Default: “–” (no default; VAL must be supplied whenever OPT references an output item that requires a value qualifier).\n\nContextual integration:  \nWhen the user issues “ECHO … FORC/FULL/EXTR” or “ECHO REAC YES/FULL/EXTR/4,” the SIR routine generates up to two tables per section:  \n  – An optional geometry table (controlled by GEO) listing cross‐section shapes and intersected elements.  \n  – A results table summarizing forces and moments for each load case.  \n\nAll options and their numeric qualifiers are stored in the database—overwriting any prior SIR‐date entries—so that later postprocessing or graphical representation (via PLOT, NX–W) can be performed without re‐running the section extraction.",
+        "metadata": {
+            "document_name": "sir_1.pdf",
+            "page_indices": [
+                23
+            ],
+            "page_labels": [
+                "3-16"
+            ],
+            "type": "table",
+            "sections": [
+                "3 Input Description",
+                "3.10 ECHO – Output Control"
+            ]
+        }
+    },
+    {
+        "content": "ECHO\n YES\n —\n Regular output\n FULL Extensive output\n The output of SIR consists of two tables for each section. The first table is optional and de- scribes the geometry of the section and of all intersected elements.\n The second table lists the sum of all resultant section components for each load case. The user gets also the parts of all individual elements with ECHO FORC.\n A graphical representation may be produced for every load case and every section component.\n The individual components may be switched on or off with PLOT or the suboptions NX to W.\n The section definition and the forces for each load are saved in the data base for a later inter- pretation. In this case all already existing SIR-dates in the data base are overwritten and/or deleted.\n The type SUPPORTS with the sum of corresponding nodal forces and moments is printed additionally per load case in the list of the forces and moments considering ECHO REAC YES, FULL, EXTR or 4. All nodes inside the section box are used, independend of the group control. With ECHO REAC EXTR the resulting forces of bedding of the area elements are added. The used area elements are dependend from the group control. With ECHO REAC 4 the resulting forces of bedding of the area elements are used instead of the node support forces.",
+        "metadata": {
+            "document_name": "sir_1.pdf",
+            "page_indices": [
+                23,
+                24
+            ],
+            "page_labels": [
+                "3-16",
+                "3-17"
+            ],
+            "type": "text",
+            "sections": "3.10 ECHO – Output Control"
+        }
+    },
+    {
+        "content": "The content and the extent of the output are dependent on the definition of the record ECHO.",
+        "metadata": {
+            "document_name": "sir_1.pdf",
+            "page_indices": [
+                26
+            ],
+            "page_labels": [
+                "4-1"
+            ],
+            "type": "text",
+            "sections": "4 Output Description"
+        }
+    },
+    {
+        "content": "The list of the forces and moments is output with ECHO FORC YES. The overall internal forces and moments (type SUM) of the single load cases at the sections defined in the records SECT are printed.\n section Section number XS Beam ordinate LC Load case number Type and moments of all elements types No Element number of the intersected elements N[kN] Normal force Vy[kN] Shear force Vz[kN] Shear force Mt[kNm] Torsional moment My[kNm] Bending moment Mz[kNm] Bending moment Mb[kNm2] Warping moment\n Element type (e.g. QUAD) or SUM for the forces\n The single forces and moments with the element type and the used load cases are output additionally with the input ECHO FORC FULL.\n The type SUPPORTS with the sum of corresponding support forces and moments is printed additionally per load case in the list of the forces and moments considering ECHO REAC YES, FULL, EXTR or 4.",
+        "metadata": {
+            "document_name": "sir_1.pdf",
+            "page_indices": [
+                26
+            ],
+            "page_labels": [
+                "4-1"
+            ],
+            "type": "text",
+            "sections": "4.1 List of the Forces and Moments"
+        }
+    },
+    {
+        "content": "The list of the section geometry is output with the input ECHO GEO FULL.\n section Section number XS Beam ordinate Coordinate Coordiante type X, Y or Z center\n Value of the corresponding coordinate\n minimum\n Depth of the section box for support reactions,\n maximum\n local coordinates of the active window of the sec- tion plane with reference to the reference\n point\n local directions\n Type Element type (e.g. QUAD, BEAM) No Element number ya[m] , za[m] Distances to the reference node ye[m] , ze[m] A[m2] area t[m] Element thickness x[−] Interpolation factor beam length",
+        "metadata": {
+            "document_name": "sir_1.pdf",
+            "page_indices": [
+                26,
+                27
+            ],
+            "page_labels": [
+                "4-1",
+                "4-2"
+            ],
+            "type": "text",
+            "sections": "4.2 List of the Section Geometry"
+        }
+    },
+    {
+        "content": "The list of the considered load cases appears with the input ECHO LC YES or FULL.\n LC Load case number\n CSMI smallest prestressed construction stage\n CSMA largest prestressed construction stage\n Title of loading case",
+        "metadata": {
+            "document_name": "sir_1.pdf",
+            "page_indices": [
+                27
+            ],
+            "page_labels": [
+                "4-2"
+            ],
+            "type": "text",
+            "sections": "4.3 List of the Considered Load Cases"
+        }
+    },
+    {
+        "content": "The results of SIR can be stored in an input file for the programs AQUA and AQBS for the use of a classical beam design. The kind and the extent of these dates are described with the corresponding CTRL options.",
+        "metadata": {
+            "document_name": "sir_1.pdf",
+            "page_indices": [
+                27
+            ],
+            "page_labels": [
+                "4-2"
+            ],
+            "type": "text",
+            "sections": "4.4 AQUA and AQB Input"
+        }
+    },
+    {
+        "content": "The corresponding force and moment distributions are represented graphically in Report Browser output with the input ECHO PLOT YES or ECHO NX to W YES.",
+        "metadata": {
+            "document_name": "sir_1.pdf",
+            "page_indices": [
+                27
+            ],
+            "page_labels": [
+                "4-2"
+            ],
+            "type": "text",
+            "sections": "4.5 Graphical Representations"
+        }
+    }
+]

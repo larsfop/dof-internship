@@ -1,0 +1,1371 @@
+[
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            3
+        ],
+        "page_labels": [
+            null
+        ],
+        "type": "table",
+        "sections": [
+            "Foreword"
+        ],
+        "coordinates": [
+            [
+                487.408447265625,
+                383.6372985839844
+            ],
+            [
+                2925.726318359375,
+                1443.6971435546875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "4.3 4.4 4.5 4.6 4.7 Materials . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . Support Conditions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4.4.1 Start/End . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4.4.2 Continuous . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . Buckling eigenvalues . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . Buckling Resistance of Steel Members . . . . . . . . . . . . . . . . . . . . . 4.6.1 EN 1993-1-1 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4.6.2 DIN 18800/ OEN 4300 . . . . . . . . . . . . . . . . . . . . . . . . . Summary of the results . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4.7.1 EN 1993-1-1 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4.7.2 DIN 18800/ OEN 4300 . . . . . . . . . . . . . . . . . . . . . . . . . 4.7.3 BS 5950 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-2 4-2 4-2 4-3 4-3 4-3 4-3 4-6 4-7 4-7 4-8 4-8"
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            1,
+            2
+        ],
+        "page_labels": [
+            null,
+            null
+        ],
+        "type": "text",
+        "sections": [
+            "Foreword"
+        ],
+        "content": "BDK Buckling Resistance of Steel Members\n BDK Manual, Service Pack 2025-4 Build 146\n Copyright © 2025 by SOFiSTiK AG, Nuremberg, Germany.\n SOFiSTiK AG\n HQ Nuremberg Office Garching Flataustraße 14 Parkring 2 90411 Nürnberg 85748 Garching bei München Germany Germany T +49 (0)911 39901-0 T +49 (0)89 315878-0 F +49(0)911 397904 F +49 (0)89 315878-23 info@sofistik.com\n www.sofistik.com\n This manual is protected by copyright laws. No part of it may be translated, copied or reproduced, in any form or by any means, without written permission from SOFiSTiK AG. SOFiSTiK reserves the right to modify or to release new editions of this manual.\n The manual and the program have been thoroughly checked for errors. However, SOFiSTiK does not claim that either one is completely error free. Errors and omissions are corrected as soon as they are detected.\n The user of the program is solely responsible for the applications. We strongly encourage the user to test the correctness of all calculations at least by random sampling.\n Contents\n Contents\n Contents\n 1\n 2\n 3\n Task Description 1-1 1.1 Task Outline . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1-1 1.2 Supported Design Codes . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1-1 1.3 Assumptions and Limitations . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1-1 Theoretical Principles 2-1 2.1 Model System . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-1 2.2 Boundary Conditions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-1 2.3 Buckling Types . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-2 2.4 Eigenvalues . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-2 2.5 Modes of analysis . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-3 2.6 Design: Buckling Curves . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-3 2.7 Lateral torsional buckling according to EN 1993-1-1 [2] . . . . . . . . . . . 2-5 2.7.1 Interaction factors - Annex A, Annex B . . . . . . . . . . . . . . . 2-7 2.8 Lateral torsional buckling according to DIN 18800-2 [1] / OEN 4300 . . . 2-10 2.9 British Standard - BS 5950 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-10 Input Description 3-1 3.1 Input Language . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-1 3.2 Input Records . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-1 3.3 Conversion of Projects . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-2 3.3.1 CADINP Commands . . . . . . . . . . . . . . . . . . . . . . . . . . 3-2 3.4 CVA – Support at the beginning . . . . . . . . . . . . . . . . . . . . . . . . . . 3-3 3.5 CVE – Support at the end . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-4 3.6 CVM – Intermediate Support . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-5 3.7 CVL – Lateral Restrains . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-6 3.8 CV – Continuous support . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-7 3.9 TVAR – Template Variables . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-8 3.10 CTRL – Controlling Parameters . . . . . . . . . . . . . . . . . . . . . . . . . . 3-9 3.10.1 EN 1993-1-1 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-9 3.10.2 DIN 18800-2 / OEN 4300 . . . . . . . . . . . . . . . . . . . . . . . . 3-10 3.10.3 BS 5950 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-10 3.11 LC – Selection of the Loadcase to be Designed . . . . . . . . . . . . . . . . 3-13 3.12 MEMB – Selection of the Elements to be Designed . . . . . . . . . . . . . . 3-14 3.13 ECHO – Control of Output . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-17 Output Description 4-1 4.1 Design Forces and Moments . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-1 4.2 Sectional Values . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-1",
+        "token_count": 1686
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            2,
+            3,
+            4
+        ],
+        "page_labels": [
+            null,
+            null,
+            "1-1"
+        ],
+        "type": "text",
+        "sections": [
+            "Foreword"
+        ],
+        "content": "3-13 3.12 MEMB – Selection of the Elements to be Designed . . . . . . . . . . . . . . 3-14 3.13 ECHO – Control of Output . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-17 Output Description 4-1 4.1 Design Forces and Moments . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-1 4.2 Sectional Values . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-1.\n 4\n i\n Bibliography\n 4-11\n 1 Task Description\n BDK provides solution to the problem of beam stability. It determines the stability eigenvalues for buckling of a straight individual member. The member, which is taken from the entire sys- tem, is calculated with STAR2 or ASE and the buckling resistance check of steel members is performed according to the specified design code.\n 1.1 Task Outline\n At first, the user defines the system selecting straight, individual beam or truss elements, which are cut out of the entire structural system and are treated independently. The program allows the user to explicitly define the support conditions at the start and end of each selected indi- vidual beam, as well as continuous supports, offering a complete control on the properties of the selected system. Furthermore, standards-related design parameters may also be explicitly defined.\n Having available the complete system, the program sets up and solves the formed stability eigenvalue problem and the eigenvalues and eigenforms are determined for a pre-specified and calculated loadcase. Following the eigenvalues determination and taking into considera- tion the defined design parameters, BDK performs the buckling check according to the selected design code.\n 1.2 Supported Design Codes\n The design checks are performed according to one of the following supported standards:\n • DIN 18800-2 / OEN 4300: Structural steelwork analysis of safety against buckling of linear members and frames [1].\n • EN 1993-1-1: Design of steel structures - Part 1-1: General rules and rules for buildings [2].\n • BS 5950-1: Structural use of steelwork in building [3].\n 1.3 Assumptions and Limitations\n BDK can determine the stability eigenvalues under the following assumptions:\n • General, also unsymmetric cross-sections\n • General tapered sections (along the beam axis)\n • Straight beam axis and centric haunches\n • Change of the boundary conditions including the elastic warping constraint and distributed support.",
+        "token_count": 590
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            4,
+            5
+        ],
+        "page_labels": [
+            "1-1",
+            "1-2"
+        ],
+        "type": "text",
+        "sections": [
+            "Foreword"
+        ],
+        "content": "1.3 Assumptions and Limitations. BDK can determine the stability eigenvalues under the following assumptions:. • General, also unsymmetric cross-sections. • General tapered sections (along the beam axis). • Straight beam axis and centric haunches. • Change of the boundary conditions including the elastic warping constraint and distributed support..\n • Solution for the complete lateral torsional buckling problem or for the plain lateral buckling problem with disregard of the normal force.\n For the calculation of the lateral torsional buckling safety for an individual beam, according to DIN 18800-2, the assumptions of this design code hold. This implies that the design is strictly valid only for double symmetric I and H sections, without the intended torsional loading.\n Materials, section profiles and the design code to comply with, are selected by the user at the early steps of defining the total structural system. Regardless of the initial design standard selection, the user may explicitly redefine in the BDK task the specification of a different design standard (see NORM). This practice should be done with caution, since significant differences exist between the design codes, regarding material mechanical behaviour and properties as well as the considered safety factors.\n Furthermore, a cross-section of class 4 of EN 1993-1-1 and EN 1993-1-5 can be treated, since the calculation of the effective cross-section values in BDK is available.\n Warning\n At the current version of BDK, it is possible to calculate only the effective properties for THIN-WALLED cross-sections (Iterative Method). Another approach would be to use the SIG NEFF input in AQUA, which works both for solid, as well as for thin-walled cross- sections. Please refer to the VERIFICATION Manual Design - Example DCE-EN 30.\n For the determination of the critical force and moment for buckling, always an eigenvalue anal- ysis is performed, except of explicitly user-defined buckling lengths. In the unlikely event that the eigenvalue analysis fails, analytical formulas are used.",
+        "token_count": 419
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            6
+        ],
+        "page_labels": [
+            "2-1"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.1 Model System"
+        ],
+        "content": "A model system can consist of several beam or truss elements, forming a member, although there are no individual supports between its endings, other than the optionally defined. The user can select any straight beam or truss element to cut out of the entire structural system. Each selected member is then treated by BDK as an individual independent system, taking into account the inner forces and displacements derived from the parental system analysis for a considered loadcase. For a member that represents a subsystem of the total system, the corresponding support conditions have to be defined carefully. This applies in particular to the sway perpendicular to the system plane, for the case where the system was entered as a planar system.",
+        "token_count": 138
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            7,
+            6
+        ],
+        "page_labels": [
+            "2-2",
+            "2-1"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.2 Boundary Conditions"
+        ],
+        "content": "The start and end boundary conditions can be defined using the CVA and CVE input. With- out this specification, they are set to Fork-Fork. Moreover, BDK assumes that there are no intermediate individual supports between the endings of the selected member, other than the optionally defined intermediate supports (CVM), lateral restraints (CVL), and continuous sup- ports (CV). Therefore, the user should explicitly enter the exact boundary conditions at both ends (CVA / CVE) and in between them (CVM / CVL / CV). For this purpose, different input options are available:\n the assignment of spring constant values,\n the definition of fixities using the literal FIX,\n •\n the automatic computation of the spring constant values using the literal AUTO.\n •\n The supports thus defined are oriented in the local directions of the member.\n In the case of the literal AUTO, the corresponding spring constant value of a support is auto- matically determined by a linear analysis of the global structure. This value is independent of the design load case. Hence, imperfections or second order effects are not incorporated. It should be also noted that the supports only constrain single degrees of freedom and do not couple them. Therefore, coupling effects are considered in a simplified way. Between different nodes, coupling effects are neglected. The literal AUTO can be used in the CVA, CVE, and CVM input.\n The automatic calculation of the boundary conditions (AUTO) supports parallel processing of the elements and uses a parallel finite element solver. This means, that the performance may be improved by using multicore processors.\n Hint\n See Example 58 of the VERIFICATION Manual Mechanical for a demonstration of the automatic computation of the spring constant values.\n EE\n Warning\n (Warning continued...)\n Default start and end boundary conditions are assumed as Fork-Fork. Therefore, it is recommended for the user to explicitly enter the support conditions!\n • See CVA, CVE, CVM, CVL, CV.\n Hint\n A member rotated about the longitudinal axis can be modelled by rotating the cross sec- tion with the ALPH input in AQUA instead of rotating the local coordinate system of the member using the DROT input in SOFIMSHA/C. In this way, the supports defined in BDK, which refer to the local coordinate system of the member, can be better aligned to the boundary conditions of the global structure, such as fixities.",
+        "token_count": 485
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            7
+        ],
+        "page_labels": [
+            "2-2"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.3 Buckling Types"
+        ],
+        "content": "Literature and design codes distinguish between the following cases for beam structures:\n • Lateral Torsional Buckling: the most general case of buckling where deflections towards both axes as well as torsional rotation (twist) occur.\n • Lateral Buckling: lateral deflection and torsional rotation (twist).\n • Flexural Buckling: buckling about the strong or weak axis, in-plane deformation, no tor- sional rotation.\n • Torsional Buckling: buckling about the longitudinal axis, torsional rotation (twist), the beam axis remain straight.",
+        "token_count": 118
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            10
+        ],
+        "page_labels": [
+            "2-5"
+        ],
+        "type": "image",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.4 Eigenvalues"
+        ],
+        "coordinates": [
+            [
+                454.8415832519531,
+                493.3522222222223
+            ],
+            [
+                2319.37863,
+                2192.3993566666663
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 2.1: Buckling curves according to EN 1993-1-1"
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            7,
+            10
+        ],
+        "page_labels": [
+            "2-2",
+            "2-5"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.4 Eigenvalues"
+        ],
+        "content": "The case of buckling will occur if an element will suffer from large forces due to small defor- mations induced by geometric non-linear effects. This will limit the ultimate load for slender structures.\n The elasto-static theory of stability will not account for material non-linearities, while the stan- dard plastic design method will not account for the geometric non-linearities. As both theories are not applicable in a general case, their results will define basic design parameters used for the combined design of the effects.\n For the quite general case treated within the program a solution based on an analytical ap- proach is no longer available. The solution is obtained by a variational approach based on the energy. The expression of the energy comprehends quite a lot of terms and is given and explained in detail in the book of Petersen [4] (eq. 7.65 page 675) or Roik, Carl, and Lindner [5]. BDK uses an extended formulation according to Schroeter [6].\n χ",
+        "token_count": 206
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            11
+        ],
+        "page_labels": [
+            "2-6"
+        ],
+        "type": "image",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.7 Lateral torsional buckling according to EN 1993-1-1 [2]"
+        ],
+        "coordinates": [
+            [
+                823.8991088867188,
+                751.4741821289062
+            ],
+            [
+                2073.923095703125,
+                2309.8681640625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 2.2: Axes of angle section"
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            10,
+            11
+        ],
+        "page_labels": [
+            "2-5",
+            "2-6"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.7 Lateral torsional buckling according to EN 1993-1-1 [2]"
+        ],
+        "content": "Eurocode’s approach to the beam stability design checks depends mostly on two important factors:\n 1. The type of loading:\n (a) Compressive axial force (EN 1993-1-1, 6.3.1)\n (b) Major axis bending moment (EN 1993-1-1, 6.3.2)\n (c) Combined bending and axial compression (EN 1993-1-1, 6.3.3)\n The type, shape and properties of the cross-section.\n BDK performes the design check for the combined bending and axial compression, as it is described in EN 1993-1-1, 6.3.3, Eq. 6.61 and 6.62 with the interaction factors kyy, kyz, kzy, kzz. Interaction factors are calculated according to Method 1 (1993-1-1, Annex A) or Method 2 (EN 1993-1-1, Annex B).\n all rules relate to principal axis properties, which are generally defined by the axes ”y-y” and ”z-z”, but for the sections such as angles are defined by the axes ”u-u” and ”v-v”, as shown in Fig. 2.2. BDK performs the check with respect to ”y-y” and ”z-z” and not ”u-u” and ”v-v”.\n A more pictorial representation of the design algorithm according to EN 1993-1-1, for compres- sion and for bending can be visualised in Fig. 2.3 and 2.4.\n As mentioned earlier, for the determination of the critical load Ncr and moment Mcr, an eigen- value analysis is performed. In the unlikely event that the eigenvalue analysis fails, e.g. due to non adequate input of the system definition, a fallback solution with approximatively analytical formulas is used. For the case of the elastic critical load for flexural buckling Ncr the Euler Formula with effective buckling length factor β = 1.0 is used:",
+        "token_count": 434
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            11,
+            12
+        ],
+        "page_labels": [
+            "2-6",
+            "2-7"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.7 Lateral torsional buckling according to EN 1993-1-1 [2]"
+        ],
+        "content": "In the unlikely event that the eigenvalue analysis fails, e.g. due to non adequate input of the system definition, a fallback solution with approximatively analytical formulas is used. For the case of the elastic critical load for flexural buckling Ncr the Euler Formula with effective buckling length factor β = 1.0 is used:.\n determination of kc in EN 1993-1-1, Table 6.6.",
+        "token_count": 89
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            13
+        ],
+        "page_labels": [
+            "2-8"
+        ],
+        "type": "image",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.7 Lateral torsional buckling according to EN 1993-1-1 [2]",
+            "2.7.1 Interaction factors - Annex A, Annex B"
+        ],
+        "coordinates": [
+            [
+                557.711111111111,
+                478.16143798828125
+            ],
+            [
+                2012.0306544444443,
+                4292.21826171875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 2.3: Flexural Buckling"
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            14
+        ],
+        "page_labels": [
+            "2-9"
+        ],
+        "type": "image",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.7 Lateral torsional buckling according to EN 1993-1-1 [2]",
+            "2.7.1 Interaction factors - Annex A, Annex B"
+        ],
+        "coordinates": [
+            [
+                0,
+                0
+            ],
+            [
+                2008.590087890625,
+                4299.421875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 2.4: Lateral Buckling"
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            12
+        ],
+        "page_labels": [
+            "2-7"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.7 Lateral torsional buckling according to EN 1993-1-1 [2]",
+            "2.7.1 Interaction factors - Annex A, Annex B"
+        ],
+        "content": "For the determination of the interaction factors kyy, kyz, kzy, kzz, both methods of Annex A and B of EN 1993-1-1[2], have been implemented. The interaction factors have been derived from two alternative approaches. The National Annex may give a choice from alternative method 1 or alternative method 2. The application range of the two methods is in both cases basically a single span member of doubly symmetrical cross section subjected to axial compression, end-moments and transverse loading [8].\n Hint\n Both, method 1 (Annex A) and method 2 (Annex B) have been developed by ECCS. An essential difference in the application between these two methods is, that in the method 1 no possibility is provided to take into account the intermediate supports and lateral restraints for the LTB analysis. In method 2 the intermediate and lateral supports may be taken into account in the k,j interaction factors.\n • Annex A, Method 1: The intention of the formulae for Method 1 is to present general, transparent, consistent and accurate interaction criteria, as described in ECCS TC 8 - No. 119 [7]. Each factor involved in this formulae is linked with a physical effect, which allows for the influence of the different phenomena to be represented. This method can represent both members susceptible and not susceptible to torsional deformation.\n Various factors in this method, need to be determined explicitly. BDK employs the eigen- value analysis to determine them and does not derive them from analytical formulas, in order to offer a more accurate representation of the system under consideration:\n – ¯λ0, representing the reduced slenderness for lateral torsional buckling for the partic- ular case of constant bending moment,\n – C1, the factor depending on the bending moment distribution and end restraints con- ditions,\n – Ncr,T, the torsional critical force,\n – ¯λm, the maximum non-dimensional slenderness.",
+        "token_count": 408
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            12,
+            13,
+            14
+        ],
+        "page_labels": [
+            "2-7",
+            "2-8",
+            "2-9"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.7 Lateral torsional buckling according to EN 1993-1-1 [2]",
+            "2.7.1 Interaction factors - Annex A, Annex B"
+        ],
+        "content": "– ¯λ0, representing the reduced slenderness for lateral torsional buckling for the partic- ular case of constant bending moment,. – C1, the factor depending on the bending moment distribution and end restraints con- ditions,. – Ncr,T, the torsional critical force,. – ¯λm, the maximum non-dimensional slenderness..\n • Annex B, Method 2: Method 2 distinguishes the two standard cases of torsionally stiff and torsionally flexible members separately [8]. It has been developed principally in such a way that the application range also covers members with intermediate lateral restraints, which may not be effective for in plane flexural buckling.\n | START\n START\n |\n START\n |\n Vv\n Eigenvalue Analysis - only axial force (KNIC)\n Vv\n Analytical\n Analytical\n formulas\n ECCS TC 8\n No\n Eig. Anal.\n successful\n / . ~\n Effects of lateral torsional\n buckling may be ignored\n EN 1993-1-1, 6.3.2.2(4)\n '\n Yes\n |\n Critical force Mcr\n J\n a\n Yes/ , Niro\n MEd/Mcr ≤ λ\n Wy = Wp,y cross-section class 1 or 2, Wy = We,y for cross-section class 3, Wy = Weƒƒ,y for cross-section class 4\n $$Calculate non-dimensional slenderness lLT  EN 1993-1-1, 6.3.2.2  Slenderness lLT  Determine buckling curve  EN 1993-1-1, Table 6.5  No  Cross-section  G1-G3  general case  Yes  Determine buckling curve  EN 1993-1-1, Table 6.4  Imperfection factor aLT  Imperfection factor aLT  EN 1993-1-1, Table 6.3  Determine correction factor kc  EN 1993-1-1, Table 6.3  Calculate LT  EN 1993-1-1, Table 6.6  Calculate LT  EN 1993-1-1, 6.3.2.3(1)  EN 1993-1-1, 6.3.2.2(1)  f <= 1.0  LT  EN 1993-1-1, 6.3.2.3(2)  LT  Calculate reduction  factor khLT <= 1.0  or kh <= 1.0/l2  LT  EN 1993-1-1, Eq. 6.57  Calculate modified reduction factor  khLT,mod  EN 1993-1-1, Eq. 6.58  Reduction factor khLT,mod  Calculate reduction  factor khLT <= 1.0  EN 1993-1-1, Eq. 6.56  Reduction factor khLT  Calculate design buck-  Reduction factor khLT  ling resistance Mb,Rd  EN 1993-1-1, 6.3.2.1(3)  Design of buckling resistance Mb,Rd  Calculate utilisation MEd/Mb,Rd  EN 1993-1-1, 6.3.2.1(1)  MEd/Mb,Rd  END$$",
+        "token_count": 716
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            15
+        ],
+        "page_labels": [
+            "2-10"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.8 Lateral torsional buckling according to DIN 18800-2 [1] / OEN 4300"
+        ],
+        "content": "The analysis procedure for the lateral torsional buckling design is made according to DIN 18800, Part 2 Element 301, where it says: For the simplification of beams, continuous beams and frames, one can evaluate flexural buckling and lateral torsional buckling separately. Whereby the flexural buckling analysis is followed by the lateral torsional buckling analysis. Each analysis is made for individual beams, which are picked from the entire system. Each beam is subjected to the beam-end internal forces and moments, which are determined for the entire system.\n The flexural buckling analysis is made with the programs STAR2 or ASE. All the individual beams, of the system being analysed for flexural buckling, are provided with support conditions, usually torsional restraints are applied. The STAR2 or ASE calculation has to be made with ultimate loads or γ-factor loads. Whereby the analysis procedure elastic-elastic or plastic- plastic (non-linear theory) according to DIN 18800, Part 2 Table 101 is possible in STAR2 or ASE. All the elasto-plastic regions must be fixed laterally against torsion and deformation, which is required for the conservation of the cross-section.\n The individual checks are then calculated with the equations from the elements 310, 318 and 321 of the DIN 18800-2.",
+        "token_count": 274
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            15,
+            16
+        ],
+        "page_labels": [
+            "2-10",
+            "3-1"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "2.9 British Standard - BS 5950"
+        ],
+        "content": "If you set the record NORM BS within the program AQUA, you will check lateral-torsional buckling, according to chapter 4.3 of BS 5950-1:2000. The essential equation is:\n 3 Input Description",
+        "token_count": 52
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            16
+        ],
+        "page_labels": [
+            "3-1"
+        ],
+        "type": "image",
+        "sections": [
+            "2 Theoretical Principles",
+            "3.1 Input Language"
+        ],
+        "coordinates": [
+            [
+                547.2833333333334,
+                984.6023559570312
+            ],
+            [
+                2119.68212890625,
+                2604.05419921875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 3.1: BDK Input representation"
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            16
+        ],
+        "page_labels": [
+            "3-1"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "3.1 Input Language"
+        ],
+        "content": "The input is made in the CADINP language (see general manual SOFiSTiK: ”FEA / STRUC- TURAL Installation and Basics”).",
+        "token_count": 33
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            16
+        ],
+        "page_labels": [
+            "3-1"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Theoretical Principles",
+            "3.2 Input Records"
+        ],
+        "coordinates": [
+            [
+                387.3474426269531,
+                3039.67919921875
+            ],
+            [
+                2926.676513671875,
+                4154.5361328125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Record Items CVA CB CY CZ DX DY DZ CVE CB CY CZ DX DY DZ CVM TYPE NO CB CY CZ DX DY DZ CVL REF S CY DX HDIV CV DX CY CZ TVAR NAME VAL SCOP CMNT CTRL OPT CURV SCL BETA LLT0 TAB BMY BMZ BMQY BMQZ SFAC LCST SWY SWZ"
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            16
+        ],
+        "page_labels": [
+            "3-1"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Theoretical Principles",
+            "3.2 Input Records"
+        ],
+        "coordinates": [
+            [
+                2213.814453125,
+                4191.5859375
+            ],
+            [
+                2877.9751733333333,
+                4244.7177734375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Table continued on next page."
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            17
+        ],
+        "page_labels": [
+            "3-2"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Theoretical Principles",
+            "3.2 Input Records"
+        ],
+        "coordinates": [
+            [
+                406.6167297363281,
+                393.45318603515625
+            ],
+            [
+                2904.13037109375,
+                947.6806640625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Record Items LTB MTHD LF NO MEMB REF FROM TO INC SKY SKZ TYPE ECHO OPT VAL"
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            16,
+            17
+        ],
+        "page_labels": [
+            "3-1",
+            "3-2"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "3.2 Input Records"
+        ],
+        "content": "The following records are defined:\n The record MEMB is used to start a calculation. The other records describe the attributes of an analysis. They have to be defined before MEMB.\n The records HEAD, END and PAGE are described in the general manual SOFiSTiK: ”FEA / STRUCTURAL Installation and Basics”.\n A description of the individual records is given in the following sections.",
+        "token_count": 79
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            17
+        ],
+        "page_labels": [
+            "3-2"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "3.3 Conversion of Projects",
+            "3.3.1 CADINP Commands"
+        ],
+        "content": "In this BDK version some CADINP commands have been replaced by new ones (SOFiSTiK FEA 2014 → SOFiSTiK FEA 2018). Below, a list of the corresponding changes is provided, for the right conversion of projects:\n • CURV has been replaced by CTRL\n • EIGE has been replaced by MEMB and LC\n • ECHO BDK has been replaced by ECHO MEMB",
+        "token_count": 93
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            18
+        ],
+        "page_labels": [
+            "3-3"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Theoretical Principles",
+            "3.4 CVA – Support at the beginning"
+        ],
+        "coordinates": [
+            [
+                378.38348388671875,
+                821.5601806640625
+            ],
+            [
+                2917.40478515625,
+                1765.0
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default CB Spring constant warping bi-moment kNm3 0 CY Spring constant for lateral kN/m ∞ displacement y CZ Spring constant for lateral kN/m ∞ displacement z DX Rotational spring constant Torsion kNm/rd ∞ DY Rotational spring constant Moment My kNm/rd 0 DZ Rotational spring constant Moment Mz kNm/rd 0"
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            18
+        ],
+        "page_labels": [
+            "3-3"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "3.4 CVA – Support at the beginning"
+        ],
+        "content": "See also: CVE, MEMB\n CVA\n As a default BDK employs a fork support condition.\n The supports are in the local directions of the beam and are defined as spring constants (positive values) or as fixities (negative values). The value -1.0 or the literal FIX represent a fixed constraint. The literal AUTO enables the automatic computation of a spring constant value.\n These input values are active only for the subsequent MEMB input.",
+        "token_count": 91
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            19
+        ],
+        "page_labels": [
+            "3-4"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Theoretical Principles",
+            "3.5 CVE – Support at the end"
+        ],
+        "coordinates": [
+            [
+                379.3642578125,
+                821.9448852539062
+            ],
+            [
+                2917.694091796875,
+                1764.9696044921875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default CB Spring constant warping bi-moment kNm3 0 CY Spring constant for lateral kN/m ∞ displacement y CZ Spring constant for lateral kN/m ∞ displacement z DX Rotational spring constant Torsion kNm/rd ∞ DY Rotational spring constant Moment My kNm/rd 0 DZ Rotational spring constant Moment Mz kNm/rd 0"
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            19
+        ],
+        "page_labels": [
+            "3-4"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "3.5 CVE – Support at the end"
+        ],
+        "content": "See also: CVA, MEMB\n CVE\n As a default BDK employs a fork support condition.\n The supports are in the local directions of the beam and are defined as spring constants (positive values) or as fixities (negative values). The value -1.0 or the literal FIX represent a fixed constraint. The literal AUTO enables the automatic computation of a spring constant value.\n These input values are active only for the subsequent MEMB input.",
+        "token_count": 91
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            20
+        ],
+        "page_labels": [
+            "3-5"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Theoretical Principles",
+            "3.6 CVM – Intermediate Support"
+        ],
+        "coordinates": [
+            [
+                388.1396179199219,
+                810.4631958007812
+            ],
+            [
+                2923.813720703125,
+                1653.8818359375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default NO Node number −/ ! CB Spring constant warping bi-moment kNm3 0 CY Spring constant for lateral displacement y kN/m 0 CZ Spring constant for lateral displacement z kN/m 0 DX Rotational spring constant Torsion kNm/rd 0 DY Rotational spring constant Moment My kNm/rd 0 DZ Rotational spring constant Moment Mz kNm/rd 0"
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            20
+        ],
+        "page_labels": [
+            "3-5"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "3.6 CVM – Intermediate Support"
+        ],
+        "content": "See also: CVA, CVE, CVL, MEMB\n CVM\n The supports are in the local directions of the beam and are defined as spring constants (positive values) or as fixities (negative values). The value -1.0 or the literal FIX represent a fixed constraint. The literal AUTO enables the automatic computation of a spring constant value.\n To use the CVM input for intermediate supports it is necessary to select a node.\n A lateral-torsional restraint for e.g. node 1001 is defined by:\n +PROG BDK\n HEAD ! ... CVM NO 1001 CY FIX CZ FIX DX FIX ! ... END\n These input values are active only for the subsequent MEMB input.",
+        "token_count": 146
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            21
+        ],
+        "page_labels": [
+            "3-6"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Theoretical Principles",
+            "3.7 CVL – Lateral Restrains"
+        ],
+        "coordinates": [
+            [
+                370.494384765625,
+                814.2607421875
+            ],
+            [
+                2908.444091796875,
+                2025.1689453125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default REF Reference LT ∗ STRT Distance from Start of Member END Distance from End of Member MID Distance from Mid of Member XI Relative position between Start and End of Member [from 0 to 1] S Distance / Position m/− 0 CY Spring constant for lateral displacement y kN/m 0 DX Rotational spring constant Torsion kNm/rd 0 HDIV Equal partitioning of beam, e.g. HDIV 3 will split the − ∗ member on three equal parts"
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            21
+        ],
+        "page_labels": [
+            "3-6"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "3.7 CVL – Lateral Restrains"
+        ],
+        "content": "See also: CVA, CVE, MEMB\n CVL\n The supports are in the local directions of the beam and are defined as spring constants (positive values) or as fixities (negative values). The value -1.0 or the literal FIX represent a fixed constraint.\n +PROG BDK\n HEAD ! ... CVL REF STRT S 1.0 CY FIX DX FIX CVL REF MID S 0.5 CY FIX DX FIX CVL REF END S 0.5 CY FIX DX FREE CVL REF XI S 0.4 CY FIX DX FREE CVL HDIV 4 CY 0 DX FIX ! ... END\n These input values are active only for the subsequent MEMB input.\n The input CVL can be set at any station along the member, it is NOT required that a FEM node exists at the station.",
+        "token_count": 175
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            22
+        ],
+        "page_labels": [
+            "3-7"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Theoretical Principles",
+            "3.8 CV – Continuous support"
+        ],
+        "coordinates": [
+            [
+                388.314453125,
+                812.2788696289062
+            ],
+            [
+                2963.363037109375,
+                1260.5030517578125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default DX Torsional support kNm/m/rd 0 CY Support in local y-direction kN/m2 0 CZ Support in local z-direction kN/m2 0"
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            22
+        ],
+        "page_labels": [
+            "3-7"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "3.8 CV – Continuous support"
+        ],
+        "content": "See also: MEMB\n CV\n For the torsional support the user has to manually add the flexural stiffness of the flange to the value DX, for the case where the support is created by the support CX or CY.\n These input values are active only for the subsequent MEMB input.",
+        "token_count": 60
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            23
+        ],
+        "page_labels": [
+            "3-8"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Theoretical Principles",
+            "3.9 TVAR – Template Variables"
+        ],
+        "coordinates": [
+            [
+                385.8304748535156,
+                810.387939453125
+            ],
+            [
+                2918.877685546875,
+                1553.4923095703125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default NAME Name of a variable Lt16 ! VAL Value of the variable or Lt64 ! expression in the format ”=expression” SCOP Scope of variable − * If specified, the variable will be saved to the database CMNT Comment to the variable Lt32 -"
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            24
+        ],
+        "page_labels": [
+            "3-9"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Theoretical Principles",
+            "3.9 TVAR – Template Variables"
+        ],
+        "coordinates": [
+            [
+                376.6018981933594,
+                842.4544677734375
+            ],
+            [
+                2891.200927734375,
+                3392.1376953125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description OPT A literal from the following list: EN EN 1993-1-1 DIN DIN 18800-2 / OEN 4300 BS BS 5950 CURV Lateral torsional buckling curve SCL Cross section class BETA Additional parameter for analysis option LLT0 Additional parameter for analysis option TAB Additional parameter for analysis option BMY Moment coefficient for lateral torsional buckling pri- mary bending BMZ Analogous transverse bending BMZ BMQY Moment from transverse load in global y-direction BMQZ Analogous transverse bending SFAC System factor n LCST Loadcase number for results SWY Sway in y direction (EC 3, Method 2) SWZ Sway in z direction (EC 3, Method 2) LTB Susceptible to torsional deformations (EC 3, Method 2) MTHD EN 1993-1-1, Method 1 or 2 1 EN 1993-1-1, Method 1 (Annex A) 2 EN 1993-1-1, Method 2 (Annex B) Unit Default LT - − AUTO − AUTO − 0.75 − 0.4 − NO − * − * − * − 1.35 − 1.35 − 2.5 − - − NO − NO − AUTO − 1"
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            24
+        ],
+        "page_labels": [
+            "3-9"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Theoretical Principles",
+            "3.9 TVAR – Template Variables"
+        ],
+        "coordinates": [
+            [
+                367.6045837402344,
+                3639.76904296875
+            ],
+            [
+                2917.669921875,
+                4068.630615234375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "EN Description CURV Lateral torsional buckling curve: a, b, c, d or AUTO (Chapter 6.3.2) SCL Cross section class: Unit Default − AUTO − AUTO"
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            24
+        ],
+        "page_labels": [
+            "3-9"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Theoretical Principles",
+            "3.9 TVAR – Template Variables"
+        ],
+        "coordinates": [
+            [
+                2217.5499999999997,
+                4103.0469066666665
+            ],
+            [
+                2877.9751733333333,
+                4155.703125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Table continued on next page."
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            25
+        ],
+        "page_labels": [
+            "3-10"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Theoretical Principles",
+            "3.9 TVAR – Template Variables"
+        ],
+        "coordinates": [
+            [
+                370.5150146484375,
+                405.8694763183594
+            ],
+            [
+                2931.79931640625,
+                1887.9923095703125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "EN Description Unit Default 1, 2, 3 or AUTO (Ch. 6.3.2.3 Rolled or equivalent welded sections) G1, G2, G3 or AUTO:G (Chapter 6.3.2.2 General case) BETA β (Chapter 6.3.2.3) − 0.75 LLT0 λLT,0 (Chapter 6.3.2.3) − 0.4 TAB Correction factor kc from Table 6.6 (Chapter 6.3.2.3). YES − NO activates the table LCST Load case number for results − - SWY Sway in y direction (EC 3, Method 2) − NO SWZ Sway in z direction (EC 3, Method 2) − NO LTB Susceptible to torsional deformations (EC 3, Method 2) − AUTO MTHD EN 1993-1-1, Method 1 or 2 − 1 1 EN 1993-1-1, Method 1 (Annex A) 2 EN 1993-1-1, Method 2 (Annex B)"
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            25
+        ],
+        "page_labels": [
+            "3-10"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Theoretical Principles",
+            "3.9 TVAR – Template Variables"
+        ],
+        "coordinates": [
+            [
+                376.4312438964844,
+                2152.805908203125
+            ],
+            [
+                2917.0703125,
+                3032.046142578125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "DIN Description Unit Default BMY βMy moment coefficient for lateral torsional buckling pri- − * mary bending (Chapter 3.5.1, Tab. 11) BMZ βMz analogous transverse bending − * BMQY βM,Qy moment from transverse load in global y-direction − 1.35 (Chapter 3.5.1, Tab. 11) BMQZ βM,Qz analogous transverse bending − 1.35 SFAC System factor n (Chapter 3.3.4, Tab. 9) − 2.5 LCST Load case number for results − -"
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            25
+        ],
+        "page_labels": [
+            "3-10"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Theoretical Principles",
+            "3.9 TVAR – Template Variables"
+        ],
+        "coordinates": [
+            [
+                383.4594421386719,
+                3299.156005859375
+            ],
+            [
+                2948.750732421875,
+                3901.980712890625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "BS Description Unit Default SCL Cross section class: 1, 2, 3 or AUTO − AUTO BMY βMy moment coefficient for lateral torsional buckling pri- − * mary bending (Chapter 4.3.6.6, Tab. 18) BMZ βMz analogous transverse bending − * LCST Load case number for results − -"
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            27
+        ],
+        "page_labels": [
+            "3-12"
+        ],
+        "type": "image",
+        "sections": [
+            "2 Theoretical Principles",
+            "3.9 TVAR – Template Variables"
+        ],
+        "coordinates": [
+            [
+                448.8382263183594,
+                370.1777648925781
+            ],
+            [
+                2328.9573466666666,
+                2328.4482421875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 3.2: Schematic representation of C1 calculation"
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            23,
+            24,
+            25,
+            26
+        ],
+        "page_labels": [
+            "3-8",
+            "3-9",
+            "3-10",
+            "3-11"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "3.9 TVAR – Template Variables"
+        ],
+        "content": "See also: CTRL\n TVAR\n SOFiSTiK variables, defined via STO# or LET# are globally valid. For more complex tasks, it becomes necessary to define variables valid only within a scope. TVAR allows a very general definition of those numeric variables within a freely selectable scope. The definition of literals or the definition of tables or functions is not possible.\n There is a range of variables in the Eurocodes allowing to adopt national factors called boxed values. They are defined in the INI files in general. A survey of the accepted names is given in the file master.ini.\n For special cases, these values may be defined with TVAR. If for example a change of the material safety factor is required, for the design according to a specific National Annex, then it is possible to specify the factor GAM-S0 or GAM-S1 for SCOP DESI:\n +PROG BDK\n HEAD NORM DC \"EN\" NDC \"1993-2005\" TVAR NAME GAM-S0 VAL 1.0 SCOP DESI TVAR NAME GAM-S1 VAL 1.1 SCOP DESI ! ... END\n 3.10 CTRL – Controlling Parameters\n CTRL\n 3.10.1 EN 1993-1-1\n 3.10.2 DIN 18800-2 / OEN 4300\n 3.10.3 BS 5950\n The control values according to DIN 18800-2, EN 1993-1-1, BS 5950-1, can be defined with this input record.\n For design according to EN 1993-1-1 and BS 5950-1, a cross-section class is needed. An automatic cross section classification is performed with respect to AQB. No separate run of the module AQB is needed. Then this AQB-deliverd class is taken over as default for the design. If this is not the case, then a class 3 will be assumed. For design according to EN 1993-1- 1, a class of G1-G3 can be defined, corresponding to class 1-3, but design with respect to EN 1993-1-1, 6.3.2.2 denoted as \"general case\". If design according to EN 1993-1-1, 6.3.2.3 (default case), is to be performed, then cross-section class 1-3 has to be input. Input AUTO treats cross-section class respectively to EN 1993-1-1, 6.3.2.3 while AUTO:G - respectively to EN 1993-1-1, 6.3.2.2. As already mentioned, BDK may also treat class 4 cross sections. If the section is classifed as 4, the non effective parts according EN 1993-1-5 will be calculated and taken into account.",
+        "token_count": 612
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            26,
+            27
+        ],
+        "page_labels": [
+            "3-11",
+            "3-12"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "3.9 TVAR – Template Variables"
+        ],
+        "content": "Input AUTO treats cross-section class respectively to EN 1993-1-1, 6.3.2.3 while AUTO:G - respectively to EN 1993-1-1, 6.3.2.2. As already mentioned, BDK may also treat class 4 cross sections. If the section is classifed as 4, the non effective parts according EN 1993-1-5 will be calculated and taken into account..\n Since the default case for lateral torsional buckling design according to EN 1993-1-1, is done with respect to section 6.3.2.3, the values of β and λLT,0 are chosen from the file for the design code (INI file) mostly with 0.75 and 0.4, respectively. If design according to section 6.3.2.2 is requested through the cross-section class G1-G3, then β and λLT,0 are chosen 1.0 and 0.2, respectively, leading to the simplification of equation 6.57 to 6.56.\n The lateral torsional buckling curve is equivalently determined from tables 6.4 and 6.5. For rolled steel shapes of I-section, if no curve is specified, an automatic determination is per- formed, taking into account the ratio of h/b. For classification of these sections as welded, a zero root radius has to be input in the cross-section definition (see AQUA record PROF). In case the automatic determination is not able to deliver a curve for the type of the cross- section, a default type d is assumed, corresponding to \"other cross-sections\" as denoted in EN 1993-1-1, Table 6.4.\n The correction factor kc (EN 1993-1-1, 6.3.2.3), is by default calculated by BDK and not taken by the limited eight only cases that are provided in EN 1993-1-1, Table 6.6. According to DIN EN 1993-1-1, C1 = k−2 c holds. This enables the option to determine a more representative value for kc, according to the moment distribution of the system under consideration, through the eigenvalue analysis and the C1 factor.\n In case the user wants to limit the solution to the eight cases presented in EN 1993-1-1, Table 6.6, then CTRL TAB YES has to be provided and both kc and C1 will be derived by the table values.",
+        "token_count": 537
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            26,
+            27,
+            28
+        ],
+        "page_labels": [
+            "3-11",
+            "3-12",
+            "3-13"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "3.9 TVAR – Template Variables"
+        ],
+        "content": "This enables the option to determine a more representative value for kc, according to the moment distribution of the system under consideration, through the eigenvalue analysis and the C1 factor.. In case the user wants to limit the solution to the eight cases presented in EN 1993-1-1, Table 6.6, then CTRL TAB YES has to be provided and both kc and C1 will be derived by the table values..\n With the option of CTRL LCST a loadcase number can be provided, where the results of enveloping of the corresponding loadcases and members, i.e. the maximum utilisation level for the designed members, will be stored and can then be represented in WinGRAF or Result Viewer. If CTRL LCST 0 is input, then any further design will not be considered to the previous LCST specified.\n These input values remain active for the subsequent MEMB-inputs, as long as they are not newly defined.\n 3.11 LC – Selection of the Loadcase to be Designed\n See also: MEMB\n LC\n Item Description Unit Default NO Loadcase number 1\n LC activates a loadcase. LC is used to select the loadcases to be designed. Loadcases should consist of calculated loadcases and their respective loads. Superimposed loadcases are usually not proper.",
+        "token_count": 266
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            29
+        ],
+        "page_labels": [
+            "3-14"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Theoretical Principles",
+            "3.12 MEMB – Selection of the Elements to be Designed"
+        ],
+        "coordinates": [
+            [
+                385.22637939453125,
+                811.396728515625
+            ],
+            [
+                2917.34375,
+                2494.042724609375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default REF Reference type LT CONT BEAM Beam number SLN Structural line number TRUS Truss number CONT Continuation record FROM First element number or structural line − 1 TO Last element number − FROM INC Increment of element number − 1 SKY Effective buckling length factor for major axis bending − - SKZ Effective buckling length factor for transverse bending − - TYPE FLEX Centric compression LT LAT LAT Major axis bending LTB Combined bending and axial compression EIGE Eigenvalues ID Design-Element: Identification number − SLN No."
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            29,
+            30
+        ],
+        "page_labels": [
+            "3-14",
+            "3-15"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "3.12 MEMB – Selection of the Elements to be Designed"
+        ],
+        "content": "See also: LC, CVA, CVE, CVM, CV, CVL, CTRL\n MEMB\n The ID number represents the Design Element number. If nothing is defined BDK will automat- ically try to use the SLN Number as ID. In case the user has defined a sequence of Structural lines and nothing is defined, then BDK will randomly use an ID that is available.\n +PROG BDK\n HEAD Example ! ... ! ID = 3 for SLN 5 (User defined) MEMB SLN 5 TYPE LTB ID 3\n ! ID = 6 (BDK - automatic) MEMB SLN 6 TYPE LTB\n ! ...\n END\n For every MEMB record an analysis is made for the selected series of beams or trusses. Therefore an MEMB record must always come last in the input order, because it concludes the input definition of the requested analysis. A series of beams or trusses should generally not have any supports, bends or extreme point loads between its endings, because only a\n continuous deflection curve is generated.\n The input option CONT serves as a continuation line, offering the possibility to enter a number of different elements to be considered in the designed member. For example, the following input would process the member consisting of structural lines 5, 3, 11:\n +PROG BDK\n HEAD Example ! ... MEMB SLN 5 TYPE LTB CONT 3 CONT 11 ! ... END\n MEMB SLN 5 TYPE LTB\n CONT 3\n CONT 11\n For the buckling design, further eigenvalue analyses may be performed internally for the deter- mination of the critical loads, depending on the specified standard. This is done independently of the specification of the MEMB input.\n From version 2020 you can call the design elements (created via DECREATOR) directly in BDK (via MEMB ID).\n Step 1) First create the design element(s) via DECREATOR.\n +PROG DECREATOR HEAD DDEL ALL ! Delete all previous design elements DSLN NO 1000 TITL \"DLN 1000\" FREF \"REF\" DGEO OPT SLN ID 1",
+        "token_count": 452
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            31,
+            30
+        ],
+        "page_labels": [
+            "3-16",
+            "3-15"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "3.12 MEMB – Selection of the Elements to be Designed"
+        ],
+        "content": "Step 1) First create the design element(s) via DECREATOR.. +PROG DECREATOR HEAD DDEL ALL ! Delete all previous design elements DSLN NO 1000 TITL \"DLN 1000\" FREF \"REF\" DGEO OPT SLN ID 1.\n ! Generate explicit sections (Increment = 0.1*L)\n DSLC REF XI S (0 1 0.10)\n END\n Step 2) Call the design element via MEMB ID input in BDK.\n +PROG BDK HEAD LATERAL TORSIONAL BUCKLING CHECK EN 1993-1-1 ECHO FULL EXTR CTRL TAB YES CTRL MTHD 2\n ! Loadcase\n LC\n 100\n ! Boundary conditions CVA CY FIX CZ FIX DX FIX CVE CY FIX CZ FIX CVL REF MID S 0 CY FIX\n ! Element CTRL OPT EN SCL 1 LCST 951 MEMB TYPE EIGE ID 1000 END",
+        "token_count": 207
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            32
+        ],
+        "page_labels": [
+            "3-17"
+        ],
+        "type": "table",
+        "sections": [
+            "2 Theoretical Principles",
+            "3.13 ECHO – Control of Output"
+        ],
+        "coordinates": [
+            [
+                343.6591796875,
+                810.7466430664062
+            ],
+            [
+                2937.6103515625,
+                2783.35595703125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default OPT A literal from the following list: LT - FORC Design forces and moments SECT Sectional values MAT Materials BOUN Support conditions EIGE Buckling eigenvalues MEMB Buckling Resistance of Steel Members SUM Summary of the results FULL Select all the options DESE Design elements CLAS Cross-Section Classification PLOT Graphical representation of member VAL Extent of the Output LT - NO No output YES Normal output FULL Extended output EXTR Extreme extended output"
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            32
+        ],
+        "page_labels": [
+            "3-17"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Theoretical Principles",
+            "3.13 ECHO – Control of Output"
+        ],
+        "content": "ECHO\n All options have a normal extent of output as default, except of EIGE with a default of no output and SUM with an extreme output as default. The effect of the individual options can be seen in Chapter 4: Output Description.\n From version 2020 per default, BDK will activate the member plots. This may be deactivated by using ECHO PLOT NO.",
+        "token_count": 79
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            34
+        ],
+        "page_labels": [
+            "4-1"
+        ],
+        "type": "table",
+        "sections": [
+            "4 Output Description",
+            "4.1 Design Forces and Moments"
+        ],
+        "coordinates": [
+            [
+                1457.2592249999998,
+                2544.5630316666666
+            ],
+            [
+                2613.726318359375,
+                4215.9716796875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Table is not printed"
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            35
+        ],
+        "page_labels": [
+            "4-2"
+        ],
+        "type": "table",
+        "sections": [
+            "4 Output Description",
+            "4.1 Design Forces and Moments"
+        ],
+        "coordinates": [
+            [
+                1457.259225,
+                1171.4463649999996
+            ],
+            [
+                1867.5455322265625,
+                2219.54833984375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Table is not printed"
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            35
+        ],
+        "page_labels": [
+            "4-2"
+        ],
+        "type": "table",
+        "sections": [
+            "4 Output Description",
+            "4.1 Design Forces and Moments"
+        ],
+        "coordinates": [
+            [
+                1457.259225,
+                2544.2241427777776
+            ],
+            [
+                1914.8448486328125,
+                4140.671875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Table is not printed"
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            36
+        ],
+        "page_labels": [
+            "4-3"
+        ],
+        "type": "table",
+        "sections": [
+            "4 Output Description",
+            "4.1 Design Forces and Moments"
+        ],
+        "coordinates": [
+            [
+                1457.2592250000005,
+                1565.4630316666676
+            ],
+            [
+                1933.5340576171875,
+                1749.4298095703125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Table is not printed"
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            34,
+            35,
+            36
+        ],
+        "page_labels": [
+            "4-1",
+            "4-2",
+            "4-3"
+        ],
+        "type": "text",
+        "sections": [
+            "4 Output Description",
+            "4.1 Design Forces and Moments"
+        ],
+        "content": "This table contains the design forces and moments for each beam section.\n DESIGN FORCES AND MOMENTS\n Beam Beam number x[m] x-value of the beam section SNo Cross-section number N[kN] Normal force Vy[kN] Shear force Vz[kN] Shear force Mt[kNm] Torsional moment My[kNm] Bending moment Mz[kNm] Bending moment Mb[kNm2] Warping moment Mt2[kNm] Secondary torsional moment\n ECHO FORC\n NO\n Characteristic value of resistance to compression\n Design plastic resistance to bending moments\n M-pl,y,Rk[kNm]\n M-pl,z,Rd[kNm] M-pl,z,Rk[kNm] Characteristic value of resistance to bending mo- ments Design plastic resistance to bending moments Characteristic value of resistance to bending mo- ments\n ECHO SECT\n NO\n Material number\n Young’s modulus\n ECHO MAT\n NO\n Beginning of beam\n Warping moment\n positive values are real spring constants negative values are fixities (-1.0 = fully fixed)\n 4.4.2 Continuous\n CONTINUOUS\n DX[kNm/m] Torsional support CY[kN/m2] Support in local y-direction CZ[kN/m2] Support in local z-direction\n ECHO BOUN\n NO",
+        "token_count": 271
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            36
+        ],
+        "page_labels": [
+            "4-3"
+        ],
+        "type": "table",
+        "sections": [
+            "4 Output Description",
+            "4.5 Buckling eigenvalues"
+        ],
+        "coordinates": [
+            [
+                1457.2592250000005,
+                2965.8408094444453
+            ],
+            [
+                1974.6884211111117,
+                4306.9958094444455
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Table is not printed"
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            36,
+            37,
+            38
+        ],
+        "page_labels": [
+            "4-3",
+            "4-4",
+            "4-5"
+        ],
+        "type": "text",
+        "sections": [
+            "4 Output Description",
+            "4.5 Buckling eigenvalues"
+        ],
+        "content": "The buckling eigenvalues are given out in a table.\n BUCKLING EIGENVALUES\n TYPE Type of eigenvalue analysis No. Eigenvalue number Buckling factor Buckling factor\n ECHO EIGE\n NO\n Loadcase Loadcase number N-Ed [kN] Maximum compressive force ( < = 0.0) M-y,Ed [kNm] Absolute maximum moment My M-z,Ed [kNm] Absolute maximum moment Mz\n N-cr [kN] Elastic critical flexural buckling force L-cr [m] Comparative buckling length y − y, z − z Buckling curve for a cross-section α Imperfection factor λ Non-dimensional slenderness χ Reduction factor for flexural buckling N-b,Rd [kN]\n Design buckling resistance of a compression mem-\n ber\n LATERAL BUCKLING\n M-cr [kNm] Elastic critical moment for lateral torsional buckling C-1 Moment factor, depending on bending moment di- agram and support conditions LTB Recommended lateral torsional buckling curve α-LT Imperfection factor for lateral torsional buckling λ-LT Slenderness for lateral torsional buckling λ-LT0 Plateau length for the lateral torsional buckling curve -LT Value to determinate the reduction factor β Correction factor for the lateral torsional buckling curve χ-LT Reduction factor for lateral torsional buckling k-c Correction factor for moment distribution f Modification factor χ-LT,mod Modified reduction factor for lateral torsional buck- ling M-b,Rd [kNm] Design buckling resistance moment\n INTERACTION FACTORS\n k-yy, k-yz, k-zy, k-zz\n Interaction factors\n AUXILIARY TERMS\n λ-0 buckling due to uniform bending N-cr,T[kN] Elastic critical torsional buckling force C-my,0, C-mz,0 Equivalent uniform moment factor\n Non-dimensional slenderness for lateral torsional\n CHECK OF FLEXURAL BUCKLING/TORSIONAL BUCKLING",
+        "token_count": 420
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            39,
+            38
+        ],
+        "page_labels": [
+            "4-6",
+            "4-5"
+        ],
+        "type": "text",
+        "sections": [
+            "4 Output Description",
+            "4.5 Buckling eigenvalues"
+        ],
+        "content": "AUXILIARY TERMS. λ-0 buckling due to uniform bending N-cr,T[kN] Elastic critical torsional buckling force C-my,0, C-mz,0 Equivalent uniform moment factor. Non-dimensional slenderness for lateral torsional. CHECK OF FLEXURAL BUCKLING/TORSIONAL BUCKLING.\n n-y N-Ed / N-b,y,Rd\n n-z N-Ed / N-b,z,Rd\n CHECK OF LATERAL BUCKLING\n m-y\n M-y,Ed / M-b,Rd\n CHECK OF LATERAL TORSIONAL BUCKLING\n n-y N-Ed / N-b,y,Rd n-z N-Ed / N-b,z,Rd m-y M-y,Ed / M-b,Rd m-z M-z,Ed / M-b,Rd nm-y Buckling resistance according to EN 1993-1-1, Eq. 6.61 nm-z Buckling resistance according to EN 1993-1-1, Eq. 6.62\n NO YES FULL No printing of results Only design values table and corresponding utili- sation table is printed according to type FLEX, LAT, LTB All tables are printed",
+        "token_count": 252
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            39,
+            40,
+            41
+        ],
+        "page_labels": [
+            "4-6",
+            "4-7",
+            "4-8"
+        ],
+        "type": "text",
+        "sections": [
+            "4 Output Description",
+            "4.5 Buckling eigenvalues",
+            "4.6.2 DIN 18800/ OEN 4300"
+        ],
+        "content": "DESIGN VALUES\n Selection Selection type and element or sequence to be de- signed\n Length[m] Total length of the selected member\n Lambda-Kz Corresponding slenderness ratio, only due to com- pression ky Coefficient used to consider the moment distribu- tion My and the corresponding slenderness ratio Lambda-Kz kz analogous to y ay Coefficient az Ccoefficient Kappa-M Reduction factor for the lateral torsional buckling Lambda-M Corresponding slenderness ratio, only due to bending moment effects Beta-My Moment coefficient to find the shape of the bending moments My Beta-Mz analogous to y Beta-Mqy Moment shape coefficient for the lateral direction Beta-Mqz analogous to y System-Faktor System factor according to Table 9 DIN 18800 Part 2 Buckling Curves According to Table 4 DIN 18800 Part 2\n CHECK OF TORS.-FLEXURAL BUCKLING\n BDK\n Utilisation of the lateral torsional buckling safety\n ECHO MEMB\n NO No printing of results YES Only design values table and utilisation table is printed FULL All tables are printed\n 4.7 Summary of the results\n 4.7.1\n EN 1993-1-1\n Selection Loadcase n-y n-z m-y m-z nm-y nm-z Selection type and element or sequence to be de- signed Loadcase number N-Ed / N-b,y,Rd N-Ed / N-b,z,Rd M-y,Ed / M-b,Rd M-z,Ed / M-b,Rd Buckling resistance according to EN 1993-1-1, Eq. 6.61 Buckling resistance according to EN 1993-1-1, Eq. 6.62\n Check\n Passed or Not passed\n DIN 18800/ OEN 4300 SUMMARY OF THE RESULTS Selection Loadcase BDK Check BS 5950 SUMMARY OF THE RESULTS Selection Loadcase BDK Check ECHO SUM Selection of elements forming the member to be designed Loadcase number Utilisation of the lateral torsional buckling safety Passed or Not passed Selection type and element or sequence to be de- signed Loadcase number Utilisation of the lateral torsional buckling safety Passed or Not passed",
+        "token_count": 460
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            41,
+            42
+        ],
+        "page_labels": [
+            "4-8",
+            "4-9"
+        ],
+        "type": "text",
+        "sections": [
+            "4 Output Description",
+            "4.5 Buckling eigenvalues",
+            "4.6.2 DIN 18800/ OEN 4300"
+        ],
+        "content": "DIN 18800/ OEN 4300 SUMMARY OF THE RESULTS Selection Loadcase BDK Check BS 5950 SUMMARY OF THE RESULTS Selection Loadcase BDK Check ECHO SUM Selection of elements forming the member to be designed Loadcase number Utilisation of the lateral torsional buckling safety Passed or Not passed Selection type and element or sequence to be de- signed Loadcase number Utilisation of the lateral torsional buckling safety Passed or Not passed.\n 4.7.2\n 4.7.3\n NO YES FULL Table is not printed Table for globally maximum utilisation level will be printed Table of utilisation level for every member will be printed\n EXTR\n Full table of utilisation level for every member and every loadcase will be printed",
+        "token_count": 155
+    },
+    {
+        "document_name": "bdk_1.pdf",
+        "page_indices": [
+            44
+        ],
+        "page_labels": [
+            "4-11"
+        ],
+        "type": "text",
+        "sections": [
+            "Bibliography"
+        ],
+        "content": "[1] DIN 18800-2:2008. Stahlbauten, Teil 2: Stabilitätsfälle - Knicken von Stäben und Stabw- erken. DIN. 2008.\n [2] EN 1993-1-1:2005. Eurocode 3: Design of steel structures, Part 1-1: General rules and rules for buildings. CEN. 2005.\n [3] BS 5950-1:2000. Structural use of steelwork in building, Part 1: Code of practice for design - Rolled and welded sections. BSi. 2001.\n [4] Chr. Petersen. Statik und Stabilität der Baukonstruktionen. Vieweg & Sohn, Braunschweig, 1980.\n [5] K. Roik, J. Carl, and J. Lindner. Biegetorsionsprobleme gerader dünnwandiger Stäbe. Wilhelm Ernst & Sohn, Berlin, 1972.\n [6] H. Schroeter. Berechnung idealer Kipplasten von Trägern veränderlicher Höhe mit Hilfe Hermit’scher Polynome. Mitteilungen aus dem Institut für Bauingenieurwesen I, Heft 5 Technische Universität München, 1980.\n [7] N. Boissonnade et al. Rules for Member Stability in EN 1993-1-1, Background documen- tation and design guidelines. ECCS Technical Committee 8 - Stability. No. 119. 2006.\n [8] R. Greiner and J. Lindner. “Interaction formulae for members subjected to bending and ax- ial compression in EUROCODE 3 - the Method 2 approach”. In: Journal of Constructional Steel Research 62 (2006), pp. 757–770.",
+        "token_count": 404
+    }
+]

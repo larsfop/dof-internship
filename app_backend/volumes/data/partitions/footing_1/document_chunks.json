@@ -1,0 +1,1661 @@
+[
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            3
+        ],
+        "page_labels": [
+            null
+        ],
+        "type": "table",
+        "sections": [
+            "Foreword"
+        ],
+        "coordinates": [
+            [
+                527.3875732421875,
+                388.4559020996094
+            ],
+            [
+                2920.5712890625,
+                871.6672973632812
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "6.2.3 sleeve . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6.2.4 Moment-V. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6.3 Permissible Soil Pressure . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6.4 Soil Pressure/Buckling . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6.5 Design . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6.6 Sleeve Design . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6-1 6-2 6-3 6-3 6-4 6-5"
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            4
+        ],
+        "page_labels": [
+            "1-1"
+        ],
+        "type": "image",
+        "sections": [
+            "Foreword"
+        ],
+        "coordinates": [
+            [
+                393.69999999999993,
+                2470.624138464383
+            ],
+            [
+                1785.5972900390625,
+                4192.1640625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 1.1"
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            1,
+            2,
+            4
+        ],
+        "page_labels": [
+            null,
+            null,
+            "1-1"
+        ],
+        "type": "text",
+        "sections": [
+            "Foreword"
+        ],
+        "content": "FOOTiNG Foundations\n FOOTiNG Manual, Service Pack 2025-4 Build 146\n Copyright © 2025 by SOFiSTiK AG, Nuremberg, Germany.\n SOFiSTiK AG\n HQ Nuremberg Office Garching Flataustraße 14 Parkring 2 90411 Nürnberg 85748 Garching bei München Germany Germany T +49 (0)911 39901-0 T +49 (0)89 315878-0 F +49(0)911 397904 F +49 (0)89 315878-23 info@sofistik.com\n www.sofistik.com\n This manual is protected by copyright laws. No part of it may be translated, copied or reproduced, in any form or by any means, without written permission from SOFiSTiK AG. SOFiSTiK reserves the right to modify or to release new editions of this manual.\n The manual and the program have been thoroughly checked for errors. However, SOFiSTiK does not claim that either one is completely error free. Errors and omissions are corrected as soon as they are detected.\n The user of the program is solely responsible for the applications. We strongly encourage the user to test the correctness of all calculations at least by random sampling.\n Contents\n Contents\n Contents\n 1\n 2\n 3\n 4\n 5\n 6\n i\n 1 Task Description\n The SSD task FOOTiNG determined either for given loads the necessary foundation measure- ments or he leads at predetermined foundation measurements necessary evidence through. Loads than vertical forces, moments and horizontal forces are taken into account. The design combinations required are automatically formed. Additional stresses second order theory can be considered.\n The foundations for a bending design, a push or a tax punching shear are performed. It can be single and strip foundations are processed. When the footings of a quiver can be arranged. There is also the opportunity to take on the expense of a Auflagerknoten SOFiSTiK from a database (eg from the support task COLUMN).",
+        "token_count": 436
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            4
+        ],
+        "page_labels": [
+            "1-1"
+        ],
+        "type": "text",
+        "sections": [
+            "Foreword"
+        ],
+        "content": "The foundations for a bending design, a push or a tax punching shear are performed. It can be single and strip foundations are processed. When the footings of a quiver can be arranged. There is also the opportunity to take on the expense of a Auflagerknoten SOFiSTiK from a database (eg from the support task COLUMN)..\n The data entered in a graphically interactive working environment within the SSD (SOFiSTiK Structural Desktop).\n The program FOOT determines the necessary foundation dimensions in dependence on the defined loads and permissible soil pressure. The permissible soil pressures can be preset or determined from the tables 1 - 6 according to DIN 1054:2010-12 or from self-defined ta- bles. Axial forces, moments and lateral forces in both directions are allowed as permanent and imposed loads. A bending design and a punching checks is done by the program for the foundation. Isolated foundation and strip foundation can be calculated here. For isolated foun- dations it is possible to defined a sleeve. Additional moments according to second-order theory and loads acting on sleeve are allowed for the design . If desired, a picture of the determined foundation including loads can be output.",
+        "token_count": 247
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            6
+        ],
+        "page_labels": [
+            "2-1"
+        ],
+        "type": "image",
+        "sections": [
+            "2 Input tabs",
+            "2.1 System"
+        ],
+        "coordinates": [
+            [
+                393.69999999999993,
+                1050.264391801711
+            ],
+            [
+                1784.603759765625,
+                2774.5107421875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 2.1"
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            7,
+            6
+        ],
+        "page_labels": [
+            "2-2",
+            "2-1"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Input tabs",
+            "2.1 System"
+        ],
+        "content": "In the tab System general information about the foundation are set, for example position title and the selection of materials for concrete and steel and all information for control of the proofs and calculation.\n In the section ”General” the following control options are available:\n • Rounding foundation: Rounding value for the automatic determination of foundation size (default 0.05 m)\n • Critical cut: Distance of the critical perimeter for the punching shear. With the default setting ”iterative” the program automatically calculates the worst punching cone. For special situations or comparative calculations, alternatively a factor can be entered (e.g. 1.4*d).\n • Reinforcement: Average longitudinal reinforcement level ρ in [%] within the circular cut 1.5d. With the default setting 0.0 [%] the level of the reinforcement in round cut 1.5d is determined from the calculated reinforcement.\n • Load raise factor: The load raise factor β takes into account the effect of moments in the loaded area. For special situations or comparative analyzes alternatively here can be entered a factor.\n Default: If no moments exist, the program sets β=1.1 as a minimum, otherwise the load raise factor β is determined according to the German \"Heft 600\".\n • Design section: Here the location for the dimensioning cut (bending design foundation)\n is specified. The following design sections are available:\n ◦ edge of column\n ◦ mid of column\n ◦ mid of column smoothed\n ◦ mid of sleeves flank\n ◦ edge of sleeve\n In section ”Proof” the desired proofs for soil according to DIN EN 1997-1 are selected. The selected proofs are executed and transferred to the result. The extend of output is controlled in the tab ”Output”.\n In the section ”Design” the required proofs for the reinforced concrete according to DIN EN 1992-1-1: 2013-04 are selected. In particular, a punching check can be enforced, even if the shear check will be decisive.",
+        "token_count": 410
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            8
+        ],
+        "page_labels": [
+            "2-3"
+        ],
+        "type": "image",
+        "sections": [
+            "2 Input tabs",
+            "2.2 Geometry"
+        ],
+        "coordinates": [
+            [
+                393.69999999999993,
+                754.0593637608442
+            ],
+            [
+                1790.369384765625,
+                2470.6455078125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 2.2"
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            8
+        ],
+        "page_labels": [
+            "2-3"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Input tabs",
+            "2.2 Geometry"
+        ],
+        "content": "In the tab ”Geometry” the type of foundation and its dimensions are set, as well as the axis distance for the reinforcement design.\n Predefined dimensions of the foundation can be set using the lock-symbol. In case one of the ground proof is not successfully complied and both lock-symbols are opened, the correspond- ing foundation widths are increased, holding the given proportion bx/by.",
+        "token_count": 76
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            9
+        ],
+        "page_labels": [
+            "2-4"
+        ],
+        "type": "image",
+        "sections": [
+            "2 Input tabs",
+            "2.3 Column"
+        ],
+        "coordinates": [
+            [
+                393.7,
+                753.3278158197447
+            ],
+            [
+                1788.0599365234375,
+                2472.161865234375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 2.3"
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            9
+        ],
+        "page_labels": [
+            "2-4"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Input tabs",
+            "2.3 Column"
+        ],
+        "content": "All information related to a columnn connected to the coundation is located in the tab ”Column”. The dimensions and materials are taken automatically when it is possible.\n In case an eccentric column, there are two possibilities to control the automatic increase of the foundation dimensions.\n The values of e and ey will be measured from the outer foundation edge and mantained during the calculation. A positive value refers to the right side, a negative one to the left side.\n The values of e and ey will be relative to the center of the foundation. A positive value of e displace the column in positive x-direction.",
+        "token_count": 120
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            10
+        ],
+        "page_labels": [
+            "2-5"
+        ],
+        "type": "image",
+        "sections": [
+            "2 Input tabs",
+            "2.4 Sleeve"
+        ],
+        "coordinates": [
+            [
+                393.69999999999993,
+                741.2104106870661
+            ],
+            [
+                1789.206298828125,
+                2462.650146484375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 2.4"
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            10
+        ],
+        "page_labels": [
+            "2-5"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Input tabs",
+            "2.4 Sleeve"
+        ],
+        "content": "All information related to the geometry of a sleeve foundation is located in the tab ”Sleeve”. The tab is disabled for foundations without sleeve.",
+        "token_count": 29
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            11
+        ],
+        "page_labels": [
+            "2-6"
+        ],
+        "type": "image",
+        "sections": [
+            "2 Input tabs",
+            "2.5 Soil"
+        ],
+        "coordinates": [
+            [
+                393.7,
+                662.6130833333333
+            ],
+            [
+                1789.3472900390625,
+                2389.387939453125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 2.5"
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            11,
+            12
+        ],
+        "page_labels": [
+            "2-6",
+            "2-7"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Input tabs",
+            "2.5 Soil"
+        ],
+        "content": "In tab ”Subsoil” all values related to the soil are set.\n • In a combo box you can select a soil profile, which has been previously defined in the task ”Bore profile”.\n • The design values of soil resistance can be selected from the Tables A6.1 - A6.8 (DIN 1054:2010-12).\n • A user defined table is also allowed.\n • A permissible soil resistance can be defined instead of a table (default 210 [kN/m2]).\n • Several soil layer can be taken into account, they are represented in the corresponding graphic.\n • The location of the ground water level will be considered.\n A uniform additional load can be defined for the foundation.\n • Permanent: The load will be consider as permanent for the soil verification.\n • Variable: every soil verification will be performed once with the variable load and once\n without it.",
+        "token_count": 183
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            13
+        ],
+        "page_labels": [
+            "2-8"
+        ],
+        "type": "image",
+        "sections": [
+            "2 Input tabs",
+            "2.6 Design conditions"
+        ],
+        "coordinates": [
+            [
+                393.7,
+                754.0602506801337
+            ],
+            [
+                1788.020751953125,
+                2473.586181640625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 2.6"
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            13
+        ],
+        "page_labels": [
+            "2-8"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Input tabs",
+            "2.6 Design conditions"
+        ],
+        "content": "The security factors for load Actions and soil proofs are set in this tab. The predefined values are assigned according to the Design Code and usually they should not be changed.\n The values will be assigned automatically to the Actions table.",
+        "token_count": 44
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            14
+        ],
+        "page_labels": [
+            "2-9"
+        ],
+        "type": "image",
+        "sections": [
+            "2 Input tabs",
+            "2.7 Loads"
+        ],
+        "coordinates": [
+            [
+                0,
+                0
+            ],
+            [
+                1786.74560546875,
+                2628.159423828125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 2.7"
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            13,
+            14
+        ],
+        "page_labels": [
+            "2-8",
+            "2-9"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Input tabs",
+            "2.7 Loads"
+        ],
+        "content": "In tab ”Loads” take place the load input, which can be set manually or automatically from the corresponding reactions stored in the database(CDB). Additional influences for Second Order Theory (ΔM, ΔH) can be agregated to the table. These will be consided for the determination of the load conbinations.\n $$(r) SOFISTiK: Fundament o System | Geometry | Column Sleeve | Subsoil | Designsituation Loads Output Characteristic Loads Ree: [Load Case Manager | | | Remove | Support Node: [ene] &2 Reinit Load Case Type My Mx Hx Hy AMy AMx [kNm] -- [kNm] [kN] [kN] [kNm] [kNm] vj1* G -96.00 -48.00 Z)2* QE -180.00 20.0 -106.00 Ji3* Ww -90.00 35.0 < Combinations Node: lo 7| |W] Additional A-effects (| Consider nonlinear load cases Generate Combination Identifier accV Title (kN] Y=}1 mid 1/6 G(1) Y=|2 mid 1/3 G(1)+Q_E(2) v|3 mid 1/3 G(1)+Q_E(2)+W(3) v/4 mid 1/3 G(1)+W(3) Y=|5 base failure 1206.5 G(1)+Q_E(2) eK we & pe BQ [7] Subsoil layers a 6 base failure 1206.5 G(1)+Q_E(2)+W(3) v| Process immediately | Cancel | | Help$$\n The next input options are available:\n • For a pure FOOTiNG-Project the selection of Nodes is not allowed. Some default Load Cases are already included (G,Q,S,W), the corresponding loads will be manually inserted. Additional Actions and Load Cases will be added in the Load Case Manager. With the Button ”Create” the MAXIMA-Engine will be started to define the relevant Load Combinations for each verification and the will be shown the respective table.",
+        "token_count": 457
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            14
+        ],
+        "page_labels": [
+            "2-9"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Input tabs",
+            "2.7 Loads"
+        ],
+        "content": "Some default Load Cases are already included (G,Q,S,W), the corresponding loads will be manually inserted. Additional Actions and Load Cases will be added in the Load Case Manager. With the Button ”Create” the MAXIMA-Engine will be started to define the relevant Load Combinations for each verification and the will be shown the respective table..\n • The loads can be taken over the Program COLUMN selecting the corresponding Node. The support reactions will be taken from the Database (CDB) and the Load Combina- tions for the different proofs will be generated with help of the Superposition Program MAXIMA. Additional influences for Second Order Analisys (ΔM, ΔH) can be included in the table.\n • The loads can be assigned through Node selection also in case of a general 3D Sys- tem.\n The support reactions will be taken from the Database (CDB) and the Load Combina- tions for the selected Nodes will be generated automatically. When several Nodes are selected, they will share the same Mark and a common Foundation will be determinated for those Nodes.",
+        "token_count": 220
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            15
+        ],
+        "page_labels": [
+            "2-10"
+        ],
+        "type": "image",
+        "sections": [
+            "2 Input tabs",
+            "2.8 Output"
+        ],
+        "coordinates": [
+            [
+                393.7,
+                674.9074717977168
+            ],
+            [
+                1787.8421630859375,
+                2394.98269
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 2.8"
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            15
+        ],
+        "page_labels": [
+            "2-10"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Input tabs",
+            "2.8 Output"
+        ],
+        "content": "In tab ”Output” the results output is configurated.\n The standard results output is short and clear. The most relevant Load Combinations and proofs are included by default.\n Specially for bearing failure verification, there are additional output options and graphics to improve the understanding of the results.\n All Load Combinations used during the calculation can be printed out.",
+        "token_count": 69
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            17
+        ],
+        "page_labels": [
+            "3-2"
+        ],
+        "type": "image",
+        "sections": [
+            "3 Methods of Analysis"
+        ],
+        "coordinates": [
+            [
+                693.4384155273438,
+                580.8154296875
+            ],
+            [
+                1785.6285400390625,
+                2141.9326899999996
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 3.1"
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            17
+        ],
+        "page_labels": [
+            "3-2"
+        ],
+        "type": "image",
+        "sections": [
+            "3 Methods of Analysis"
+        ],
+        "coordinates": [
+            [
+                679.9786987304688,
+                2362.2333984375
+            ],
+            [
+                1790.3363037109375,
+                3881.7160233333334
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 3.2"
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            18
+        ],
+        "page_labels": [
+            "3-3"
+        ],
+        "type": "image",
+        "sections": [
+            "3 Methods of Analysis"
+        ],
+        "coordinates": [
+            [
+                774.4668579101562,
+                511.3327941894531
+            ],
+            [
+                1789.147705078125,
+                2846.8938011111113
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 3.3"
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            16
+        ],
+        "page_labels": [
+            "3-1"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Methods of Analysis"
+        ],
+        "content": "The determination of the minimum foundation dimensions is done according to DIN EN 1997- 1:2009-09 / DIN 1054:2010-12. An opening of the ground joint is not allowed for permanent loads.\n The maximum permissible foundation dimensions are 21 m in all directions. They are rounded to a integral multiples of a rounding off value.\n The permissible soil pressures can be input or they can be determined with an interpolation by the program from the tables A6.1-A6.8 DIN 1054:2010-12. Another possibility is to use a table which is input by the user. Different combinations of internal forces and moments can be defined for a foundation.\n In addition it is possible to taken over combinations of internal forces and moments from the SOFiSTiK database. The necessary foundation dimensions are determined then for these combinations in dependence on the available soil pressure.\n At the end the bending design and the shear check are done for all combinations. The design occurs according to DIN EN 1992-1-1:2013-04. A design cut is divided in eight sections. A corresponding part of the total moment is allocated to every section according to table 2.10 Heft 240 DAfStb. The distribution may be asymmetrical in case of foundation which is loaded eccentrically. The punching check for EC 2 according to the relevant design code.\n Several load cases which include axial forces, moments about the X and Y axis and lateral forces in X and Y direction as permanent and imposed load can be considered for a foundation. The largest necessary foundation dimensions result from one of these load cases. These dimensions are used for the bending design and the punching check for all other load cases. For the check of the permissible soil pressures the stress are calculated for the moment loading about the X and Y axis. On the other hand only the in each case corresponding moment acts unaxial for the determination of the design moments. It is calculated in dependence on the input at the column section, in column centre, at the sleeve edge for sleeve foundations or in",
+        "token_count": 423
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            16,
+            17,
+            18
+        ],
+        "page_labels": [
+            "3-1",
+            "3-2",
+            "3-3"
+        ],
+        "type": "text",
+        "sections": [
+            "3 Methods of Analysis"
+        ],
+        "content": "For the check of the permissible soil pressures the stress are calculated for the moment loading about the X and Y axis. On the other hand only the in each case corresponding moment acts unaxial for the determination of the design moments. It is calculated in dependence on the input at the column section, in column centre, at the sleeve edge for sleeve foundations or in.\n the centre of the sleeve wall.\n NEd\n CLA",
+        "token_count": 85
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            20
+        ],
+        "page_labels": [
+            "4-1"
+        ],
+        "type": "text",
+        "sections": [
+            "4 Definitions"
+        ],
+        "content": "The indications are described in Heft 240 DAfStb page 25-27. A coordinate system in clockwise direction is preset for the load definition. The positive Z axis shows in direction of the axial forces.\n A system values, like foundation sides, column sides, foundation thickness and static heights are specified in cm. The loads have to be input in the SI system in kN and m and the stresses in kN/m2.\n The control of the determination of the foundation size is activated via a definition of the foun- dation sides.\n The application point of the loads lies in the origin of the local coordinate system for the foun- dation. The origin of the Z axis lies at the upper edge of foundation, for sleeve foundations at the upper edge of the sleeve.",
+        "token_count": 160
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            22
+        ],
+        "page_labels": [
+            "5-1"
+        ],
+        "type": "text",
+        "sections": [
+            "5 Input Description",
+            "5.1 Input Language"
+        ],
+        "content": "The input occurs in a free format with the CADINP input language (see the general manual SOFiSTiK: ’Basics’).\n Three categories of units are distinguished:\n mm Fixed unit. Input is always required in the specified unit.\n [mm] Explicit unit. Input defaults to the specified unit. Alternatively, an explicit as- signment of a related unit is possible (eg. 2.5[m] ).\n [mm]1011 Implicit unit. Implicit units are categorised semantically and denoted by a cor- responding identity number (shown in green). Valid categories referring to the unit ”length” are, for example, geodetic elevation, section length and thickness. The default unit for each category is defined by the currently active (design code specific) unit set. This input default can be overridden as described above. The specified unit in square brackets corresponds to the default for unit set 5 (Eu- rocodes, NORM UNIT 5).",
+        "token_count": 198
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            23
+        ],
+        "page_labels": [
+            "5-2"
+        ],
+        "type": "table",
+        "sections": [
+            "5 Input Description",
+            "5.2 Input Records"
+        ],
+        "coordinates": [
+            [
+                406.53350830078125,
+                729.0414428710938
+            ],
+            [
+                2841.129638671875,
+                3133.541259765625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "POS Position Description CTRL OPT VAL MATF FUND STEE COLU PROF ACT TYPE GAMF GAMU PSI0 PSI1 PSI2 TAB T BESI LF GAMG GAMQ LAGU LAGF WIGR GEOM TYP BX BY HI HA D1X NBEM CFUN SLEE HSWO HSWI WXWU WYWU WXGU WXWL KOEB SCOV COLU QA CX CY D1 DU AS EX EY EZ EOPT SPT NO X Y Z NX NY SX SY SZ GUID LC NO TYPE V MY MX HX DMY DMX DHX DHY TIT LOAD NO TYPE V MY MX HX ZUGV TIT KN NO POS GEO BX BY WI TIT BEW SDUX SDUY DMIN DMAX CMIN CMAX KOEV KOEH KOAV KOAH ECHO OPT1 VAL TIT WIGL D1Y TYPE ASV NZ HY HY REP DUST"
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            23,
+            24
+        ],
+        "page_labels": [
+            "5-2",
+            "5-3"
+        ],
+        "type": "text",
+        "sections": [
+            "5 Input Description",
+            "5.2 Input Records"
+        ],
+        "content": "The following records are defined:\n Record\n Items\n The records HEAD and END are described in the general manual SOFiSTiK: ’Basics’.\n 5.3 POS – Position Description\n POS\n Item Description LIT32 Unit Default −\n With POS the position gets a description.",
+        "token_count": 60
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            25
+        ],
+        "page_labels": [
+            "5-4"
+        ],
+        "type": "table",
+        "sections": [
+            "5 Input Description",
+            "5.4 CTRL – Control of the Calculation"
+        ],
+        "coordinates": [
+            [
+                545.1627197265625,
+                764.987548828125
+            ],
+            [
+                2919.57080078125,
+                3843.31396484375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Description SAVE Save design results in the CDB. IMPO Import system data to CDB. DMII assume delta-moments and delta-forces BEM the bending design are enforced FKDU Factor for punching cone KLAF gapping for mid 2/3 EGZ include dead load and extra load BETR Angle for round cut FVSD Coefficient moments BEWR Reinforcement ration ρ SYMB Arrange symmetric reinforcement TOT complete reinf. LFDM continuous meter BGRZ limit of footing size AM1 minimum reinforcement for bending BRND rounding for the reinforcement SCHU Shear design RUND Rounding foundation REIB Friction angle KBEM Determinate reinforcement for each Node STEP Reinforcement distribution T8, T3 or T1 DRSW Punching Bars Angle ROEN Reinforcement ratio of punching cone 1 = additional reinf. in the round cut c+2*3.0d (DIN EN 1992-1-1 6.4.4.(1)) 0 = additional reinf. in the critical round cut Input of the value Unit Default LT NEIN LT NEIN − YES − NO − 2.36 − YES − YES − 1.5 − 0 % 0 LT - m 21 LT NO cm 0.5 LT JA cm 5 degree 25 LT NO LT T8 Grd 45 − 1 ∗"
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            25,
+            26,
+            27
+        ],
+        "page_labels": [
+            "5-4",
+            "5-5",
+            "5-6"
+        ],
+        "type": "text",
+        "sections": [
+            "5 Input Description",
+            "5.4 CTRL – Control of the Calculation"
+        ],
+        "content": "CTRL\n Item\n OPT\n VAL\n YES Save design results in the Database (CDB).\n YES Import system data to Database (CDB). Note that no calculations are perform when this option is set.\n YES If Delta-values are given for characteristic loads, they will be added to the respective component and subsequently combined.\n ignore Delta-values even if they are given for characteristic loads.\n BEM\n YES Force creation of bending reinforcement, even if it is not required because of geomet- ric reasons.\n da = d / ((bx-cx)/2.) > 1\n YES For 2. Core Value gapping is allowed.\n 2. Core Value should not gape.\n YES Consider self-weight and additional loads.\n No self-weight neither additional loads.\n Angle for round cut can be set as 1.5d or 1.0d.\n These correspond to an angle of 33.7 or 45 degrees respectively.\n For DIN EN 1992-1-1:2013-04 the value will be set as 0. The program calculates the most unfavorable punching cone. Use this value to proof distinct calculation results.\n With CTRL FVSD Val it is possible to define the coefficient for the consideration of moment effects in the load area.\n DIN EN 1992-1-1:2013-04\n 1.10 Inner columns\n 1.4 Edge columns\n 1.5 Corner columns\n – The program uses 1.1, if moments do not act or a factor is calculated from the mo- ments.\n value The mean longitudinal reinforcement ratio ρ should be calculated as mean values taking into account a slab width equal to the column width plus 3d each side.\n 0 The reinforcement ratio as mean values taking into account a slab width equal to the column width plus 3d each side is calculated from the determined reinforcement.\n VED The longitudinal reinforcement is increased, to avoid a shear respectively a punching reinforcement.\n With CTRL SYMB TOT or LFDM symmetric reinforcement can be configured. The maximum reinforcement value will be used for both directions. With TOT the total reinforcement will be used and with LFDM the running lengt applied.",
+        "token_count": 440
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            27,
+            28
+        ],
+        "page_labels": [
+            "5-6",
+            "5-7"
+        ],
+        "type": "text",
+        "sections": [
+            "5 Input Description",
+            "5.4 CTRL – Control of the Calculation"
+        ],
+        "content": "0 The reinforcement ratio as mean values taking into account a slab width equal to the column width plus 3d each side is calculated from the determined reinforcement.. VED The longitudinal reinforcement is increased, to avoid a shear respectively a punching reinforcement.. With CTRL SYMB TOT or LFDM symmetric reinforcement can be configured. The maximum reinforcement value will be used for both directions. With TOT the total reinforcement will be used and with LFDM the running lengt applied..\n The size of Foundation is limited to 21 [m]. With CTRL BGRZ Val (Val = max. [cm] ) this limitation can be modified.\n With CTRL AM1 YES the minimum reinforcement for bending is defined.\n Rounding for the bending reinforcement distribution.\n YES Force Shear reinforcement.\n Shear reinforcement suppresed.\n Increment to determinate Foundation size\n (Default.: 5 cm)\n Friction angle for the slide verification (Voreinst.: 25 Grad)\n Determinate reinforcement for each Node.\n Several nodes can be given to perform the design, the size of the Foundation will be determinated useing the forces of all nodes. Use KBEM to determinate the bend- ing and shear reinforcement for the maximum load effect or for each node and its respective loads.\n Distribution of bending reinforcement\n T8 divide in 8 sections\n T3 divide in 3 sections\n T1 constant section\n For the calculation of the horizontal Sleeve reinforcement, is assumed that the forces of the column rebar are tranfered to the vertical Stirrups of the Sleeve. These forces are directed, by mean of punching rebar, to the horizontal Stirrups. The punching rebar angle q depends on the Sleeve roughness and lap length. (Angle q ≤45˚)\n 1 The reinforcement of bending shall be calculated in general accordance with DIN EN 1992-1-1, 6.4.4 (1) in the region of the column plus 3d per page. Hint: additional reinf. in the round cut c+2*3.0d (DIN EN 1992-1-1 6.4.4.(1))\n 0 The user can specify that only the reinforcement in the punching area should be considered.\n Hint: additional reinf. in the critical round cut (defined by the user)",
+        "token_count": 471
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            29
+        ],
+        "page_labels": [
+            "5-8"
+        ],
+        "type": "table",
+        "sections": [
+            "5 Input Description",
+            "5.5 MATF – Material Input"
+        ],
+        "coordinates": [
+            [
+                373.731201171875,
+                808.0723266601562
+            ],
+            [
+                2954.427978515625,
+                1353.4786376953125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default FOOT Material number of Foundation − - STEE Material number of reinforcement − - COLU Material number of Column − - PROF NUmber of Soil Profile − -"
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            29
+        ],
+        "page_labels": [
+            "5-8"
+        ],
+        "type": "text",
+        "sections": [
+            "5 Input Description",
+            "5.5 MATF – Material Input"
+        ],
+        "content": "MATF\n Note: See AQUA manual for more details.\n +PROG AQUA HEAD materials NORM DIN 'EN199X-200X' CONC 1 C 45 ; STEE 2 B 500A; CONC 3 C 25 END\n For Bearing Failure verification the input of soil slayers is required. A Soil Profile valid for FOOTiNG can only be created via FOOTiNG Dialog or CADINP.\n +PROG AQUA\n HEAD Soil Profile\n HEAD Soil Profile\n BORE 1 X 0 Y 0 Z -1.5 NX 0 NY 0 NZ 1 ALF 0 HGWL 0 HGWH 2.2 TITL \"Bohrprofil01\"\n BLAY S 0 MUE 0 DES 0 VARI CONS C 0 PHI 30 GAM 18 GAMA 8 BLAY S 1 MUE 0 DES 0 VARI CONS C 2 PHI 35 GAM 19 GAMA 9 BLAY S 3 MUE 0 DES 0 VARI CONS C 3 PHI 40 GAM 20 GAMA 10 BLAY S 999 VARI CONS BTAB OPT 'A6.6:H' FACS 1\n BORE 2 X 0 Y 0 Z 0 NX 0 NY 0 NZ 1 ALF 0 HGWL 0 HGWH 2.2 TITL \"Bohrprofil02\"\n BLAY S 0 MUE 0 DES 0 VARI CONS C 0 PHI 30 GAM 18 GAMA 8 BLAY S 1 MUE 0 DES 0 VARI CONS C 2 PHI 35 GAM 19 GAMA 9 BLAY S 2 MUE 0 DES 0 VARI CONS C 3 PHI 40 GAM 20 GAMA 10 BLAY S 999 VARI CONS BTAB V1 222.33 FACS 1",
+        "token_count": 412
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            29
+        ],
+        "page_labels": [
+            "5-8"
+        ],
+        "type": "text",
+        "sections": [
+            "5 Input Description",
+            "5.5 MATF – Material Input"
+        ],
+        "content": "BLAY S 0 MUE 0 DES 0 VARI CONS C 0 PHI 30 GAM 18 GAMA 8 BLAY S 1 MUE 0 DES 0 VARI CONS C 2 PHI 35 GAM 19 GAMA 9 BLAY S 2 MUE 0 DES 0 VARI CONS C 3 PHI 40 GAM 20 GAMA 10 BLAY S 999 VARI CONS BTAB V1 222.33 FACS 1.\n END",
+        "token_count": 106
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            30
+        ],
+        "page_labels": [
+            "5-9"
+        ],
+        "type": "table",
+        "sections": [
+            "5 Input Description",
+            "5.6 ACT – Actions"
+        ],
+        "coordinates": [
+            [
+                368.7614440917969,
+                819.4695434570312
+            ],
+            [
+                2929.349365234375,
+                1658.494873046875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description TYPE Type of the action GAMF Favourable safty factor GAMU Unfavourable safty factor PSI0 Combination value rare PSI1 Combination value frequent PSI2 Combination value quasi permanent TIT Description of the action Unit Default LT2 * − * − * − * − * − * LT32 ’0"
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            30
+        ],
+        "page_labels": [
+            "5-9"
+        ],
+        "type": "text",
+        "sections": [
+            "5 Input Description",
+            "5.6 ACT – Actions"
+        ],
+        "content": "See also: MATF\n ACT\n TYPE\n GAMF\n Favourable safty factor\n Unfavourable safty factor\n PSI0\n Combination value rare\n PSI1\n Combination value frequent\n PSI2\n Combination value quasi permanent\n TIT\n Description of the action",
+        "token_count": 57
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            32
+        ],
+        "page_labels": [
+            "5-11"
+        ],
+        "type": "table",
+        "sections": [
+            "5 Input Description",
+            "5.7 TAB – Soil Pressure according to Tables"
+        ],
+        "coordinates": [
+            [
+                351.4683837890625,
+                822.4937744140625
+            ],
+            [
+                2921.47412109375,
+                1966.5093994140625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default LC Design situation, loading − 1 Savety factors of aktions DIN EN 1990 GAMG permanent − 1.35 GAMQ variable − 1.50 Position stability (DIN EN 1990) LAGU unfavorable − 1.10 LAGF favorable − 0.90 Savety factors of resistances DIN 1054 WIGR Base falure − 1.40 WIGL Sliding −s 1.10"
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            33
+        ],
+        "page_labels": [
+            "5-12"
+        ],
+        "type": "table",
+        "sections": [
+            "5 Input Description",
+            "5.7 TAB – Soil Pressure according to Tables"
+        ],
+        "coordinates": [
+            [
+                438.85150146484375,
+                919.4024047851562
+            ],
+            [
+                2793.41552734375,
+                1241.27294921875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Action permanent variable BS-P 1.35 1.50 BS-T 1.20 1.30 BS-A 1.10 1.10"
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            33
+        ],
+        "page_labels": [
+            "5-12"
+        ],
+        "type": "table",
+        "sections": [
+            "5 Input Description",
+            "5.7 TAB – Soil Pressure according to Tables"
+        ],
+        "coordinates": [
+            [
+                438.01165771484375,
+                1508.5201416015625
+            ],
+            [
+                2834.6123046875,
+                1836.8968505859375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Action unfavorable favorable BS-P 1.10 0.90 BS-T 1.05 0.90 BS-A 1.00 0.95"
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            33
+        ],
+        "page_labels": [
+            "5-12"
+        ],
+        "type": "table",
+        "sections": [
+            "5 Input Description",
+            "5.7 TAB – Soil Pressure according to Tables"
+        ],
+        "coordinates": [
+            [
+                439.9805603027344,
+                2120.673828125
+            ],
+            [
+                2772.4169921875,
+                2425.224365234375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Resistance Bearing Failure Sliding BS-P 1.40 1.10 BS-T 1.30 1.10 BS-A 1.20 1.10"
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            31,
+            32,
+            33
+        ],
+        "page_labels": [
+            "5-10",
+            "5-11",
+            "5-12"
+        ],
+        "type": "text",
+        "sections": [
+            "5 Input Description",
+            "5.7 TAB – Soil Pressure according to Tables"
+        ],
+        "content": "TAB\n Item Description Unit Default T Anchoring depth m !\n T\n If the anchoring depth is higher than 2.00 m, the specific weight of the soil has to be defined with the record.\n 5.8 BESI – Safety factors\n BESI\n LC\n Design Situation to DIN 1054:2010-12, 2.2\n Loading\n 1 BS-P - Persistent situation\n 2 BS-T - Transient situation\n 3 BS-A - Accidental situation\n Safety factors of actions DIN DIN 1054:2010-12\n Safety factors of permanent actions\n Safety factors of variable actions Savety factors of leakage of position stability (DIN EN 1990:2010-12)\n LAGU\n unfavorable\n favorable Safety factors of resistances\n Bearing Failure resistance\n Sliding resistance Safety factors of actions\n Safety factors of position stability\n Safety factors of resistances",
+        "token_count": 188
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            34
+        ],
+        "page_labels": [
+            "5-13"
+        ],
+        "type": "table",
+        "sections": [
+            "5 Input Description",
+            "5.9 GEOM – Geometry"
+        ],
+        "coordinates": [
+            [
+                360.1344299316406,
+                815.1781005859375
+            ],
+            [
+                2929.219970703125,
+                2266.5048828125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description TYPE Type of fundation EINZ Normal foundation KOE Sleeve foundation BLOC Sleeve block out foundation STRE Strip foundation STIF Boot foundation BX Foundation dimension in X direction BY Foundation dimension in Y direction HI Foundation thickness inside HA Foundation thickness outside D1X Distance of reinforcement in X direction D1Y Distance of reinforcement in Y direction NBEM Control design section STR, STM, AUSR, KOEM, KOER Unit Default LT EINZ cm ! cm ! cm ! cm ! cm ! cm ! LT STR"
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            35
+        ],
+        "page_labels": [
+            "5-14"
+        ],
+        "type": "image",
+        "sections": [
+            "5 Input Description",
+            "5.9 GEOM – Geometry"
+        ],
+        "coordinates": [
+            [
+                458.3194580078125,
+                418.8451232910156
+            ],
+            [
+                1786.1339111328125,
+                2699.286865234375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 5.1"
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            36
+        ],
+        "page_labels": [
+            "5-15"
+        ],
+        "type": "image",
+        "sections": [
+            "5 Input Description",
+            "5.9 GEOM – Geometry"
+        ],
+        "coordinates": [
+            [
+                464.237060546875,
+                484.8081359863281
+            ],
+            [
+                1790.2664794921875,
+                2073.757080078125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 5.2"
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            38
+        ],
+        "page_labels": [
+            "5-17"
+        ],
+        "type": "table",
+        "sections": [
+            "5 Input Description",
+            "5.9 GEOM – Geometry"
+        ],
+        "coordinates": [
+            [
+                369.7048645019531,
+                822.1345825195312
+            ],
+            [
+                2929.137451171875,
+                1866.3702392578125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default HSWO Sleeve height outside cm ! HSWI Sleeve height inside cm ! WXWU Upper Wall thickness from sleeve in X direction cm ! WYWU Upper Wall thickness from sleeve in Y direction cm WXWU WXGU Gap width at the top cm WXWL Gap width at the bottom cm TYPE Sleeve type (R = rough, G = smooth) LT R KOEB Control sleeve design LT LEON (LEON, PSCH, STWM)"
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            38
+        ],
+        "page_labels": [
+            "5-17"
+        ],
+        "type": "image",
+        "sections": [
+            "5 Input Description",
+            "5.9 GEOM – Geometry"
+        ],
+        "coordinates": [
+            [
+                607.0811157226562,
+                2113.231689453125
+            ],
+            [
+                1788.323974609375,
+                3990.39013671875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 5.3"
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            40
+        ],
+        "page_labels": [
+            "5-19"
+        ],
+        "type": "table",
+        "sections": [
+            "5 Input Description",
+            "5.9 GEOM – Geometry"
+        ],
+        "coordinates": [
+            [
+                337.7797546386719,
+                813.4484252929688
+            ],
+            [
+                2930.86279296875,
+                2614.72509765625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default QA Typ of column LT Q4 QU Rectangle with circum. reinf. QK Circle with circum. reinf. Q4 Rectangle with rod reinf. QS Rectangle with bar bundle QR sym. reinf. CX Dimension in X direction cm 30. CY Dimension in Y direction cm 30. D1 Distance of reinforcement cm 5.0 DU Diameter mm 12 AS necassary Reinforcement of column cm2 0. ASV available Reinforcement of column cm2 0. EX Eccentricity in X direction cm 0. EY Eccentricity in Y direction cm 0. EZ Eccentricity in Y direction cm 0. EOPT Eccentricity LT SP RAND with reference to foundation edge"
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            41
+        ],
+        "page_labels": [
+            "5-20"
+        ],
+        "type": "image",
+        "sections": [
+            "5 Input Description",
+            "5.9 GEOM – Geometry"
+        ],
+        "coordinates": [
+            [
+                618.67431640625,
+                1390.1461181640625
+            ],
+            [
+                1788.7171630859375,
+                2945.96826171875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 5.4"
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            34,
+            36,
+            37
+        ],
+        "page_labels": [
+            "5-13",
+            "5-15",
+            "5-16"
+        ],
+        "type": "text",
+        "sections": [
+            "5 Input Description",
+            "5.9 GEOM – Geometry"
+        ],
+        "content": "GEOM\n EINZ Normal foundation\n KOE Sleeve foundation\n BLOC Sleeve block out foundation\n STRE Strip foundation\n STIF L-Shaped foundation\n The foundation dimensions are defined by the foundation sides BX and BY: Foundation di- mensions in cm:\n BX > 0, BY > 0\n no modification\n BX > 0, BY < 0\n BY is modified\n BX < 0, BY > 0 BX is modified\n BX < 0, BY < 0\n BX and BY are modified\n BX:BY = aspect ratio\n BX = 0, BY = 0 BX and BY are modified\n A:B (coulmn dimensions = aspect ratio)\n The calculation for the determination of the foundation dimensions can be controlled by the proportions of the sides BX and BY. If BX or BY < 0, then this values is modified. The program starts the iteration with the absolute value.\n BX > 0, BY > 0\n The input foundation dimensions are not modified. A comparison with the permissible soiol pressures is not done. The soil pressures are determined with the defined foundation dimen- sions and the defined loads. It follows the design and the punching check. If the stability check is not correct, then the foundation dimensions are increased and an information is printed.\n BX > 0, BY < 0\n The measure of BX is here not changed. BY is determined in such a way, that the permissible soil pressures are kept under the available loads.\n The measure of BY is here not changed. BX is determined in such a way, that the permissible soil pressures are kept under the available loads.\n BX < 0, BY < 0\n BX and BY are determined. In this case the aspect ratio of BX:BY is not modified.\n BX = 0, BY = 0\n BX and BY are determined. The constant aspect ratio results from the column dimensions CX:CY.\n HI\n Foundation thickness inside\n Die Fundamenthöhe wird am Stützenrand bzw. am Köcherrand angegeben.",
+        "token_count": 422
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            37,
+            38,
+            39,
+            40,
+            41
+        ],
+        "page_labels": [
+            "5-16",
+            "5-17",
+            "5-18",
+            "5-19",
+            "5-20"
+        ],
+        "type": "text",
+        "sections": [
+            "5 Input Description",
+            "5.9 GEOM – Geometry"
+        ],
+        "content": "In this case the aspect ratio of BX:BY is not modified.. BX = 0, BY = 0. BX and BY are determined. The constant aspect ratio results from the column dimensions CX:CY.. HI. Foundation thickness inside. Die Fundamenthöhe wird am Stützenrand bzw. am Köcherrand angegeben..\n Foundation thickness outside\n HA must be equal to or less HI.\n The static heights HX and HY are necessary for the design in both direction. Both values have to be different and smaller than the foundation thickness.\n The position for the design section can be defined with the option NBEM. If nothing is input, the design is done at the column edge (STR).\n STM design in column centre (without rounding off)\n STR design at column edge\n AUSR design in column centre with rounding off\n KOEM design in the middle of the sleeve wall\n KOER design at sleeve wall edge\n 5.10 SLEE – Sleeve\n SLEE\n The sleeve height outside and inside and the wall thickness of the sleeve in cm are additionally\n necessary. Normally the program uses a rough sleeve. A smooth sleeve is defined with the input G for the sleeve TYPE.\n WXGU and WXWL are the gap width of the sleeve to the column.\n Type of the sleeve gap\n R = rough\n G = smooth\n The input for KEOB defines, whether the design should be done according to Leonhardt (LEON), according to Paschen (PSCH) (DAfStb, Heft 411) or according to the beam structure model (STWM).\n 5.11 COLU – Column\n COLU\n SP\n with reference to centre of gravity\n Type of column\n Rechteckquerschnitt mit Umfangsbewehrung\n QK Kreisquerschnitt mit Umfangsbewehrung\n Q4 Rechteckquerschnitt mit Eckbewehrung\n QS Rechteckquerschnitt mit Stabbündel\n QR Sym. reinforcement\n The values CX and CY have to be input in cm. The column dimensions are necessary for the punching check and for the aspect ratio of the foundation dimensions. The distribution of the moments and thus the reinforcement in the design section result from the ratio of the length of one column side to the corresponding foundation side.\n Distance of the reinforcement of the column in cm\n Diameter of the column reinforcement in mm\n necessary Reinforcement of the column cm2",
+        "token_count": 498
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            40,
+            41
+        ],
+        "page_labels": [
+            "5-19",
+            "5-20"
+        ],
+        "type": "text",
+        "sections": [
+            "5 Input Description",
+            "5.9 GEOM – Geometry"
+        ],
+        "content": "The column dimensions are necessary for the punching check and for the aspect ratio of the foundation dimensions. The distribution of the moments and thus the reinforcement in the design section result from the ratio of the length of one column side to the corresponding foundation side.. Distance of the reinforcement of the column in cm. Diameter of the column reinforcement in mm. necessary Reinforcement of the column cm2.\n available Reinforcement of the column cm2 Dieser Wert wird benötigt, um realistische Über- greifungslängen bei der Bemessung der Köcherbewehrung zu erhalten.\n It is possible to define the column eccentrically on the foundation. With the option SP the wall is generated eccentrically to the centre of gravity.\n the eccentricity references to the edge of foundation (RAND) or to the centre of gravity (SP). Columns of halls with onesided loading should keep a constant space from the foundation edge.",
+        "token_count": 185
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            42
+        ],
+        "page_labels": [
+            "5-21"
+        ],
+        "type": "table",
+        "sections": [
+            "5 Input Description",
+            "5.12 LC – LF - Characteristic Loads"
+        ],
+        "coordinates": [
+            [
+                346.4105224609375,
+                817.1146240234375
+            ],
+            [
+                2925.345458984375,
+                2368.214599609375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default NO Number of loadcase − - TYPE Type of Action LT G (G, Q, S, W, A) KN Node number of support − - V Axial force kN ! MY Moment about Y axis kNm - MX Moment about X axis kNm - HX Lateral force in X direction kN - HY Lateral force in Y direction kN - DMY Second order theory moment about Y axis kNm - DMX Second order theory moment about X axis kNm - DHX Second order theory force in X direction kN - DHY Second order theory force in Y direction kN - TIT Title of the loadcase LT32 -"
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            43
+        ],
+        "page_labels": [
+            "5-22"
+        ],
+        "type": "image",
+        "sections": [
+            "5 Input Description",
+            "5.12 LC – LF - Characteristic Loads"
+        ],
+        "coordinates": [
+            [
+                875.8604125976562,
+                392.4311218261719
+            ],
+            [
+                1789.9232177734375,
+                1231.7271344444443
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 5.5"
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            42,
+            43
+        ],
+        "page_labels": [
+            "5-21",
+            "5-22"
+        ],
+        "type": "text",
+        "sections": [
+            "5 Input Description",
+            "5.12 LC – LF - Characteristic Loads"
+        ],
+        "content": "See also: , LKOE, LAST\n LC\n Number of the characteristic loadcase.\n Type of the action\n G permanent loading\n SnOQ FOOD\n Q variable loading (A, B)\n Snow\n W Wind\n Q_A variable loading (C, D)\n Q_B variable loading (E)\n A außergewöhnlich\n Node number\n The Node number for the takeover of support reactions from the Database (CDB) is set here.\n A positive axial force acts as a loading and a negative one as an unloading. The moment MY acts on X direction (about the Y axis) and the moment MX in Y direction (about the X axis). A\n positive lateral force HX and a negative moment MY as well as a positive lateral force HY and a positive moment MX have the same action direction.",
+        "token_count": 168
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            44
+        ],
+        "page_labels": [
+            "5-23"
+        ],
+        "type": "table",
+        "sections": [
+            "5 Input Description",
+            "5.13 LOAD – Design Loads"
+        ],
+        "coordinates": [
+            [
+                349.3547058105469,
+                819.4852905273438
+            ],
+            [
+                2921.384765625,
+                2069.159912109375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default NO Number of the load − - TYPE Type for the check LT BEME (K1, K2, GL, GB, LAGS, BEME) KN Node number − - V Axial force kN ! MY Moment about Y axis kNm - MX Moment about X axis kNm - HX Lateral force in X direction kN - HY Lateral force in Y direction kN - ZUGV Additional load in Z direction kN - TIT Title of the loadcase LT64 -"
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            45
+        ],
+        "page_labels": [
+            "5-24"
+        ],
+        "type": "image",
+        "sections": [
+            "5 Input Description",
+            "5.13 LOAD – Design Loads"
+        ],
+        "coordinates": [
+            [
+                886.0103759765625,
+                1907.0460205078125
+            ],
+            [
+                1788.5283203125,
+                2753.6382455555554
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 5.6"
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            44
+        ],
+        "page_labels": [
+            "5-23"
+        ],
+        "type": "text",
+        "sections": [
+            "5 Input Description",
+            "5.13 LOAD – Design Loads"
+        ],
+        "content": "See also: LF, LKOE\n LOAD\n Number of the design load.\n TYPE\n Type of the check\n K1 mid 1/3\n K2 mid 2/3\n GL Sliding\n GB Bearing Failure\n LAGS Stability\n BEME Reinforcement Design\n Node number\n By taking over the supporting forces from the database (CDB) the node number should be defined.\n A positive axial force acts as a loading and a negative one as an unloading. The moment MY acts on X direction (about the Y axis) and the moment MX in Y direction (about the X axis). A positive lateral force HX and a negative moment MY as well as a positive lateral force HY and a positive moment MX have the same action direction.",
+        "token_count": 156
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            46
+        ],
+        "page_labels": [
+            "5-25"
+        ],
+        "type": "table",
+        "sections": [
+            "5 Input Description",
+            "5.14 BEW – Reinforcement Parameter"
+        ],
+        "coordinates": [
+            [
+                352.2562255859375,
+                806.25537109375
+            ],
+            [
+                2903.073486328125,
+                2364.4833984375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Bewehrung Fundamentplatte SDUX diameter X-direction SDUY diameter Y-direction DMIN minimaler diameter DMAX maximaler diameter CMIN minimaler distance CMAX maximaler distance Schubbewehrung DUST diameter Schubbewehrung Sleeve reinforcement KOEV diameter vertikal KOEH diameter horizontal KOAV distance vertikal KOAH distance horizontal Unit Default mm 12 mm 12 mm 8 mm 28 cm 5 cm 25 mm 20 mm 14 mm 14 cm 20 cm 30"
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            46
+        ],
+        "page_labels": [
+            "5-25"
+        ],
+        "type": "text",
+        "sections": [
+            "5 Input Description",
+            "5.14 BEW – Reinforcement Parameter"
+        ],
+        "content": "See also: MAT\n BEW",
+        "token_count": 7
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            47
+        ],
+        "page_labels": [
+            "5-26"
+        ],
+        "type": "table",
+        "sections": [
+            "5 Input Description",
+            "5.15 KN – Selection Support Nodes"
+        ],
+        "coordinates": [
+            [
+                358.4879455566406,
+                807.2392578125
+            ],
+            [
+                2909.18994140625,
+                2088.143310546875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default NO Node number − * POS Position description LT8 * GEO Description for the same size of foundation LT16 * BX Foundation dimension in X direction cm * BY Foundation dimension in Y direction cm * WI Rotation of the foundation axis opposite to the global degree 0 coordinate system REP Computational fixed point of the column in the foun- m 0 dation TIT Positionsbezeichnung LT32 *"
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            48
+        ],
+        "page_labels": [
+            "5-27"
+        ],
+        "type": "image",
+        "sections": [
+            "5 Input Description",
+            "5.15 KN – Selection Support Nodes"
+        ],
+        "coordinates": [
+            [
+                506.482177734375,
+                597.1365356445312
+            ],
+            [
+                1787.504638671875,
+                1748.906494140625
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Figure 5.7"
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            47
+        ],
+        "page_labels": [
+            "5-26"
+        ],
+        "type": "text",
+        "sections": [
+            "5 Input Description",
+            "5.15 KN – Selection Support Nodes"
+        ],
+        "content": "See also: LCDB\n KN\n The foundation dimensions are defined by the foundation sides BX and BY\n A rotation can be defined with WI, if the foundation axes are not identically to those ones of the global coordinate system. The computational fixed point of the column has not to be identically to the defined point of application of the loads on the foundation. This can be adapted with the input REP.",
+        "token_count": 81
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            49
+        ],
+        "page_labels": [
+            "5-28"
+        ],
+        "type": "table",
+        "sections": [
+            "5 Input Description",
+            "5.16 ECHO – Output Options"
+        ],
+        "coordinates": [
+            [
+                394.7356262207031,
+                798.3701782226562
+            ],
+            [
+                2930.42919921875,
+                2911.847412109375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default OPT1 COMB Reinforcement for each Load Case LT NEIN GB Bearing Failure (JA, VOLL, EXTR) LT NEIN TAB Soil pressure table LT NEIN ACT Actions table LT JA TESI Partial Safety Factors LT JA CRFC Reinforcement of column connection LT JA RFC Bending ans Shear reinforcement LT JA SRFC Sleeve reinforcement LT JA GLEI Slide verification LT JA KIPP Tipping verification LT JA LAGS Stability verification LT JA LOAD Print Loads LT VOLL PUN Punching verification LT JA SYST Representation of Foundation (dimensions LT JA and reinforcement) WERT YES LT NO VOLL"
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            49,
+            50
+        ],
+        "page_labels": [
+            "5-28",
+            "5-29"
+        ],
+        "type": "text",
+        "sections": [
+            "5 Input Description",
+            "5.16 ECHO – Output Options"
+        ],
+        "content": "ECHO\n EXTR\n COMB Perform code veryfications and design for all Load Cases.\n GB GB controls the Bearing Failure verification.\n A valid Soil Profile including soil layers must be provided using the Record MATF.\n YES perform the Bearing Failure verification.\n VOLL expanded output.\n EXTR create sketch.\n Soil pressure table (A6.1-A6.8 or user defined) will be printed.\n ACT Output of applied Actions (DIN 1054:2010-12) .\n TESI Output of Partial Safety Factors for Actions (DIN 1054:2010-12, DIN EN 1990:2010-12) and Resistances (DIN 1054:2010-12).\n CRFC Print reinforcement of column connection.\n RFC Perform reinforcement design.\n Print bending reinforcement and shear verification.\n a expanded table will be printed for each combination.\n SRFC Print Sleeve reinforcement. The verification can be performed by Leonhardt, Paschen or beam model.\n GLEI Slide verification. For Horizontal Loads the defined friction coefficient will be used.\n KIPP Tipping verification. In case of self-weight loads the 1. core value will be checked and for gapping the 2. core value.\n LAGS Stability verification.\n LOAD Output of the combined Loads.\n JA Print only the combinations that were applied in one verification or for reinforcement design.\n VOLL All tested combinations will be printed.\n EXTR include a sketch of the characteristic loads.\n PUN Punching verification control.\n Graphical representation of design results.",
+        "token_count": 309
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            51
+        ],
+        "page_labels": [
+            "5-30"
+        ],
+        "type": "table",
+        "sections": [
+            "5 Input Description",
+            "5.17 SPT – Structural point"
+        ],
+        "coordinates": [
+            [
+                385.6930236816406,
+                818.3049926757812
+            ],
+            [
+                2904.10009765625,
+                2074.02685546875
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default NO Point number − - X Point coordinates [m]1001 0.0 Y [m]1001 0.0 Z [m]1001 0.0 NX z-axis of the local coordinate system − * NY − * NZ − * SX x-axis of the local coordinate system − * SY − * SZ − * GUID 128 bit code given as hexadecimal string Lt !"
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            51,
+            52,
+            53
+        ],
+        "page_labels": [
+            "5-30",
+            "6-1",
+            "6-2"
+        ],
+        "type": "text",
+        "sections": [
+            "5 Input Description",
+            "5.17 SPT – Structural point"
+        ],
+        "content": "SPT\n Note: See SOFIMSHC manual for more details.\n A Structural Point in FOOTiNG is used to define a foundation connected to the corresponding Structural Element. All parameters refer to a local coordinate system which is located in the center of the upper face of the foundation. Its z-axis points downward in gravity direction towards the lower face of the foundation. This coordinate system is independant from the coordinate system of the structural point the foundation is connected to.\n 6 Output Description\n 6.1 Position Description\n Foundation:\n quast-zweiachsig/F1 260x260\n 6.2 System\n 6.2.1 Column\n Dimensions of the column CX cy Cc @X ey exs eys 6.2.2 Stat. Heights Static heights for the design dx dy d 6.2.3 sleeve Dimensions of the sleeve kx ky edge length in X direction in cm edge length in Y direction in cm diameter of the column cross section c= 1.13 -/cx - cy for rectangular columns For rough sleeve foundations c is determined from the dimensions of the sleeve. eccentric loading from the foundation edge incm eccentric connection in Y direction eccentric loading from the foundation centre of gravity in cm eccentric connection in Y direction height for X direction in cm height for Y direction in cm average value from both directions edge length in X direction in cm edge length in Y direction in cm\n For rough sleeve foundations c is determined\n 6.2.2\n 6.2.3\n ha\n sleeve height from foundation upper edge\n hi inner sleeve height wax sleeve wall thickness in X direction way sleeve wall thickness in Y direction",
+        "token_count": 338
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            53,
+            54
+        ],
+        "page_labels": [
+            "6-2",
+            "6-3"
+        ],
+        "type": "text",
+        "sections": [
+            "5 Input Description",
+            "5.17 SPT – Structural point",
+            "6.2.4 Moment-V."
+        ],
+        "content": "The total moment is divided in eight parts according to table 2.10 from Heft 240 DAfStb\n X-Ri parts of the total moment in % for the moment in X direction (cy/by) Y-Ri parts of the total moment in % for the moment in Y direction (cx/bx)\n The parts refer to the half foundation. The sum of the parts is 50.\n A partitioning for both sides is done for eccentric loaded foundations.\n Type Marking of the loadcase with the action V(kN) axial force in kN My(kNm) Mx(kNm) Hx(kN) lateral force in X direction in kN Hy(kN) lateral force in Y direction in kN\n moment in X direction (about Y axis) in kNm\n moment in Y direction (about X axis) in kNm\n dMy(kNm) additional moment in X direction dMx(kNm) additional moment in Y direction in kNm dHx(kN) additional lateral force in X direction in kN dHy(kN) additional lateral force in Y direction in kN\n foundation\n foundation\n in kN/m2, dead weight of the foundation,\n if it was used.\n The additional loads from the sleeve are determined for a sleeve foundation.\n sleeve in kN superimposed load in kN/m2, superimposed load which results from the fill around the sleeve\n LC V(kN) axial force in kN My(kNm) moment in X direction (about Y axis) in kNm Mx(kNm) moment in Y direction (about X axis) in kNm Hx(kN) lateral force in X direction in kN Hy(kN) lateral force in Y direction in kN accV(kN) accompanying load in Z-direction\n The loads become a number and a description",
+        "token_count": 378
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            54
+        ],
+        "page_labels": [
+            "6-3"
+        ],
+        "type": "text",
+        "sections": [
+            "5 Input Description",
+            "6.3 Permissible Soil Pressure"
+        ],
+        "content": "The parts which give the permissible soil pressure are compiled for the determination from tables:\n table soil pressure interpolated from the input tables with the defined anchoring depth\n rectangular foundation\n increase for rectangular foundations for a side ratio b : by < 2 bzw. b’ : b’y < 2 DIN 1054:2010-12, 6.10.2.2 (2)\n dense packing soil\n increase about the input percent value\n DIN 1054:2010-12, 6.10.2.2 (3)\n ground water\n decrease in case of ground water DIN 1054:2010-12, 6.10.2.3",
+        "token_count": 138
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            55,
+            56,
+            54
+        ],
+        "page_labels": [
+            "6-4",
+            "6-5",
+            "6-3"
+        ],
+        "type": "text",
+        "sections": [
+            "5 Input Description",
+            "6.4 Soil Pressure/Buckling"
+        ],
+        "content": "The permissible and the calculated soil pressures are compared. The marked combinations for this check were build without safety factors.\n rho\n soil friction angle for determination of the safety against sliding\n LF Combination number V(kN) My(kNm) moment in X direction (about Y axis) in kNm Mx(kNm) moment in Y direction (about X axis) in kNm sigma soil pressure in kN/m2 with reference to the subarea A’ which centre of gravity is the load application point. Beside there is the permissible value.\n axial force in kN mit dead weight of the foundation\n If lateral forces are available, the permissible stresses are reduced about a factor.\n Fact. Factor bx’/by’ reduced edge length for determination of sigma ex/ey eccentricity of the resulting load\n At gaping gap at the end of the line gapping appears.\n printed in cm2.\n The design is done for both directions by indicating the number and description of the combi- nation. For a strip foundation the design is done for a strip of 100 cm only for the X direction.",
+        "token_count": 220
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            65
+        ],
+        "page_labels": [
+            "6-14"
+        ],
+        "type": "table",
+        "sections": [
+            "5 Input Description",
+            "6.6 Sleeve Design"
+        ],
+        "coordinates": [
+            [
+                470.2268981933594,
+                793.6585083007812
+            ],
+            [
+                1661.5916748046875,
+                1274.13720703125
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "System Kécherfundament Moment -V. Fundament Stiitze; stat.Hdhen K6cher X-Ri Y-Ri [m] [m] [m] [m]|_ [o/o]| [0/0] bx 3.000 | cx @.600 | dx @.450) kx 1.300 8.0 11.4 by 2.0@0| cy 0.400 | dy @.460| ky 1.100 10.0 14.4 hi @.500)c 1.351\\d @.455)ha 1.0 14.0 17.0 ha @.500| ex' 1.100 hi 1.000 18.0 17.0 h 1.550 wax 8.250 18.0 14.0 way @.250 14.0 11.0 10.0 8.5 8.0 6.8"
+    },
+    {
+        "document_name": "footing_1.pdf",
+        "page_indices": [
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70
+        ],
+        "page_labels": [
+            "6-5",
+            "6-6",
+            "6-7",
+            "6-8",
+            "6-9",
+            "6-10",
+            "6-11",
+            "6-12",
+            "6-13",
+            "6-14",
+            "6-15",
+            "6-16",
+            "6-17",
+            "6-18",
+            "6-19"
+        ],
+        "type": "text",
+        "sections": [
+            "5 Input Description",
+            "6.6 Sleeve Design"
+        ],
+        "content": "It is printed the kind of the analysis (Leonhardt, Paschen or beam structure model) and the kind of the shuttering (rough or smooth). The design is done in X and Y direction. The reinforcement is determined for the flank walls and the back-wall. Impact loads can be input additionally for the design.\n LF number of combination Ri. direction erf-t sleeve in cm Zs tensile force in the back-wall in kN Z design force in kN As reinforcement in cm2 Pos. of reinforcement lower description description of combination\n necessary anchoring depth of the column in the\n vertical or horizontal and wall or shoulder above or\n The absorption of the lateral forces in the end wall or back-wall is verified additionally for smooth shuttering.\n Output about the round cut for punching\n a-crit measure for the critical round cut (1.0*d resp. 1.5*d) a-crit critical round cut in cm u-crit generated around the column in cm A-Fund foundation area in m2 A-crit round cut area in m2\n circumference of the round cut which is\n At different heights of the foundation outside and at the edge of the\n column hrmx height at the round cut in X direction in cm hrmy height at the round cut in Y direction in cm hrm average height at the round cut in cm\n A shear reinforcement can be prevented via a further increase of the bending reinforcement in both directions X and Y in the round cut area.\n SOFIiSTiK 2014-1 FOOTING - Einzel- und Streifenfundamente (V 14.01)\n Einzelfundament\n Fundament: quast-zweiachsig/F1 260x260 GroRe aus LF 7 G+Q(2)+0.6W(4) (Grundbruch)\n 2\n 8 : Q < x Ee Q ww (e) no\n SOFIiSTiK 2014-1 FOOTING - Einzel- und Streifenfundamente (V 14.01)\n Einzelfundament\n $$Eigengewicht 12.5 84.5 Auflast standig @.0 Lastzusammenstellung OK-Fundament Lastfall Vv My Mx Hx Hy zugV | Nachweis Bezeichnung [kN] [kNm] [kNm] [KN] [kN] [kN] 1 844.8 -55.9 57.5 0.28 0.0 1.Kernw. G 2 1389.8] -212.0 94.6 18.0 0.0 2.Kernw. G+Q(2)+0.6W(4) |3 1269.8] -255.1 86.4| 30.0 0.8 2.Kernw. G+W(4)+0.70(2) 4 919.8) -210.9 62.6 30.0 0.0 2.Kernw. G+W(4) 15 889.8] -148.9 60.6 18.0 0.0 2.Kernw. G+@.6W(4) 6 1344.8] -119.0 91.5 0.0 0.0 2.Kernw. G+Q(2) 7 1389.8| -212.0 94.6} 18.0 @.@| 1958.@/Grundbruch |G+Q(2)+0.6W(4) |8 1269.8) -255.1 86.4 30.0 0.0 1778.0|Grundbruch G+W(4)+0.7Q(2) Ig 919.8] -210.9 62.6 30.0 0.0 1253.@|Grundbruch G+W(4) 10 889.8) -148.9 60.6 18.0 0.0 1208.@|Grundbruch G+@.6W(4) 11 1344.8] -119.0 91.5 0.28 0.0 1890@.5|Grundbruch G+Q(2) 12 844.8 -55.9 57.5 0.0 0.0 114@.5|Grundbruch G 13 1958.0| -309.6 133.2 27.8 0.0 1389.8/Gleiten 1.35G+1.5Q(2)+0.9W(4) 14 844.8 -55.9 57.5 0.0 0.0 844.8|Gleiten G 15 1778.0| -374.2 121.0 45.0 0.0 1269.8/Gleiten 1.35G+1.5W(4)+1.05Q(2) 16 1253.0| -308.0 85.3 45.0 0.0 919.8|Gleiten 1.35G+1.5W(4) 17 1140.5 -75.5 77.6 0.28 0.0 844.8} Gleiten 1.35G 18 1482.3] -354.7 100.8 45.0 0.0 1269.8|/Gleiten G+1.5W(4)+1.05Q(2) 19 957.3) -288.4 65.2 45.0 0.0 919.8|Gleiten G+1.5W(4) 20 1890.5) -170.1 128.6 0.0 0.0 1344.8/Gleiten 1.35G+1.5Q(2) 21 1746.8| -295.6] 118.8] 27.0 0.8 Lagesich. @.9GF+1.1G4+1.50(2)+0.9W(4) 22 760.3 -50.3 51.8 0.0 0.0 Lagesich. @.9GF+0.9G 23 1566.8] -360.2 106.6 45.0 0.0 Lagesich. @.9GF+1.1G+1.5W(4)+1.05Q(2) 24 1041.8] -294.0 70.9 45.0 0.0 Lagesich. @.9GF+1.1G+1.5W(4) 25 929.3 -61.5 63.2 0.28 0.0 Lagesich. @.9GF+1.1G 26 1397.8) -349.1 95.1 45.0 0.0 Lagesich. @.9GF+0.9G+1.5W(4)+1.05Q(2) 27 872.8) -282.8 59.4 45.0 0.0 Lagesich. @.9GF+O0.9G+1.5W(4) 28 1679.3) -156.1 114.2 0.0 0.0 Lagesich. @.9GF+1.1G6+1.5Q(2) 29 1958.0| -309.6 133.2 27.8 0.0 Sohlwiderst. /1.35G+1.5Q(2)+0.9W(4) 30 844.8 -55.9 57.5 0.0 0.0 Sohlwiderst. |G 31 1778.0| -374.2) 121.0] 45.0 0.8 Sohlwiderst. |1.35G+1.5W(4)+1.050(2) 32 1253.0| -308.0 85.3 45.0 0.0 Sohlwiderst. /1.35G+1.5W(4) 33 1140.5 -75.5 77.6 0.28 0.0 Sohlwiderst. /1.35G 34 1482.3] -354.7 100.8 45.0 0.0 Sohlwiderst. |G+1.5W(4)+1.05Q(2) 35 957.3) -288.4 65.2} 45.0 0.0 Sohlwiderst. |G+1.5wW(4) 36 1890.5) -170.1 128.6 0.0 0.0 Sohlwiderst. |1.35G+1.5Q(2) 1.Kernweite nach DIN EN 1997-1:2009-09 Lastfall Vv My Mx bx\" by' ex ey| ex/bx| ey/by|Bezeichnung [KN] | [kNm] | [kNm] [m] [m] [m] [m]$$\n 1\n 929.3\n 55.9\n 57.5) 2.480} 2.476] 0.060) 0.062] 0.023]; 0.024/G\n SOFIiSTiK 2014-1 FOOTING - Einzel- und Streifenfundamente (V 14.01)\n Einzelfundament\n 2.Kernweite nach DIN EN 1997-1:2009-09 Lastfall Vv My Mx bx\" by’ ex ey| ex/bx| ey/by|Bezeichnung [KN] | [kNm]| [kNm] [m] [m] [m] [m] 4 1004.3 225.9 62.6} 2.150} 2.475] @.225| @.062| @.087| 0.024] G+W(4)\n Lagesicherheitsnachweis gem. DIN EN 1990:2010-12 V) MEd,dst| MEd,stb| Mdst/|Bezeichnung [kN] [kNm] [kNm]| Mstb 305.3 1233.5| @.248|@.9GF+0.9G+1.5W(4) 1822.8 118.8 2369.7| @.050|@.9GF+1.1G+1.5Q(2)+0.9W(4)\n Lastfall |Ri.\n 27\n 948.9\n x\n 21\n Y\n Gleiten Reibungswinkel 25.0 Grad Gleitwiderstand 1.10\n Lastfall Vk Hx Hy Td Rrd| Td/R|Bezeichnung [KN] [KN] [KN] [KN] [KN] 16 1004.3 45.0 0.0 45.0 425.7| @.106/1.35G+1.5W(4)\n Grundbruchnachweis X-Richtung Grundbruchwiderstand 1.40 LF 7:G+Q(2)+0.6W(4) b'/a'= 230/ 247 cm, V= 1474.3 kN, H= 18.0 kN, Omega= 90.0 Grad\n Boden\n Phi\n Kohas. Lange Flache [m] [Grad] [kN/m3] [KN/m2] [m] @.00 30.0 18.00\n Kote\n Gamma\n [m2]\n 18.00\n Q.50\n 30.0\n 18.00\n 14.50 26.96 UK Fundament\n 99.00\n 30.0\n 8.00\n phim\n 30.0\n 18.00\n Summe 14.50 26.96\n Beiwerte Tragfahigk. Form Neigung\n Breite 10.047 0.721 Griindungstiefe 18.401 SOFiSTIK AG - www.sofistik.de\n 8.970\n @.982\n 1.465\n Nd= 2072.1 kN, RNk= 3007.0 KN, RNd= 2147.8 kN,\n mue= 0.96\n ,\n $$Lastzusammenstellung Lastfall Vv My Mx Hx Hy | Bezeichnung [KN] [kNm] [kNm] [kN] [KN] 37 1958.0| -309.6| 133.2| 27.0 @.0]1.35G4+1.50(2)+0.9W(4) 38 844.8 -55.9 57.5 0.0 Q.0/G 39 1778.0| -374.2 121.0 45.0 @.0/1.35G+1.5W(4)4+1.05Q(2) 40 1253.0] -308.0 85.3 45.0 @.0/1.35G+1.5W(4) 41 1140.5 -75.5 77.6 0.0 Q@.0/1.35G 42 1482.3) -354.7 100.8 45.0 @.0)/G+1.5W(4)+1.05Q(2) 43 957.3] -288.4 65.2 45.0 @.0/G+1.5W(4) 44 1890.5| -170.1 128.6 0.0 @.0/1.35G+1.5Q(2)$$\n Material\n Beton Stahl Sicherheitsbeiwerte Fundament /C 20/25 |B 5@@ B (EN 1992) 1.50 1.15 Stiitze C 45/55 B 50@ B (EN 1992) 1.50 1.15\n SOFIiSTiK 2014-1 FOOTING - Einzel- und Streifenfundamente (V 14.01)\n Einzelfundament\n Bemessung Stiitzenanschluss\n Knoten/ Vv My Mx Mue As | Bezeichnung Lastfall [kN] [kNm] [kNm] [cm2] 39 -1778.0| -374.2 121.0| 3.23 48 .52|1.35G+1.5W(4)+1.05Q(2) Bemessung Stiitzenrand Moment M/8 b d| eps.b/ eps.s As; Stanz| ges As|Lastfall [kNm] [kNm] [m] [m] | [0/00] | [0/00] [cm2]| [cm2] [cm2] 530.7] 38.0 | 0.325} 0.450} -2.09| 25.00; 1.91 LF 37:1.35G+1.5Q(2)+0.9W(4) 53.1 | @.325| @.450| -2.72| 25.00) 2.69 2.32 74.3 | @.325) @.450; -3.50); 23.41) 4.01? 3.18 100.0 | 0.325} 0.450; -3.50| 16.06; 5.37 1.82| 42.60 |in X-Richtung 553.1] 43.8 | 0.325} 0.440; -2.41/ 25.00; 2.26 LF 37:1.35G+1.5Q(2)+0.9W(4) 55.3 | 0.325] 0.440) -2.93] 25.00] 3.042 3.42 77.4 | @.325) @.440; -3.50) 21.04) 4.16? 3.03 100.0 | 0.325} 0.440; -3.50; 15.13} 5.52 1.67| 46.21 |in Y-Richtung Mindestbewehrung Querkrafttragfahigkeit (DIN EN 1992-1-1 NA.6.54.1)\n 2\n Rundschnitt a-crit = @.99*d\n a-crit u-crit A-Fund A-crit\n [cm]\n [cm]\n [m2]\n [m2]\n 44.1 436.8 6.76 1.46\n 8 2 : Q < fs D\n Durchstanznachweis, Abschn. 6.4 VEd,red Querkraft beta Erhdéhung der Querkraft ro_l Mittlerer Langsbewehrun erhoht Vrd,max --> VEd LF 37:1.35G4+1.5Q(2)+0.9W(4) gsgrad zusatzliche Bewehrung im Rundschnitt in X-Richtung in Y-Richtung vEd Querkraft im Rundschnitt vRd,c Aufnehmb.Querkraft(ohne Schubbew. ) vRd,max Druckstrebenfestigkeit Durchstanzbewehrung Schnitt d/a a us VEd,red = VRd,s [em] [em] [MN] [MN] 1 @.30@ 13.4 243.9 0.767 0.987 2 @.80 35.6 383.7 ©.767 0.987 uout 1.91 85.1 694.4 1.110 1.110 mit Schragstaben @.99 44.1 436.8 1.016 1.146 1.534 1.29 Q.30 @.58 14.64 16.22 1.016 0.726 1.016 [MN ] Aussermittigkeit [%] [%] [cm2] [cm2] [MN/m2] [MN/m2] < [MN/m2] erforderlich As [cm2] [cm2/m] 27.33 27.33 31.73 11.21 7.12\n vEd\n SOFIiSTiK 2014-1 FOOTING - Einzel- und Streifenfundamente (V 14.01)\n Einzelfundament\n SOFiSTIK AG - www.sofistik.de\n SOFIiSTiK 2014-1 FOOTING - Einzel- und Streifenfundamente (V 14.01)\n DBV-Beispiel 11: Blockfundament (kritischer Rundschnitt und Lasterh6hung BETA automatisch durch FOOT ermittelt)\n Fundament: dbv-beispiel-11/F1 300x300 GroBe vorgegeben\n System Blockfundament\n Moment -V.\n 2\n B : g D 5 no\n K6cher\n Stiitze; stat.Hdhen\n Y-Ri\n X-Ri\n Fundament\n $$Zusatzliche Lasten Fundament Gesamtlast [kN/m2] [kN] Eigengewicht 20.0 180.0 Auflast standig @.0 Lastzusammenstellung OK-Fundament Lastfall Vv My Mx Hx Hy zugV | Nachweis Bezeichnung [kN] [kNm] [kNm] [KN] [kN] [kN] 11 4072.5 61.2 0.0 0.0 0.0 Sohlwiderst. |/1.35G+1.5Q(2) Sohlwiderstand nach DIN 1054:2010-12 Lastfall Vv My Mx Sigma bx\" by' ex ey |Bezeichnung [KN] | [kNm]| [kNm] [kN/m2] [m] [m] [m] [m] 11 4315.5 61.2 @.0| 484 < 500 1.35G+1.5Q(2) 3030.0 -42.8 0.0 2.972| 3.000) 0.014) 0.000$$\n M1: 50\n SOFIiSTiK 2014-1 FOOTING - Einzel- und Streifenfundamente (V 14.01)\n DBV-Beispiel 11: Blockfundament (kritischer Rundschnitt und Lasterh6hung BETA automatisch durch FOOT ermittelt)\n Pos: dbv-beispiel-11/F1 Bemessung nach DIN EuroNorm EN 1992 (2011) Concrete Structures\n 8 2 = : Q Fa Fa 3\n Lastzusammenstellung OK-Fundament Lastfall Vv My Mx Hx Hy | Bezeichnung [KN] [kNm] [kNm] [kN] [KN] 14 4072.5 61.2 0.0 0.0 @.0/1.35G+1.5Q(2) Material Beton Stahl Sicherheitsbeiwerte Fundament /C 30/37 |B 5@@ B (EN 1992) 1.50 1.15 Stiitze C 40/50 B 50@ B (EN 1992) 1.50 1.15 Bemessung Stiitzenanschluss Knoten/ Vv My Mx Mue As | Bezeichnung Lastfall [kN] [kNm] [kNm] [cm2] 14 -4072.5 61.2 @.0; 1.31 21.03 /1.35G+1.5Q(2) Bemessung Stiitzenrand Moment M/8 b d| eps.b| eps.s As| ges As|Lastfall [kNm] [kNm] [m] [m] | [0/00] | [0/00] [cm2] [cm2] 1171.6) 85.9 | 0.375] @.75@| -1.28| 25.00; 2.56 LF 14:1.35G+1.5Q(2) 117.2 | @.375| @.750| -1.54|) 25.00; 3.50 164.0 | 0.375} @.750| -1.93]| 25.00; 5.572 218.7 | @.375| 8.750} -2.40| 25.00} 6.63 | 36.52 |in X-Richtung 1147.1) 84.1 | 0.375] @.730| -1.30|} 25.00; 2.58 LF 14:1.35G+1.5Q(2) 114.7 | @.375| 0.730} -1.58} 25.00; 3.53 160.6 | @.375| @.730| -1.98| 25.00; 5.71? 214.1 | 0.375| 0.730| -2.46| 25.00} 6.67 | 36.99 jin Y-Richtung 2 Mindestbewehrung Querkrafttragfahigkeit (DIN EN 1992-1-1 NA.6.54.1) Kécherbemessung Stabwerksmodell :rauhe Schalungsflachen erf t= 60.0 [cm] LF Ri. T[KN] As[cm2] Bezeichnung 14 X Zugkraft aus Stitze 284.6 6.51.35G+1.5Q(2) Stitzenzugkraft Fs = 457.2 [kN] (= 21.03/2 * fyd) Versatz Bewehrung a = 19.1 [cm] innerer Hebelarm z = 31.5 [cm] vertikale Bugel 6.5 Druckstreben Theta 45 Grad 284.6 6.5 horizontale Bigel 6.5 Rundschnitt a-crit = @.68*d a-crit u-crit A-Fund A-crit [cm] [cm] [m2] [m2] 50.3 476.2 9.00 1.76 Durchstanznachweis, Abschn. 6.4 LF 14:1.35G+1.5Q(2) VEd,red Querkraft 3.276 [MN] beta Erhdéhung der Querkraft 1.10 Aussermittigkeit ro_l Mittlerer Langsbewehrungsgrad @.18 [%] vEd Querkraft im Rundschnitt 1.023 [MN/m2] vRd,c Aufnehmb.Querkraft(ohne Schubbew. ) @.845 [MN/m2] (vmin) < vEd vRd,max Druckstrebenfestigkeit 1.183 [MN/m2] vmin = Mindestwert fiir VRd,c (6.2.2(1)) Durchstanzbewehrung Schnitt d/a a u---VEd,red VRd,s_ erforderlich As [cm] [cm] [MN] [MN] [cm2] [cm2/m] 1 Q.30 22.2 299.5 1.638 1.802 41.44 13.84\n 2\n 0.80\n 59.2 532.0 1.638 1.802 41.44\n 7.79\n uout\n 1.44 106.8 830.9 1.767 1.767\n mit Schragstaben @.68 50.3 476.2 1.023 1.712 39.38\n SOFiSTiK 2014-1 FOOTING - Einzel- und Streifenfundamente (V 14.01)\n DBV-Beispiel 11: Blockfundament (kritischer Rundschnitt und Lasterh6hung BETA automatisch durch FOOT ermittelt)\n @ ao] =< o PS le} : Q x Fe Q 5 no\n SOFIiSTiK 2014-1 FOOTING - Einzel- und Streifenfundamente (V 14.01)\n DBV-Beispiel 12: K6écherfundament (kritischer Rundschnitt und Lasterhdhung BETA automatisch durch FOOT ermittelt)\n Fundament: dbv-beispiel-12/F1 300x200 GroBe vorgegeben\n Teilsicherheitsbeiwerte BS-P standige Situation\n Einwirkungen (DIN 1054) standig 1.35 veranderlich 1.50 Lagesicherheit (DIN EN 1998) |ungiinstig 1.10 giinstig @.98 Widerstande (DIN 1054) Grundbruch 1.40 Gleiten 1.10\n Einwirkungen DIN EN 1990\n Kenn\n G\n W\n -2 | Bezeichnung Eigengewicht 1.500 @.000 0.600 @.200 @.000|Wind\n y-f 1.350| 1.000\n p-@\n p-1\n y-u\n Qe\n 1.500; 0.000) 1.000; 9.900; 09.800@|Nutzlast Lagerrdaume Kat. E\n Charakteristische Lasten OK Fundament SOFiSTIK AG - www.sofistik.de\n Vv My [kN] [kNm ] [kNm] 257.0 -96.0 0.0\n LF/\n Mx\n Hx\n [kN] 0.0\n Typ 1/G 2/Q.E 3/W\n 573.0} -180.0\n 0.0\n 20.0\n -90.0\n 0.0\n 35.0\n 0.0\n | 96.0\n 257.0\n Hy [kN] 0.0\n dMy [kNm ] -48.0\n 0.0 -106.0\n 0.0\n 0.0\n dMx\n [kNm] 0.0\n 0.0\n 0.0\n dHy | Bezeichnung [kN] [kN] 0.0 @.0|Standige Last 0.0 @.@/Lastfall 2\n dHx\n 0.0 @.0|Lastfall 3\n SOFIiSTiK 2014-1 FOOTING - Einzel- und Streifenfundamente (V 14.01)\n DBV-Beispiel 12: K6écherfundament (kritischer Rundschnitt und Lasterhdhung BETA automatisch durch FOOT ermittelt)\n 8 =~ 5\n + < E & °\n Zusatzliche Lasten Fundament K6cher Gesamtlast [kN/m2] [kN] [kN] Eigengewicht 12.5 37.5 112.5 Auflast standig @.0 a) Auflast Boden 18.9 -27.0 86.4 Lastzusammenstellung OK-Fundament Lastfall Vv My Mx Hx Hy zugV | Nachweis Bezeichnung [kN] [kNm] [kNm] [KN] [KN] [kN] 1 257.0| -144.0 0.0 0.0 0.0 1.Kernw. G 4 257.0| -234.0 0.0 35.0 8.0 2.Kernw. G+W(3) 1.Kernweite nach DIN EN 1997-1:2009-@9 Lastfall Vv My Mx bx\" by’ ex ey| ex/bx| ey/by|Bezeichnung [KN] | [kNm]| [kNm] [m] [m] [m] [m] 1 455.9 41.2 Q@.0| 2.819) 2.000; 0.090} 8.000; 0.030} @.000/G 2.Kernweite nach DIN EN 1997-1:2009-@9 Lastfall Vv My Mx bx\" by’ ex ey| ex/bx| ey/by|Bezeichnung [KN] | [kNm]| [kNm] [m] [m] [m] [m] 4 455.9 185.4 @.0| 2.186] 2.000] 0.407] 0.000) 0.136] @.000|G+W(3) Pos: dbv-beispiel-12/F1 Bemessung nach DIN EuroNorm EN 1992 (2011) Concrete Structures Lastzusammenstellung OK-Fundament Lastfall Vv My Mx Hx Hy | Bezeichnung [kN] [kNm] [kNm] [KN] [KN] 24 1206.4] -623.4 @.0| 30.0 @.0}1.35G+1.5Q_E(2) 26 1206.4| -758.4 @.0| 82.5 @.0}1.35G+1.5Q_ E(2)+1.5W(3) Material Beton Stahl Sicherheitsbeiwerte Fundament /C 25/38 |B 5@@ B (EN 1992) 1.50 1.15 |Stitze C 45/55 |B 500 B (EN 1992) 1.50 1.15 Bemessung Stiitzenanschluss |Knoten/ Vv My Mx Mue As | Bezeichnung | Lastfall [kN] [knm] [knm] [cm2] 26 -1206.4| -758.4 @.0| 2.27 54.58/1.35G+1.5Q_E(2)+1.5W(3) Bemessung K6cherrand Moment M/8 b d| eps.b| eps.s As| ges As|Lastfall [kNm] [kNm] [m] [m] | [0/00] | [0/00] [cm2] [cm2] 471.6| 37.7 | @.250) 0.450) -2.14|) 25.00) 1.90 LF 26:1.35G+1.5Q_E(2)+1.5wW(3) 47.2 | @.250| @.450| -2.55| 25.00| 2.39 66.0 | @.250) 8.450) -3.42) 25.00) 3.39 84.9 | @.250; 8.450) -3.5@| 18.88) 4.49 84.9 | @.250; 8.450) -3.5@| 18.88) 4.49 66.0 | @.250; 8.450) -3.42) 25.00) 3.39 47.2 | @.250| @.450| -2.55| 25.00] 2.39 37.7 | @.250; @.450; -2.14) 25.00; 1.90 | 24.33 |in X-Richtung 63.6 7.2 | @.375| 0.460 @.753 LF 24:1.35G+1.5Q_E(2) 9.2 | @.375| 0.460 @.753 10.8 | @.375) 0.460 2.642 10.8 | @.375) 0.460 2.392 8.9 | @.375| 0.460 @.753 7.0 | @.375| 0.460 @.753 5.4 Q.375| 0.460 @.753 4.3 | 0.375| 0.460 @.753| 9.56 |in Y-Richtung\n 2 Mindestbewehrung Querkrafttragfahigkeit (DIN EN 1992-1-1 NA.6.54.1) 3 min-As: @ 8, t = 25.0 cm\n SOFIiSTiK 2014-1 FOOTING - Einzel- und Streifenfundamente (V 14.01)\n DBV-Beispiel\n 12: K6écherfundament (kritischer Rundschnitt und Lasterhdhung BETA automatisch durch FOOT Kécherbemessung Stabwerksmodell :rauhe Schalungsflachen erf t= 90.0 [cm] Ri. T[KN] As[cm2] Bezeichnung X Zugkraft aus Querkraft 78.6 1.81.35G+1.5Q_E(2)+1.5W(3) Einbindetiefe t= [cm] KOcherwandachsen aw= 105.0 [cm] Zugkraft aus Stiitze 765.5 17.6 Stitzenzugkraft Fs = [kN] (= 54.58/2 * fyd) Versatz Bewehrung a = [cm] innerer Hebelarm z = [cm] vertikale Bigel 19.4 (= 17.6 + 1.8) Anteil aus Querkraft 82.5 1.9 Druckstreben Theta 45 Grad 765.5 17.6 horizontale Bugel 19.5 (= 17.6 + 1.9) X-Richtung Schnitt 4-4 Querkraft 485.2 [KN] LF 26:1.35G+1.5Q_E(2)+1.5W(3) Querkraft Stiitzenrand 710.2 [kN] Mittlerer Langsbewehrungsgrad @.27 [%] Aufnehmb.Querkraft(ohne Schubbew. ) 338.9 [kN] < VEd Druckstrebenfestigkeit 2581.9 [kN] > VEd@ Winkel zwischen den Betondruckstreben 18.4 [Grad] Erforderliche Schubbewehrung 9.18 [cm2]\n LF\n 26\n Schubnachweis\n VEd,red VEd@\n ro_l VRd,c Vrd,max Theta\n ermittelt)\n Asw\n SOFiSTIK AG - www.sofistik.de\n minAsw\n SOFIiSTiK 2014-1 FOOTING - Einzel- und Streifenfundamente (V 14.01)\n Bauingenieur Band 81 Mai 2006: Streifenfundament\n Fundament: streifenfundamen/F1 270x100 GroBe vorgegeben\n System Streifenfundament Fundament Stiitze| stat.Hdhen K6cher X-Ri Y-Ri [m] [m] [m] [m]| [o0/o]| [0/0] bx 2.700) cx @. 300) dx @.4520 hi @.500\\c @.300\\d @.450 ha @.500;ex' mittig\n Teilsicherheitsbeiwerte BS-P standige Situation\n Einwirkungen (DIN 1054) standig 1.35 veranderlich 1.50 Lagesicherheit (DIN EN 1998) |ungiinstig 1.10 giinstig @.98 Widerstande (DIN 1054) Grundbruch 1.40 Gleiten 1.10\n Einwirkungen DIN EN 1990\n Kenn y-u y-f p-@ p-1 -2 | Bezeichnung G 1.350| 1.000 Eigengewicht W 1.500 @.000 0.600 @.200 @.000|Wind\n Charakteristische Lasten OK Fundament\n LF/ Vv My Hx | Bezeichnung Typ [KN] | [kNm]| [KN] 1/G 161.1 8.0 @.@|Standige Last 4/W 0.0 @.0| -33.8/|Wind\n 8\n B : Q x D Ww 9\n 164.1 ~. & ic 1G _ Standige Last 4W Wind Lastbilder Knoten 0, Lastfall 1-4 Zusatzliche Lasten Fundament Gesamtlast [kN/m2] [kN] Eigengewicht 12.5 33.8 Auflast standig Q.0 Lastzusammenstellung OK-Fundament Lastfall Vv My Hx zugV | Nachweis Bezeichnung [kN] [kNm] [kN] [kN] 1 161.1 0.0 0.0 1.Kernw. G 2 161.1 Q@.0| -33.8 2.Kernw. G+W(4) 3 161.1 @.0| -33.8 217.5|Grundbruch | G+W(4) 7 217.5 Q@.0| -50.7 161.1|Gleiten 1.35G+1.5W(4) 12 145.0 @.0| -50.7 Lagesich. @.9GF+0.9G+1.5W(4) 1.Kernweite nach DIN EN 1997-1:2009-09 Lastfall Vv My Mx bx\" by’ ex ey| ex/bx| ey/by|Bezeichnung [KN] | [kNm]| [kNm] [m] [m] [m] [m] 1 194.8 0.0 Q@.0| 2.700; 1.000; 0.000) 0.000; 0.000; 0.000/G 2.Kernweite nach DIN EN 1997-1:2009-09 Lastfall Vv My Mx bx\" by’ ex ey| ex/bx| ey/by|Bezeichnung [KN] | [kNm]| [kNm] [m] [m] [m] [m] 2 194.8 16.9 @.0| 2.527] 1.000] 0.087] 0.000) 8.032| 8.000|G+W(4) Lagesicherheitsnachweis gem. DIN EN 1990:2010-12 Lastfall |Ri. V) MEd,dst| MEd,stb| Mdst/|Bezeichnung [kN] [kNm] [kNm]| Mstb 12 X 175.4 25.4 236.7) @.107/@.9GF+0.9G+1.5W(4)\n M1:50\n SOFIiSTiK 2014-1 FOOTING - Einzel- und Streifenfundamente (V 14.01)\n Bauingenieur Band 81 Mai 2006: Streifenfundament\n Gleiten Reibungswinkel 25.0 Grad Gleitwiderstand 1.10\n Lastfall Vk Hx Hy Td Rrd| Td/R|Bezeichnung [KN] [KN] [KN] [KN] [KN] 7 194.9 -50.7 0.0 50.7 82.6| @.614/1.35G+1.5W(4)\n Grundbruchnachweis X-Richtung Grundbruchwiderstand 1.40 LF 3:G+W(4) b'/a'= 253/ 100 cm, V= 194.9 kN, H= 33.8 KN, Omega= 90.0 Grad\n Boden\n Kote Phi Gamma Kohas. Lange Flache [m] [Grad] [kN/m3] [KN/m2] [m] [m2] @.00 35.0 19.00 19.00 Q.50 35.0 19.00 15.17 27.72 UK Fundament 99.00 35.0 9.00 phim 35.0 19.00 Summe 15.17 27.72 Beiwerte Tragfahigk. Form Neigung Breite 22.614 1.000 0.565 Griindungstiefe 33.296 1.000 0.683\n Nd= 263.@ kN, RNk= 2094.6 kN, RNd= 1496.2 kN, , mue= 0.18\n SOFiSTIK AG - www.sofistik.de\n $$Lastzusammenstellung OK-Fundament Lastfall Vv My Hx | Bezeichnung [KN] [kNm] [KN] 17 217.5 0.0 @.0)1.35G 19 217.5 @.0) -50.7)1.35G+1.5W(4) Material Beton Stahl Sicherheitsbeiwerte Fundament /C 20/25 |B 5@@ B (EN 1992) 1.50 1.15 Stiitze C 20/25 B 50@ B (EN 1992) 1.50 1.15 Bemessung Wandanschluss Knoten/ Vv My Mue As | Bezeichnung Lastfall [kN] [kNm] [cm2] 17 -217.5 @.0| 0.03 @.75|1.35G Bemessung Stiitzenrand Moment b d| eps.b| eps.s As| ges As|Lastfall [kNm] [m] [m] | [0/00] | [0/00] [cm2] [cm2] 68.6 | 1.000; 0.450; -1.46) 25.00) 3.41 LF 19:1.35G+1.5W(4) Schubnachweis X-Richtung Schnitt 3-3 VEd,red Querkraft 71.7 [KN] LF 19:1.35G+1.5W(4) VEd@ Querkraft Stiitzenrand 110.6 [kN] ro_l Mittlerer Langsbewehrungsgrad @.08 [%] VRd,c Aufnehmb.Querkraft(ohne Schubbew. ) 151.6 [kN] > VEd Vrd,max Druckstrebenfestigkeit 1032.8 [kN] > VEd@$$\n SOFIiSTiK 2014-1 FOOTING - Einzel- und Streifenfundamente (V 14.01)\n Bauingenieur Band 81 Mai 2006: Streifenfundament\n Schubnachweis X-Richtung Schnitt 3-3 Theta Winkel zwischen den Betondruckstreben 18.4 [Grad]",
+        "token_count": 10197
+    }
+]
