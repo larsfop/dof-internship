@@ -14,3 +14,5 @@ volumes
 !volumes/data
 
 !app_backend/requirements.txt
+
+!app/tsconfig*.json
