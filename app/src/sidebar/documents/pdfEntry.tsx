@@ -1,5 +1,5 @@
 import { useAppRefs } from "../../context/refContext.tsx";
-import { useAppDispatch, useAppState } from "../../context/stateContext.tsx";
+import { useAppDispatch } from "../../context/stateContext.tsx";
 import { getPDF } from "../../layout/content.ts";
 import { scrollToPage } from "../../layout/pdf.tsx";
 
@@ -19,7 +19,6 @@ export interface PDFViewer {
 export default function PDFEntry({ name } : { name: string }) {
     const dispatch = useAppDispatch();
     const { pdfViewerRef } = useAppRefs();
-    const { pdfViewer } = useAppState();
 
     return (
         // <li title={name} className={pdfViewer?.name === name ? "active" : ""} style={{ marginLeft: "0.5rem" }} >

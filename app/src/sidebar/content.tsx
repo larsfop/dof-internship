@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useAppState } from "../context/stateContext.tsx";
 
 import ChatHistoryEntry from "../history/history.tsx";
@@ -184,7 +184,7 @@ function FolderNode( { node } : { node: Map<string, any> | string[] } ) {
 }
 
 async function loadPDFs() {
-    const response = await fetch(`http://192.168.0.71:8015/fetch_all_pdfs`, {
+    const response = await fetch(`http://192.168.50.20:8015/fetch_all_pdfs`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
