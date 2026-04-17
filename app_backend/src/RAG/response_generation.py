@@ -131,12 +131,12 @@ def generate_response(
                     yield orjson.dumps({
                         'node': node,
                         'content': data
-                    })
+                    }) + b"\n"
 
                 elif node == 'summary':
                     yield orjson.dumps({
                         'node': node,
-                    })
+                    }) + b"\n"
 
                 elif node == 'generate_answer':
                     response: ResponseOutput = content['parsed']
@@ -144,7 +144,7 @@ def generate_response(
                         'node': node,
                         'content': response.model_dump(),
                         'metadata': callback.as_dict()
-                    })
+                    }) + b"\n"
 
                     # new_semantic_cache_embedding(
                     #     prompt, 

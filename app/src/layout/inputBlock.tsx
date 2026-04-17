@@ -193,22 +193,30 @@ async function generateResponse(prompt: string, sessionID: string) {
     const decoder = new TextDecoder();
 
     let chunk;
+    let buffer = "";
     try {
-        while (true) {
+        outer: while (true) {
             const { done, value } = await reader.read();
             if (done) break;
 
-            const event = decoder.decode(value, { stream: true });
-            try {
-                chunk = JSON.parse(event);
-            } catch (e) {
-                console.error("Failed to parse chunk:", event, e);
-                continue;
-            }
+            buffer += decoder.decode(value, { stream: true });
 
-            if (chunk.node === "semantic_cache" || chunk.node === "generate_answer") {
-                console.log("Received chunk:", chunk);
-                break;
+            const lines = buffer.split("\n");
+            // Keep the last (possibly incomplete) line in the buffer
+            buffer = lines.pop()!;
+
+            for (const line of lines) {
+                if (!line.trim()) continue;
+                try {
+                    chunk = JSON.parse(line);
+                } catch (e) {
+                    console.error("Failed to parse chunk:", line, e);
+                    continue;
+                }
+                if (chunk.node === "semantic_cache" || chunk.node === "generate_answer") {
+                    console.log("Received chunk:", chunk);
+                    break outer;
+                }
             }
         }
     } catch (error) {
