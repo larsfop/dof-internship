@@ -73,10 +73,6 @@
     &:focus {
       outline: blue auto 1px;
     }
-
-    &:not(:empty) + #chat-input-placeholder {
-      display: none;
-    }
   }
 
   > button {
@@ -101,10 +97,6 @@
       filter: var(--filter);
     }
   }
-}
-
-#chat-input:not(:empty) + #chat-input-placeholder {
-  display: none;
 }
 
 #chat-input:empty + #chat-send-button {

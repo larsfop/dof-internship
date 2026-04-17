@@ -30,6 +30,7 @@ export default function InputBlock() {
     const dispatch = useAppDispatch();
     const ref = useRef<HTMLButtonElement>(null);
     const [outline, setOutline] = useState(false);
+    const [isEmpty, setIsEmpty] = useState(true);
 
     let currentInputIndex = useRef(inputArray.length);
     function handleKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
@@ -44,14 +45,15 @@ export default function InputBlock() {
             const delta = key === "arrowup" ? -1 : 1;
             const index = currentInputIndex.current + delta;
             if (index >= 0 && index <= inputArray.length) {
-                if (index === inputArray.length) node.textContent = "";
-                else node.textContent = inputArray[index];
+                if (index === inputArray.length) { node.textContent = ""; setIsEmpty(true); }
+                else { node.textContent = inputArray[index]; setIsEmpty(false); }
                 currentInputIndex.current = index;
             }
         } else if (e.ctrlKey && key === "x") {
             e.preventDefault();
             navigator.clipboard.writeText(node.textContent || "");
             node.textContent = "";
+            setIsEmpty(true);
             currentInputIndex.current = inputArray.length;
         }
     }
@@ -111,11 +113,13 @@ export default function InputBlock() {
                         setCursorToStart(node);
                         setOutline(true);
                     }} 
+                    onInput={(e) => setIsEmpty(!e.currentTarget.textContent)}
                     onBlur={() => {
                         const node = chatInput.current;
                         if (!node) return;
                         if (!node.textContent) {
                             node.textContent = "";
+                            setIsEmpty(true);
                             currentInputIndex.current = inputArray.length;
                         }
                         setOutline(false);
@@ -127,6 +131,7 @@ export default function InputBlock() {
                     color: "var(--text-muted)",
                     alignContent: "end",
                     pointerEvents: "none",
+                    display: isEmpty ? undefined : "none",
                 }} id="chat-input-placeholder">
                     {inputPlaceholder}
                 </span>
@@ -139,11 +144,13 @@ export default function InputBlock() {
 
                 if (!node.textContent!.trim()) {
                     node.textContent = "";
+                    setIsEmpty(true);
                     return;
                 }
 
                 handleUserInput(node.textContent!);
                 node.textContent = "";
+                setIsEmpty(true);
                 currentInputIndex.current = inputArray.length + 1;
             } }>
                 <img src={SendMessage} alt="" />
