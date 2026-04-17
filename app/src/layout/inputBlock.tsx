@@ -59,7 +59,6 @@ export default function InputBlock() {
     async function handleUserInput(input: string) {
         currentInputIndex.current = inputArray.length;
         if (!input.trim()) return;
-        const sessionID = currentSessionID || crypto.randomUUID();
         const data = currentSessionData
         data.push({
             prompt: input,
@@ -67,17 +66,18 @@ export default function InputBlock() {
         dispatch({ type: "SET_SESSION_DATA", payload: [...data] });
         dispatch({ type: "ADD_INPUT", payload: input });
 
-        const chunk = await generateResponse(input, sessionID);
-        if (!chunk) {
-            console.error("No response received");
-            return;
-        }
+        const chunk = await generateResponse(input, currentSessionID);
     
-        data[data.length - 1].response = chunk.content.response;
-        data[data.length - 1].citations = chunk.content.citations;
-        dispatch({ type: "SET_SESSION_DATA", payload: [...data] });
-        dispatch({ type: "SET_SESSION", payload: sessionID });
-        dispatch({ type: "NEW_HISTORY_ENTRY", payload: { sessionID, name: chunk.content.summaryTitle } });
+        if (chunk) {
+            data[data.length - 1].response = chunk.content.response;
+            data[data.length - 1].citations = chunk.content.citations;
+            dispatch({ type: "SET_SESSION_DATA", payload: [...data] });
+            dispatch({ type: "SET_SESSION", payload: currentSessionID });
+            dispatch({ type: "NEW_HISTORY_ENTRY", payload: { sessionID: currentSessionID, name: chunk.content.summaryTitle } });
+        } else {
+            data[data.length - 1].responseError = true;
+            dispatch({ type: "SET_SESSION_DATA", payload : [...data] });
+        }
     }
 
     return (
@@ -168,35 +168,45 @@ async function generateResponse(prompt: string, sessionID: string) {
         prompt: prompt,
     });
 
-    const response = await fetch(`http://192.168.0.71:8015/prompt?${queryParams.toString()}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    });
+    let response: globalThis.Response;
+    try {
+        response = await fetch(`http://192.168.0.71:8015/prompt?${queryParams.toString()}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+    } catch (error) {
+        console.error("Error fetching response:", error);
+        return;
+    }
 
     const reader = response.body?.getReader();
     if (!reader) return;
     const decoder = new TextDecoder();
 
     let chunk;
-    while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
+    try {
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
 
-        const event = decoder.decode(value, { stream: true });
-        try {
-            chunk = JSON.parse(event);
-        } catch (e) {
-            console.error("Failed to parse chunk:", event, e);
-            continue;
+            const event = decoder.decode(value, { stream: true });
+            try {
+                chunk = JSON.parse(event);
+            } catch (e) {
+                console.error("Failed to parse chunk:", event, e);
+                continue;
+            }
+
+            if (chunk.node === "semantic_cache" || chunk.node === "generate_answer") {
+                console.log("Received chunk:", chunk);
+                break;
+            }
         }
-
-        if (chunk.node === "semantic_cache" || chunk.node === "generate_answer") {
-            console.log("Received chunk:", chunk);
-
-            break;
-        }
+    } catch (error) {
+        console.error("Error reading stream:", error);
+        return chunk;
     }
 
     return chunk;

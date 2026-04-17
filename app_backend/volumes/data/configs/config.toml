@@ -9,7 +9,7 @@ search_type = "similarity"
 score_threshold = 0.95
 
 [rag_config.search_kwargs]
-k = 10
+k = 5
 # score_threshold = 0.1
 
 [rag_config.llm_models]

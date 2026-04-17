@@ -2,7 +2,8 @@ from langchain_core.prompts import ChatPromptTemplate
 import logging
 
 from config import CONFIG
-from ..utils import GradeResults, State, create_pdfs_from_embeddings
+from ..pydantic_classes import GradeResults, State
+from ..pdf import create_pdfs_from_embeddings
 from ai_models import get_check_model
 from database import get_vector_retriever
 

@@ -1,5 +1,5 @@
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
-from config import CONFIG, cache_with_config_key
+from config import CONFIG
 
 def get_model() -> ChatOpenAI:
     rag_config = CONFIG.rag

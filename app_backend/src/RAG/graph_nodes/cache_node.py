@@ -1,7 +1,7 @@
 from langgraph.types import Command
 from typing import Literal
 
-from ..utils import State
+from ..pydantic_classes import State
 from database import fetch_from_semantic_cache
 
 def cache_node(state: State) -> Command[Literal['summary', 'use_rag']]:

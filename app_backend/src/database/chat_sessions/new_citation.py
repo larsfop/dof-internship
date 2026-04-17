@@ -4,11 +4,11 @@ from ..cursor import CURSOR, CONNECTION
 
 logger = logging.getLogger("main")
 
-def new_citation(response_id: str, document_name: str, page_labels: str, pdf_pages: str) -> None:
+def new_citation(response_id: str, document_name: str, page_labels: str, page_indices: str) -> None:
     try:
         CURSOR.execute(
             "INSERT INTO citations (responseID, documentName, pageLabels, pdfPages) VALUES (%s, %s, %s, %s)",
-            (response_id, document_name, page_labels, pdf_pages)
+            (response_id, document_name, page_labels, page_indices)
         )
         CONNECTION.commit()
         logger.info(f"Citation for response ID \'{response_id}\' added successfully.")

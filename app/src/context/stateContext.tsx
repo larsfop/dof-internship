@@ -5,7 +5,7 @@ import { PDFViewer } from "../sidebar/documents/pdfEntry.tsx";
 
 
 interface AppState {
-    currentSessionID: string | null;
+    currentSessionID: string;
     currentSessionData: ChatSession[];
     newHistoryEntry: ChatHistory | null;
     pdfViewer: PDFViewer | null;
@@ -30,7 +30,7 @@ const reducer = (state: AppState, action: AppAction): AppState => {
         case "SET_SESSION":
             return { ...state, currentSessionID: action.payload };
         case "NEW_SESSION":
-            return { ...state, currentSessionID: null, currentSessionData: [], inputArray: [] };
+            return { ...state, currentSessionID: crypto.randomUUID(), currentSessionData: [], inputArray: [] };
         case "SET_SESSION_DATA":
             return { ...state, currentSessionData: action.payload };
         case "NEW_HISTORY_ENTRY":
@@ -54,7 +54,7 @@ const reducer = (state: AppState, action: AppAction): AppState => {
 };
 
 const initialState: AppState = {
-    currentSessionID: null,
+    currentSessionID: crypto.randomUUID(),
     currentSessionData: [],
     newHistoryEntry: null,
     pdfViewer: null,

@@ -4,6 +4,7 @@ import { Citation } from "../history/history.ts";
 import { getPDF } from "./content.ts";
 import { scrollToPage } from "./pdf.tsx";
 
+let pageIndex = 0;
 export default function CitationBlock({ citation }: { citation: Citation }) {
     const dispatch = useAppDispatch();
     const { pdfViewerRef } = useAppRefs();
@@ -12,11 +13,12 @@ export default function CitationBlock({ citation }: { citation: Citation }) {
         <cite title="View document" onClick={async (e) => {
             e.preventDefault();
             const { documentName, pdfPages } = citation;
-            const { url, page } = await getPDF(documentName, pdfPages[0]);
+            const pdfPage = pdfPages[pageIndex % pdfPages.length];
+            const { url, page } = await getPDF(documentName, pdfPage);
+            pageIndex++;
 
             const name = pdfViewerRef.current?.dataset.name;
             if (pdfViewerRef.current && name === documentName) {
-                console.log("Scrolling to page", page);
                 scrollToPage(pdfViewerRef.current!, page);
             } else {
                 dispatch({ type: "SET_PDF_VIEWER", payload: { src: url, name: documentName, page: page } });

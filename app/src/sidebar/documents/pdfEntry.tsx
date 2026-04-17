@@ -16,25 +16,25 @@ export interface PDFViewer {
     page: number;
 }
 
-export default function PDFEntry({ pdf } : { pdf: PDF }) {
+export default function PDFEntry({ name } : { name: string }) {
     const dispatch = useAppDispatch();
     const { pdfViewerRef } = useAppRefs();
     const { pdfViewer } = useAppState();
 
     return (
-        <li title={pdf.name} className={pdfViewer?.name === pdf.name ? "active" : ""} style={{marginLeft: "0.75rem"}} >
-            <span id={pdf.name} onClick={async (e) => {
-                e.preventDefault();
-                const { url, page } = await getPDF(pdf.name);
+        // <li title={name} className={pdfViewer?.name === name ? "active" : ""} style={{ marginLeft: "0.5rem" }} >
+        <span id={name} title={name} onClick={async (e) => {
+            e.preventDefault();
+            const { url, page } = await getPDF(name);
 
-                const name = pdfViewerRef.current?.dataset.name;
-                if (pdfViewerRef.current && name === pdf.name) {
-                    console.log("Scrolling to page", page);
-                    scrollToPage(pdfViewerRef.current!, page);
-                } else {
-                    dispatch({ type: "SET_PDF_VIEWER", payload: { src: url, name: pdf.name, page: page } });
-                }
-            }} style={{ overflow: "hidden", textOverflow: "ellipsis", }} >{pdf.name}</span>
-        </li>
+            const currentName = pdfViewerRef.current?.dataset.name;
+            if (pdfViewerRef.current && name === currentName) {
+                console.log("Scrolling to page", page);
+                scrollToPage(pdfViewerRef.current!, page);
+            } else {
+                dispatch({ type: "SET_PDF_VIEWER", payload: { src: url, name: name, page: page } });
+            }
+        }} style={{ overflow: "hidden", textOverflow: "ellipsis", }} >{name}</span>
+        // </li>
     )
 }

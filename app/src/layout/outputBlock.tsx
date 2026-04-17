@@ -3,6 +3,10 @@ import CitationBlock from "./citationBlock";
 import CodeBlock from "./codeBlock";
 
 export default function OutputBlock({ entry }: { entry: ChatSession }) {
+    if (entry.responseError) {
+        return <p style={{ color: "red" }}>An error occurred while generating the response. Please try again.</p>;
+    }
+
     const content = HTMLParser(entry.response || "");
 
     return (
@@ -20,6 +24,10 @@ export default function OutputBlock({ entry }: { entry: ChatSession }) {
                         return <table key={index} dangerouslySetInnerHTML={{ __html: (node as Element).innerHTML }}></table>
                     case "BR":
                         return <br key={index} />
+                    case "UL":
+                        return <ul key={index} dangerouslySetInnerHTML={{ __html: (node as Element).innerHTML }}></ul>
+                    case "OL":
+                        return <ol key={index} dangerouslySetInnerHTML={{ __html: (node as Element).innerHTML }}></ol>
                     default:
                         console.warn("Unhandled node type:", node.nodeName);
                         return <div key={index} dangerouslySetInnerHTML={{ __html: (node as Element).outerHTML }} />

@@ -1,5 +1,5 @@
-from pydantic import BaseModel, Field
-from typing import List, Dict, Any, Self, Tuple
+from pydantic import BaseModel, Field, NonNegativeInt
+from typing import List, Dict, Any, Self, Tuple, Annotated
 from langgraph.graph import MessagesState
 from langmem.short_term import RunningSummary
 
@@ -11,10 +11,10 @@ class GradeDocument(BaseModel):
         description="The name or identifier of the document"
     )
     page_indices: List[int] = Field(
-        description="The page indices of the document"
+        description="The page indices of the document, found in metadata (page_indices)"
     )
-    page_labels: List[int] = Field(
-        description="The page labels of the document"
+    page_labels: List[str] = Field(
+        description="The page labels of the document, found in metadata (page_labels)"
     )
     score: float = Field(
         description="Relevance score between 0 and 1"
@@ -65,10 +65,17 @@ class Citation(BaseModel):
         description='The full name of the pdf document'
     )
     pageLabels: List[str] = Field(
-        description='List of the pdf page labels'
+        description=(
+            'List of the pdf page labels (the printed page numbers, as opposed to the internal PDF page indices). '
+            'Each label must correspond positionally to the matching entry in pageIndices.'
+        )
     )
-    pdfPages: List[int] = Field(
-        description='List of the 0th-index pdf indices'
+    pageIndices: List[NonNegativeInt] = Field(
+        description=(
+            'List of 0-based page indices (internal PDF position, NOT the printed page number). '
+            'Index 0 = first page of the PDF, index 1 = second page, etc. '
+            'Each index must correspond positionally to the matching entry in pageLabels.'
+        )
     )
 
 
@@ -89,11 +96,12 @@ class ResponseOutput(BaseModel):
                 return True
         return False
     
-    def __getitem__(self, document_name: str) -> Citation | None:
+    def __getitem__(self, document_name: str) -> Citation:
         for citation in self.citations:
             if citation.documentName == document_name:
                 return citation
-        return None
+        
+        raise KeyError(f"Document name '{document_name}' not found in citations.")
     
     def update_citation_pages(self, new_pdf_pages: list[int], new_page_labels: list[str], document_name: str) -> None:
         if document_name not in self:
@@ -104,8 +112,8 @@ class ResponseOutput(BaseModel):
             return
         
         try:
-            indices = citation.pdfPages
-            citation.pdfPages = [new_pdf_pages[index] + 1 for index in indices]
+            indices = citation.pageIndices
+            citation.pageIndices = [new_pdf_pages[index] + 1 for index in indices]
             citation.pageLabels = [new_page_labels[index] for index in indices]
         except:
             print('Not able to write citation!')

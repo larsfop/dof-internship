@@ -29,6 +29,7 @@ export type ChatSession = {
     prompt: string;
     response?: string;
     citations?: Citation[];
+    responseError?: boolean;
 }
 
 let sessions = new Map<string|null, ChatSession[]>();

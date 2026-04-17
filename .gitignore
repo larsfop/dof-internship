@@ -9,6 +9,7 @@ mysql_connection.json
 *.pid
 __pycache__
 uv*
+TODO.md
 
 volumes
 !volumes/data

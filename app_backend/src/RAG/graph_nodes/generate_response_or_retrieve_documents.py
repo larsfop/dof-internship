@@ -3,7 +3,7 @@ from typing import Literal
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
 
-from ..utils import State
+from ..pydantic_classes import State
 from ai_models import get_check_model
 from config import CONFIG
 
