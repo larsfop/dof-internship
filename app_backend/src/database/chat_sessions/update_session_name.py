@@ -2,12 +2,12 @@ import psycopg
 import logging
 from ..cursor import CURSOR, CONNECTION
 
-logger = logging.getLogger("main")
+logger = logging.getLogger("database")
 
 def update_session_name(session_id: str, new_name: str) -> None:
     try:
         CURSOR.execute(
-            "UPDATE sessions SET name = %s WHERE sessionID = %s",
+            "UPDATE sessions SET name = %s WHERE session_id = %s",
             (new_name, session_id)
         )
         CONNECTION.commit()

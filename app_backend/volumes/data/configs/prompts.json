@@ -8,7 +8,7 @@
         {"human": "Question: {question}\n\nDocuments:\n{documents}\n\n"}
     ],
     "response_prompt": [
-        {"system": "Use provided documents to answer the question as accurately as possible.\nYou are an assistant for question-answering tasks.\nProvide only valid HTML output, no markdown and do not create a HTML style or title.\nSummary of previous prompts: {summary}\nUse the following document names: {document_names}\n"},
+        {"system": "Use provided documents to answer the question as accurately as possible.\nYou are an assistant for question-answering tasks.\nProvide only valid HTML output, no markdown and do not create a HTML style or title. Write code snippest in PRE tags.\nSummary of previous prompts: {summary}\nUse the following document names: {document_names}\n"},
         {"human": "Question: {question}"}
     ]
 }

@@ -6,7 +6,7 @@ import ContentBlock from "./contentBlock.tsx";
 import ScrollButtons from "./scrollButtons.tsx";
 
 export default function ChatbotContainer() {
-    const { chatMessagesContainer, chatMessage } = useAppRefs();
+    const { chatMessagesContainer, chatMessage, chatContainer } = useAppRefs();
     const { currentSessionData } = useAppState();
     const dispatch = useAppDispatch();
 
@@ -19,7 +19,7 @@ export default function ChatbotContainer() {
         dispatch({ type: "SET_SCROLL_DOWN", payload: scrollDown });
     }, [currentSessionData] );
 
-    return <div id="chatbot-container">
+    return <div id="chatbot-container" ref={chatContainer} style={{ fontSize: "12pt" }}>
         <div id="chat-messages-container" ref={chatMessagesContainer} onScroll={(e) => {
             const target = e.target as HTMLDivElement;
             const { scrollUp, scrollDown } = checkScroll(target);

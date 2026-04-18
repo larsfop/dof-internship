@@ -13,12 +13,12 @@
         ],
         "coordinates": [
             [
-                453.40826416015625,
-                1118.9154052734375
+                454.01263427734375,
+                1116.88037109375
             ],
             [
-                2918.738525390625,
-                2891.966064453125
+                2919.463134765625,
+                2886.530517578125
             ]
         ],
         "height": 4678,
@@ -90,12 +90,12 @@
         ],
         "coordinates": [
             [
-                400.30902099609375,
-                1265.9959716796875
+                395.01641845703125,
+                1269.5384521484375
             ],
             [
-                2872.47412109375,
-                2947.362060546875
+                2874.235107421875,
+                2949.4599609375
             ]
         ],
         "height": 4678,
@@ -133,12 +133,12 @@
         ],
         "coordinates": [
             [
-                401.74249267578125,
-                815.0120239257812
+                403.7089538574219,
+                813.8157348632812
             ],
             [
-                2927.27099609375,
-                1158.0654296875
+                2927.927734375,
+                1158.638916015625
             ]
         ],
         "height": 4678,
@@ -169,13 +169,40 @@
         "page_labels": [
             "2-3"
         ],
+        "type": "table",
+        "sections": [
+            "2 Input Description",
+            "2.4 CTRL – Control options"
+        ],
+        "coordinates": [
+            [
+                397.97662353515625,
+                814.5452270507812
+            ],
+            [
+                2926.648193359375,
+                1168.9700927734375
+            ]
+        ],
+        "height": 4678,
+        "width": 3308,
+        "content": "Item Description Unit Default OPT One of the following options: LT - REST restart control"
+    },
+    {
+        "document_name": "dbmerg_1.pdf",
+        "page_indices": [
+            8
+        ],
+        "page_labels": [
+            "2-3"
+        ],
         "type": "text",
         "sections": [
             "2 Input Description",
             "2.4 CTRL – Control options"
         ],
-        "content": "CTRL\n Item Description Unit Default OPT One of the following options: LT - REST restart control",
-        "token_count": 18
+        "content": "CTRL",
+        "token_count": 1
     },
     {
         "document_name": "dbmerg_1.pdf",
@@ -209,17 +236,33 @@
         ],
         "coordinates": [
             [
-                395.8222351074219,
-                813.8441772460938
+                397.5480651855469,
+                812.8651123046875
             ],
             [
-                2939.435791015625,
-                1262.1717529296875
+                2938.380615234375,
+                1263.04638671875
             ]
         ],
         "height": 4678,
         "width": 3308,
         "content": "Item Description Unit Default NO New load case number − * NOS Old load case number − NO"
+    },
+    {
+        "document_name": "dbmerg_1.pdf",
+        "page_indices": [
+            9
+        ],
+        "page_labels": [
+            "2-4"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Input Description",
+            "2.5 LC – Load Cases"
+        ],
+        "content": "LC\n Any action of DBMERG will use the selected load cases only. With input of NOS you may copy results to other load case numbers.\n In combination with the grouping of the elements you may assign in different blocks results of different elments of the same load case to different load cases of the same element. The default NO=NOS is only posssible, if you have two data bases open.",
+        "token_count": 83
     },
     {
         "document_name": "dbmerg_1.pdf",
@@ -232,39 +275,21 @@
         "type": "table",
         "sections": [
             "2 Input Description",
-            "2.5 LC – Load Cases"
+            "2.6 GRP – Group Assignment"
         ],
         "coordinates": [
             [
-                389.0762023925781,
-                814.8405151367188
+                389.7919616699219,
+                813.6661987304688
             ],
             [
-                2942.91552734375,
-                1361.982421875
+                2941.26611328125,
+                1362.3848876953125
             ]
         ],
         "height": 4678,
         "width": 3308,
         "content": "Item Description Unit Default NO Group number source data − ! NOS Group number target data − NO NDIV Group divisor − *"
-    },
-    {
-        "document_name": "dbmerg_1.pdf",
-        "page_indices": [
-            9,
-            10
-        ],
-        "page_labels": [
-            "2-4",
-            "2-5"
-        ],
-        "type": "text",
-        "sections": [
-            "2 Input Description",
-            "2.5 LC – Load Cases"
-        ],
-        "content": "LC\n Any action of DBMERG will use the selected load cases only. With input of NOS you may copy results to other load case numbers.\n In combination with the grouping of the elements you may assign in different blocks results of different elments of the same load case to different load cases of the same element. The default NO=NOS is only posssible, if you have two data bases open.\n 2.6 GRP – Group Assignment\n GRP\n For the transfer of data elements of the project base will be assigned to elements of the source database. Without any input a 1 to 1 assignement is in effect.\n The group number is given as division of the node or elementnumber by NDIV. Two elements will be assigned to each other if the modulus will be the same and the group numbers follow the specified assignment. In DBMERG you may define completely other groups than those which are defined in the database.\n Beam elements, however, will be assigned to each other only if the beam length is also identi- cal.\n If the node numbers do not follow the same rules as the elements, you have to use to seperate blocks with different assignements.\n This feature can be used to multiply the properties of prefabricated parts.\n Example:\n In the project data base are the elements 1001, 1002, 1003 as well as 1101, 1102, 1103 and 2001, 2002, 2003 defined. In the additional data base are the Elements 101, 102, 103 defined. Input of\n +PROG DBMERG HEAD GRP NO 9999 NOS 0 END\n defines the assignments:\n 1101 := 101 , 1102 := 102 and 1103 := 103\n Elements 1001 to 1003 resp. 2001 to 2003 are without assignment. The results of elments 101 to 103 will be assigned to the elements 1101 to 1103.",
-        "token_count": 414
     },
     {
         "document_name": "dbmerg_1.pdf",
@@ -279,10 +304,26 @@
         "type": "text",
         "sections": [
             "2 Input Description",
-            "2.5 LC – Load Cases"
+            "2.6 GRP – Group Assignment"
         ],
-        "content": "1101 := 101 , 1102 := 102 and 1103 := 103. Elements 1001 to 1003 resp. 2001 to 2003 are without assignment. The results of elments 101 to 103 will be assigned to the elements 1101 to 1103..\n Input of:\n +PROG DBMERG HEAD GRP NO 10 NOS 1 NDIV 100 GRP NO 11 NOS 1 NDIV 100 END\n defines the assignments:\n 1001 < = 101 , 1002 < = 102 und 1003 < = 103\n 1101 < = 101 , 1102 < = 102 und 1103 < = 103\n and will thus copy the results multiple to the elements. And finally\n +PROG DBMERG HEAD GRP NO 9999 NOS 1 NDIV 100 END\n will assign:\n 1001 < = 101 , 1002 < = 102 und 1003 < = 103\n 1101 < = 101 , 1102 < = 102 und 1103 < = 103\n 2001 < = 101 , 2002 < = 102 und 2003 < = 103\n For the data transfer the first valid assignment is used, multiple assignements are not checked, which allows to define a general default as last assignment, while more specific ones are defined first.",
-        "token_count": 304
+        "content": "GRP\n For the transfer of data elements of the project base will be assigned to elements of the source database. Without any input a 1 to 1 assignement is in effect.\n The group number is given as division of the node or elementnumber by NDIV. Two elements will be assigned to each other if the modulus will be the same and the group numbers follow the specified assignment. In DBMERG you may define completely other groups than those which are defined in the database.\n Beam elements, however, will be assigned to each other only if the beam length is also identi- cal.\n If the node numbers do not follow the same rules as the elements, you have to use to seperate blocks with different assignements.\n This feature can be used to multiply the properties of prefabricated parts.\n Example:\n In the project data base are the elements 1001, 1002, 1003 as well as 1101, 1102, 1103 and 2001, 2002, 2003 defined. In the additional data base are the Elements 101, 102, 103 defined. Input of\n +PROG DBMERG HEAD GRP NO 9999 NOS 0 END\n defines the assignments:\n 1101 := 101 , 1102 := 102 and 1103 := 103\n Elements 1001 to 1003 resp. 2001 to 2003 are without assignment. The results of elments 101 to 103 will be assigned to the elements 1101 to 1103.\n Input of:\n +PROG DBMERG HEAD GRP NO 10 NOS 1 NDIV 100 GRP NO 11 NOS 1 NDIV 100 END\n defines the assignments:\n 1001 < = 101 , 1002 < = 102 und 1003 < = 103\n 1101 < = 101 , 1102 < = 102 und 1103 < = 103",
+        "token_count": 409
+    },
+    {
+        "document_name": "dbmerg_1.pdf",
+        "page_indices": [
+            11
+        ],
+        "page_labels": [
+            "2-6"
+        ],
+        "type": "text",
+        "sections": [
+            "2 Input Description",
+            "2.6 GRP – Group Assignment"
+        ],
+        "content": "+PROG DBMERG HEAD GRP NO 10 NOS 1 NDIV 100 GRP NO 11 NOS 1 NDIV 100 END. defines the assignments:. 1001 < = 101 , 1002 < = 102 und 1003 < = 103. 1101 < = 101 , 1102 < = 102 und 1103 < = 103.\n and will thus copy the results multiple to the elements. And finally\n +PROG DBMERG HEAD GRP NO 9999 NOS 1 NDIV 100 END\n will assign:\n 1001 < = 101 , 1002 < = 102 und 1003 < = 103\n 1101 < = 101 , 1102 < = 102 und 1103 < = 103\n 2001 < = 101 , 2002 < = 102 und 2003 < = 103\n For the data transfer the first valid assignment is used, multiple assignements are not checked, which allows to define a general default as last assignment, while more specific ones are defined first.",
+        "token_count": 236
     },
     {
         "document_name": "dbmerg_1.pdf",
@@ -299,12 +340,12 @@
         ],
         "coordinates": [
             [
-                365.8748474121094,
-                811.2103271484375
+                365.49285888671875,
+                819.097900390625
             ],
             [
-                2900.20654296875,
-                2377.1943359375
+                2902.875,
+                2377.4423828125
             ]
         ],
         "height": 4678,
@@ -342,12 +383,12 @@
         ],
         "coordinates": [
             [
-                362.1513671875,
-                807.56103515625
+                362.63665771484375,
+                807.6547241210938
             ],
             [
-                2896.22216796875,
-                2568.9267578125
+                2894.7685546875,
+                2570.378173828125
             ]
         ],
         "height": 4678,
@@ -385,12 +426,12 @@
         ],
         "coordinates": [
             [
-                368.6681823730469,
-                815.89453125
+                368.4243469238281,
+                815.4105834960938
             ],
             [
-                2936.16796875,
-                1660.840576171875
+                2933.38818359375,
+                1661.254638671875
             ]
         ],
         "height": 4678,
@@ -428,12 +469,12 @@
         ],
         "coordinates": [
             [
-                367.145751953125,
-                815.5296630859375
+                366.8995666503906,
+                815.068115234375
             ],
             [
-                2936.7294921875,
-                1660.7899169921875
+                2933.865966796875,
+                1661.2242431640625
             ]
         ],
         "height": 4678,
@@ -471,12 +512,12 @@
         ],
         "coordinates": [
             [
-                362.4313049316406,
-                818.402099609375
+                360.38482666015625,
+                817.3035888671875
             ],
             [
-                2937.700439453125,
-                1580.0201416015625
+                2935.520263671875,
+                1580.7242431640625
             ]
         ],
         "height": 4678,
@@ -514,17 +555,17 @@
         ],
         "coordinates": [
             [
-                364.3406066894531,
-                764.1088256835938
+                363.236572265625,
+                797.0484619140625
             ],
             [
-                2956.04541015625,
-                3323.12060546875
+                2960.0029296875,
+                3286.280517578125
             ]
         ],
         "height": 4678,
         "width": 3308,
-        "content": "Item Description Unit Default TYPE Type of results to work on LT ALL NONE deactivated all values ALL selected all values BLOA Free loads FLOA Element loading FORC Internal forces and moments NFOR Forces in nodes ERRO Error estimator BEDD Foundation stresses CRAC Crack orientations YIEL Nonlinear shell stress parameters STRE Stresses in elements NSTR Stresses in nodes ERRS Error estimator from stresses DESI Design stresses NDES Design stresses in nodes REIN Reinforcements NREI Reinforcements in nodes TEND Tendons FMX Factor for bending moment m-xx − 1.0 FMY Factor for bending moment m-yy − FMX FMXY Factor for torsional moment m-xy − FMY FVX Factor for shear force q-x − FMXY FVY Factor for shear force q-y − FVX FNX Factor for membrane force n-x − FVY FNY Factor for memebrane force n-y − FNX FNXY Factor for membrane shear force n-xy − FNY"
+        "content": "Item Description Unit Default TYPE Type of results to work on LT ALL NONE deactivated all values ALL selected all values BLOA Free loads FLOA Element loading FORC Internal forces and moments NFOR Forces in nodes ERRO Error estimator BEDD Foundation stresses CRAC Crack orientations YIEL Nonlinear shell stress parameters STRE Stresses in elements NSTR Stresses in nodes ERRS Error estimator from stresses DESI Design stresses NDES Design stresses in nodes REIN Reinforcements NREI Reinforcements in nodes TEND Tendons FMX Factor for bending moment m-xx − 1.0 FMY Factor for bending moment m-yy − FMX FMXY Factor for torsional moment m-xy − FMY FVX Factor for shear force q-x − FMXY FVY Factor for shear force q-y − FVX FNX Factor for membrane force n-x − FVY FNY Factor for memebrane force n-y − FNX"
     },
     {
         "document_name": "dbmerg_1.pdf",
@@ -539,8 +580,8 @@
             "2 Input Description",
             "2.12 QUAD – Plane Elements"
         ],
-        "content": "QUAD\n For the selected load cases and groups the results will be copied. Factors should not be missused to supress torsional moments.",
-        "token_count": 29
+        "content": "QUAD\n FNXY\n Factor for membrane shear force n-xy\n −\n FNY\n For the selected load cases and groups the results will be copied. Factors should not be missused to supress torsional moments.",
+        "token_count": 46
     },
     {
         "document_name": "dbmerg_1.pdf",
@@ -557,12 +598,12 @@
         ],
         "coordinates": [
             [
-                364.22418212890625,
-                820.3297119140625
+                360.2864074707031,
+                818.5128784179688
             ],
             [
-                2919.54296875,
-                2072.638427734375
+                2924.4970703125,
+                2072.52978515625
             ]
         ],
         "height": 4678,
@@ -600,12 +641,12 @@
         ],
         "coordinates": [
             [
-                388.7671203613281,
-                805.2133178710938
+                390.1701965332031,
+                803.8799438476562
             ],
             [
-                2926.498046875,
-                1451.721435546875
+                2921.6044921875,
+                1453.067626953125
             ]
         ],
         "height": 4678,
@@ -643,12 +684,12 @@
         ],
         "coordinates": [
             [
-                368.7122497558594,
-                815.8728637695312
+                366.3633728027344,
+                814.816162109375
             ],
             [
-                2934.7978515625,
-                1693.7835693359375
+                2931.80322265625,
+                1694.6290283203125
             ]
         ],
         "height": 4678,
@@ -688,7 +729,7 @@
             "3 Example",
             "3.1 Example"
         ],
-        "content": "A bridge with identical prefabricated girders in longitudinal and transverse direction and an in situ concrete plate is analyzed. As the prestress is the same in all girders, first a system with just one girder is defined and prestress and all design for the transport and handling in the factory are performed. This girder should consist of six beam elements with the numbers 102, 103 to 107. The name of this database should be SINGLE.\n First we create an intermediate system for the longitudinal system, as there are no effects in transverse direction from dead load, prestress or creep. Numbers of those beamelements of the data base SYSTEML have numbers 1102 to 1107 in the first span and 5102 to 5107 in the fifth span. To copy the tendons from SINGLE to SYSTEML is done via\n +PROG DBMERG\n HEAD COPY THE TENDONS TO FULL SPAN SYSTEM CDB \"single.cdb\" ECHO OPT GRP BEAM TYPE TEND GRP NO NOS NDIV 11 1 100 21 2 100 31 2 100 41 2 100 51 5 100\n END\n Output is as follows:\n LOADCASES\n 0 COPIED FROM 1\n GROUPING\n DIVISOR 11 100 1 21 100 2 31 100 2 41 100 2 51 100 5\n PROJECT\n SOURCE\n TRANSFERED ELEMENTDATA\n BEAM 1102 TRANSFERED FROM 102\n BEAM 1103 TRANSFERED FROM 103\n BEAM 1104 TRANSFERED FROM 104\n BEAM 1105 TRANSFERED FROM 105\n BEAM 1106 TRANSFERED FROM 106\n BEAM 1107 TRANSFERED FROM 107\n BEAM 2102 TRANSFERED FROM 202 BEAM 2103 TRANSFERED FROM 203 BEAM 2104 TRANSFERED FROM 204 BEAM 2105 TRANSFERED FROM 205 BEAM 2106 TRANSFERED FROM 206 BEAM 2107 TRANSFERED FROM 207 BEAM 3102 TRANSFERED FROM 202 BEAM 3103 TRANSFERED FROM 203 BEAM 3104 TRANSFERED FROM 204 BEAM 3105 TRANSFERED FROM 205 BEAM 3106 TRANSFERED FROM 206 BEAM 3107 TRANSFERED FROM 207 BEAM 4102 TRANSFERED FROM 202 BEAM 4103 TRANSFERED FROM 203 BEAM 4104 TRANSFERED FROM 204 BEAM 4105 TRANSFERED FROM 205 BEAM 4106 TRANSFERED FROM 206 BEAM 4107 TRANSFERED FROM 207 BEAM 5102 TRANSFERED FROM 502 BEAM 5103 TRANSFERED FROM 503 BEAM 5104 TRANSFERED FROM 504 BEAM 5105 TRANSFERED FROM 505 BEAM 5106 TRANSFERED FROM 506 BEAM 5107 TRANSFERED FROM 507\n Now all beams have the same prestress from one span. Then all analysis is done which acounts for construction stages and other effects which are the same for all longitudinal girder systems.\n In the mean time a database SYSTEMG has been created with the total system. Beam ele- ments of the different longitudinal girders have numbers which change in the 100-digit column. Beam1201 is therefore between 1101 and 1301. Transverse girders have numbers greater than 10000. With this system live loads and other have been analyzed.\n To copy the results from that system to a single longitudinal girder is no done in such a way, that results from different girders are copied as different load cases of the same girder system. Then a superposition with MAXIMA or AQB can be done in system SYSTEML.\n +PROG DBMERG\n HEAD GET LIVELOAD FROM GLOBAL SYSTEM CDB \"systemg.cdb\" ! LOAD CASE 3 DEAD LOAD G2 (OUTER GIRDERS) ! LOAD CASE 81 TO 86 LIVELOAD ! LOAD CASE 31 TO 35 CONSTRUCTION SPAN 1 ! LOAD CASE 51 TO 56 CONSTRUCTION SPAN 3 LC NO 3 NOS 3 LC (181 186 1) (81 1) LC (191 196 1) (91 1) LC (131 135 1) (31 1)\n LC (151 156 1) (51 1) GRP (11 61 10) (11 10) 100 BEAM TYPE FORC END LC (281 286 1) (81 1) LC (291 296 1) (91 1) LC (231 235 1) (31 1) LC (251 256 1) (51 1) GRP (11 61 10) (12 10) 100 BEAM TYPE FORC END LC (381 386 1) (81 1) LC (391 396 1) (91 1) LC (331 335 1) (31 1) LC (351 356 1) (51 1) GRP (11 61 10) (13 10) 100 BEAM TYPE FORC END END\n Now the design can be done on the simpler system. It would be also possible to go back to the system SINGLE. In this case however due to a rather complicated creep stress ditribution this is not of a great benefit.",
+        "content": "A bridge with identical prefabricated girders in longitudinal and transverse direction and an in situ concrete plate is analyzed. As the prestress is the same in all girders, first a system with just one girder is defined and prestress and all design for the transport and handling in the factory are performed. This girder should consist of six beam elements with the numbers 102, 103 to 107. The name of this database should be SINGLE.\n First we create an intermediate system for the longitudinal system, as there are no effects in transverse direction from dead load, prestress or creep. Numbers of those beamelements of the data base SYSTEML have numbers 1102 to 1107 in the first span and 5102 to 5107 in the fifth span. To copy the tendons from SINGLE to SYSTEML is done via\n +PROG DBMERG\n HEAD COPY THE TENDONS TO FULL SPAN SYSTEM CDB \"single.cdb\" ECHO OPT GRP BEAM TYPE TEND GRP NO NOS NDIV 11 1 100 21 2 100 31 2 100 41 2 100 51 5 100\n END\n Output is as follows:\n LOADCASES\n 0 COPIED FROM 1\n GROUPING\n DIVISOR 11 100 1 21 100 2 31 100 2 41 100 2 51 100 5\n PROJECT\n SOURCE\n TRANSFERED ELEMENTDATA\n BEAM 1102 TRANSFERED FROM 102\n 1103 TRANSFERED FROM 103\n BEAM\n BEAM 1104 TRANSFERED FROM 104\n BEAM 1105 TRANSFERED FROM 105\n BEAM 1106 TRANSFERED FROM 106\n BEAM 1107 TRANSFERED FROM 107\n BEAM 2102 TRANSFERED FROM 202 BEAM 2103 TRANSFERED FROM 203 BEAM 2104 TRANSFERED FROM 204 BEAM 2105 TRANSFERED FROM 205 BEAM 2106 TRANSFERED FROM 206 BEAM 2107 TRANSFERED FROM 207 BEAM 3102 TRANSFERED FROM 202 BEAM 3103 TRANSFERED FROM 203 BEAM 3104 TRANSFERED FROM 204 BEAM 3105 TRANSFERED FROM 205 BEAM 3106 TRANSFERED FROM 206 BEAM 3107 TRANSFERED FROM 207 BEAM 4102 TRANSFERED FROM 202 BEAM 4103 TRANSFERED FROM 203 BEAM 4104 TRANSFERED FROM 204 BEAM 4105 TRANSFERED FROM 205 BEAM 4106 TRANSFERED FROM 206 BEAM 4107 TRANSFERED FROM 207 BEAM 5102 TRANSFERED FROM 502 BEAM 5103 TRANSFERED FROM 503 BEAM 5104 TRANSFERED FROM 504 BEAM 5105 TRANSFERED FROM 505 BEAM 5106 TRANSFERED FROM 506 BEAM 5107 TRANSFERED FROM 507\n Now all beams have the same prestress from one span. Then all analysis is done which acounts for construction stages and other effects which are the same for all longitudinal girder systems.\n In the mean time a database SYSTEMG has been created with the total system. Beam ele- ments of the different longitudinal girders have numbers which change in the 100-digit column. Beam1201 is therefore between 1101 and 1301. Transverse girders have numbers greater than 10000. With this system live loads and other have been analyzed.\n To copy the results from that system to a single longitudinal girder is no done in such a way, that results from different girders are copied as different load cases of the same girder system. Then a superposition with MAXIMA or AQB can be done in system SYSTEML.\n +PROG DBMERG\n HEAD GET LIVELOAD FROM GLOBAL SYSTEM CDB \"systemg.cdb\" ! LOAD CASE 3 DEAD LOAD G2 (OUTER GIRDERS) ! LOAD CASE 81 TO 86 LIVELOAD ! LOAD CASE 31 TO 35 CONSTRUCTION SPAN 1 ! LOAD CASE 51 TO 56 CONSTRUCTION SPAN 3 LC NO 3 NOS 3 LC (181 186 1) (81 1) LC (191 196 1) (91 1) LC (131 135 1) (31 1)\n LC (151 156 1) (51 1) GRP (11 61 10) (11 10) 100 BEAM TYPE FORC END LC (281 286 1) (81 1) LC (291 296 1) (91 1) LC (231 235 1) (31 1) LC (251 256 1) (51 1) GRP (11 61 10) (12 10) 100 BEAM TYPE FORC END LC (381 386 1) (81 1) LC (391 396 1) (91 1) LC (331 335 1) (31 1) LC (351 356 1) (51 1) GRP (11 61 10) (13 10) 100 BEAM TYPE FORC END END\n Now the design can be done on the simpler system. It would be also possible to go back to the system SINGLE. In this case however due to a rather complicated creep stress ditribution this is not of a great benefit.",
         "token_count": 1182
     }
 ]

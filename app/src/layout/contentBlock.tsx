@@ -2,6 +2,8 @@ import { useRef, useState } from "react";
 import OutputBlock from "./outputBlock.tsx";
 import { handleCopyToClipboard } from "./content.ts";
 import { ChatSession } from "../history/history.ts";
+import { generateResponse } from "./inputBlock.tsx";
+import { useAppDispatch, useAppState } from "../context/stateContext.tsx";
 
 import Write from "../assets/write.svg";
 import Copy from "../assets/copy.svg";
@@ -9,6 +11,8 @@ import Copy from "../assets/copy.svg";
 export default function ContentBlock({entry}: { entry: ChatSession }) {
     const contentRef = useRef<HTMLSpanElement>(null);
     const [outline, setOutline] = useState(false);
+    const { currentSessionData, currentSessionID } = useAppState();
+    const dispatch = useAppDispatch();
 
     let prompt = entry.prompt;
     return (
@@ -20,7 +24,7 @@ export default function ContentBlock({entry}: { entry: ChatSession }) {
                 spellCheck={false}
                 aria-multiline={true}
                 style={{ outline: "none", display: "block" }}
-                onBlur={(e) => {
+                onBlur={async (e) => {
                     const node = e.currentTarget;
                     node.contentEditable = "false";
                     setOutline(false);
@@ -29,7 +33,24 @@ export default function ContentBlock({entry}: { entry: ChatSession }) {
                         return;
                     }
 
-                    prompt = node.textContent;
+                    const response = await generateResponse(
+                        node.textContent,
+                        currentSessionID,
+                        entry.response_id,
+                        true
+                    )
+
+                    if (!response) {
+                        console.error("Failed to generate response for edited prompt");
+                        node.textContent = prompt;
+                        return;
+                    }
+
+                    entry.prompt = node.textContent
+                    entry.response = response.content.response;
+                    entry.citations = response.content.citations;
+                    entry.cache_id = response.content.cache_id;
+                    dispatch({ type: "SET_SESSION_DATA", payload: [...currentSessionData] });
                 }}
                 onKeyDown={handeKeyDown}
                 >
@@ -76,7 +97,7 @@ function highlightText(element: HTMLElement) {
 function handeKeyDown(e: React.KeyboardEvent<HTMLSpanElement>) {
     const key = e.key.toLowerCase();
     const node = e.currentTarget
-    if (e.ctrlKey && key === "enter") {
+    if (key === "enter") {
         e.preventDefault();
         node.blur();
     } else if (e.ctrlKey && key === "x") {

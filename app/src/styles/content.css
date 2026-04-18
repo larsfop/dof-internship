@@ -43,13 +43,14 @@
   width: min(80%, 600px);
   justify-self: center;
   display: flex;
-  gap: 8px;
-  padding: 0.5rem 0.75rem;
+  gap: 0.5em;
+  padding: 0.5em 0.75em;
+  font-size: 12pt;
   align-items: end;
   border: none;
-  border-radius: 18px;
+  border-radius: 1.125em;
   z-index: 2;
-  box-shadow: 0px 0px 8px #151515;
+  box-shadow: 0px 0px 0.5em #151515;
 
   grid-area: 1/1;
   position: relative;
@@ -77,10 +78,10 @@
 
   > button {
     border: none;
-    border-radius: 8px;
-    height: 32px;
-    width: 32px;
-    font-size: 16px;
+    border-radius: 0.5em;
+    height: 2em;
+    width: 2em;
+    font-size: 1em;
     cursor: pointer;
     background-color: transparent;
 
@@ -93,7 +94,7 @@
     }
 
     > img {
-      height: 24px;
+      height: 1.5em;
       filter: var(--filter);
     }
   }
@@ -124,7 +125,7 @@
   padding-bottom: 100px;
 
   > div:not(:first-child) {
-    border-top: .15rem solid var(--text-muted);
+    border-top: 0.15em solid var(--text-muted);
   }
 }
 
@@ -140,18 +141,32 @@ cite {
   display: flex;
   flex-direction: column;
   gap: 2.5em;
-  width: min(80%, 800px);
-  padding-block: 1.5rem;
+  width: min(80%, 80em);
+  padding-block: 1.5em;
+}
+
+.output-buttons {
+  display: flex;
+  gap: 0.25em;
+  justify-content: flex-start;
+
+  button {
+    height: 1.6em;
+    width: 1.6em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 .input-block {
   align-self: flex-end;
   position: relative;
   background: var(--bg-light);
-  min-height: 2.5rem;
-  padding: 0.75rem 0.75rem;
+  min-height: 2.5em;
+  padding: 0.75em 0.75em;
   border: 0px solid;
-  border-radius: 12px;
+  border-radius: 0.75em;
   max-width: 69%;
   word-break: break-word;
 
@@ -162,11 +177,11 @@ cite {
 
 .input-options {
   display: flex;
-  gap: 0.1rem;
+  gap: 0.1em;
 
   position: absolute;
-  right: 0.5rem;
-  bottom: -2.2rem;
+  right: 0.5em;
+  bottom: -2.2em;
 
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -181,8 +196,8 @@ cite {
 
 .code-block-container {
   background: var(--bg-light);
-  padding: 12px;
-  border-radius: 12px;
+  padding: 0.75em;
+  border-radius: 0.75em;
   margin-block: 0.75em;
   position: relative;
 
@@ -204,12 +219,12 @@ cite {
 }
 
 .content-button {
-  width: 1.75rem;
-  height: 1.75rem;
+  width: 1.75em;
+  height: 1.75em;
 
   position: absolute;
-  right: 0.5rem;
-  top: 0.5rem;
+  right: 0.5em;
+  top: 0.5em;
 
   cursor: pointer;
   opacity: 0;
@@ -221,7 +236,8 @@ cite {
 }
 
 table {
-  width: 100%;
+  width: fit-content;
+  max-width: 100%;
   display: block;
   border: none;
   overflow-x: auto;
@@ -231,11 +247,11 @@ table, th, td {
   border-width: 1px;
   border-style: solid;
   border-collapse: collapse;
-  margin-block: 1rem;
+  margin-block: 1em;
 }
 
 th, td {
-  padding: 4px 8px;
+  padding: 0.25em 0.5em;
 }
 
 tr:hover {
@@ -246,11 +262,11 @@ caption {
   text-align: left;
   font-weight: bold;
   font-size: 1.2em;
-  width: fit-content;
-  margin-bottom: 10px;
+  width: 100%;
+  margin-bottom: 0.625em;
 }
 
 .button-show-in-pdf {
   float: right;
-  margin-left: 10px;
+  margin-left: 0.625em;
 }

@@ -36,11 +36,11 @@ export default function ChatHistoryEntry({entry}: {entry: ChatHistory}) {
                     if (!node) return;
                     node.contentEditable = "false";
                     if (!node.textContent) {
-                        node.textContent = sessionName;
+                        node.innerHTML = sessionName;
                         return;
                     }
                     if (node.textContent !== sessionName) {
-                        fetch(`http://192.168.50.20:8015/update_session_name?session_id=${sessionID}&new_name=${encodeURIComponent(node.textContent)}`, {
+                        fetch(`http://192.168.0.71:8015/update_session_name?session_id=${sessionID}&new_name=${encodeURIComponent(node.textContent)}`, {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -62,9 +62,8 @@ export default function ChatHistoryEntry({entry}: {entry: ChatHistory}) {
                     textOverflow: "ellipsis",
                     background: isActive ? "var(--highlight)" : "",
                 }}
-            >
-                {sessionName}
-            </span>
+                dangerouslySetInnerHTML={{ __html: sessionName }}
+            />
             <button title="Chat options" style={{
                 opacity: isActive ? 1 : ""
             }}
@@ -115,7 +114,7 @@ export default function ChatHistoryEntry({entry}: {entry: ChatHistory}) {
                     if (!node) return;
                     node.parentElement?.remove();
 
-                    await fetch(`http://192.168.50.20:8015/remove_session?session_id=${sessionID}`, {
+                    await fetch(`http://192.168.0.71:8015/remove_session?session_id=${sessionID}`, {
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json',

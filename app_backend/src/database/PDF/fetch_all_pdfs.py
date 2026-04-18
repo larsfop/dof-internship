@@ -2,7 +2,7 @@ import psycopg
 import logging
 from ..cursor import CURSOR, CONNECTION
 
-logger = logging.getLogger("main")
+logger = logging.getLogger("database")
 
 def fetch_all_pdfs() -> list[dict[str, str]]:
     try:
@@ -10,8 +10,8 @@ def fetch_all_pdfs() -> list[dict[str, str]]:
             """
                 SELECT
                     id,
-                    documentName as name,
-                    documentPath as path,
+                    document_name,
+                    document_path,
                     category
                 FROM pdfs
         """

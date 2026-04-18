@@ -9,7 +9,7 @@ import logging
 
 from .class_objects import DocumentPartition
 
-logger = logging.getLogger('main')
+logger = logging.getLogger("document_processing")
 
 def crop_partitions(partitions: List[DocumentPartition], document: Document, crop: ArrayLike) -> List[DocumentPartition]:
     cropped_data = []

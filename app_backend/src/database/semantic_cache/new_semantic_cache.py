@@ -1,15 +1,18 @@
 import psycopg
 from uuid import uuid4
-from langchain_openai import OpenAIEmbeddings
 import logging
+from typing import TYPE_CHECKING
 
+if TYPE_CHECKING:
+    from RAG.pydantic_classes import ResponseOutput
 from ..cursor import CURSOR, CONNECTION
+from ai_models import get_cache_embedding_model
 
-logger = logging.getLogger("main")
+logger = logging.getLogger("database")
 
-embed_model = OpenAIEmbeddings(model='text-embedding-3-small')
+embed_model = get_cache_embedding_model()
 
-def new_semantic_cache(prompt: str, response) -> None:
+def new_semantic_cache(prompt: str, response: "ResponseOutput") -> None:
     uuid_str = str(uuid4())
     prompt = prompt.lower()
     embeddings = embed_model.embed_query(prompt)
@@ -27,14 +30,14 @@ def new_semantic_cache(prompt: str, response) -> None:
             CURSOR.execute(
                 (
                     "INSERT INTO cache_citations "
-                    "(cacheID, documentName, pageLabels, pdfPages) "
+                    "(cache_id, document_name, page_labels, page_indices) "
                     "VALUES (%s, %s, %s, %s)"
                 ),
                 (
                     uuid_str,
-                    citation.documentName,
-                    ';'.join(map(str, citation.pageLabels)),
-                    ';'.join(map(str, citation.pdfPages))
+                    citation.document_name,
+                    ';'.join(map(str, citation.page_labels)),
+                    ';'.join(map(str, citation.page_indices))
                 )
             )
 

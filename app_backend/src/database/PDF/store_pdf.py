@@ -3,15 +3,15 @@ import logging
 
 from ..cursor import CURSOR, CONNECTION
 
-logger = logging.getLogger("main")
+logger = logging.getLogger("database")
 
 def store_pdf(name: str, path: str, category: str | None = None) -> None:
     try:
         CURSOR.execute(
             """
-                INSERT INTO pdfs (id, documentName, documentPath, category)
+                INSERT INTO pdfs (id, document_name, document_path, category)
                 VALUES (gen_random_uuid(), %s, %s, %s)
-                ON CONFLICT (documentName) DO UPDATE SET documentPath = EXCLUDED.documentPath, category = EXCLUDED.category;
+                ON CONFLICT (document_name) DO UPDATE SET document_path = EXCLUDED.document_path, category = EXCLUDED.category;
             """,
             (name, path, category)
         )

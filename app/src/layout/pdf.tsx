@@ -1,17 +1,47 @@
-import { useAppState } from "../context/stateContext.tsx";
+import { useEffect } from "react";
+import { useAppDispatch, useAppState } from "../context/stateContext.tsx";
 import { useAppRefs } from "../context/refContext.tsx";
 
-let firstRender = true;
 export default function RenderPDF() {
+    const dispatch = useAppDispatch();
     const { pdfViewer } = useAppState();
     const { main, pdfViewerRef } = useAppRefs();
 
+    useEffect(() => {
+        const iframe = pdfViewerRef.current;
+        if (!iframe || !pdfViewer) return;
+
+        let offPageChanging: (() => void) | undefined;
+
+        function onLoad() {
+            const pdfApp = (iframe!.contentWindow as any)?.PDFViewerApplication;
+            if (!pdfApp) return;
+
+            pdfApp.initializedPromise.then(() => {
+                const handler = (e: any) => {
+                    dispatch({ type: "SET_PDF_PAGE_CACHE", payload: { name: pdfViewer!.name, page: e.pageNumber } });
+                };
+                pdfApp.eventBus.on("pagechanging", handler);
+                offPageChanging = () => pdfApp.eventBus.off("pagechanging", handler);
+            });
+        }
+
+        iframe.addEventListener("load", onLoad);
+        return () => {
+            iframe.removeEventListener("load", onLoad);
+            offPageChanging?.();
+        };
+    }, [pdfViewer]);
+
     if (!pdfViewer) return null;
 
-    if (firstRender) {
-        main.current?.style.setProperty("grid-template-columns", "1fr 12px 1fr");
-        firstRender = false;
-    }
+    // const mainDiv = main.current;
+    // if (mainDiv ) {
+    //     const currentColumns = mainDiv.style.gridTemplateColumns.split(" ")[2];
+    //     if (currentColumns === "0fr") {
+    //         mainDiv.style.setProperty("grid-template-columns", "1fr 12px 1fr");
+    //     }
+    // }
 
     return (
         <iframe 

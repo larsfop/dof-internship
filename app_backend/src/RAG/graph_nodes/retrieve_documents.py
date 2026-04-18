@@ -7,7 +7,7 @@ from ..pdf import create_pdfs_from_embeddings
 from ai_models import get_check_model
 from database import get_vector_retriever
 
-logger = logging.getLogger("main")
+logger = logging.getLogger("RAG")
 
 def retrieve_documents(state: State):
 
@@ -16,7 +16,7 @@ def retrieve_documents(state: State):
 
     logger.info(
         f"Retrieved {len(documents)} documents:\n"\
-        f"{'\n'.join([f'{doc.metadata['document_name']} ; Pages: {doc.metadata['page_indices']}' for doc in documents])}"
+        f"{'\n'.join([f'{doc.metadata['document_name']} ; Pages: {doc.metadata['page_indices']}' for doc in documents])}\n"
     )
 
     prompt = ChatPromptTemplate.from_messages([
@@ -31,7 +31,7 @@ def retrieve_documents(state: State):
 
     logger.info(
         f"Grading results for retrieved documents:\n"\
-        f"{'\n'.join([f'{doc.document_name} ; Score: {doc.score} ; pages: {doc.page_indices}' for doc in response.documents])}"
+        f"{'\n'.join([f'{doc.document_name} ; Score: {doc.score} ; page indices: {doc.page_indices}' for doc in response.documents])}\n"
     )
 
     pdf_data = create_pdfs_from_embeddings(response)

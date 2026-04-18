@@ -5,7 +5,7 @@ export type ChatHistory = {
 
 export async function loadChatHistory() {
     const userID = localStorage.getItem("userID");
-    const response = await fetch(`http://192.168.50.20:8015/get_sessions?user_id=${userID}`, {
+    const response = await fetch(`http://192.168.0.71:8015/get_sessions?user_id=${userID}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -13,22 +13,24 @@ export async function loadChatHistory() {
     });
     const data = await response.json();
 
-    return data.map((entry: { name: string; sessionid: string }) => ({
+    return data.map((entry: { name: string; session_id: string }) => ({
         name: entry.name,
-        sessionID: entry.sessionid,
+        sessionID: entry.session_id,
     })) as ChatHistory[];
 }
 
 export type Citation = {
-    documentName: string;
-    pageLabels: string[];
-    pdfPages: number[];
+    document_name: string;
+    page_labels: string[];
+    page_indices: number[];
 }
 
 export type ChatSession = {
     prompt: string;
+    cache_id?: string;
     response?: string;
     citations?: Citation[];
+    response_id?: string;
     responseError?: boolean;
 }
 
@@ -38,7 +40,7 @@ export async function loadSession(sessionID: string) {
         return sessions.get(sessionID)!;
     }
 
-    const response = await fetch(`http://192.168.50.20:8015/get_chat?session_id=${sessionID}`, {
+    const response = await fetch(`http://192.168.0.71:8015/get_chat?session_id=${sessionID}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

@@ -9,5 +9,8 @@ loglevel = "info"
 # reload_engine = 'poll'
 
 def post_worker_init(worker):
-    from main import app_process_all_pdfs
-    app_process_all_pdfs()
+#     from main import app_process_all_pdfs
+    from setup_database import setup_database
+    setup_database()
+
+#     app_process_all_pdfs()

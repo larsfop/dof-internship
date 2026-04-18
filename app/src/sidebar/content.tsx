@@ -87,6 +87,7 @@ export default function SidebarContent() {
         }}>
             <ul id="chat-history-list" style={{
                 overflowY: "auto",
+                width: "100%",
                 display: isChatList ? "block" : "none",
                 paddingInline: "0.5rem",
             }}>
@@ -104,7 +105,7 @@ function FolderRoot( { pdfList, isChatList } : { pdfList: PDF[], isChatList: boo
 
     let pdfPathMap = new Map<string, any>();
     for (let pdf of pdfList) {
-        const folders = pdf.path.split("/").slice(3, -1);
+        const folders = pdf.document_path.split("/").slice(3, -1);
         
         const depth = folders.length;
         let path: any = pdfPathMap;
@@ -119,7 +120,7 @@ function FolderRoot( { pdfList, isChatList } : { pdfList: PDF[], isChatList: boo
             path = path.get(folders[i]);
             
             if (path instanceof Array) {
-                path.push(pdf.name);
+                path.push(pdf.document_name);
             }
         }
     }
@@ -184,7 +185,7 @@ function FolderNode( { node } : { node: Map<string, any> | string[] } ) {
 }
 
 async function loadPDFs() {
-    const response = await fetch(`http://192.168.50.20:8015/fetch_all_pdfs`, {
+    const response = await fetch(`http://192.168.0.71:8015/fetch_all_pdfs`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'

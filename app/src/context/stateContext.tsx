@@ -9,6 +9,7 @@ interface AppState {
     currentSessionData: ChatSession[];
     newHistoryEntry: ChatHistory | null;
     pdfViewer: PDFViewer | null;
+    pdfPageCache: Map<string, number>;
     inputArray: string[];
     scrollUp: boolean;
     scrollDown: boolean;
@@ -23,7 +24,8 @@ type AppAction =
     | { type: "ADD_INPUT"; payload: string }
     | { type: "SET_INPUT"; payload: string[] }
     | { type: "SET_SCROLL_UP"; payload: boolean }
-    | { type: "SET_SCROLL_DOWN"; payload: boolean };
+    | { type: "SET_SCROLL_DOWN"; payload: boolean }
+    | { type: "SET_PDF_PAGE_CACHE"; payload: { name: string; page: number } };
 
 const reducer = (state: AppState, action: AppAction): AppState => {
     switch (action.type) {
@@ -50,6 +52,10 @@ const reducer = (state: AppState, action: AppAction): AppState => {
             return { ...state, scrollDown: action.payload };
         case "SET_PDF_VIEWER":
             return { ...state, pdfViewer: action.payload };
+        case "SET_PDF_PAGE_CACHE":
+            const newCache = new Map(state.pdfPageCache);
+            newCache.set(action.payload.name, action.payload.page);
+            return { ...state, pdfPageCache: newCache };
     }
 };
 
@@ -58,6 +64,7 @@ const initialState: AppState = {
     currentSessionData: [],
     newHistoryEntry: null,
     pdfViewer: null,
+    pdfPageCache: new Map(),
     inputArray: [],
     scrollUp: false,
     scrollDown: false,

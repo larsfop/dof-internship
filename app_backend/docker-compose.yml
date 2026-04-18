@@ -28,6 +28,7 @@ services:
       # - type: bind
       #     source: /path/to/local/documents (relative or absolute path)
       #     target: ${MOUNT_PATH}/path/inside/container (MOUNT_PATH is defined as mount path inside container and is required)
+      # - DOCUMENT MOUNTS -
       - type: bind
         source: ../pdfs
         target: ${MOUNT_PATH}/test_documents

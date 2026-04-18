@@ -3,7 +3,7 @@ import logging
 from ..cursor import CURSOR, CONNECTION
 from config import CONFIG
 
-logger = logging.getLogger("main")
+logger = logging.getLogger("database")
 
 def clear_pdf_from_store(filename: str):
     collection_name = CONFIG.rag.collection_name
@@ -22,7 +22,7 @@ def clear_pdf_from_store(filename: str):
         CURSOR.execute(
             """
                 DELETE FROM pdfs
-                WHERE documentName LIKE %s;
+                WHERE document_name LIKE %s;
             """,
             (f'{filename}%',)
         )

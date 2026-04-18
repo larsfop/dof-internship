@@ -8,16 +8,18 @@ import Hamburger from "../assets/hamburger.svg";
 import NewChat from "../assets/new-chat.svg";
 import LightMode from "../assets/light-mode.svg";
 import DarkMode from "../assets/dark-mode.svg";
+import { useAppRefs } from "../context/refContext.tsx";
 
 export default function Sidebar() {
     const [isExpanded, setIsExpanded] = useState(false);
     const [isDarkMode, setIsDarkMode] = useState(true);
     const { currentSessionData } = useAppState();
+    const { sidebar } = useAppRefs();
     const dispatch = useAppDispatch();
 
     return (
-        <nav id="sidebar" style={{
-            width: `${isExpanded ? 16 : 3}rem`,
+        <nav id="sidebar" ref={sidebar} style={{
+            width: isExpanded ? "min(16rem, 40vw)" : "3rem",
         }}>
             <button style={{
                 justifyContent: "center",

@@ -8,7 +8,7 @@ import logging
 import pymupdf
 from pathlib import Path
 
-from database import delete_session, fetch_all_pdfs, get_sessions, get_chat, update_session_name, fetch_pdfs, clear_pdf_from_store
+from database import delete_session, fetch_all_pdfs, get_sessions, get_chat, update_session_name, fetch_pdfs, clear_pdf_from_store, remove_from_semantic_cache
 from RAG import generate_response
 from document_processing import chunk_and_store_document
 from config import CONFIG, add_filename_to_config, remove_filename_from_config 
@@ -30,11 +30,15 @@ async def prompt(
     prompt: str, 
     user_id: str = 'test_user',
     session_id: str = 'test_session',
+    response_id: str|None = None,
+    check_cache: bool = True,
 ):
     response = generate_response(
         prompt,
         user_id,
-        session_id
+        session_id,
+        response_id,
+        check_cache,
     )
     return StreamingResponse(response, media_type='text/event-stream')
 
@@ -45,7 +49,7 @@ async def app_get_pdf(
 ):
     pdfs = fetch_pdfs(name)
 
-    pdf_path = pdfs[0]['documentpath']
+    pdf_path = pdfs[0]['document_path']
     with pymupdf.open(pdf_path) as doc:
         pdf_bytes = doc.tobytes()
 
@@ -76,6 +80,14 @@ async def app_remove_session(
     return delete_session(session_id)
 
 
+@app.get('/remove_cache')
+async def app_remove_cache(
+    cache_id: str,
+):
+    remove_from_semantic_cache(cache_id)
+    return {"message": f"Semantic cache entry with ID '{cache_id}' removed successfully."}
+
+
 @app.post('/update_session_name')
 def app_update_session_name(
     session_id: str,
@@ -97,16 +109,7 @@ async def app_fetch_all_pdfs():
     return fetch_all_pdfs()
 
 
-file_path = Path(os.environ["MOUNT_PATH"])
-@app.post('/process_pdf')
-async def app_process_pdf(
-    filename: str,
-):
-    files = file_path.rglob(filename)
-    for file in files:
-        chunk_and_store_document(file)
-    return {"message": f"PDF '{filename}' processed and stored successfully."}
-
+_file_path = Path(os.environ["MOUNT_PATH"])
 @app.post('/remove_pdf')
 async def app_remove_pdf(
     name: str,
@@ -117,15 +120,15 @@ async def app_remove_pdf(
     logger.info(f"Removing {len(pdfs)} PDFs with name '{name}' from store.")
 
     for pdf in pdfs:
-        clear_pdf_from_store(pdf['documentname'][:-4])
+        clear_pdf_from_store(pdf['document_name'][:-4])
 
     documents = CONFIG.partition.documents
-    pdf_names = [pdf['documentname'] for pdf in pdfs]
-    for i, doc in enumerate(documents):
-        files = list(file_path.rglob(doc))
+    pdf_names = [pdf['document_name'] for pdf in pdfs]
+    for doc in documents:
+        files = list(_file_path.rglob(doc))
 
         if not files:
-            logger.warning(f"No files found matching '{doc}' on mount '{file_path}'.")
+            logger.warning(f"No files found matching '{doc}' on mount '{_file_path}'.")
             continue
 
         for file in files:
@@ -142,26 +145,42 @@ async def app_remove_pdf(
 @app.post("/store_pdfs")
 async def app_store_pdfs(
     filename: str,
+    is_partitioning: bool = True,
+    is_chunking: bool = True,
+    is_vector_storing: bool = True,
+    load_checkpoint: bool = True,
+    recreate: bool = False
 ):
     if not filename.endswith('.pdf'):
         filename += '.pdf'
 
-    files = list(file_path.rglob(filename))
+    files = list(_file_path.rglob(filename))
     logger.info(f"Found {len(files)} files matching '{filename}'")
     if not files:
-        logger.warning(f"No files found matching '{filename}' on mount '{file_path}'.")
+        logger.warning(f"No files found matching '{filename}' on mount '{_file_path}'.")
         return {"message": f"No PDFs found with name '{filename}'."}
 
     old_files = fetch_all_pdfs()
-    old_files = [file["name"] for file in old_files]
+    old_files = [file["document_name"] for file in old_files]
 
     n_new_files = 0
-    for file in files:
-        if file.name in old_files:
+    for i, file in enumerate(files, start=1):
+        logger.info(f"Processing file {i}/{len(files)}: '{file.name}'")
+
+        if file.name in old_files and not recreate:
             logger.info(f"PDF '{file.name}' already exists in the database. Skipping.")
             continue
-        chunk_and_store_document(file)
+        token_quota_reached = chunk_and_store_document(
+            file,
+            is_partitioning,
+            is_chunking,
+            is_vector_storing,
+            load_checkpoint
+        )
         n_new_files += 1
+
+        if token_quota_reached:
+            break
 
     if n_new_files > 0:
         add_filename_to_config(filename)
@@ -174,31 +193,41 @@ async def app_store_pdfs(
 
 
 @app.post("/process_all_pdfs")
-def app_process_all_pdfs():
+def app_process_all_pdfs(
+    is_partitioning: bool = True,
+    is_chunking: bool = True,
+    is_vector_storing: bool = True,
+    load_checkpoint: bool = True,
+    recreate: bool = False
+):
     documents = CONFIG.partition.documents
     existing_pdfs = fetch_all_pdfs()
-    existing_pdfs = [pdf["name"] for pdf in existing_pdfs]
+    existing_pdfs = [pdf["document_name"] for pdf in existing_pdfs]
 
+    files: list[Path] = list(set().union(*[list(_file_path.rglob(doc)) for doc in documents]))
     processed_files = []
-    for doc in documents:
-        files = list(file_path.rglob(doc))
+    for i, file in enumerate(files, start=1):
+        logger.info(f"Processing file {i}/{len(files)}: '{file.name}'")
 
-        if not files:
-            logger.warning(f"No files found matching '{doc}' on mount '{file_path}'.")
-            # remove_filename_from_config(doc)
+        # Skip already processed files
+        if file.name in processed_files:
             continue
 
-        for file in files:
-            # Skip already processed files
-            if file.name in processed_files:
-                continue
+        # Skip files that exist in the database
+        if file.name in existing_pdfs and not recreate:
+            continue
 
-            # Skip files that exist in the database
-            if file.name in existing_pdfs:
-                continue
+        token_quota_reached = chunk_and_store_document(
+            file,
+            is_partitioning,
+            is_chunking,
+            is_vector_storing,
+            load_checkpoint
+        )
+        processed_files.append(file.name)
 
-            chunk_and_store_document(file)
-            processed_files.append(file.name)
+        if token_quota_reached:
+            break
 
     logger.info(f"Processed {len(processed_files)} files.")
 

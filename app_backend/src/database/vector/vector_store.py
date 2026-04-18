@@ -5,7 +5,7 @@ from langchain_postgres import PGVector
 from config import CONFIG
 from ai_models import get_embedding_model
 
-logger = logging.getLogger("main")
+logger = logging.getLogger("database")
 
 POSTGRES_URL = 'postgresql://{user}:{password}@postgres:5432/postgres?sslmode=disable'.format(
     user=os.environ['POSTGRES_USER'],

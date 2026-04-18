@@ -1,11 +1,19 @@
 from langgraph.types import Command
 from typing import Literal
 from langchain_core.prompts import ChatPromptTemplate
+from langchain_openai import ChatOpenAI
 from pydantic import BaseModel, Field
+import logging
 
 from ..pydantic_classes import State
 from ai_models import get_check_model
 from config import CONFIG
+
+logger = logging.getLogger("RAG")
+model = ChatOpenAI(
+    model="gpt-5.4",
+    temperature=0,
+)
 
 class CheckResponse(BaseModel):
     """Determine whether to retrieve documents or generate an answer."""
@@ -22,9 +30,9 @@ def generate_response_or_retrieve_documents(state: State) -> Command[Literal['ge
     prompt = ChatPromptTemplate.from_messages([
         (key, value) for item in CONFIG.prompts['check_prompt'] for key, value in item.items()
     ])
-    chain = prompt | get_check_model().with_structured_output(schema=CheckResponse)
-    response = chain.invoke({'question': question})
-    
+    chain = prompt | model.with_structured_output(schema=CheckResponse)
+    response: CheckResponse = chain.invoke({'question': question})
+    logger.info(f"Response: {response} - Decided to {'retrieve documents' if response.retrieve_documents == 'yes' else 'generate answer'}")
     if response.retrieve_documents == 'yes':
         return Command(goto='retrieve_documents')
     else:

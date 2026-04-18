@@ -50,6 +50,7 @@ class DocumentMetadata(BaseDataClass):
     detection_class_prob: Optional[float] = -999
     image_path: Optional[str] = None
     file_directory: Optional[str] = None
+    is_extracted: Optional[bool] = False
 
     def __post_init__(self):
         self.coordinates = DocumentCoordinates(**self.coordinates)

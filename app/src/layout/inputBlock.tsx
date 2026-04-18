@@ -69,13 +69,15 @@ export default function InputBlock() {
         dispatch({ type: "ADD_INPUT", payload: input });
 
         const chunk = await generateResponse(input, currentSessionID);
-    
-        if (chunk) {
+
+        if (chunk && chunk.node !== "error") {
+            data[data.length - 1].cache_id = chunk.content.cache_id;
             data[data.length - 1].response = chunk.content.response;
             data[data.length - 1].citations = chunk.content.citations;
+            data[data.length - 1].response_id = chunk.response_id;
             dispatch({ type: "SET_SESSION_DATA", payload: [...data] });
             dispatch({ type: "SET_SESSION", payload: currentSessionID });
-            dispatch({ type: "NEW_HISTORY_ENTRY", payload: { sessionID: currentSessionID, name: chunk.content.summaryTitle } });
+            dispatch({ type: "NEW_HISTORY_ENTRY", payload: { sessionID: currentSessionID, name: chunk.content.summary_title } });
         } else {
             data[data.length - 1].responseError = true;
             dispatch({ type: "SET_SESSION_DATA", payload : [...data] });
@@ -168,16 +170,18 @@ function setCursorToStart(element: HTMLElement) {
     sel?.addRange(range);
 }
 
-async function generateResponse(prompt: string, sessionID: string) {
+export async function generateResponse(prompt: string, sessionID: string, responseID: string|null = null, checkCache: boolean = true) {
     const queryParams = new URLSearchParams({
         session_id: sessionID,
         user_id: localStorage.getItem("userID") || "",
         prompt: prompt,
+        response_id: responseID || "",
+        check_cache: checkCache.toString(),
     });
 
     let response: globalThis.Response;
     try {
-        response = await fetch(`http://192.168.50.20:8015/prompt?${queryParams.toString()}`, {
+        response = await fetch(`http://192.168.0.71:8015/prompt?${queryParams.toString()}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -213,8 +217,7 @@ async function generateResponse(prompt: string, sessionID: string) {
                     console.error("Failed to parse chunk:", line, e);
                     continue;
                 }
-                if (chunk.node === "semantic_cache" || chunk.node === "generate_answer") {
-                    console.log("Received chunk:", chunk);
+                if (chunk.node === "semantic_cache" || chunk.node === "generate_answer" || chunk.node === "error") {
                     break outer;
                 }
             }

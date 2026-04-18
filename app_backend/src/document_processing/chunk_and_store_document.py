@@ -16,7 +16,7 @@ from .partition_processing import process_partitions
 from .vector_store import add_documents_to_vector_store, prepare_documents
 from config import CONFIG, PartitionConfig
 
-logger = logging.getLogger('main')
+logger = logging.getLogger("document_processing")
 
 def chunk_and_store_document(
         file_path: Path, 
@@ -24,7 +24,7 @@ def chunk_and_store_document(
         is_chunking: bool = True, 
         is_vector_storing: bool = True,
         load_checkpoint: bool = True
-    ) -> None:
+    ) -> bool:
     filename = file_path.stem
     with Timer(
         f"Processing file: {filename}",
@@ -50,12 +50,13 @@ def chunk_and_store_document(
                 data = chunk_partitions(
                     config, 
                     output_path, 
-                    doc
+                    doc,
+                    load_checkpoint
                 )
 
             # Fill vector store
             if is_vector_storing:
-                store_chunks(
+                token_quota_reached = store_chunks(
                     file_path, 
                     load_checkpoint, 
                     filename, 
@@ -63,6 +64,8 @@ def chunk_and_store_document(
                     data, 
                     doc
                 )
+
+    return token_quota_reached
 
 
 def partition_document(
@@ -72,41 +75,45 @@ def partition_document(
         config: PartitionConfig, 
         output_path: Path
     ) -> None:
-    while True:
-        if load_checkpoint:
-            try:
-                with open(output_path / f'unstructured_partitions_{config.strategy}.json', 'r') as f:
-                    _ = json.load(f)
-                logger.info(f"Loaded existing partitions for {filename}, skipping partitioning step.")
-
-                break
-            except FileNotFoundError:
-                logger.info(f"No existing partitions found for {filename}, proceeding with partitioning.")
-
+    if load_checkpoint:
         try:
-            shutil.copy2(output_path / f'unstructured_partitions_{config.strategy}.json', output_path / f'unstructured_partitions_{config.strategy}_backup.json')
+            if (output_path / f'unstructured_partitions_{config.strategy}.json').is_file():
+                logger.info(f"Loaded existing partitions for {filename}, skipping partitioning step.")
+                return
         except FileNotFoundError:
-            pass
+            logger.info(f"No existing partitions found for {filename}, proceeding with partitioning.")
 
-        with Timer(exit_msg='Finished partitioning PDF'):
-            chunk_pdf(
-                file_path=file_path,
-                output_dir=output_path,
-                strategy=config.strategy
-            )
+    try:
+        shutil.copy2(output_path / f'unstructured_partitions_{config.strategy}.json', output_path / f'unstructured_partitions_{config.strategy}_backup.json')
+    except FileNotFoundError:
+        pass
 
-        break
+    with Timer(exit_msg='Finished partitioning PDF'):
+        chunk_pdf(
+            file_path=file_path,
+            output_dir=output_path,
+            strategy=config.strategy
+        )
 
 
 def chunk_partitions(
         config: PartitionConfig, 
         output_path: Path, 
-        doc: pymupdf.Document
+        doc: pymupdf.Document,
+        load_checkpoint: bool
     ) -> list[dict]:
     with Timer(
         'Starting post-processing and chunking of partitions',
         'Finished processing and chunking partitions'
     ):
+        if load_checkpoint:
+            try:
+                data: list[dict] = read_from_file(output_path / 'document_chunks.json')
+                logger.info(f"Loaded existing chunks for {output_path.stem}, skipping chunking step.")
+                return data
+            except FileNotFoundError:
+                logger.info(f"No existing chunks found for {output_path.stem}, proceeding with chunking.")
+        
         partitions = load_partitions(output_path / f'unstructured_partitions_{config.strategy}.json')
 
         # Crop partitions
@@ -154,11 +161,15 @@ def store_chunks(
             documents: list[Document] = []
 
         # Prepare documents for loading into vector store
-        documents.extend(prepare_documents(
-            data, 
-            doc, 
+        new_documents, token_quota_reached = prepare_documents(
+            data,
+            doc,
             start_index=len(documents)
-        ))
+        )
+        documents.extend(new_documents)
+
+        if token_quota_reached:
+            return True
 
         # Load documents into vector store
         add_documents_to_vector_store(
@@ -179,3 +190,5 @@ def store_chunks(
             pass
 
         write_to_file(output, output_path / 'document_vectors.json')
+
+        return False

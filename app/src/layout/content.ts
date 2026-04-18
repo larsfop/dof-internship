@@ -30,7 +30,7 @@ export function handleCodeBlocks(container: HTMLElement) {
 }
 
 let documentsArray: Map<string, string> = new Map();
-export async function getPDF(name: string, page: number | null = null) {
+export async function getPDF(name: string, page: number) {
     if (documentsArray.has(name)) {
         let pdfURL = documentsArray.get(name);
         let newPage: number;
@@ -38,14 +38,14 @@ export async function getPDF(name: string, page: number | null = null) {
             pdfURL = pdfURL!.split("#page=")[0] + `#page=${page}`;
             newPage = page;
         } else {
-            newPage = Number(pdfURL!.split("#page=")[1]);
+            newPage = 1;
         }
 
         documentsArray.set(name, pdfURL!);
         return { url: pdfURL!, page: newPage };
     }
 
-    const pdfResponse = await fetch(`http://192.168.50.20:8015/pdf?name=${encodeURIComponent(name)}`, {
+    const pdfResponse = await fetch(`http://192.168.0.71:8015/pdf?name=${encodeURIComponent(name)}`, {
         method: 'GET',
         headers: {
             'method': 'GET',

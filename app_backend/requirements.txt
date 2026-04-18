@@ -27,3 +27,4 @@ argcomplete
 unidecode
 watchdog
 inotify
+tesseract

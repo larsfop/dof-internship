@@ -45,6 +45,7 @@ dependencies = [
     "tqdm",
     "gptcache",
     "watchdog",
+    "termcolor",
 ]
 
 [project.optional-dependencies]

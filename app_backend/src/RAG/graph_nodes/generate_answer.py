@@ -9,7 +9,7 @@ from ..pdf import DocumentPDF
 from ai_models import get_model, get_response_model
 from config import CONFIG
 
-logger = logging.getLogger("main")
+logger = logging.getLogger("RAG")
 
 def generate_answer(
     state: State,
@@ -55,9 +55,9 @@ def generate_answer(
         document_names=", ".join([doc.name for doc in docs]),
         question=question
     )[:-1]
-    logger.info((
+    logger.debug((
         f"Invoking model with prompt:\n"
-        f"{'\n\n'.join([message.pretty_repr() for message in formatted_prompt])}"
+        f"{'\n\n'.join([message.pretty_repr() for message in formatted_prompt])}\n"
     ))
     chain = prompt | get_response_model().with_structured_output(ResponseOutput)
     response: ResponseOutput = chain.invoke({
@@ -65,14 +65,13 @@ def generate_answer(
         'document_names': ", ".join([doc.name for doc in docs]),
         'question': question
     })
-
-    logger.info(f"Citations:\n{response.citations}")
-
+    
+    logger.debug(f"Citations before formatting: {response.citations}")
     format_citation_pages(response, docs)
 
-    logger.info(f"Generated response:\n{response.response}")
-    logger.info(f"Citations:\n{response.citations}")
-    return {'messages': [AIMessage(content=response.response)], 'parsed': response, 'documents': []}
+    logger.debug(f"Generated response:\n{response.response}")
+    logger.debug(f"Citations after formatting: {response.citations}")
+    return {'messages': [AIMessage(response.response)], 'parsed': response, 'documents': []}
 
 
 def format_citation_pages(response: ResponseOutput, documents: list[DocumentPDF]):
@@ -82,18 +81,16 @@ def format_citation_pages(response: ResponseOutput, documents: list[DocumentPDF]
 
         citation = response[pdf.name]
         try:
-            new_page_labels = [pdf.pageLabels[index] for index in citation.pageIndices]
-            new_page_indices = [pdf.pages[index] + 1 for index in citation.pageIndices]
-            print("Updating using page indices...")
+            new_page_labels = [pdf.page_labels[index] for index in citation.page_indices]
+            new_page_indices = [pdf.page_indices[index] + 1 for index in citation.page_indices]
         except:
-            new_page_indices = [index + 1 for index in pdf.pages if pdf.pageLabels[index] in citation.pageLabels]
-            new_page_labels = [pdf.pageLabels[index] for index in pdf.pages if pdf.pageLabels[index] in citation.pageLabels]
-            print("Updating using page labels...")
-        
-        if not new_page_indices or not new_page_labels:
-            new_page_indices = citation.pageIndices
-            new_page_labels = citation.pageLabels
-            print(f"Not able to update citation for document '{pdf.name}'!")
+            try:
+                new_page_indices = [index for index, label in zip(pdf.page_indices, pdf.page_labels) if label in citation.page_labels]
+                new_page_labels = [label for label in pdf.page_labels if label in citation.page_labels]
+            except:
+                logger.error(f"Failed to format citation pages for document {pdf.name} with indices {citation.page_indices} and labels {citation.page_labels}")
+                new_page_indices = citation.page_indices
+                new_page_labels = citation.page_labels
 
-        citation.pageIndices = new_page_indices
-        citation.pageLabels = new_page_labels
+        citation.page_indices = new_page_indices
+        citation.page_labels = new_page_labels

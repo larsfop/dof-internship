@@ -32,7 +32,6 @@
   .directory {
     display: flex;
     gap: 0.3rem;
-    font-size: large;
     color: var(--text-muted);
     cursor: pointer;
     border-radius: 12px;
@@ -44,8 +43,8 @@
   .directory::before {
     content: "";
     display: block;
-    width: 1.3rem;
-    height: 1.3rem;
+    width: 1rem;
+    height: 1rem;
     align-self: center;
     background-image: var(--directory-collapsed);
     background-size: contain;
@@ -81,11 +80,7 @@
   }
 
   ul {
-    list-style: none;
-  }
-
-  ul:has(li) {
-    margin-top: 0.25rem;
+    margin: 0;
   }
 
   li {
@@ -121,7 +116,6 @@
     border-radius: 12px;
     padding: 0.25rem 0.5rem;
     cursor: pointer;
-    font-size: large;
     transition: all 0.2s ease;
     color: var(--text-muted);
   }
@@ -159,15 +153,24 @@
   }
 }
 
+#chat-history-list {
+  span {
+    height: 2rem;
+  }
+}
+
 #document-list {
   position: relative;
   overflow-y: auto;
   width: 100%;
   padding-inline: 0.5rem;
 
+  span {
+    z-index: 10;
+  }
+
   ul {
-    position: relative;
-    margin: 0;
+    padding-left: 1.5rem;
   }
 
   li:not(#document-list > li) {
@@ -178,9 +181,9 @@
       content: "";
       position: absolute;
       top: 1rem;
-      left: -1.45rem;
-      width: 1.5rem;
-      height: 1px;
+      left: -0.45rem;
+      width: 0.75rem;
+      height: 0.1rem;
       background-color: var(--border);
     }
   
@@ -188,8 +191,8 @@
       content: "";
       position: absolute;
       top: 0;
-      left: -1.45rem;
-      width: 1px;
+      left: -0.45rem;
+      width: 0.1rem;
       height: 100%;
       background-color: var(--border);
     }
@@ -206,6 +209,7 @@ button {
     cursor: pointer;
     border-radius: 0.5rem;
     padding: 0;
+    font-size: inherit;
 }
 
 button:has(img):hover {

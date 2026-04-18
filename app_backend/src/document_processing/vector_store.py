@@ -13,7 +13,7 @@ from pathlib import Path
 from database import get_vector_store, store_pdf, clear_pdf_from_store
 from ai_models import get_partition_model
 
-logger = logging.getLogger('main')
+logger = logging.getLogger("document_processing")
 
 def iter_by_sections(data: list[dict], start_index: int = 0) -> Iterator[tuple[str, list[dict]]]:
     sections = defaultdict(list)
@@ -41,48 +41,41 @@ def image_to_base64(image: dict, pdf: pymupdf) -> str:
     return img_b64
 
 
-def image_document(image_data: dict, texts: list[dict], pdf: pymupdf.Document) -> Document:
+def image_document(image_data: dict, texts: list[dict], pdf: pymupdf.Document) -> Document|None:
     document_name = image_data['document_name']
     sections = image_data['sections']
     img_b64 = image_to_base64(image_data, pdf)
 
     model = get_partition_model()
 
-    while True:
-        try:
-            response = model.invoke(
-                [
-                    {
-                        'role': 'user',
-                        'content': [
-                            { 
-                                "type": "text", 
-                                "text": (
-                                    'You are an expert at analysing and describing images for RAG vector store.\n'
-                                    'Create a detailed description on the input image.\n'
-                                    'Keep token usage around 400-600 tokens.\n'
-                                    'Use the additional text for context if relevant:\n'
-                                    f'{". ".join([text["content"] for text in texts])}'
-                                )
-                            },
-                            {
-                                "type": "image_url",
-                                "image_url": {'url': f"data:image/png;base64,{img_b64}"}
-                            }
-                        ]
-                    }
-                ]
-            )
-            time.sleep(0.1)  # Placeholder for actual API call
-        except RateLimitError:
-            logger.warning('Token quota reached!')
-            user_input = input('Continue creating vectors? (y/n): ').strip().lower()
-            if user_input == 'y':
-                continue
-            else:
-                break
-        else:
-            break
+    try:
+        response = model.invoke(
+            [
+                {
+                    'role': 'user',
+                    'content': [
+                        { 
+                            "type": "text", 
+                            "text": (
+                                'You are an expert at analysing and describing images for RAG vector store.\n'
+                                'Create a detailed description on the input image.\n'
+                                'Keep token usage around 400-600 tokens.\n'
+                                'Use the additional text for context if relevant:\n'
+                                f'{". ".join([text["content"] for text in texts])}'
+                            )
+                        },
+                        {
+                            "type": "image_url",
+                            "image_url": {'url': f"data:image/png;base64,{img_b64}"}
+                        }
+                    ]
+                }
+            ]
+        )
+        time.sleep(0.1)  # Placeholder for actual API call
+    except RateLimitError as e:
+        logger.exception('Token quota reached!. Stopping document processing. Add more tokens and restart the process with load_checkpoint=True to continue from the last successful step.')
+        return None
 
     return Document(
         page_content=response.content,
@@ -96,48 +89,41 @@ def image_document(image_data: dict, texts: list[dict], pdf: pymupdf.Document) -
     )
 
 
-def table_document(table_data: dict, texts: list[dict], pdf: pymupdf.Document) -> Document:
+def table_document(table_data: dict, texts: list[dict], pdf: pymupdf.Document) -> Document|None:
     document_name = table_data['document_name']
     sections = table_data['sections']
     img_b64 = image_to_base64(table_data, pdf)
 
     model = get_partition_model()
 
-    while True:
-        try:
-            response = model.invoke(
-                [
-                    {
-                        'role': 'user',
-                        'content': [
-                            { 
-                                "type": "text", 
-                                "text": (
-                                    'You are an expert at analysing and describing tables for RAG vector store.\n'
-                                    'Create a detailed description on the input table.\n'
-                                    'Keep token usage around 400-600 tokens.\n'
-                                    'Use the additional text for context if relevant:\n'
-                                    f'{". ".join([text["content"] for text in texts])}'
-                                )
-                            },
-                            {
-                                "type": "image_url",
-                                "image_url": {'url': f"data:image/png;base64,{img_b64}"}
-                            }
-                        ]
-                    }
-                ]
-            )
-            time.sleep(0.1)  # Placeholder for actual API call
-        except RateLimitError:
-            logger.warning('Token quota reached!')
-            user_input = input('Continue creating vectors? (y/n): ').strip().lower()
-            if user_input == 'y':
-                continue
-            else:
-                break
-        else:
-            break
+    try:
+        response = model.invoke(
+            [
+                {
+                    'role': 'user',
+                    'content': [
+                        { 
+                            "type": "text", 
+                            "text": (
+                                'You are an expert at analysing and describing tables for RAG vector store.\n'
+                                'Create a detailed description on the input table.\n'
+                                'Keep token usage around 400-600 tokens.\n'
+                                'Use the additional text for context if relevant:\n'
+                                f'{". ".join([text["content"] for text in texts])}'
+                            )
+                        },
+                        {
+                            "type": "image_url",
+                            "image_url": {'url': f"data:image/png;base64,{img_b64}"}
+                        }
+                    ]
+                }
+            ]
+        )
+        time.sleep(0.1)  # Placeholder for actual API call
+    except RateLimitError as e:
+        logger.exception('Token quota reached!. Stopping document processing. Add more tokens and restart the process with load_checkpoint=True to continue from the last successful step.')
+        return None
         
     return Document(
         page_content=response.content,
@@ -151,7 +137,7 @@ def table_document(table_data: dict, texts: list[dict], pdf: pymupdf.Document) -
     )
 
 
-def prepare_documents(data: list[dict], pdf: pymupdf.Document, start_index: int = 0) -> list[Document]:
+def prepare_documents(data: list[dict], pdf: pymupdf.Document, start_index: int = 0) -> list[Document]|bool:
     try:
         documents = []
         document_name = data[0]['document_name']
@@ -174,12 +160,15 @@ def prepare_documents(data: list[dict], pdf: pymupdf.Document, start_index: int 
                             'sections': sections
                         }
                     )
+                if document is None:
+                    return documents, True
+
                 documents.append(document)
 
     except KeyboardInterrupt:
         logger.warning('Process interrupted by user. Returning documents created so far.')
     finally:
-        return documents
+        return documents, False
 
 
 def add_documents_to_vector_store(

@@ -2,12 +2,12 @@ import psycopg
 import logging
 from ..cursor import CURSOR, CONNECTION
 
-logger = logging.getLogger("main")
+logger = logging.getLogger("database")
 
 def fetch_pdfs(filename: str) -> list[dict[str, str]]|None:
     try:
         data = CURSOR.execute(
-            "SELECT * FROM pdfs WHERE documentName LIKE %s",
+            "SELECT * FROM pdfs WHERE document_name LIKE %s",
             (f'{filename}%',)
         ).fetchall()
         if data:

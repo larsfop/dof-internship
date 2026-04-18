@@ -9,12 +9,12 @@ from config import CONFIG
 from .pydantic_classes import GradeResults
 from database import fetch_pdfs
 
-logger = logging.getLogger('main')
+logger = logging.getLogger('RAG')
 
 class DocumentPDF(BaseModel):
     name: str
-    pages: List[int]
-    pageLabels: List[str]
+    page_indices: List[int]
+    page_labels: List[str]
     data: str
 
 
@@ -23,7 +23,7 @@ def create_pdfs_from_embeddings(documents: GradeResults) -> list[DocumentPDF]:
 
     pdf_data: dict[str, dict[str, list[int]|pymupdf.Document]] = {}
     for i, document in enumerate(documents, start=1):
-        logger.info(f'Processing embedding {i}/{len(documents)} for document: {document.document_name} with pages {document.page_indices} and page labels {document.page_labels}')
+        logger.info(f'Processing embedding {i}/{len(documents)} for document: {document.document_name} with page indices {document.page_indices} and page labels {document.page_labels}')
         if not document.document_name in pdf_data:
             pdf_data[document.document_name] = {
                 'page_indices': [],
@@ -37,7 +37,7 @@ def create_pdfs_from_embeddings(documents: GradeResults) -> list[DocumentPDF]:
             continue
 
         for pdf in pdfs:
-            with pymupdf.open(pdf['documentpath']) as doc:
+            with pymupdf.open(pdf['document_path']) as doc:
                 for j, page_index in enumerate(document.page_indices):
                     if page_index in pdf_data[document.document_name]['page_indices']:
                         continue
@@ -52,8 +52,8 @@ def create_pdfs_from_embeddings(documents: GradeResults) -> list[DocumentPDF]:
     return [
         DocumentPDF(
             name=document_name,
-            pages=doc['page_indices'],
-            pageLabels=doc['page_labels'],
+            page_indices=doc['page_indices'],
+            page_labels=doc['page_labels'],
             data=base64.b64encode(doc['pdf'].tobytes()).decode('utf-8')
         ) for document_name, doc in pdf_data.items()
     ]

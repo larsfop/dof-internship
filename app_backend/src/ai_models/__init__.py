@@ -1,1 +1,1 @@
-from .llm_models import get_model, get_summary_model, get_response_model, get_check_model, get_embedding_model, get_partition_model
+from .llm_models import get_model, get_summary_model, get_response_model, get_check_model, get_embedding_model, get_cache_embedding_model, get_partition_model

@@ -1,2 +1,3 @@
 from .fetch_from_semantic_cache import fetch_from_semantic_cache
 from .new_semantic_cache import new_semantic_cache
+from .remove_from_semantic_cache import remove_from_semantic_cache

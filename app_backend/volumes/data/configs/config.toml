@@ -9,13 +9,14 @@ search_type = "similarity"
 score_threshold = 0.95
 
 [rag_config.search_kwargs]
-k = 5
+k = 10
 # score_threshold = 0.1
 
 [rag_config.llm_models]
-summary_model = { model = "gpt-4.1" }
-retriever_model = { model = "gpt-4.1", kwargs = { temperature = 0 } }
-response_model = { model = "o4-mini" }
+summary_model = { model = "gpt-5.4-mini" }
+retriever_model = { model = "gpt-5.4-mini", kwargs = { temperature = 0 } }
+response_model = { model = "gpt-5.4-mini" }
+html_formatting_model = { model = "gpt-5.4-nano", kwargs = { temperature = 0 } }
 
 
 # --- DOCUMENT PARTITION CONFIG ---
@@ -28,12 +29,15 @@ strategy = "hi_res"
 crop = [ 38, 50, 563, 785 ]
 
 # AI model for partitioning (e.g. for table extraction)
-llm_model = { model = "o4-mini", kwargs = { service_tier = "flex" } }
+llm_model = { model = "gpt-5.4-nano", kwargs = { service_tier = "flex" } }
 
 # Documents to include from the mounted directories (supports glob patterns), (only pdfs are supported)
 # Files are searched recursively
 # Examples: "*.pdf", "eurocodes/*.pdf", "ns*.pdf", "ns*1995*.pdf"
 documents = [
+    "dbmerg_1.pdf",
+    "dbmerg_1.pdf",
+    "*.pdf",
     "ns*.pdf",
     "SOFiSTiK/*.pdf",
 ]
@@ -48,18 +52,18 @@ disable_existing_loggers = false
 format = "%(asctime)s - %(levelname)s: %(message)s"
 datefmt = "%Y-%m-%d %H:%M:%SZ"
 
-# [logger_config.formatters.json]
-# "()" = "mylogger.MyJSONFormatter"
-# 
-# [logger_config.formatters.json.fmt_keys]
-# level = "levelname"
-# message = "message"
-# timestamp = "timestamp"
-# logger = "name"
-# module = "module"
-# function = "funcName"
-# line = "lineno"
-# thread_name = "threadName"
+[logger_config.formatters.json]
+"()" = "config.logger.MyJSONFormatter"
+
+[logger_config.formatters.json.fmt_keys]
+level = "levelname"
+message = "message"
+timestamp = "timestamp"
+logger = "name"
+module = "module"
+function = "funcName"
+line = "lineno"
+thread_name = "threadName"
 
 [logger_config.handlers.stderr]
 class = "logging.StreamHandler"
@@ -67,14 +71,14 @@ level = "INFO"
 formatter = "simple"
 stream = "ext://sys.stderr"
 
-# [logger_config.handlers.file]
-# class = "logging.handlers.RotatingFileHandler"
-# level = "DEBUG"
-# formatter = "json"
-# filename = "logs/my_app.log.jsonl"
-# maxBytes = 10000
-# backupCount = 3
+[logger_config.handlers.file]
+class = "logging.handlers.RotatingFileHandler"
+level = "DEBUG"
+formatter = "json"
+filename = "../data/logs/server-backend.log"
+maxBytes = 1000000
+backupCount = 3
 
 [logger_config.loggers.root]
 level = "DEBUG"
-handlers = ["stderr"]
+handlers = ["stderr", "file"]

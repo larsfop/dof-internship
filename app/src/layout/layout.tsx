@@ -26,7 +26,9 @@ export default function Main() {
     }, []);
 
     return (
-        <main id="main" ref={main}>
+        <main id="main" ref={main} style={{
+            gridTemplateColumns: "1fr 0px 0fr"
+        }}>
             <ChatbotContainer />
             <div id="gutter" ref={gutterRef}>
                 <img src={GutterDrag} alt="" />
