@@ -45,7 +45,7 @@ export async function getPDF(name: string, page: number) {
         return { url: pdfURL!, page: newPage };
     }
 
-    const pdfResponse = await fetch(`http://192.168.0.71:8015/pdf?name=${encodeURIComponent(name)}`, {
+    const pdfResponse = await fetch(`http://192.168.86.235:8015/pdf?name=${encodeURIComponent(name)}`, {
         method: 'GET',
         headers: {
             'method': 'GET',

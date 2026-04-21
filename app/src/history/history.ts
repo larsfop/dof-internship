@@ -5,7 +5,7 @@ export type ChatHistory = {
 
 export async function loadChatHistory() {
     const userID = localStorage.getItem("userID");
-    const response = await fetch(`http://192.168.0.71:8015/get_sessions?user_id=${userID}`, {
+    const response = await fetch(`http://192.168.86.235:8015/get_sessions?user_id=${userID}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -40,7 +40,7 @@ export async function loadSession(sessionID: string) {
         return sessions.get(sessionID)!;
     }
 
-    const response = await fetch(`http://192.168.0.71:8015/get_chat?session_id=${sessionID}`, {
+    const response = await fetch(`http://192.168.86.235:8015/get_chat?session_id=${sessionID}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

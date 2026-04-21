@@ -1,0 +1,66 @@
+{
+    "$schema": "https://lnav.org/schemas/format-v1.schema.json",
+    "dof_app_log": {
+        "title": "DOF App Log",
+        "description": "JSON log format for the DOF internship backend application.",
+        "file-pattern": ".*.log",
+        "json": true,
+        "timestamp-field": "timestamp",
+        "level-field": "level",
+        "body-field": "message",
+        "thread-id-field": "thread_name",
+        "src-file-field": "module",
+        "src-line-field": "line",
+        "line-format": [
+            { "field": "__timestamp__", "timestamp-format": "%Y-%m-%d %H:%M:%S" },
+            " - ",
+            { "field": "__level__", "align": "left", "max-width": 5, "min-width": 5, "overflow": "abbrev", "text-transform": "uppercase" },
+            " - ",
+            { "field": "logger", "overflow": "abbrev", "align": "left", "max-width": 12, "min-width": 12 },
+            " - ",
+            { "field": "message"},
+            " - ",
+            { "field": "function", "overflow": "truncate", "align": "left"},
+            ":",
+            { "field": "line", "align": "left" }
+        ],
+        "value": {
+            "logger": {
+                "kind": "string",
+                "identifier": true
+            },
+            "module": {
+                "kind": "string",
+                "identifier": true,
+                "hidden": true
+            },
+            "function": {
+                "kind": "string",
+                "identifier": true
+            },
+            "line": {
+                "kind": "integer",
+                "foreign-key": true
+            },
+            "thread_name": {
+                "kind": "string",
+                "identifier": true,
+                "hidden": true
+            }
+        },
+        "sample": [
+            {
+                "line": "{\"level\": \"INFO\", \"message\": \"Configuration and logger loaded successfully.\", \"timestamp\": \"2026-04-17T08:59:04.392047+00:00\", \"logger\": \"main\", \"module\": \"config\", \"function\": \"<module>\", \"line\": 113, \"thread_name\": \"MainThread\"}",
+                "level": "info"
+            },
+            {
+                "line": "{\"level\": \"DEBUG\", \"message\": \"CONFIGDIR=/root/.config/matplotlib\", \"timestamp\": \"2026-04-17T08:59:13.813248+00:00\", \"logger\": \"matplotlib\", \"module\": \"__init__\", \"function\": \"wrapper\", \"line\": 342, \"thread_name\": \"MainThread\"}",
+                "level": "debug"
+            },
+            {
+                "line": "{\"level\": \"WARNING\", \"message\": \"Deserializing unregistered type RAG.pydantic_classes.ResponseOutput from checkpoint.\", \"timestamp\": \"2026-04-17T09:01:36.547072+00:00\", \"logger\": \"langgraph.checkpoint.serde.jsonplus\", \"module\": \"jsonplus\", \"function\": \"_check_allowed\", \"line\": 530, \"thread_name\": \"AnyIO worker thread\"}",
+                "level": "warning"
+            }
+        ]
+    }
+}

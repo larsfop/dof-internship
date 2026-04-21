@@ -185,7 +185,7 @@ function FolderNode( { node } : { node: Map<string, any> | string[] } ) {
 }
 
 async function loadPDFs() {
-    const response = await fetch(`http://192.168.0.71:8015/fetch_all_pdfs`, {
+    const response = await fetch(`http://192.168.86.235:8015/fetch_all_pdfs`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'

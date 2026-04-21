@@ -96,7 +96,7 @@ export default function OutputBlock({ entry }: { entry: ChatSession }) {
                 /></button>
                 {fromCache && (
                     <button title="Remove response from cache" onClick={async () => {
-                        await fetch(`http://192.168.0.71:8015/remove_cache?cache_id=${entry.cache_id}`, {
+                        await fetch(`http://192.168.86.235:8015/remove_cache?cache_id=${entry.cache_id}`, {
                             method: "GET",
                             headers: {
                                 "Content-Type": "application/json"

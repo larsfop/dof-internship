@@ -40,7 +40,7 @@ export default function ChatHistoryEntry({entry}: {entry: ChatHistory}) {
                         return;
                     }
                     if (node.textContent !== sessionName) {
-                        fetch(`http://192.168.0.71:8015/update_session_name?session_id=${sessionID}&new_name=${encodeURIComponent(node.textContent)}`, {
+                        fetch(`http://192.168.86.235:8015/update_session_name?session_id=${sessionID}&new_name=${encodeURIComponent(node.textContent)}`, {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -114,7 +114,7 @@ export default function ChatHistoryEntry({entry}: {entry: ChatHistory}) {
                     if (!node) return;
                     node.parentElement?.remove();
 
-                    await fetch(`http://192.168.0.71:8015/remove_session?session_id=${sessionID}`, {
+                    await fetch(`http://192.168.86.235:8015/remove_session?session_id=${sessionID}`, {
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json',
