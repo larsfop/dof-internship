@@ -5,7 +5,7 @@ import { useAppRefs } from "../context/refContext.tsx";
 export default function RenderPDF() {
     const dispatch = useAppDispatch();
     const { pdfViewer } = useAppState();
-    const { main, pdfViewerRef } = useAppRefs();
+    const { pdfViewerRef } = useAppRefs();
 
     useEffect(() => {
         const iframe = pdfViewerRef.current;

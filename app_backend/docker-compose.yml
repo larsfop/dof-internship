@@ -1,6 +1,7 @@
 services:
   postgres:
     image: pgvector/pgvector:pg18
+    container_name: postgres-database
     ports:
       - "5435:5432"
     environment:
@@ -18,7 +19,7 @@ services:
 
   backend:
     build: .
-    container_name: backend
+    container_name: app-api
     volumes:
       # Bind mounts for source code, DEV ONLY
       - type: bind
@@ -30,7 +31,7 @@ services:
       #     target: ${MOUNT_PATH}/path/inside/container (MOUNT_PATH is defined as mount path inside container and is required)
       # - DOCUMENT MOUNTS -
       - type: bind
-        source: ../pdfs
+        source: C:\Users\Lars\Documents\dof-internship\pdfs
         target: ${MOUNT_PATH}/test_documents
       # Stored volume for configs, logs, partitions and default documents
       - data:/app/data
