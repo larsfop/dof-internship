@@ -68,7 +68,7 @@ Section "Main" SEC_MAIN
 
   ; ── ProgramData (app binaries / compose / api) ───────────────────────────
   SetOutPath "$INSTDIR"
-  IfFileExists "$INSTDIR\*.*" +2 0
+  IfFileExists "$INSTDIR\docker-compose.yml" +3 0
     File "${SRC_DIR}\docker-compose.yml"
     File /nonfatal "${SRC_DIR}\.env"
 
@@ -79,7 +79,7 @@ Section "Main" SEC_MAIN
   File /r "${SRC_DIR}\src\*"
 
   ; ── Documents (user data / configs) ──────────────────────────────────────
-  IfFileExists "$DOCUMENTS\${APP_NAME}\volumes\data\*.*" +2 0
+  IfFileExists "$DOCUMENTS\${APP_NAME}\volumes\data\configs" +3 0
     SetOutPath "$DOCUMENTS\${APP_NAME}\volumes\data\configs"
     File /nonfatal /r "${SRC_DIR}\volumes\data\configs\*"
 
@@ -94,7 +94,7 @@ Section "Main" SEC_MAIN
 
   SetOutPath "$DOCUMENTS\${APP_NAME}"
   File /nonfatal "${SRC_DIR}\README.md"
-  File /nonfatal "${SRC_DIR}\*.ps1"
+  File /nonfatal "${SRC_DIR}\*.exe"
 
   ; ── Uninstaller ───────────────────────────────────────────────────────────
   WriteUninstaller "$INSTDIR\uninstall.exe"
