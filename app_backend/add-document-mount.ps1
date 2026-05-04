@@ -3,10 +3,10 @@ param (
     [Parameter(Mandatory=$true, HelpMessage="Path to the target directory (relative to the 'app/documents' on the container, e.g., test/documents).")][string]$targetPath
 )
 
-$filePath = "docker-compose.yml"
+$DockerPath = "$env:ProgramFiles/dof-pdf/docker-compose.yml"
 $searchText = "# - DOCUMENT MOUNTS -"
 
-$lines = Get-Content -Path $filePath
+$lines = Get-Content -Path $DockerPath
 $targetIndex = -1
 
 for ($i = 0; $i -lt $lines.Count; $i++) {
@@ -35,6 +35,6 @@ $before = $lines[0..$targetIndex]
 $after  = $lines[($targetIndex + 1)..($lines.Count - 1)]
 
 $updatedLines = @($before) + @($indentedNewLine) + @($after)
-Set-Content -Path $filePath -Value $updatedLines
+Set-Content -Path $DockerPath -Value $updatedLines
 
-Write-Host "Document mount added successfully. Run './reload-container.ps1' to start the container with the new mount."
+Write-Host "Document mount added successfully. Run './reload-container.exe' to restart the container with the new mount."
