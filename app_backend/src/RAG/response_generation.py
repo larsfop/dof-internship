@@ -12,6 +12,7 @@ from uuid import uuid4
 from .pydantic_classes import State, ResponseOutput
 from database import new_response, new_citation, new_semantic_cache, POSTGRES_URL
 from .graph_nodes import cache_node, generate_response_or_retrieve_documents, retrieve_documents, generate_answer, get_summary_node
+from config import CONFIG
 
 logger = logging.getLogger("RAG")
 
@@ -114,7 +115,7 @@ def generate_response(
                         'role': 'user',
                         'content': prompt
                     },
-                    'check_cache': check_cache
+                    'check_cache': check_cache and CONFIG.rag.use_cache
                 },
                 config
             ):

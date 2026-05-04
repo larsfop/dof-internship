@@ -25,6 +25,7 @@ class RAGConfig(BaseModel):
     metric_type: str
     search_type: str
     score_threshold: float
+    use_cache: bool
     search_kwargs: Optional[dict] = Field(default_factory=dict)
 
 

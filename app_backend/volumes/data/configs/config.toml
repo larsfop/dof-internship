@@ -1,12 +1,13 @@
 # --- RAG CONFIG ---
 [rag_config]
-embedding_model = "text-embedding-3-large"
-embedding_dimensions = 3072
+embedding_model = "text-embedding-3-small"
+embedding_dimensions = 1536
 collection_name = "document_store"
 index_type = "FLAT"
 metric_type = "cosine"
 search_type = "similarity"
 score_threshold = 0.95
+use_cache = true
 
 [rag_config.search_kwargs]
 k = 10

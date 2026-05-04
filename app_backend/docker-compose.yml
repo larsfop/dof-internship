@@ -31,7 +31,7 @@ services:
       #     target: ${MOUNT_PATH}/path/inside/container (MOUNT_PATH is defined as mount path inside container and is required)
       # - DOCUMENT MOUNTS -
       - type: bind
-        source: C:\Users\Lars\Documents\dof-internship\pdfs
+        source: C:/Users/DOF_guest/Documents/dof-pdf/pdfs
         target: ${MOUNT_PATH}/test_documents
       # Stored volume for configs, logs, partitions and default documents
       - data:/app/data

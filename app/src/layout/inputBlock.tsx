@@ -181,7 +181,7 @@ export async function generateResponse(prompt: string, sessionID: string, respon
 
     let response: globalThis.Response;
     try {
-        response = await fetch(`http://192.168.86.235:8015/prompt?${queryParams.toString()}`, {
+        response = await fetch(`http://192.168.50.20:8015/prompt?${queryParams.toString()}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

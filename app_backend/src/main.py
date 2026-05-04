@@ -177,10 +177,14 @@ async def app_store_pdfs(
             is_vector_storing,
             load_checkpoint
         )
-        n_new_files += 1
 
         if token_quota_reached:
             break
+        
+        n_new_files += 1
+        
+    if token_quota_reached:
+        return {"message": f"Token quota reached while processing '{filename}'. Processed {n_new_files} new files before reaching the limit."}
 
     if n_new_files > 0:
         add_filename_to_config(filename)
