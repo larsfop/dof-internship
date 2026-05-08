@@ -2,6 +2,8 @@
 
 A RAG-based (Retrieval-Augmented Generation) desktop application for querying engineering PDF documents. It combines a Tauri/React frontend with a Python FastAPI backend, a PostgreSQL vector database, and OpenAI language models.
 
+App and server installer for Windows can be downloaded from the [releases](https://github.com/larsfop/dof-internship/releases).
+
 ---
 
 ## Architecture
